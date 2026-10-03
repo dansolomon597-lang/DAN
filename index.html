@@ -175,13 +175,278 @@ function sendOrder(){
  const lines=cart.map(p=>p.name+" - "+p.price+" ETB").join("\n");
  const message="DAN SHOP ETH ORDER\nName: "+name+"\nPhone: "+phone+"\nAddress: "+address+"\nPayment: "+document.getElementById("paymentMethod").value+"\n"+lines+"\nTotal: "+total+" ETB\nLocation: "+locationLink;
  window.open("https://wa.me/251988407460?text="+encodeURIComponent(message),"_blank");
-}
-function changeLanguage(){
- const lang=document.getElementById("language").value;
- const messages={am:"አማርኛ ተመርጧል",en:"English selected",om:"Afaan Oromoo filatame",so:"Soomaali la doortay",ar:"تم اختيار العربية",fr:"Français sélectionné",de:"Deutsch ausgewählt"};
- alert(messages[lang]);
-}
-render();
+<script>
+/* DAN SHOP ETH — GLOBAL LANGUAGE SYSTEM */
+
+(function () {
+  "use strict";
+
+  const LANG_KEY = "danShopLanguage";
+
+  const translations = {
+    am: {
+      "Home": "መነሻ",
+      "Products": "ምርቶች",
+      "Account": "መለያ",
+      "Cart": "ጋሪ",
+      "Orders": "ትዕዛዞች",
+      "Admin Dashboard": "የአስተዳዳሪ ዳሽቦርድ",
+      "Customer service": "የደንበኛ አገልግሎት",
+      "Payments": "ክፍያዎች",
+      "Order history & tracking": "የትዕዛዝ ታሪክ እና መከታተያ",
+      "Seller applications": "የሻጭ ማመልከቻዎች",
+      "Pending products": "በመጠባበቅ ላይ ያሉ ምርቶች",
+      "Orders": "ትዕዛዞች",
+      "Approve": "አጽድቅ",
+      "Reject": "አትቀበል",
+      "Received": "ተቀብሏል",
+      "Confirmed": "ተረጋግጧል",
+      "Shipped": "ተልኳል",
+      "Delivered": "ደርሷል",
+      "Cancelled": "ተሰርዟል",
+      "Add to cart": "ወደ ጋሪ ጨምር",
+      "Buy now": "አሁን ግዛ",
+      "Search": "ፈልግ",
+      "Checkout": "ክፍያ",
+      "Place Order": "ትዕዛዝ አስገባ"
+    },
+
+    en: {
+      "Home": "Home",
+      "Products": "Products",
+      "Account": "Account",
+      "Cart": "Cart",
+      "Orders": "Orders",
+      "Admin Dashboard": "Admin Dashboard",
+      "Customer service": "Customer service",
+      "Payments": "Payments",
+      "Order history & tracking": "Order history & tracking",
+      "Seller applications": "Seller applications",
+      "Pending products": "Pending products",
+      "Approve": "Approve",
+      "Reject": "Reject",
+      "Received": "Received",
+      "Confirmed": "Confirmed",
+      "Shipped": "Shipped",
+      "Delivered": "Delivered",
+      "Cancelled": "Cancelled",
+      "Add to cart": "Add to cart",
+      "Buy now": "Buy now",
+      "Search": "Search",
+      "Checkout": "Checkout",
+      "Place Order": "Place Order"
+    },
+
+    so: {
+      "Home": "Bogga hore",
+      "Products": "Alaabta",
+      "Account": "Akoonka",
+      "Cart": "Gaariga",
+      "Orders": "Dalabaadka",
+      "Admin Dashboard": "Maamulka",
+      "Customer service": "Adeegga macaamiisha",
+      "Payments": "Lacag-bixinta",
+      "Order history & tracking": "Taariikhda iyo raadraaca dalabka",
+      "Seller applications": "Codsiyada iibiyayaasha",
+      "Pending products": "Alaabta sugaysa",
+      "Approve": "Oggolow",
+      "Reject": "Diid",
+      "Received": "La helay",
+      "Confirmed": "La xaqiijiyay",
+      "Shipped": "La diray",
+      "Delivered": "La geeyay",
+      "Cancelled": "La joojiyay",
+      "Add to cart": "Ku dar gaariga",
+      "Buy now": "Hadda iibso",
+      "Search": "Raadi",
+      "Checkout": "Bixinta",
+      "Place Order": "Dalbo"
+    },
+
+    ar: {
+      "Home": "الرئيسية",
+      "Products": "المنتجات",
+      "Account": "الحساب",
+      "Cart": "السلة",
+      "Orders": "الطلبات",
+      "Admin Dashboard": "لوحة الإدارة",
+      "Customer service": "خدمة العملاء",
+      "Payments": "الدفع",
+      "Order history & tracking": "سجل الطلبات والتتبع",
+      "Seller applications": "طلبات البائعين",
+      "Pending products": "المنتجات المعلقة",
+      "Approve": "موافقة",
+      "Reject": "رفض",
+      "Received": "تم الاستلام",
+      "Confirmed": "تم التأكيد",
+      "Shipped": "تم الشحن",
+      "Delivered": "تم التسليم",
+      "Cancelled": "ملغى",
+      "Add to cart": "أضف إلى السلة",
+      "Buy now": "اشتر الآن",
+      "Search": "بحث",
+      "Checkout": "الدفع",
+      "Place Order": "إرسال الطلب"
+    },
+
+    fr: {
+      "Home": "Accueil",
+      "Products": "Produits",
+      "Account": "Compte",
+      "Cart": "Panier",
+      "Orders": "Commandes",
+      "Admin Dashboard": "Tableau de bord administrateur",
+      "Customer service": "Service client",
+      "Payments": "Paiements",
+      "Order history & tracking": "Historique et suivi des commandes",
+      "Seller applications": "Demandes des vendeurs",
+      "Pending products": "Produits en attente",
+      "Approve": "Approuver",
+      "Reject": "Refuser",
+      "Received": "Reçu",
+      "Confirmed": "Confirmé",
+      "Shipped": "Expédié",
+      "Delivered": "Livré",
+      "Cancelled": "Annulé",
+      "Add to cart": "Ajouter au panier",
+      "Buy now": "Acheter maintenant",
+      "Search": "Rechercher",
+      "Checkout": "Paiement",
+      "Place Order": "Passer la commande"
+    }
+  };
+
+  function getLanguage() {
+    return localStorage.getItem(LANG_KEY) || "am";
+  }
+
+  function translateElement(el, lang) {
+    if (!el) return;
+
+    const original =
+      el.getAttribute("data-original-text") ||
+      el.textContent.trim();
+
+    if (!el.hasAttribute("data-original-text")) {
+      el.setAttribute("data-original-text", original);
+    }
+
+    const text = el.getAttribute("data-original-text");
+
+    if (translations[lang] && translations[lang][text]) {
+      el.textContent = translations[lang][text];
+    }
+  }
+
+  function translatePage(lang) {
+
+    document.documentElement.lang = lang;
+
+    /* Arabic = RTL */
+    if (lang === "ar") {
+      document.documentElement.dir = "rtl";
+      document.body.dir = "rtl";
+    } else {
+      document.documentElement.dir = "ltr";
+      document.body.dir = "ltr";
+    }
+
+    /* Translate visible text */
+    document.querySelectorAll(
+      "h1,h2,h3,h4,h5,h6,p,span,b,strong,button,a,label,option,th,td"
+    ).forEach(el => {
+      translateElement(el, lang);
+    });
+
+    /* Translate placeholders */
+    document.querySelectorAll("input,textarea").forEach(el => {
+      const original =
+        el.getAttribute("data-original-placeholder") ||
+        el.getAttribute("placeholder");
+
+      if (original) {
+        el.setAttribute(
+          "data-original-placeholder",
+          original
+        );
+
+        if (
+          translations[lang] &&
+          translations[lang][original]
+        ) {
+          el.placeholder =
+            translations[lang][original];
+        }
+      }
+    });
+
+    /* Keep language selector synchronized */
+    const selector = document.querySelector(
+      "#languageSelect, #languageSwitcher, select[name='language']"
+    );
+
+    if (selector) {
+      selector.value = lang;
+    }
+  }
+
+  window.changeLanguage = function (lang) {
+    if (!translations[lang]) return;
+
+    localStorage.setItem(LANG_KEY, lang);
+
+    translatePage(lang);
+
+    /* Re-render dynamic marketplace content */
+    if (typeof renderProducts === "function") {
+      renderProducts();
+    }
+
+    if (typeof updateCounts === "function") {
+      updateCounts();
+    }
+
+    if (typeof renderAdmin === "function") {
+      renderAdmin();
+    }
+
+    if (typeof renderOrders === "function") {
+      renderOrders();
+    }
+  };
+
+  document.addEventListener("change", function (e) {
+
+    if (
+      e.target.matches(
+        "#languageSelect, #languageSwitcher, select[name='language']"
+      )
+    ) {
+      changeLanguage(e.target.value);
+    }
+
+  });
+
+  /* Translate again whenever Admin/Product content changes */
+  const observer = new MutationObserver(function () {
+    const lang = getLanguage();
+
+    document.querySelectorAll(
+      "h1,h2,h3,h4,h5,h6,p,span,b,strong,button,a,label,option,th,td"
+    ).forEach(el => {
+      translateElement(el, lang);
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  /* Start with saved language */
+  document.addEventListener("DOMContentLoaded", function () {
+    translatePage(getLanguage());
+  });
+
+})();
 </script>
-</body>
-</html>
