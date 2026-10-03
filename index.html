@@ -1,1 +1,201 @@
 
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DAN SHOP ETH | Online Shopping</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6fa;color:#17243a;font-family:Arial,sans-serif}
+header{background:#07172e;color:white;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:900}
+.logo span{color:#ffbd35}
+.search{padding:13px;border:0;border-radius:8px;flex:1;min-width:170px}
+select,button{padding:11px;border:0;border-radius:8px;cursor:pointer}
+nav{background:white;padding:15px;display:flex;gap:22px;overflow:auto}
+nav a{color:#17243a;text-decoration:none;font-weight:bold;white-space:nowrap}
+.container{max-width:1250px;margin:auto;padding:16px}
+.hero{background:linear-gradient(120deg,#07172e,#0875e8);color:white;border-radius:15px;padding:35px;display:flex;justify-content:space-between;align-items:center;min-height:230px}
+.hero h1{font-size:38px;margin:0}
+.hero span{color:#ffbd35}
+.hero button{background:#ffbd35;font-weight:bold}
+.categories{display:flex;gap:10px;overflow:auto;margin:20px 0}
+.categories button{background:white;color:#17243a;white-space:nowrap}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.product{background:white;border-radius:12px;padding:12px;box-shadow:0 2px 10px #0001}
+.product img{width:100%;height:165px;object-fit:contain;background:#f7f8fa;border-radius:8px}
+.product h3{font-size:15px;min-height:35px}
+.price{color:#0875e8;font-weight:bold;font-size:19px}
+.add{width:100%;background:#0875e8;color:white}
+.panel{background:white;padding:18px;border-radius:12px;margin-top:20px}
+footer{background:#07172e;color:white;padding:30px;margin-top:30px}
+.cart{position:fixed;right:15px;bottom:15px;background:#0875e8;color:white;border-radius:30px;padding:15px 20px;z-index:5}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:10;align-items:center;justify-content:center;padding:15px}
+.modal.show{display:flex}
+.dialog{background:white;padding:20px;border-radius:12px;width:100%;max-width:500px;max-height:90vh;overflow:auto}
+.field{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:8px}
+@media(max-width:850px){.products{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:550px){.products{grid-template-columns:repeat(2,1fr)}.hero{padding:22px}.hero h1{font-size:28px}.product img{height:125px}}
+</style>
+</head>
+<body>
+
+<header>
+ <div>
+  <div class="logo">DAN <span>SHOP ETH</span></div>
+  <small>BETTER PRODUCTS • BETTER LIFE</small>
+ </div>
+ <input id="search" class="search" placeholder="እቃ ፈልግ..." oninput="renderProducts()">
+ <select id="language" onchange="setLanguage(this.value)">
+  <option value="am">አማርኛ</option>
+  <option value="en">English</option>
+  <option value="om">Afaan Oromoo</option>
+  <option value="so">Soomaali</option>
+  <option value="ar">العربية</option>
+  <option value="fr">Français</option>
+  <option value="de">Deutsch</option>
+ </select>
+</header>
+
+<nav>
+ <a href="#">መነሻ</a>
+ <a href="#products">እቃዎች</a>
+ <a href="#delivery">ማድረሻ</a>
+ <a href="#payment">ክፍያ</a>
+ <a href="#contact">አግኙን</a>
+</nav>
+
+<main class="container">
+<section class="hero">
+ <div>
+  <h1>DAN <span>SHOP ETH</span></h1>
+  <h3>የሚፈልጉትን ሁሉ በአንድ ቦታ!</h3>
+  <p>ጥራት • ቀላል ግዢ • የቤት ማድረስ</p>
+  <button onclick="document.getElementById('products').scrollIntoView()">አሁን ይግዙ</button>
+ </div>
+ <div style="font-size:85px">🛍️</div>
+</section>
+
+<div class="categories">
+ <button onclick="filter('all')">ሁሉም</button>
+ <button onclick="filter('Shoes')">👟 ጫማ</button>
+ <button onclick="filter('Phones')">📱 ስልኮች</button>
+ <button onclick="filter('Home')">🏠 የቤት እቃ</button>
+ <button onclick="filter('Beauty')">🌸 ውበት</button>
+ <button onclick="filter('Gaming')">🎮 ጌም</button>
+ <button onclick="filter('Accessories')">🎒 ቦርሳ</button>
+</div>
+
+<h2 id="products">🔥 ተወዳጅ እቃዎች</h2>
+<div class="products" id="productList"></div>
+
+<section class="panel" id="delivery">
+<h2>📍 የደንበኛ አድራሻ</h2>
+<input class="field" id="customerName" placeholder="ሙሉ ስም">
+<input class="field" id="customerPhone" placeholder="ስልክ ቁጥር">
+<input class="field" id="customerAddress" placeholder="ከተማ / አካባቢ / ዝርዝር አድራሻ">
+<button onclick="getLocation()">📍 Location ላክ</button>
+<p id="locationText">Location ገና አልተጋራም።</p>
+</section>
+
+<section class="panel" id="payment">
+<h2>💳 የክፍያ አማራጮች</h2>
+<p>Telebirr • CBE Birr • ባንክ • Binance Pay • Cash on Delivery</p>
+<select id="paymentMethod" class="field">
+<option>Cash on Delivery</option>
+<option>Telebirr</option>
+<option>CBE Birr</option>
+<option>Bank Transfer</option>
+<option>Binance Pay</option>
+</select>
+<p>ማስታወሻ፦ የክፍያ አማራጮቹ በዚህ ድረ-ገጽ ላይ የምርጫ ዝርዝር ናቸው፤ ትክክለኛ የኦንላይን ክፍያ ለማገናኘት የክፍያ አቅራቢ ውልና የቴክኒክ ግንኙነት ያስፈልጋል።</p>
+</section>
+</main>
+
+<footer id="contact">
+<h2>DAN SHOP ETH</h2>
+<p>WhatsApp: 0988407460</p>
+<a style="color:white" href="https://wa.me/251988407460">WhatsApp ላይ ያግኙን</a>
+</footer>
+
+<button class="cart" onclick="openCart()">🛒 ቅርጫት (<span id="cartCount">0</span>)</button>
+
+<div class="modal" id="cartModal">
+ <div class="dialog">
+  <button onclick="closeCart()" style="float:right">✖</button>
+  <h2>የግዢ ቅርጫት</h2>
+  <div id="cartItems"></div>
+  <h3 id="total"></h3>
+  <button class="add" onclick="sendOrder()">ትዕዛዝ በWhatsApp ላክ</button>
+ </div>
+</div>
+
+<script>
+const products=[
+{id:1,name:"Air Jordan 1",category:"Shoes",price:18000,img:"https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500"},
+{id:2,name:"Nike Air Force 1",category:"Shoes",price:15000,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500"},
+{id:3,name:"Jordan High Top",category:"Shoes",price:19500,img:"https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=500"},
+{id:4,name:"Smartphone",category:"Phones",price:28000,img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500"},
+{id:5,name:"Coffee Grinder",category:"Home",price:6500,img:"https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=500"},
+{id:6,name:"Perfume",category:"Beauty",price:7500,img:"https://images.unsplash.com/photo-1541643600914-78b084683601?w=500"},
+{id:7,name:"PlayStation 5",category:"Gaming",price:90000,img:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=500"},
+{id:8,name:"Backpack",category:"Accessories",price:4300,img:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500"},
+{id:9,name:"Khaki Trousers",category:"Accessories",price:3500,img:"https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500"},
+{id:10,name:"Television",category:"Home",price:65000,img:"https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=500"},
+{id:11,name:"Juicer",category:"Home",price:7800,img:"https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=500"},
+{id:12,name:"Headphones",category:"Accessories",price:8500,img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500"}
+];
+
+let activeCategory="all";
+let cart=[];
+let customerLocation="";
+
+function renderProducts(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=products.filter(p=>(activeCategory==="all"||p.category===activeCategory)&&p.name.toLowerCase().includes(q));
+ document.getElementById("productList").innerHTML=list.map(p=>`
+ <article class="product">
+  <img src="${p.img}" alt="${p.name}" loading="lazy">
+  <h3>${p.name}</h3>
+  <div class="price">${p.price.toLocaleString()} ETB</div>
+  <button class="add" onclick="addToCart(${p.id})">ወደ ቅርጫት ጨምር</button>
+ </article>`).join("");
+}
+function filter(category){activeCategory=category;renderProducts()}
+function addToCart(id){cart.push(products.find(p=>p.id===id));document.getElementById("cartCount").textContent=cart.length}
+function openCart(){
+ document.getElementById("cartModal").classList.add("show");
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map((p,i)=>`<p>${p.name} — ${p.price.toLocaleString()} ETB <button onclick="removeItem(${i})">✖</button></p>`).join(""):"ቅርጫቱ ባዶ ነው።";
+ document.getElementById("total").textContent="ጠቅላላ: "+cart.reduce((s,p)=>s+p.price,0).toLocaleString()+" ETB";
+}
+function removeItem(i){cart.splice(i,1);document.getElementById("cartCount").textContent=cart.length;openCart()}
+function closeCart(){document.getElementById("cartModal").classList.remove("show")}
+function getLocation(){
+ if(!navigator.geolocation){alert("ስልክህ Location አይደግፍም");return}
+ navigator.geolocation.getCurrentPosition(pos=>{
+ customerLocation="https://maps.google.com/?q="+pos.coords.latitude+","+pos.coords.longitude;
+ document.getElementById("locationText").innerHTML='<a target="_blank" href="'+customerLocation+'">Location ተይዟል — ካርታ ክፈት</a>';
+ },()=>alert("Location ፈቃድ ስጥ።"));
+}
+function sendOrder(){
+ if(!cart.length){alert("በመጀመሪያ እቃ ይምረጡ");return}
+ const name=document.getElementById("customerName").value;
+ const phone=document.getElementById("customerPhone").value;
+ const address=document.getElementById("customerAddress").value;
+ const payment=document.getElementById("paymentMethod").value;
+ if(!name||!phone||!address){alert("ስም፣ ስልክና አድራሻ ያስገቡ");return}
+ const items=cart.map(p=>p.name+" - "+p.price+" ETB").join("%0A");
+ const total=cart.reduce((s,p)=>s+p.price,0);
+ const message="DAN SHOP ETH ORDER%0AName: "+encodeURIComponent(name)+"%0APhone: "+encodeURIComponent(phone)+"%0AAddress: "+encodeURIComponent(address)+"%0APayment: "+encodeURIComponent(payment)+"%0A"+items+"%0ATotal: "+total+" ETB%0ALocation: "+encodeURIComponent(customerLocation);
+ window.open("https://wa.me/251988407460?text="+message,"_blank");
+}
+function setLanguage(lang){
+ const labels={am:"ቋንቋው አማርኛ ተመርጧል",en:"English selected",om:"Afaan Oromoo filatame",so:"Soomaali la doortay",ar:"تم اختيار العربية",fr:"Français sélectionné",de:"Deutsch ausgewählt"};
+ alert(labels[lang]);
+}
+renderProducts();
+</script>
+</body>
+</html>
+
