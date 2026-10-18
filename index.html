@@ -1,1 +1,2418 @@
+//+------------------------------------------------------------------+
+//| GOLD SMC SCALPER V5                                              |
+//| MT5 Expert Advisor - XAUUSD                                     |
+//| STRATEGY TESTER / DEMO FIRST                                    |
+//+------------------------------------------------------------------+
+#property strict
+#property version "5.00"
 
+#include <Trade/Trade.mqh>
+CTrade trade;
+
+//====================================================================
+// INPUTS
+//====================================================================
+input ulong MagicNumber = 18102026;
+
+//------------------------- RISK --------------------------------------
+input double RiskPercent             = 0.50;
+input double DailyLossLimitPct       = 2.00;
+input int    MaxConsecutiveLosses    = 3;
+input int    MaxTradesPerDay         = 5;
+input int    CooldownMinutes         = 10;
+
+//----------------------- INDICATORS ---------------------------------
+input int FastEMA   = 9;
+input int SlowEMA   = 21;
+input int RSIPeriod = 14;
+input int ATRPeriod = 14;
+
+input double BuyRSI  = 52.0;
+input double SellRSI = 48.0;
+
+//----------------------- SL / TP ------------------------------------
+input double StopATR      = 1.50;
+input double TakeATR      = 2.50;
+input double TrailATR     = 1.00;
+input double BreakEvenATR = 0.80;
+
+// Small protection beyond entry when BE is activated
+input double BreakEvenBufferATR = 0.05;
+
+//----------------------- EXECUTION ----------------------------------
+input int MaxSpreadPoints = 100;
+input int SlippagePoints  = 30;
+
+//----------------------- STRUCTURE ----------------------------------
+input int StructureBars = 10;
+input int LiquidityBars = 8;
+
+input bool UseStructure      = true;
+input bool UseLiquiditySweep = true;
+input bool UseFVG            = true;
+input bool UseVolumeFilter   = true;
+
+// Require at least one SMC confirmation
+input bool RequireSMCConfirmation = true;
+
+//----------------------- SESSION ------------------------------------
+input bool UseSessionFilter = true;
+
+// Broker/server time
+input int SessionStartHour = 7;
+input int SessionEndHour   = 20;
+
+//----------------------- REVERSAL -----------------------------------
+input bool AllowReversal       = true;
+input bool ReverseOnlyIfProfit = true;
+
+//----------------------- SIGNAL -------------------------------------
+input int MinimumSignalScore = 5;
+
+//====================================================================
+// INDICATOR HANDLES
+//====================================================================
+int h1Fast  = INVALID_HANDLE;
+int h1Slow  = INVALID_HANDLE;
+
+int m15Fast = INVALID_HANDLE;
+int m15Slow = INVALID_HANDLE;
+
+int m1Fast  = INVALID_HANDLE;
+int m1Slow  = INVALID_HANDLE;
+
+int m1RSI = INVALID_HANDLE;
+int m1ATR = INVALID_HANDLE;
+
+//====================================================================
+// STATE
+//====================================================================
+double dayStartEquity = 0.0;
+int    storedDay      = -1;
+
+datetime lastSignalBar = 0;
+
+//====================================================================
+// DAY KEY
+//====================================================================
+int CurrentDayKey()
+{
+   MqlDateTime tm;
+
+   TimeToStruct(
+      TimeCurrent(),
+      tm
+   );
+
+   return(
+      tm.year * 1000 +
+      tm.day_of_year
+   );
+}
+
+//====================================================================
+// START OF TODAY
+//====================================================================
+datetime StartOfToday()
+{
+   MqlDateTime tm;
+
+   TimeToStruct(
+      TimeCurrent(),
+      tm
+   );
+
+   tm.hour = 0;
+   tm.min  = 0;
+   tm.sec  = 0;
+
+   return StructToTime(tm);
+}
+
+//====================================================================
+// READ INDICATOR
+//====================================================================
+bool ReadValue(
+   int handle,
+   int shift,
+   double &value
+)
+{
+   if(handle == INVALID_HANDLE)
+      return false;
+
+   double data[1];
+
+   if(
+      CopyBuffer(
+         handle,
+         0,
+         shift,
+         1,
+         data
+      ) != 1
+   )
+   {
+      return false;
+   }
+
+   value = data[0];
+
+   return true;
+}
+
+//====================================================================
+// DAILY EQUITY GLOBAL VARIABLE NAME
+//====================================================================
+string DailyEquityGVName()
+{
+   return(
+      "GSMC_DAY_EQUITY_" +
+      IntegerToString(
+         (int)AccountInfoInteger(
+            ACCOUNT_LOGIN
+         )
+      ) +
+      "_" +
+      IntegerToString(
+         (int)MagicNumber
+      ) +
+      "_" +
+      IntegerToString(
+         CurrentDayKey()
+      )
+   );
+}
+
+//====================================================================
+// UPDATE DAY
+//
+// GlobalVariable is used so restarting the EA during the same day
+// does not reset the daily loss reference.
+//====================================================================
+void UpdateDay()
+{
+   int key =
+      CurrentDayKey();
+
+   if(key == storedDay &&
+      dayStartEquity > 0.0)
+   {
+      return;
+   }
+
+   storedDay = key;
+
+   string name =
+      DailyEquityGVName();
+
+   if(GlobalVariableCheck(name))
+   {
+      dayStartEquity =
+         GlobalVariableGet(name);
+   }
+   else
+   {
+      dayStartEquity =
+         AccountInfoDouble(
+            ACCOUNT_EQUITY
+         );
+
+      GlobalVariableSet(
+         name,
+         dayStartEquity
+      );
+   }
+
+   Print(
+      "Trading day equity reference = ",
+      dayStartEquity
+   );
+}
+
+//====================================================================
+// TODAY HISTORY
+//====================================================================
+bool SelectTodayHistory()
+{
+   return HistorySelect(
+      StartOfToday(),
+      TimeCurrent()
+   );
+}
+
+//====================================================================
+// DEAL BELONGS TO EA
+//====================================================================
+bool IsEADeal(ulong deal)
+{
+   if(deal == 0)
+      return false;
+
+   if(
+      HistoryDealGetString(
+         deal,
+         DEAL_SYMBOL
+      ) != _Symbol
+   )
+   {
+      return false;
+   }
+
+   if(
+      (ulong)HistoryDealGetInteger(
+         deal,
+         DEAL_MAGIC
+      ) != MagicNumber
+   )
+   {
+      return false;
+   }
+
+   return true;
+}
+
+//====================================================================
+// CONSECUTIVE LOSSES TODAY
+//====================================================================
+int ConsecutiveLossesToday()
+{
+   if(!SelectTodayHistory())
+      return 0;
+
+   int losses = 0;
+
+   for(
+      int i = HistoryDealsTotal() - 1;
+      i >= 0;
+      i--
+   )
+   {
+      ulong deal =
+         HistoryDealGetTicket(i);
+
+      if(!IsEADeal(deal))
+         continue;
+
+      long entry =
+         HistoryDealGetInteger(
+            deal,
+            DEAL_ENTRY
+         );
+
+      if(
+         entry != DEAL_ENTRY_OUT &&
+         entry != DEAL_ENTRY_OUT_BY
+      )
+      {
+         continue;
+      }
+
+      double result =
+         HistoryDealGetDouble(
+            deal,
+            DEAL_PROFIT
+         )
+         +
+         HistoryDealGetDouble(
+            deal,
+            DEAL_SWAP
+         )
+         +
+         HistoryDealGetDouble(
+            deal,
+            DEAL_COMMISSION
+         );
+
+      if(result < 0.0)
+      {
+         losses++;
+      }
+      else if(result > 0.0)
+      {
+         break;
+      }
+   }
+
+   return losses;
+}
+
+//====================================================================
+// TRADES TODAY
+//
+// Count entry deals.
+//====================================================================
+int TradesToday()
+{
+   if(!SelectTodayHistory())
+      return 0;
+
+   int count = 0;
+
+   for(
+      int i = 0;
+      i < HistoryDealsTotal();
+      i++
+   )
+   {
+      ulong deal =
+         HistoryDealGetTicket(i);
+
+      if(!IsEADeal(deal))
+         continue;
+
+      long entry =
+         HistoryDealGetInteger(
+            deal,
+            DEAL_ENTRY
+         );
+
+      if(entry == DEAL_ENTRY_IN)
+         count++;
+   }
+
+   return count;
+}
+
+//====================================================================
+// LAST EXIT TIME
+//====================================================================
+datetime LastExitTime()
+{
+   if(!SelectTodayHistory())
+      return 0;
+
+   for(
+      int i = HistoryDealsTotal() - 1;
+      i >= 0;
+      i--
+   )
+   {
+      ulong deal =
+         HistoryDealGetTicket(i);
+
+      if(!IsEADeal(deal))
+         continue;
+
+      long entry =
+         HistoryDealGetInteger(
+            deal,
+            DEAL_ENTRY
+         );
+
+      if(
+         entry == DEAL_ENTRY_OUT ||
+         entry == DEAL_ENTRY_OUT_BY
+      )
+      {
+         return(
+            (datetime)
+            HistoryDealGetInteger(
+               deal,
+               DEAL_TIME
+            )
+         );
+      }
+   }
+
+   return 0;
+}
+
+//====================================================================
+// COOLDOWN
+//====================================================================
+bool CooldownAllowed()
+{
+   if(CooldownMinutes <= 0)
+      return true;
+
+   datetime last =
+      LastExitTime();
+
+   if(last <= 0)
+      return true;
+
+   int elapsed =
+      (int)(
+         TimeCurrent() -
+         last
+      );
+
+   return(
+      elapsed >=
+      CooldownMinutes * 60
+   );
+}
+
+//====================================================================
+// RISK PERMISSION
+//====================================================================
+bool RiskAllowed()
+{
+   UpdateDay();
+
+   double equity =
+      AccountInfoDouble(
+         ACCOUNT_EQUITY
+      );
+
+   if(dayStartEquity > 0.0)
+   {
+      double lossPct =
+         (
+            dayStartEquity -
+            equity
+         )
+         /
+         dayStartEquity
+         *
+         100.0;
+
+      if(
+         lossPct >=
+         DailyLossLimitPct
+      )
+      {
+         Print(
+            "Trading blocked: daily loss limit."
+         );
+
+         return false;
+      }
+   }
+
+   if(
+      MaxConsecutiveLosses > 0 &&
+      ConsecutiveLossesToday() >=
+      MaxConsecutiveLosses
+   )
+   {
+      Print(
+         "Trading blocked: consecutive losses."
+      );
+
+      return false;
+   }
+
+   if(
+      MaxTradesPerDay > 0 &&
+      TradesToday() >=
+      MaxTradesPerDay
+   )
+   {
+      Print(
+         "Trading blocked: max trades today."
+      );
+
+      return false;
+   }
+
+   return true;
+}
+
+//====================================================================
+// SESSION
+//====================================================================
+bool SessionAllowed()
+{
+   if(!UseSessionFilter)
+      return true;
+
+   MqlDateTime tm;
+
+   TimeToStruct(
+      TimeCurrent(),
+      tm
+   );
+
+   if(
+      SessionStartHour ==
+      SessionEndHour
+   )
+   {
+      return true;
+   }
+
+   if(
+      SessionStartHour <
+      SessionEndHour
+   )
+   {
+      return(
+         tm.hour >=
+         SessionStartHour
+         &&
+         tm.hour <
+         SessionEndHour
+      );
+   }
+
+   return(
+      tm.hour >=
+      SessionStartHour
+      ||
+      tm.hour <
+      SessionEndHour
+   );
+}
+
+//====================================================================
+// SPREAD
+//====================================================================
+bool SpreadAllowed()
+{
+   MqlTick tick;
+
+   if(
+      !SymbolInfoTick(
+         _Symbol,
+         tick
+      )
+   )
+   {
+      return false;
+   }
+
+   if(_Point <= 0.0)
+      return false;
+
+   double spread =
+      (
+         tick.ask -
+         tick.bid
+      )
+      /
+      _Point;
+
+   return(
+      spread <=
+      MaxSpreadPoints
+   );
+}
+
+//====================================================================
+// VOLUME DIGITS
+//====================================================================
+int VolumeDigits(double step)
+{
+   int digits = 0;
+
+   while(
+      digits < 8 &&
+      MathAbs(
+         step -
+         NormalizeDouble(
+            step,
+            digits
+         )
+      ) > 1e-8
+   )
+   {
+      digits++;
+   }
+
+   return digits;
+}
+
+//====================================================================
+// NORMALIZE LOT
+//
+// IMPORTANT:
+// This function does NOT force a calculated lot upward if the
+// required risk-sized lot is below broker minimum.
+//====================================================================
+double NormalizeLotSafe(double lot)
+{
+   double minLot =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_VOLUME_MIN
+      );
+
+   double maxLot =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_VOLUME_MAX
+      );
+
+   double step =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_VOLUME_STEP
+      );
+
+   if(
+      minLot <= 0.0 ||
+      maxLot <= 0.0
+   )
+   {
+      return 0.0;
+   }
+
+   if(step <= 0.0)
+      step = minLot;
+
+   // Reject instead of increasing risk.
+   if(lot < minLot)
+      return 0.0;
+
+   lot =
+      MathMin(
+         lot,
+         maxLot
+      );
+
+   lot =
+      MathFloor(
+         lot /
+         step
+      )
+      *
+      step;
+
+   if(lot < minLot)
+      return 0.0;
+
+   return NormalizeDouble(
+      lot,
+      VolumeDigits(step)
+   );
+}
+
+//====================================================================
+// LOT SIZE
+//====================================================================
+double CalculateLot(
+   double stopDistance
+)
+{
+   if(
+      stopDistance <= 0.0 ||
+      RiskPercent <= 0.0
+   )
+   {
+      return 0.0;
+   }
+
+   double equity =
+      AccountInfoDouble(
+         ACCOUNT_EQUITY
+      );
+
+   double riskMoney =
+      equity *
+      RiskPercent /
+      100.0;
+
+   if(riskMoney <= 0.0)
+      return 0.0;
+
+   double tickSize =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_TRADE_TICK_SIZE
+      );
+
+   double tickValue =
+      SymbolInfoDouble(
+         _Symbol,
+         SYMBOL_TRADE_TICK_VALUE_LOSS
+      );
+
+   if(tickValue <= 0.0)
+   {
+      tickValue =
+         SymbolInfoDouble(
+            _Symbol,
+            SYMBOL_TRADE_TICK_VALUE
+         );
+   }
+
+   if(
+      tickSize <= 0.0 ||
+      tickValue <= 0.0
+   )
+   {
+      return 0.0;
+   }
+
+   double lossPerLot =
+      (
+         stopDistance /
+         tickSize
+      )
+      *
+      tickValue;
+
+   if(lossPerLot <= 0.0)
+      return 0.0;
+
+   double rawLot =
+      riskMoney /
+      lossPerLot;
+
+   return NormalizeLotSafe(
+      rawLot
+   );
+}
+
+//====================================================================
+// EA POSITION
+//====================================================================
+bool GetEAPosition(
+   ulong &ticket,
+   long &type,
+   double &profit,
+   double &openPrice,
+   double &sl,
+   double &tp
+)
+{
+   for(
+      int i = PositionsTotal() - 1;
+      i >= 0;
+      i--
+   )
+   {
+      ulong positionTicket =
+         PositionGetTicket(i);
+
+      if(positionTicket == 0)
+         continue;
+
+      string symbol =
+         PositionGetString(
+            POSITION_SYMBOL
+         );
+
+      ulong magic =
+         (ulong)
+         PositionGetInteger(
+            POSITION_MAGIC
+         );
+
+      if(
+         symbol == _Symbol &&
+         magic == MagicNumber
+      )
+      {
+         ticket =
+            positionTicket;
+
+         type =
+            PositionGetInteger(
+               POSITION_TYPE
+            );
+
+         profit =
+            PositionGetDouble(
+               POSITION_PROFIT
+            );
+
+         openPrice =
+            PositionGetDouble(
+               POSITION_PRICE_OPEN
+            );
+
+         sl =
+            PositionGetDouble(
+               POSITION_SL
+            );
+
+         tp =
+            PositionGetDouble(
+               POSITION_TP
+            );
+
+         return true;
+      }
+   }
+
+   return false;
+}
+
+//====================================================================
+// M1 RATES
+//====================================================================
+bool GetM1Rates(
+   MqlRates &rates[],
+   int count
+)
+{
+   ArraySetAsSeries(
+      rates,
+      true
+   );
+
+   int copied =
+      CopyRates(
+         _Symbol,
+         PERIOD_M1,
+         0,
+         count,
+         rates
+      );
+
+   return(
+      copied >= count
+   );
+}
+
+//====================================================================
+// NEW CLOSED BAR
+//====================================================================
+bool IsNewM1Bar()
+{
+   MqlRates rates[];
+
+   if(!GetM1Rates(rates,2))
+      return false;
+
+   datetime currentBar =
+      rates[0].time;
+
+   if(
+      lastSignalBar ==
+      currentBar
+   )
+   {
+      return false;
+   }
+
+   lastSignalBar =
+      currentBar;
+
+   return true;
+}
+
+//====================================================================
+// RECENT HIGH
+//====================================================================
+double RecentHigh(
+   int bars,
+   int startShift = 2
+)
+{
+   if(bars < 2)
+      bars = 2;
+
+   MqlRates rates[];
+
+   ArraySetAsSeries(
+      rates,
+      true
+   );
+
+   if(
+      CopyRates(
+         _Symbol,
+         PERIOD_M1,
+         startShift,
+         bars,
+         rates
+      ) < bars
+   )
+   {
+      return 0.0;
+   }
+
+   double highest =
+      rates[0].high;
+
+   for(
+      int i = 1;
+      i < bars;
+      i++
+   )
+   {
+      if(
+         rates[i].high >
+         highest
+      )
+      {
+         highest =
+            rates[i].high;
+      }
+   }
+
+   return highest;
+}
+
+//====================================================================
+// RECENT LOW
+//====================================================================
+double RecentLow(
+   int bars,
+   int startShift = 2
+)
+{
+   if(bars < 2)
+      bars = 2;
+
+   MqlRates rates[];
+
+   ArraySetAsSeries(
+      rates,
+      true
+   );
+
+   if(
+      CopyRates(
+         _Symbol,
+         PERIOD_M1,
+         startShift,
+         bars,
+         rates
+      ) < bars
+   )
+   {
+      return 0.0;
+   }
+
+   double lowest =
+      rates[0].low;
+
+   for(
+      int i = 1;
+      i < bars;
+      i++
+   )
+   {
+      if(
+         rates[i].low <
+         lowest
+      )
+      {
+         lowest =
+            rates[i].low;
+      }
+   }
+
+   return lowest;
+}
+
+//====================================================================
+// STRUCTURE / BOS
+//====================================================================
+int StructureSignal()
+{
+   double high =
+      RecentHigh(
+         StructureBars,
+         2
+      );
+
+   double low =
+      RecentLow(
+         StructureBars,
+         2
+      );
+
+   if(
+      high <= 0.0 ||
+      low <= 0.0
+   )
+   {
+      return 0;
+   }
+
+   MqlRates rates[];
+
+   if(!GetM1Rates(rates,3))
+      return 0;
+
+   MqlRates c =
+      rates[1];
+
+   if(c.close > high)
+      return 1;
+
+   if(c.close < low)
+      return -1;
+
+   return 0;
+}
+
+//====================================================================
+// LIQUIDITY SWEEP
+//====================================================================
+int LiquiditySweepSignal()
+{
+   double oldHigh =
+      RecentHigh(
+         LiquidityBars,
+         2
+      );
+
+   double oldLow =
+      RecentLow(
+         LiquidityBars,
+         2
+      );
+
+   if(
+      oldHigh <= 0.0 ||
+      oldLow <= 0.0
+   )
+   {
+      return 0;
+   }
+
+   MqlRates rates[];
+
+   if(!GetM1Rates(rates,3))
+      return 0;
+
+   MqlRates c =
+      rates[1];
+
+   // Bullish sweep
+   if(
+      c.low < oldLow &&
+      c.close > oldLow &&
+      c.close > c.open
+   )
+   {
+      return 1;
+   }
+
+   // Bearish sweep
+   if(
+      c.high > oldHigh &&
+      c.close < oldHigh &&
+      c.close < c.open
+   )
+   {
+      return -1;
+   }
+
+   return 0;
+}
+
+//====================================================================
+// FAIR VALUE GAP
+//====================================================================
+int FVGSignal()
+{
+   MqlRates rates[];
+
+   if(!GetM1Rates(rates,5))
+      return 0;
+
+   MqlRates older =
+      rates[3];
+
+   MqlRates middle =
+      rates[2];
+
+   MqlRates newer =
+      rates[1];
+
+   if(
+      newer.low >
+      older.high &&
+      middle.close >
+      middle.open
+   )
+   {
+      return 1;
+   }
+
+   if(
+      newer.high <
+      older.low &&
+      middle.close <
+      middle.open
+   )
+   {
+      return -1;
+   }
+
+   return 0;
+}
+
+//====================================================================
+// VOLUME
+//====================================================================
+bool VolumeConfirmed()
+{
+   if(!UseVolumeFilter)
+      return true;
+
+   MqlRates rates[];
+
+   if(!GetM1Rates(rates,12))
+      return false;
+
+   double average = 0.0;
+
+   for(
+      int i = 2;
+      i <= 9;
+      i++
+   )
+   {
+      average +=
+         (double)
+         rates[i].tick_volume;
+   }
+
+   average /= 8.0;
+
+   if(average <= 0.0)
+      return true;
+
+   return(
+      (double)
+      rates[1].tick_volume
+      >=
+      average
+   );
+}
+
+//====================================================================
+// SIGNAL
+//====================================================================
+int GetSignal()
+{
+   double H1FastValue;
+   double H1SlowValue;
+
+   double M15FastValue;
+   double M15SlowValue;
+
+   double M1FastValue;
+   double M1SlowValue;
+
+   double RSIValue;
+
+   if(
+      !ReadValue(
+         h1Fast,
+         1,
+         H1FastValue
+      )
+   )
+      return 0;
+
+   if(
+      !ReadValue(
+         h1Slow,
+         1,
+         H1SlowValue
+      )
+   )
+      return 0;
+
+   if(
+      !ReadValue(
+         m15Fast,
+         1,
+         M15FastValue
+      )
+   )
+      return 0;
+
+   if(
+      !ReadValue(
+         m15Slow,
+         1,
+         M15SlowValue
+      )
+   )
+      return 0;
+
+   if(
+      !ReadValue(
+         m1Fast,
+         1,
+         M1FastValue
+      )
+   )
+      return 0;
+
+   if(
+      !ReadValue(
+         m1Slow,
+         1,
+         M1SlowValue
+      )
+   )
+      return 0;
+
+   if(
+      !ReadValue(
+         m1RSI,
+         1,
+         RSIValue
+      )
+   )
+      return 0;
+
+   MqlRates rates[];
+
+   if(!GetM1Rates(rates,4))
+      return 0;
+
+   MqlRates c =
+      rates[1];
+
+   double range =
+      c.high -
+      c.low;
+
+   if(range <= 0.0)
+      return 0;
+
+   double body =
+      MathAbs(
+         c.close -
+         c.open
+      );
+
+   double bodyStrength =
+      body /
+      range;
+
+   bool bullishCandle =
+      (
+         c.close >
+         c.open &&
+         bodyStrength >= 0.50
+      );
+
+   bool bearishCandle =
+      (
+         c.close <
+         c.open &&
+         bodyStrength >= 0.50
+      );
+
+   int structure = 0;
+   int liquidity = 0;
+   int fvg       = 0;
+
+   if(UseStructure)
+      structure =
+         StructureSignal();
+
+   if(UseLiquiditySweep)
+      liquidity =
+         LiquiditySweepSignal();
+
+   if(UseFVG)
+      fvg =
+         FVGSignal();
+
+   int buyScore  = 0;
+   int sellScore = 0;
+
+   //---------------- H1
+   if(
+      H1FastValue >
+      H1SlowValue
+   )
+      buyScore++;
+
+   else if(
+      H1FastValue <
+      H1SlowValue
+   )
+      sellScore++;
+
+   //---------------- M15
+   if(
+      M15FastValue >
+      M15SlowValue
+   )
+      buyScore++;
+
+   else if(
+      M15FastValue <
+      M15SlowValue
+   )
+      sellScore++;
+
+   //---------------- M1
+   if(
+      M1FastValue >
+      M1SlowValue
+   )
+      buyScore++;
+
+   else if(
+      M1FastValue <
+      M1SlowValue
+   )
+      sellScore++;
+
+   //---------------- RSI
+   if(RSIValue >= BuyRSI)
+      buyScore++;
+
+   if(RSIValue <= SellRSI)
+      sellScore++;
+
+   //---------------- Candle
+   if(bullishCandle)
+      buyScore++;
+
+   if(bearishCandle)
+      sellScore++;
+
+   //---------------- Structure
+   if(UseStructure)
+   {
+      if(structure == 1)
+         buyScore++;
+
+      if(structure == -1)
+         sellScore++;
+   }
+
+   //---------------- Liquidity
+   if(UseLiquiditySweep)
+   {
+      if(liquidity == 1)
+         buyScore++;
+
+      if(liquidity == -1)
+         sellScore++;
+   }
+
+   //---------------- FVG
+   if(UseFVG)
+   {
+      if(fvg == 1)
+         buyScore++;
+
+      if(fvg == -1)
+         sellScore++;
+   }
+
+   //---------------- Volume
+   if(!VolumeConfirmed())
+      return 0;
+
+   //---------------- SMC requirement
+   bool buySMC =
+      (
+         structure == 1 ||
+         liquidity == 1 ||
+         fvg == 1
+      );
+
+   bool sellSMC =
+      (
+         structure == -1 ||
+         liquidity == -1 ||
+         fvg == -1
+      );
+
+   if(
+      RequireSMCConfirmation &&
+      !buySMC &&
+      !sellSMC
+   )
+   {
+      return 0;
+   }
+
+   //---------------- BUY
+   if(
+      buyScore >=
+      MinimumSignalScore &&
+      buyScore >
+      sellScore
+   )
+   {
+      if(
+         !RequireSMCConfirmation ||
+         buySMC
+      )
+      {
+         return 1;
+      }
+   }
+
+   //---------------- SELL
+   if(
+      sellScore >=
+      MinimumSignalScore &&
+      sellScore >
+      buyScore
+   )
+   {
+      if(
+         !RequireSMCConfirmation ||
+         sellSMC
+      )
+      {
+         return -1;
+      }
+   }
+
+   return 0;
+}
+
+//====================================================================
+// BROKER MIN STOP
+//====================================================================
+double BrokerMinStopDistance()
+{
+   long stops =
+      SymbolInfoInteger(
+         _Symbol,
+         SYMBOL_TRADE_STOPS_LEVEL
+      );
+
+   long freeze =
+      SymbolInfoInteger(
+         _Symbol,
+         SYMBOL_TRADE_FREEZE_LEVEL
+      );
+
+   if(stops < 0)
+      stops = 0;
+
+   if(freeze < 0)
+      freeze = 0;
+
+   long level =
+      MathMax(
+         stops,
+         freeze
+      );
+
+   return(
+      (double)level *
+      _Point
+   );
+}
+
+//====================================================================
+// TRADE RESULT SUCCESS
+//====================================================================
+bool TradeResultOK()
+{
+   uint code =
+      trade.ResultRetcode();
+
+   return(
+      code == TRADE_RETCODE_DONE ||
+      code == TRADE_RETCODE_DONE_PARTIAL ||
+      code == TRADE_RETCODE_PLACED
+   );
+}
+
+//====================================================================
+// OPEN TRADE
+//====================================================================
+bool OpenTrade(
+   int direction,
+   double atr
+)
+{
+   if(
+      direction != 1 &&
+      direction != -1
+   )
+   {
+      return false;
+   }
+
+   if(!RiskAllowed())
+      return false;
+
+   if(!CooldownAllowed())
+      return false;
+
+   if(!SessionAllowed())
+      return false;
+
+   if(!SpreadAllowed())
+      return false;
+
+   if(atr <= 0.0)
+      return false;
+
+   MqlTick tick;
+
+   if(
+      !SymbolInfoTick(
+         _Symbol,
+         tick
+      )
+   )
+   {
+      return false;
+   }
+
+   double minStop =
+      BrokerMinStopDistance();
+
+   double safety =
+      2.0 *
+      _Point;
+
+   double stopDistance =
+      MathMax(
+         atr *
+         StopATR,
+         minStop +
+         safety
+      );
+
+   double takeDistance =
+      MathMax(
+         atr *
+         TakeATR,
+         minStop +
+         safety
+      );
+
+   double lot =
+      CalculateLot(
+         stopDistance
+      );
+
+   if(lot <= 0.0)
+   {
+      Print(
+         "Trade skipped: calculated safe lot is below broker minimum or invalid."
+      );
+
+      return false;
+   }
+
+   ResetLastError();
+
+   bool request = false;
+
+   if(direction == 1)
+   {
+      double sl =
+         NormalizeDouble(
+            tick.ask -
+            stopDistance,
+            _Digits
+         );
+
+      double tp =
+         NormalizeDouble(
+            tick.ask +
+            takeDistance,
+            _Digits
+         );
+
+      request =
+         trade.Buy(
+            lot,
+            _Symbol,
+            0.0,
+            sl,
+            tp,
+            "GOLD SMC BUY"
+         );
+   }
+   else
+   {
+      double sl =
+         NormalizeDouble(
+            tick.bid +
+            stopDistance,
+            _Digits
+         );
+
+      double tp =
+         NormalizeDouble(
+            tick.bid -
+            takeDistance,
+            _Digits
+         );
+
+      request =
+         trade.Sell(
+            lot,
+            _Symbol,
+            0.0,
+            sl,
+            tp,
+            "GOLD SMC SELL"
+         );
+   }
+
+   if(
+      !request ||
+      !TradeResultOK()
+   )
+   {
+      Print(
+         "Trade open failed. Retcode=",
+         trade.ResultRetcode(),
+         " ",
+         trade.ResultRetcodeDescription(),
+         " Error=",
+         GetLastError()
+      );
+
+      return false;
+   }
+
+   Print(
+      direction == 1 ?
+      "BUY opened. Lot=" :
+      "SELL opened. Lot=",
+      lot
+   );
+
+   return true;
+}
+
+//====================================================================
+// MODIFY POSITION
+//====================================================================
+bool ModifyPosition(
+   ulong ticket,
+   double newSL,
+   double tp
+)
+{
+   ResetLastError();
+
+   bool request =
+      trade.PositionModify(
+         ticket,
+         NormalizeDouble(
+            newSL,
+            _Digits
+         ),
+         NormalizeDouble(
+            tp,
+            _Digits
+         )
+      );
+
+   if(
+      !request ||
+      !TradeResultOK()
+   )
+   {
+      Print(
+         "PositionModify failed. Retcode=",
+         trade.ResultRetcode(),
+         " ",
+         trade.ResultRetcodeDescription(),
+         " Error=",
+         GetLastError()
+      );
+
+      return false;
+   }
+
+   return true;
+}
+
+//====================================================================
+// POSITION PROTECTION
+//====================================================================
+void ProtectPosition(double atr)
+{
+   ulong ticket = 0;
+   long type    = -1;
+
+   double profit       = 0.0;
+   double openPrice    = 0.0;
+   double currentSL    = 0.0;
+   double tp           = 0.0;
+
+   if(
+      !GetEAPosition(
+         ticket,
+         type,
+         profit,
+         openPrice,
+         currentSL,
+         tp
+      )
+   )
+   {
+      return;
+   }
+
+   if(atr <= 0.0)
+      return;
+
+   MqlTick tick;
+
+   if(
+      !SymbolInfoTick(
+         _Symbol,
+         tick
+      )
+   )
+   {
+      return;
+   }
+
+   double minStop =
+      BrokerMinStopDistance();
+
+   double safety =
+      2.0 *
+      _Point;
+
+   double beBuffer =
+      atr *
+      BreakEvenBufferATR;
+
+   //===============================================================
+   // BUY
+   //===============================================================
+   if(type == POSITION_TYPE_BUY)
+   {
+      double move =
+         tick.bid -
+         openPrice;
+
+      //---------------- BREAK EVEN
+      if(
+         move >=
+         atr *
+         BreakEvenATR
+      )
+      {
+         double be =
+            NormalizeDouble(
+               openPrice +
+               beBuffer,
+               _Digits
+            );
+
+         if(
+            (
+               currentSL == 0.0 ||
+               currentSL < be
+            )
+            &&
+            (
+               tick.bid -
+               be
+            )
+            >
+            (
+               minStop +
+               safety
+            )
+         )
+         {
+            if(
+               ModifyPosition(
+                  ticket,
+                  be,
+                  tp
+               )
+            )
+            {
+               currentSL =
+                  be;
+            }
+         }
+      }
+
+      //---------------- TRAILING
+      if(
+         move >
+         atr *
+         TrailATR
+      )
+      {
+         double newSL =
+            tick.bid -
+            atr *
+            TrailATR;
+
+         double maxAllowed =
+            tick.bid -
+            minStop -
+            safety;
+
+         newSL =
+            MathMin(
+               newSL,
+               maxAllowed
+            );
+
+         newSL =
+            NormalizeDouble(
+               newSL,
+               _Digits
+            );
+
+         if(
+            newSL >
+            openPrice &&
+            (
+               currentSL == 0.0 ||
+               newSL >
+               currentSL +
+               _Point
+            )
+         )
+         {
+            ModifyPosition(
+               ticket,
+               newSL,
+               tp
+            );
+         }
+      }
+   }
+
+   //===============================================================
+   // SELL
+   //===============================================================
+   if(type == POSITION_TYPE_SELL)
+   {
+      double move =
+         openPrice -
+         tick.ask;
+
+      //---------------- BREAK EVEN
+      if(
+         move >=
+         atr *
+         BreakEvenATR
+      )
+      {
+         double be =
+            NormalizeDouble(
+               openPrice -
+               beBuffer,
+               _Digits
+            );
+
+         if(
+            (
+               currentSL == 0.0 ||
+               currentSL > be
+            )
+            &&
+            (
+               be -
+               tick.ask
+            )
+            >
+            (
+               minStop +
+               safety
+            )
+         )
+         {
+            if(
+               ModifyPosition(
+                  ticket,
+                  be,
+                  tp
+               )
+            )
+            {
+               currentSL =
+                  be;
+            }
+         }
+      }
+
+      //---------------- TRAILING
+      if(
+         move >
+         atr *
+         TrailATR
+      )
+      {
+         double newSL =
+            tick.ask +
+            atr *
+            TrailATR;
+
+         double minAllowed =
+            tick.ask +
+            minStop +
+            safety;
+
+         newSL =
+            MathMax(
+               newSL,
+               minAllowed
+            );
+
+         newSL =
+            NormalizeDouble(
+               newSL,
+               _Digits
+            );
+
+         if(
+            newSL <
+            openPrice &&
+            (
+               currentSL == 0.0 ||
+               newSL <
+               currentSL -
+               _Point
+            )
+         )
+         {
+            ModifyPosition(
+               ticket,
+               newSL,
+               tp
+            );
+         }
+      }
+   }
+}
+
+//====================================================================
+// CLOSE POSITION
+//====================================================================
+bool CloseEAPosition(
+   ulong ticket
+)
+{
+   ResetLastError();
+
+   bool request =
+      trade.PositionClose(
+         ticket
+      );
+
+   if(
+      !request ||
+      !TradeResultOK()
+   )
+   {
+      Print(
+         "PositionClose failed. Retcode=",
+         trade.ResultRetcode(),
+         " ",
+         trade.ResultRetcodeDescription(),
+         " Error=",
+         GetLastError()
+      );
+
+      return false;
+   }
+
+   return true;
+}
+
+//====================================================================
+// MANAGE ENTRY / REVERSAL
+//====================================================================
+void ManageTrade(
+   int signal,
+   double atr
+)
+{
+   ulong ticket = 0;
+   long type    = -1;
+
+   double profit    = 0.0;
+   double openPrice = 0.0;
+   double sl        = 0.0;
+   double tp        = 0.0;
+
+   bool exists =
+      GetEAPosition(
+         ticket,
+         type,
+         profit,
+         openPrice,
+         sl,
+         tp
+      );
+
+   //===============================================================
+   // NO POSITION
+   //===============================================================
+   if(!exists)
+   {
+      if(signal != 0)
+      {
+         OpenTrade(
+            signal,
+            atr
+         );
+      }
+
+      return;
+   }
+
+   //===============================================================
+   // REVERSAL
+   //===============================================================
+   if(
+      !AllowReversal ||
+      signal == 0
+   )
+   {
+      return;
+   }
+
+   bool opposite = false;
+
+   if(
+      type ==
+      POSITION_TYPE_BUY &&
+      signal == -1
+   )
+   {
+      opposite = true;
+   }
+
+   if(
+      type ==
+      POSITION_TYPE_SELL &&
+      signal == 1
+   )
+   {
+      opposite = true;
+   }
+
+   if(!opposite)
+      return;
+
+   if(
+      ReverseOnlyIfProfit &&
+      profit <= 0.0
+   )
+   {
+      return;
+   }
+
+   if(!RiskAllowed())
+      return;
+
+   if(!SessionAllowed())
+      return;
+
+   if(!SpreadAllowed())
+      return;
+
+   if(
+      CloseEAPosition(
+         ticket
+      )
+   )
+   {
+      Print(
+         "Opposite signal confirmed."
+      );
+
+      // Reversal is intentionally subject to cooldown.
+      // This prevents rapid flip-flopping.
+      if(CooldownAllowed())
+      {
+         OpenTrade(
+            signal,
+            atr
+         );
+      }
+   }
+}
+
+//====================================================================
+// INIT
+//====================================================================
+int OnInit()
+{
+   if(
+      RiskPercent <= 0.0 ||
+      DailyLossLimitPct <= 0.0 ||
+      StopATR <= 0.0 ||
+      TakeATR <= 0.0 ||
+      TrailATR <= 0.0 ||
+      BreakEvenATR <= 0.0 ||
+      FastEMA <= 0 ||
+      SlowEMA <= FastEMA ||
+      ATRPeriod <= 0 ||
+      RSIPeriod <= 0 ||
+      MinimumSignalScore <= 0
+   )
+   {
+      Print(
+         "Invalid EA parameters."
+      );
+
+      return INIT_PARAMETERS_INCORRECT;
+   }
+
+   trade.SetExpertMagicNumber(
+      MagicNumber
+   );
+
+   trade.SetDeviationInPoints(
+      SlippagePoints
+   );
+
+   trade.SetTypeFillingBySymbol(
+      _Symbol
+   );
+
+   //---------------- H1
+   h1Fast =
+      iMA(
+         _Symbol,
+         PERIOD_H1,
+         FastEMA,
+         0,
+         MODE_EMA,
+         PRICE_CLOSE
+      );
+
+   h1Slow =
+      iMA(
+         _Symbol,
+         PERIOD_H1,
+         SlowEMA,
+         0,
+         MODE_EMA,
+         PRICE_CLOSE
+      );
+
+   //---------------- M15
+   m15Fast =
+      iMA(
+         _Symbol,
+         PERIOD_M15,
+         FastEMA,
+         0,
+         MODE_EMA,
+         PRICE_CLOSE
+      );
+
+   m15Slow =
+      iMA(
+         _Symbol,
+         PERIOD_M15,
+         SlowEMA,
+         0,
+         MODE_EMA,
+         PRICE_CLOSE
+      );
+
+   //---------------- M1
+   m1Fast =
+      iMA(
+         _Symbol,
+         PERIOD_M1,
+         FastEMA,
+         0,
+         MODE_EMA,
+         PRICE_CLOSE
+      );
+
+   m1Slow =
+      iMA(
+         _Symbol,
+         PERIOD_M1,
+         SlowEMA,
+         0,
+         MODE_EMA,
+         PRICE_CLOSE
+      );
+
+   //---------------- RSI
+   m1RSI =
+      iRSI(
+         _Symbol,
+         PERIOD_M1,
+         RSIPeriod,
+         PRICE_CLOSE
+      );
+
+   //---------------- ATR
+   m1ATR =
+      iATR(
+         _Symbol,
+         PERIOD_M1,
+         ATRPeriod
+      );
+
+   if(
+      h1Fast  == INVALID_HANDLE ||
+      h1Slow  == INVALID_HANDLE ||
+      m15Fast == INVALID_HANDLE ||
+      m15Slow == INVALID_HANDLE ||
+      m1Fast  == INVALID_HANDLE ||
+      m1Slow  == INVALID_HANDLE ||
+      m1RSI   == INVALID_HANDLE ||
+      m1ATR   == INVALID_HANDLE
+   )
+   {
+      Print(
+         "Indicator initialization failed."
+      );
+
+      return INIT_FAILED;
+   }
+
+   UpdateDay();
+
+   // Prevent immediate processing of an already-open M1 candle
+   MqlRates rates[];
+
+   if(GetM1Rates(rates,2))
+   {
+      lastSignalBar =
+         rates[0].time;
+   }
+
+   Print(
+      "GOLD SMC SCALPER V5 READY - TESTER/DEMO FIRST."
+   );
+
+   return INIT_SUCCEEDED;
+}
+
+//====================================================================
+// TICK
+//====================================================================
+void OnTick()
+{
+   double atr = 0.0;
+
+   if(
+      !ReadValue(
+         m1ATR,
+         1,
+         atr
+      )
+   )
+   {
+      return;
+   }
+
+   if(atr <= 0.0)
+      return;
+
+   // Protection must work on every tick.
+   ProtectPosition(
+      atr
+   );
+
+   // Signals only once per new M1 candle.
+   if(!IsNewM1Bar())
+      return;
+
+   if(!RiskAllowed())
+      return;
+
+   if(!SessionAllowed())
+      return;
+
+   if(!SpreadAllowed())
+      return;
+
+   int signal =
+      GetSignal();
+
+   ManageTrade(
+      signal,
+      atr
+   );
+}
+
+//====================================================================
+// DEINIT
+//====================================================================
+void OnDeinit(
+   const int reason
+)
+{
+   if(
+      h1Fast !=
+      INVALID_HANDLE
+   )
+   {
+      IndicatorRelease(
+         h1Fast
+      );
+   }
+
+   if(
+      h1Slow !=
+      INVALID_HANDLE
+   )
+   {
+      IndicatorRelease(
+         h1Slow
+      );
+   }
+
+   if(
+      m15Fast !=
+      INVALID_HANDLE
+   )
+   {
+      IndicatorRelease(
+         m15Fast
+      );
+   }
+
+   if(
+      m15Slow !=
+      INVALID_HANDLE
+   )
+   {
+      IndicatorRelease(
+         m15Slow
+      );
+   }
+
+   if(
+      m1Fast !=
+      INVALID_HANDLE
+   )
+   {
+      IndicatorRelease(
+         m1Fast
+      );
+   }
+
+   if(
+      m1Slow !=
+      INVALID_HANDLE
+   )
+   {
+      IndicatorRelease(
+         m1Slow
+      );
+   }
+
+   if(
+      m1RSI !=
+      INVALID_HANDLE
+   )
+   {
+      IndicatorRelease(
+         m1RSI
+      );
+   }
+
+   if(
+      m1ATR !=
+      INVALID_HANDLE
+   )
+   {
+      IndicatorRelease(
+         m1ATR
+      );
+   }
+
+   Print(
+      "GOLD SMC SCALPER V5 stopped."
+   );
+}
+//+------------------------------------------------------------------+
