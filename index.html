@@ -4,870 +4,920 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GOLD SMC PRO | MT5 Trading System</title>
-
-<meta name="description"
-content="GOLD SMC PRO - MetaTrader 5 automated trading tools created by Dan & Filimon.">
+<title>GOLD SMC PRO | Dan & Filimon</title>
+<meta name="description" content="GOLD SMC PRO — international MetaTrader 5 automated Gold trading technology by Dan & Filimon.">
 
 <style>
-
 :root{
-    --gold:#e8bd55;
-    --gold2:#ffe29a;
-    --dark:#05070a;
-    --panel:#0e131a;
-    --panel2:#141a23;
-    --text:#ffffff;
-    --muted:#9fa6b2;
-    --border:rgba(232,189,85,.22);
+  --gold:#e8bd55;
+  --gold2:#ffe7a3;
+  --bg:#05070b;
+  --panel:#0e131b;
+  --panel2:#121925;
+  --text:#fff;
+  --muted:#a7adba;
+  --border:rgba(232,189,85,.22);
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
-html{
-    scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
-    background:
-    radial-gradient(circle at top,rgba(232,189,85,.08),transparent 35%),
-    var(--dark);
-
-    color:var(--text);
-    font-family:Arial,Helvetica,sans-serif;
-    line-height:1.6;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(232,189,85,.10),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  line-height:1.6;
 }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
+a{text-decoration:none;color:inherit}
 
 .container{
-    width:min(1150px,92%);
-    margin:auto;
+  width:min(1150px,92%);
+  margin:auto;
 }
 
-
 /* HEADER */
-
 header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:rgba(5,7,10,.90);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(5,7,11,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
 }
 
 nav{
-    min-height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+  min-height:74px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
 }
 
 .logo{
-    font-weight:900;
-    font-size:21px;
-    letter-spacing:1px;
+  font-size:21px;
+  font-weight:900;
+  white-space:nowrap;
+  letter-spacing:1px;
 }
 
-.logo span{
-    color:var(--gold);
-}
+.gold{color:var(--gold)}
 
 .nav-links{
-    display:flex;
-    gap:25px;
-    color:var(--muted);
-    font-size:14px;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  color:var(--muted);
+  font-size:14px;
 }
 
-.nav-links a:hover{
-    color:var(--gold);
+.nav-links a:hover{color:var(--gold)}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
+/* LANGUAGE */
+.language-wrap{
+  position:relative;
+}
 
-/* BUTTON */
+.language-btn{
+  background:#10151d;
+  color:#fff;
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:10px 12px;
+  cursor:pointer;
+  font-weight:700;
+}
 
+.language-btn:hover{
+  border-color:var(--gold);
+}
+
+.language-menu{
+  position:absolute;
+  right:0;
+  top:48px;
+  width:240px;
+  max-height:420px;
+  overflow-y:auto;
+  background:#0d1219;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:8px;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  display:none;
+}
+
+.language-menu.show{display:block}
+
+.language-menu button{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:0;
+  color:#ddd;
+  padding:10px 12px;
+  border-radius:7px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.language-menu button:hover{
+  background:rgba(232,189,85,.10);
+  color:var(--gold);
+}
+
+/* BUTTONS */
 .btn{
-    display:inline-block;
-    padding:13px 22px;
-    border-radius:8px;
-    font-weight:800;
-
-    background:linear-gradient(
-        135deg,
-        var(--gold),
-        var(--gold2)
-    );
-
-    color:#161109;
-
-    border:1px solid var(--gold);
-
-    transition:.25s;
+  display:inline-block;
+  padding:13px 22px;
+  border-radius:9px;
+  font-weight:800;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#161109;
+  border:1px solid var(--gold);
+  transition:.25s;
 }
 
 .btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 30px rgba(232,189,85,.20);
+  transform:translateY(-3px);
+  box-shadow:0 10px 30px rgba(232,189,85,.18);
 }
 
 .btn-outline{
-    background:transparent;
-    color:var(--gold);
+  background:transparent;
+  color:var(--gold);
 }
 
 .btn-outline:hover{
-    background:var(--gold);
-    color:#111;
+  background:var(--gold);
+  color:#111;
 }
-
 
 /* HERO */
-
 .hero{
-    min-height:650px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-
-    position:relative;
-    overflow:hidden;
+  min-height:660px;
+  display:flex;
+  align-items:center;
+  text-align:center;
+  overflow:hidden;
+  position:relative;
 }
 
-.hero:before{
-    content:"";
-    position:absolute;
-
-    width:500px;
-    height:500px;
-
-    background:rgba(232,189,85,.08);
-
-    filter:blur(120px);
-    border-radius:50%;
+.hero::before{
+  content:"";
+  position:absolute;
+  width:550px;
+  height:550px;
+  left:50%;
+  top:10%;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:rgba(232,189,85,.08);
+  filter:blur(120px);
 }
 
 .hero-content{
-    position:relative;
-    max-width:850px;
-    padding:100px 0;
+  position:relative;
+  max-width:880px;
+  margin:auto;
+  padding:100px 0;
 }
 
 .badge{
-    display:inline-block;
-
-    border:1px solid var(--border);
-
-    color:var(--gold);
-
-    padding:7px 15px;
-
-    border-radius:50px;
-
-    font-size:12px;
-
-    letter-spacing:1px;
-
-    margin-bottom:25px;
+  display:inline-block;
+  color:var(--gold);
+  border:1px solid var(--border);
+  border-radius:40px;
+  padding:7px 15px;
+  font-size:12px;
+  letter-spacing:1px;
+  margin-bottom:25px;
 }
 
 h1{
-    font-size:clamp(42px,8vw,78px);
-    line-height:1.05;
-    letter-spacing:-2px;
-
-    margin-bottom:25px;
-}
-
-h1 span{
-    color:var(--gold);
+  font-size:clamp(42px,8vw,78px);
+  line-height:1.05;
+  letter-spacing:-2px;
+  margin-bottom:25px;
 }
 
 .hero p{
-    max-width:680px;
-    margin:0 auto 32px;
-
-    color:var(--muted);
-
-    font-size:17px;
+  max-width:700px;
+  margin:0 auto 32px;
+  color:var(--muted);
+  font-size:17px;
 }
 
 .button-row{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
 }
-
 
 /* SECTIONS */
-
-section{
-    padding:85px 0;
-}
+section{padding:88px 0}
 
 .section-title{
-    text-align:center;
-    margin-bottom:45px;
+  text-align:center;
+  max-width:720px;
+  margin:0 auto 45px;
 }
 
 .section-title h2{
-    font-size:clamp(30px,5vw,45px);
-    margin-bottom:12px;
+  font-size:clamp(30px,5vw,45px);
+  margin-bottom:12px;
 }
 
-.section-title span{
-    color:var(--gold);
-}
-
-.section-title p{
-    max-width:650px;
-    margin:auto;
-    color:var(--muted);
-}
-
-
-/* GRID */
+.section-title p{color:var(--muted)}
 
 .grid{
-    display:grid;
-
-    grid-template-columns:
-    repeat(3,1fr);
-
-    gap:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
 }
 
 .card{
-    background:
-    linear-gradient(
-        145deg,
-        rgba(255,255,255,.03),
-        rgba(255,255,255,.01)
-    );
-
-    border:1px solid var(--border);
-
-    padding:30px;
-
-    border-radius:15px;
-
-    transition:.3s;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.01));
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:30px;
+  transition:.3s;
 }
 
 .card:hover{
-    transform:translateY(-7px);
-
-    border-color:var(--gold);
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.4);
+  transform:translateY(-7px);
+  border-color:var(--gold);
+  box-shadow:0 18px 45px rgba(0,0,0,.4);
 }
 
 .icon{
-    font-size:32px;
-    margin-bottom:15px;
+  font-size:32px;
+  margin-bottom:15px;
 }
 
 .card h3{
-    color:var(--gold);
-    margin-bottom:10px;
+  color:var(--gold);
+  margin-bottom:10px;
 }
 
 .card p{
-    color:var(--muted);
-    font-size:14px;
+  color:var(--muted);
+  font-size:14px;
 }
 
-
-/* PERFORMANCE PANEL */
-
-.performance{
-    background:#080b10;
-}
+/* TECHNOLOGY */
+.dark-section{background:#080b10}
 
 .stats{
-    display:grid;
-
-    grid-template-columns:
-    repeat(4,1fr);
-
-    gap:15px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
 }
 
 .stat{
-    padding:25px;
-
-    background:var(--panel);
-
-    border:1px solid var(--border);
-
-    border-radius:12px;
-
-    text-align:center;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:25px;
+  text-align:center;
 }
 
 .stat h3{
-    color:var(--gold);
-    font-size:28px;
+  color:var(--gold);
+  font-size:28px;
 }
 
 .stat p{
-    color:var(--muted);
-    font-size:13px;
+  color:var(--muted);
+  font-size:13px;
 }
 
+/* HOW IT WORKS */
+.step-number{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--gold);
+  color:#111;
+  font-weight:900;
+  border-radius:50%;
+  margin-bottom:15px;
+}
 
-/* WARNING */
-
+/* RISK */
 .warning{
-    max-width:850px;
-
-    margin:auto;
-
-    padding:25px;
-
-    background:rgba(232,189,85,.05);
-
-    border:1px solid var(--border);
-
-    border-radius:12px;
+  max-width:880px;
+  margin:auto;
+  padding:28px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:rgba(232,189,85,.05);
 }
 
 .warning h3{
-    color:var(--gold);
-    margin-bottom:10px;
+  color:var(--gold);
+  margin-bottom:12px;
 }
 
 .warning p{
-    color:var(--muted);
-    font-size:14px;
+  color:var(--muted);
+  font-size:14px;
 }
 
+/* FOUNDERS */
+.founders{
+  text-align:center;
+  background:linear-gradient(180deg,#080b10,#05070b);
+}
+
+.founder-name{
+  color:var(--gold);
+  font-size:30px;
+  font-weight:900;
+  margin-top:10px;
+}
 
 /* CTA */
-
 .cta{
-    text-align:center;
-
-    padding:90px 0;
-
-    background:
-    radial-gradient(
-        circle,
-        rgba(232,189,85,.10),
-        transparent 55%
-    );
+  text-align:center;
+  background:radial-gradient(circle,rgba(232,189,85,.10),transparent 58%);
 }
 
 .cta h2{
-    font-size:40px;
-    margin-bottom:15px;
+  font-size:clamp(32px,5vw,48px);
+  margin-bottom:14px;
 }
 
 .cta p{
-    color:var(--muted);
-    margin-bottom:25px;
+  color:var(--muted);
+  margin-bottom:25px;
 }
-
 
 /* FOOTER */
-
 footer{
-    border-top:1px solid var(--border);
-
-    padding:35px 0;
-
-    text-align:center;
-
-    color:var(--muted);
-
-    font-size:13px;
+  border-top:1px solid var(--border);
+  padding:35px 0;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
 }
 
-.creator{
-    color:var(--gold);
-    font-weight:bold;
-}
-
+footer strong{color:var(--gold)}
 
 /* MOBILE */
-
-@media(max-width:800px){
-
-    .nav-links{
-        display:none;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:
-        repeat(2,1fr);
-    }
-
-    .hero{
-        min-height:580px;
-    }
-
-    .hero-content{
-        padding:80px 0;
-    }
-
+@media(max-width:850px){
+  .nav-links{display:none}
+  .grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .hero{min-height:590px}
 }
 
+@media(max-width:480px){
+  .logo{font-size:16px}
+  .language-btn{padding:9px;font-size:12px}
+  .language-menu{
+    position:fixed;
+    top:75px;
+    right:4%;
+    width:92%;
+    max-height:70vh;
+  }
+  .stats{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 
-
 <body>
 
-
 <header>
-
 <div class="container">
-
 <nav>
 
-<div class="logo">
-GOLD <span>SMC PRO</span>
-</div>
+<div class="logo">GOLD <span class="gold">SMC PRO</span></div>
 
 <div class="nav-links">
-
-<a href="#features">Features</a>
-
-<a href="#technology">Technology</a>
-
-<a href="#risk">Risk</a>
-
-<a href="#about">About</a>
-
+<a href="#features" data-i18n="navFeatures">Features</a>
+<a href="#technology" data-i18n="navTechnology">Technology</a>
+<a href="#how" data-i18n="navHow">How It Works</a>
+<a href="#risk" data-i18n="navRisk">Risk</a>
+<a href="#about" data-i18n="navAbout">About</a>
 </div>
 
-<a href="#start" class="btn">
-Explore
-</a>
+<div class="nav-right">
 
+<div class="language-wrap">
+<button class="language-btn" onclick="toggleLanguages()">
+🌐 <span id="currentLanguage">English</span> ▾
+</button>
+
+<div class="language-menu" id="languageMenu">
+
+<button onclick="setLanguage('en')">🇬🇧 English</button>
+<button onclick="setLanguage('am')">🇪🇹 አማርኛ</button>
+<button onclick="setLanguage('ar')">🇸🇦 العربية</button>
+<button onclick="setLanguage('fr')">🇫🇷 Français</button>
+<button onclick="setLanguage('es')">🇪🇸 Español</button>
+<button onclick="setLanguage('de')">🇩🇪 Deutsch</button>
+<button onclick="setLanguage('it')">🇮🇹 Italiano</button>
+<button onclick="setLanguage('pt')">🇵🇹 Português</button>
+<button onclick="setLanguage('ru')">🇷🇺 Русский</button>
+<button onclick="setLanguage('tr')">🇹🇷 Türkçe</button>
+<button onclick="setLanguage('so')">🇸🇴 Soomaali</button>
+<button onclick="setLanguage('sw')">🇰🇪 Kiswahili</button>
+<button onclick="setLanguage('hi')">🇮🇳 हिन्दी</button>
+<button onclick="setLanguage('zh')">🇨🇳 中文</button>
+<button onclick="setLanguage('ja')">🇯🇵 日本語</button>
+<button onclick="setLanguage('ko')">🇰🇷 한국어</button>
+
+</div>
+</div>
+
+</div>
 </nav>
-
 </div>
-
 </header>
 
 
-
 <section class="hero">
-
 <div class="container hero-content">
 
-<div class="badge">
+<div class="badge" data-i18n="badge">
 MT5 • GOLD • AUTOMATED TRADING
 </div>
 
 <h1>
-Trade Smarter With
-<span>GOLD SMC PRO</span>
+<span data-i18n="hero1">Trade Smarter With</span><br>
+<span class="gold">GOLD SMC PRO</span>
 </h1>
 
-<p>
-
-A professional MetaTrader 5 automated trading
-system designed to analyze Gold market conditions,
-identify potential opportunities and execute
-predefined trading strategies automatically.
-
+<p data-i18n="heroText">
+A professional MetaTrader 5 automated trading system designed to analyze Gold market conditions and manage predefined trading strategies.
 </p>
 
-
 <div class="button-row">
-
-<a href="#features" class="btn">
-Explore Features
-</a>
-
-<a href="#risk" class="btn btn-outline">
-Risk Information
-</a>
-
+<a href="#features" class="btn" data-i18n="explore">Explore Features</a>
+<a href="#risk" class="btn btn-outline" data-i18n="riskButton">Risk Information</a>
 </div>
 
 </div>
-
 </section>
-
 
 
 <section id="features">
-
 <div class="container">
 
 <div class="section-title">
-
-<h2>
-Powerful <span>Trading Tools</span>
-</h2>
-
-<p>
-
-Designed for structured market analysis,
-automation and disciplined trade management.
-
+<h2><span data-i18n="powerful">Powerful</span> <span class="gold" data-i18n="tools">Trading Tools</span></h2>
+<p data-i18n="featureIntro">
+Designed for structured market analysis, automation and disciplined trade management.
 </p>
-
 </div>
-
 
 <div class="grid">
 
-
 <div class="card">
-
 <div class="icon">⚡</div>
-
-<h3>Fast Analysis</h3>
-
-<p>
-Processes market conditions efficiently
-to identify potential trading setups.
-</p>
-
+<h3 data-i18n="fastTitle">Fast Analysis</h3>
+<p data-i18n="fastText">Efficiently processes configured market conditions to identify potential setups.</p>
 </div>
 
-
-
 <div class="card">
-
 <div class="icon">🤖</div>
-
-<h3>Automated Execution</h3>
-
-<p>
-Automatically manages predefined trade
-entry and exit rules through MetaTrader 5.
-</p>
-
+<h3 data-i18n="autoTitle">Automated Execution</h3>
+<p data-i18n="autoText">Executes predefined trading rules automatically through MetaTrader 5.</p>
 </div>
 
-
-
 <div class="card">
-
 <div class="icon">🧠</div>
-
-<h3>SMC Strategy</h3>
-
-<p>
-Built around structured Smart Money
-Concept market analysis.
-</p>
-
+<h3 data-i18n="smcTitle">SMC Framework</h3>
+<p data-i18n="smcText">Designed around structured Smart Money Concept market analysis.</p>
 </div>
 
-
-
 <div class="card">
-
 <div class="icon">🛡️</div>
-
-<h3>Risk Controls</h3>
-
-<p>
-Designed to support stop-loss,
-position sizing and controlled exposure.
-</p>
-
+<h3 data-i18n="riskTitle">Risk Controls</h3>
+<p data-i18n="riskText">Supports stop-loss, position sizing and controlled market exposure.</p>
 </div>
 
-
-
 <div class="card">
-
 <div class="icon">📊</div>
-
-<h3>Market Monitoring</h3>
-
-<p>
-Continuously evaluates configured market
-conditions while the trading system is active.
-</p>
-
+<h3 data-i18n="monitorTitle">Market Monitoring</h3>
+<p data-i18n="monitorText">Monitors configured market conditions while the system is active.</p>
 </div>
-
-
 
 <div class="card">
-
 <div class="icon">🥇</div>
-
-<h3>Gold Focus</h3>
-
-<p>
-Designed specifically around
-XAUUSD / Gold market strategies.
-</p>
-
-</div>
-
-
+<h3 data-i18n="goldTitle">Gold Focus</h3>
+<p data-i18n="goldText">Built with a primary focus on XAUUSD / Gold trading strategies.</p>
 </div>
 
 </div>
-
+</div>
 </section>
 
 
-
-<section
-id="technology"
-class="performance"
->
-
+<section id="technology" class="dark-section">
 <div class="container">
 
 <div class="section-title">
-
-<h2>
-Built For <span>MT5</span>
-</h2>
-
-<p>
-
-A focused trading system designed
-for MetaTrader 5 automation.
-
+<h2><span data-i18n="builtFor">Built For</span> <span class="gold">MetaTrader 5</span></h2>
+<p data-i18n="techText">
+Focused technology for automated Gold market strategies.
 </p>
-
 </div>
-
 
 <div class="stats">
 
 <div class="stat">
-
 <h3>MT5</h3>
-
-<p>Platform</p>
-
+<p data-i18n="platform">Platform</p>
 </div>
 
-
 <div class="stat">
-
 <h3>XAUUSD</h3>
-
-<p>Primary Market</p>
-
+<p data-i18n="market">Primary Market</p>
 </div>
 
-
 <div class="stat">
-
 <h3>24/5</h3>
-
-<p>Market Monitoring Capability</p>
-
+<p data-i18n="monitoring">Monitoring Capability</p>
 </div>
-
 
 <div class="stat">
-
 <h3>SMC</h3>
-
-<p>Strategy Framework</p>
-
+<p data-i18n="framework">Strategy Framework</p>
 </div>
 
 </div>
-
 </div>
-
 </section>
 
 
-
-<section id="risk">
-
+<section id="how">
 <div class="container">
 
 <div class="section-title">
-
-<h2>
-Responsible <span>Trading</span>
-</h2>
-
-</div>
-
-
-<div class="warning">
-
-<h3>⚠ Important Risk Notice</h3>
-
-<p>
-
-Trading Gold, Forex and CFDs involves substantial
-risk and can result in loss of capital.
-
-GOLD SMC PRO does not guarantee profits or
-specific trading results.
-
-Historical or simulated performance does not
-guarantee future performance.
-
-Always test automated strategies carefully,
-use appropriate risk management and never trade
-money you cannot afford to lose.
-
+<h2><span data-i18n="howTitle">How It</span> <span class="gold" data-i18n="works">Works</span></h2>
+<p data-i18n="howIntro">
+A simple structured workflow from analysis to trade management.
 </p>
-
 </div>
-
-</div>
-
-</section>
-
-
-
-<section id="about">
-
-<div class="container">
-
-<div class="section-title">
-
-<h2>
-About <span>GOLD SMC PRO</span>
-</h2>
-
-<p>
-
-GOLD SMC PRO is an automated trading technology
-project focused on Gold market analysis,
-automation and disciplined risk management.
-
-</p>
-
-</div>
-
 
 <div class="grid">
 
 <div class="card">
-
-<div class="icon">👨‍💻</div>
-
-<h3>Created By</h3>
-
-<p>
-GOLD SMC PRO was created and developed by
-<strong>Dan & Filimon</strong>.
-</p>
-
+<div class="step-number">1</div>
+<h3 data-i18n="step1Title">Analyze</h3>
+<p data-i18n="step1Text">The system evaluates configured Gold market conditions.</p>
 </div>
-
 
 <div class="card">
-
-<div class="icon">🎯</div>
-
-<h3>Our Goal</h3>
-
-<p>
-
-Build practical automated trading tools
-with a focus on structured strategies,
-speed and responsible risk controls.
-
-</p>
-
+<div class="step-number">2</div>
+<h3 data-i18n="step2Title">Confirm</h3>
+<p data-i18n="step2Text">Strategy rules are checked before a potential trade is considered.</p>
 </div>
-
 
 <div class="card">
-
-<div class="icon">🚀</div>
-
-<h3>Development</h3>
-
-<p>
-
-The system can continue to evolve through
-testing, optimization and strategy improvements.
-
-</p>
-
+<div class="step-number">3</div>
+<h3 data-i18n="step3Title">Manage</h3>
+<p data-i18n="step3Text">Configured entry, stop-loss and trade-management rules are applied.</p>
 </div>
 
 </div>
-
 </div>
-
 </section>
 
 
-
-<section id="start" class="cta">
-
+<section id="risk" class="dark-section">
 <div class="container">
 
-<h2>
-GOLD <span style="color:#e8bd55">
-SMC PRO
-</span>
-</h2>
+<div class="section-title">
+<h2><span data-i18n="responsible">Responsible</span> <span class="gold" data-i18n="trading">Trading</span></h2>
+</div>
 
-<p>
+<div class="warning">
+<h3 data-i18n="warningTitle">⚠ Important Risk Notice</h3>
+
+<p data-i18n="warningText">
+Trading Gold, Forex and CFDs involves substantial risk and may result in loss of capital. GOLD SMC PRO does not guarantee profits or specific results. Historical or simulated results do not guarantee future performance. Test automated strategies carefully and use appropriate risk management.
+</p>
+
+</div>
+</div>
+</section>
+
+
+<section id="about" class="founders">
+<div class="container">
+
+<div class="section-title">
+<h2><span data-i18n="created">Created By</span></h2>
+
+<div class="founder-name">
+DAN & FILIMON
+</div>
+
+<p style="margin-top:15px" data-i18n="founderText">
+GOLD SMC PRO is an automated trading technology project created by Dan & Filimon with a focus on Gold market analysis, automation and responsible risk management.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🎯</div>
+<h3 data-i18n="goalTitle">Our Goal</h3>
+<p data-i18n="goalText">Build practical automated trading technology focused on structured strategies and disciplined risk controls.</p>
+</div>
+
+<div class="card">
+<div class="icon">🌍</div>
+<h3 data-i18n="globalTitle">Global Access</h3>
+<p data-i18n="globalText">Designed with an international multilingual interface for users around the world.</p>
+</div>
+
+<div class="card">
+<div class="icon">🚀</div>
+<h3 data-i18n="developmentTitle">Continuous Development</h3>
+<p data-i18n="developmentText">The project can evolve through testing, optimization and future technology improvements.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+
+<section class="cta">
+<div class="container">
+
+<h2>GOLD <span class="gold">SMC PRO</span></h2>
+
+<p data-i18n="ctaText">
 Automated Gold Trading Technology for MetaTrader 5
 </p>
 
-<a href="#features" class="btn">
-Explore The System
+<a href="#features" class="btn" data-i18n="learnMore">
+Learn More
 </a>
 
 </div>
-
 </section>
 
 
-
 <footer>
-
 <div class="container">
 
 <p>
-
 GOLD SMC PRO © 2026
-<br>
+</p>
 
-Created by
-<span class="creator">
-Dan & Filimon
-</span>
-
+<p>
+<span data-i18n="createdBy">Created by</span>
+<strong>Dan & Filimon</strong>
 </p>
 
 <br>
 
-<p>
+<p data-i18n="footerRisk">
 Trading involves risk. No profit is guaranteed.
 </p>
 
 </div>
-
 </footer>
 
+
+<script>
+
+/*
+================================================
+LANGUAGE SYSTEM
+Add additional languages to this object anytime.
+================================================
+*/
+
+const translations = {
+
+en:{
+name:"English",
+navFeatures:"Features",
+navTechnology:"Technology",
+navHow:"How It Works",
+navRisk:"Risk",
+navAbout:"About",
+badge:"MT5 • GOLD • AUTOMATED TRADING",
+hero1:"Trade Smarter With",
+heroText:"A professional MetaTrader 5 automated trading system designed to analyze Gold market conditions and manage predefined trading strategies.",
+explore:"Explore Features",
+riskButton:"Risk Information",
+powerful:"Powerful",
+tools:"Trading Tools",
+featureIntro:"Designed for structured market analysis, automation and disciplined trade management.",
+fastTitle:"Fast Analysis",
+fastText:"Efficiently processes configured market conditions to identify potential setups.",
+autoTitle:"Automated Execution",
+autoText:"Executes predefined trading rules automatically through MetaTrader 5.",
+smcTitle:"SMC Framework",
+smcText:"Designed around structured Smart Money Concept market analysis.",
+riskTitle:"Risk Controls",
+riskText:"Supports stop-loss, position sizing and controlled market exposure.",
+monitorTitle:"Market Monitoring",
+monitorText:"Monitors configured market conditions while the system is active.",
+goldTitle:"Gold Focus",
+goldText:"Built with a primary focus on XAUUSD / Gold trading strategies.",
+builtFor:"Built For",
+techText:"Focused technology for automated Gold market strategies.",
+platform:"Platform",
+market:"Primary Market",
+monitoring:"Monitoring Capability",
+framework:"Strategy Framework",
+howTitle:"How It",
+works:"Works",
+howIntro:"A simple structured workflow from analysis to trade management.",
+step1Title:"Analyze",
+step1Text:"The system evaluates configured Gold market conditions.",
+step2Title:"Confirm",
+step2Text:"Strategy rules are checked before a potential trade is considered.",
+step3Title:"Manage",
+step3Text:"Configured entry, stop-loss and trade-management rules are applied.",
+responsible:"Responsible",
+trading:"Trading",
+warningTitle:"⚠ Important Risk Notice",
+warningText:"Trading Gold, Forex and CFDs involves substantial risk and may result in loss of capital. GOLD SMC PRO does not guarantee profits or specific results. Historical or simulated results do not guarantee future performance. Test automated strategies carefully and use appropriate risk management.",
+created:"Created By",
+founderText:"GOLD SMC PRO is an automated trading technology project created by Dan & Filimon with a focus on Gold market analysis, automation and responsible risk management.",
+goalTitle:"Our Goal",
+goalText:"Build practical automated trading technology focused on structured strategies and disciplined risk controls.",
+globalTitle:"Global Access",
+globalText:"Designed with an international multilingual interface for users around the world.",
+developmentTitle:"Continuous Development",
+developmentText:"The project can evolve through testing, optimization and future technology improvements.",
+ctaText:"Automated Gold Trading Technology for MetaTrader 5",
+learnMore:"Learn More",
+createdBy:"Created by",
+footerRisk:"Trading involves risk. No profit is guaranteed."
+},
+
+am:{
+name:"አማርኛ",
+navFeatures:"ባህሪያት",
+navTechnology:"ቴክኖሎጂ",
+navHow:"እንዴት ይሰራል",
+navRisk:"ስጋት",
+navAbout:"ስለ እኛ",
+badge:"MT5 • ወርቅ • አውቶማቲክ ትሬዲንግ",
+hero1:"በGOLD SMC PRO ዘመናዊ ትሬዲንግ",
+heroText:"የወርቅ ገበያን ለመተንተን እና የተወሰኑ የትሬዲንግ ስትራቴጂዎችን ለማስተዳደር የተዘጋጀ የMetaTrader 5 አውቶማቲክ ትሬዲንግ ሲስተም።",
+explore:"ባህሪያቱን ይመልከቱ",
+riskButton:"የስጋት መረጃ",
+powerful:"ኃይለኛ",
+tools:"የትሬዲንግ መሳሪያዎች",
+featureIntro:"ለገበያ ትንተና፣ አውቶሜሽን እና ለተደራጀ የትሬድ አስተዳደር የተዘጋጀ።",
+fastTitle:"ፈጣን ትንተና",
+fastText:"የተወሰኑ የገበያ ሁኔታዎችን በፍጥነት ይመረምራል።",
+autoTitle:"አውቶማቲክ አፈጻጸም",
+autoText:"የተወሰኑ የትሬዲንግ ህጎችን በMetaTrader 5 በራስ-ሰር ያከናውናል።",
+smcTitle:"SMC ስትራቴጂ",
+smcText:"በSmart Money Concept የገበያ ትንተና መሰረት የተዘጋጀ።",
+riskTitle:"የስጋት ቁጥጥር",
+riskText:"Stop-loss፣ position sizing እና የገበያ ተጋላጭነት ቁጥጥርን ይደግፋል።",
+monitorTitle:"የገበያ ክትትል",
+monitorText:"ሲስተሙ ሲሰራ የተወሰኑ የገበያ ሁኔታዎችን ይከታተላል።",
+goldTitle:"በወርቅ ላይ ያተኮረ",
+goldText:"በዋናነት ለXAUUSD / Gold የትሬዲንግ ስትራቴጂዎች የተዘጋጀ።",
+builtFor:"የተዘጋጀው ለ",
+techText:"ለአውቶማቲክ የወርቅ ገበያ ስትራቴጂዎች የተዘጋጀ ቴክኖሎጂ።",
+platform:"ፕላትፎርም",
+market:"ዋና ገበያ",
+monitoring:"የክትትል አቅም",
+framework:"የስትራቴጂ መዋቅር",
+howTitle:"እንዴት",
+works:"ይሰራል",
+howIntro:"ከገበያ ትንተና እስከ ትሬድ አስተዳደር የተደራጀ ሂደት።",
+step1Title:"ትንተና",
+step1Text:"ሲስተሙ የተወሰኑ የወርቅ ገበያ ሁኔታዎችን ይመረምራል።",
+step2Title:"ማረጋገጫ",
+step2Text:"ትሬድ ከመታሰቡ በፊት የስትራቴጂው ህጎች ይፈተሻሉ።",
+step3Title:"አስተዳደር",
+step3Text:"Entry፣ Stop-loss እና የትሬድ አስተዳደር ህጎች ይተገበራሉ።",
+responsible:"ኃላፊነት ያለው",
+trading:"ትሬዲንግ",
+warningTitle:"⚠ አስፈላጊ የስጋት ማሳሰቢያ",
+warningText:"ወርቅ፣ Forex እና CFD ትሬዲንግ ከፍተኛ ስጋት አለው እና የካፒታል ኪሳራ ሊያስከትል ይችላል። GOLD SMC PRO ትርፍን አያረጋግጥም። አውቶማቲክ ስትራቴጂዎችን በጥንቃቄ ይፈትሹ እና ተገቢ የስጋት አስተዳደር ይጠቀሙ።",
+created:"የተፈጠረው በ",
+founderText:"GOLD SMC PRO በDan & Filimon የተፈጠረ በወርቅ ገበያ ትንተና፣ አውቶሜሽን እና ኃላፊነት ባለው የስጋት አስተዳደር ላይ ያተኮረ የትሬዲንግ ቴክኖሎጂ ፕሮጀክት ነው።",
+goalTitle:"ግባችን",
+goalText:"በተደራጀ ስትራቴጂ እና በስጋት ቁጥጥር ላይ ያተኮረ ጠቃሚ አውቶማቲክ የትሬዲንግ ቴክኖሎጂ መገንባት።",
+globalTitle:"ዓለም አቀፍ አጠቃቀም",
+globalText:"በዓለም ዙሪያ ላሉ ተጠቃሚዎች ብዙ ቋንቋዎችን እንዲደግፍ የተዘጋጀ።",
+developmentTitle:"ቀጣይ ልማት",
+developmentText:"ፕሮጀክቱ በሙከራ፣ በማሻሻያ እና በአዳዲስ ቴክኖሎጂዎች መሻሻል ይችላል።",
+ctaText:"ለMetaTrader 5 የተዘጋጀ አውቶማቲክ የወርቅ ትሬዲንግ ቴክኖሎጂ",
+learnMore:"ተጨማሪ ይመልከቱ",
+createdBy:"የተፈጠረው በ",
+footerRisk:"ትሬዲንግ ስጋት አለው። ትርፍ ዋስትና የለውም።"
+}
+
+};
+
+
+/*
+Other listed languages fall back to English until
+their full translation dictionaries are added.
+This keeps the site functional rather than showing
+missing/incorrect text.
+*/
+
+const languageNames = {
+en:"English",
+am:"አማርኛ",
+ar:"العربية",
+fr:"Français",
+es:"Español",
+de:"Deutsch",
+it:"Italiano",
+pt:"Português",
+ru:"Русский",
+tr:"Türkçe",
+so:"Soomaali",
+sw:"Kiswahili",
+hi:"हिन्दी",
+zh:"中文",
+ja:"日本語",
+ko:"한국어"
+};
+
+
+function toggleLanguages(){
+ document.getElementById("languageMenu").classList.toggle("show");
+}
+
+
+function setLanguage(lang){
+
+ const data = translations[lang] || translations.en;
+
+ document.querySelectorAll("[data-i18n]").forEach(element=>{
+
+   const key = element.getAttribute("data-i18n");
+
+   if(data[key]){
+     element.textContent = data[key];
+   }else if(translations.en[key]){
+     element.textContent = translations.en[key];
+   }
+
+ });
+
+ document.getElementById("currentLanguage").textContent =
+ languageNames[lang] || "English";
+
+ document.documentElement.lang = lang;
+
+ if(lang === "ar"){
+   document.documentElement.dir = "rtl";
+ }else{
+   document.documentElement.dir = "ltr";
+ }
+
+ localStorage.setItem("goldSmcLanguage",lang);
+
+ document.getElementById("languageMenu").classList.remove("show");
+}
+
+
+document.addEventListener("click",function(event){
+
+ const wrapper=document.querySelector(".language-wrap");
+
+ if(!wrapper.contains(event.target)){
+   document.getElementById("languageMenu").classList.remove("show");
+ }
+
+});
+
+
+const savedLanguage =
+localStorage.getItem("goldSmcLanguage");
+
+if(savedLanguage){
+ setLanguage(savedLanguage);
+}
+
+</script>
 
 </body>
 </html>
