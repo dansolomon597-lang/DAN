@@ -1,1 +1,288 @@
+//@version=5
+indicator("Gold SMC Pro - Order Blocks, FVG, Liquidity, BOS/CHoCH [MTF]", shorttitle="SMC Pro", overlay=true, max_boxes_count=500, max_lines_count=500, max_labels_count=500)
 
+// ============================================================================
+//  GOLD SMC PRO
+//  Smart Money Concepts Engine: Market Structure (BOS/CHoCH), Order Blocks,
+//  Fair Value Gaps, Liquidity Sweeps (Equal Highs/Lows) and Multi-Timeframe Bias
+//  Built for XAUUSD / Forex / Crypto - works on any symbol and timeframe
+// ============================================================================
+
+// ============================= INPUTS ======================================
+g_struct = "Market Structure"
+swingLen      = input.int(10, "Swing Detection Length", minval=2, group=g_struct)
+showBOS       = input.bool(true, "Show BOS Labels", group=g_struct)
+showCHoCH     = input.bool(true, "Show CHoCH Labels", group=g_struct)
+structLineW   = input.int(1, "Structure Line Width", minval=1, maxval=4, group=g_struct)
+
+g_ob = "Order Blocks"
+showOB        = input.bool(true, "Show Order Blocks", group=g_ob)
+obLookback    = input.int(10, "OB Search Lookback (bars)", minval=3, maxval=50, group=g_ob)
+obMaxCount    = input.int(3, "Max Active OB per Side", minval=1, maxval=10, group=g_ob)
+obMitigation  = input.string("Wick", "Mitigation Method", options=["Wick", "Close"], group=g_ob)
+obExtendBars  = input.int(25, "Box Extend (bars)", minval=5, maxval=200, group=g_ob)
+
+g_fvg = "Fair Value Gaps"
+showFVG       = input.bool(true, "Show FVG", group=g_fvg)
+fvgAutoDelete = input.bool(true, "Delete FVG After Full Mitigation", group=g_fvg)
+fvgExtendBars = input.int(20, "FVG Extend (bars)", minval=5, maxval=200, group=g_fvg)
+
+g_liq = "Liquidity"
+showLiquidity  = input.bool(true, "Show Equal Highs/Lows (Liquidity Pools)", group=g_liq)
+showSweeps     = input.bool(true, "Show Liquidity Sweep Labels", group=g_liq)
+liqPercentTol  = input.float(0.05, "Equal High/Low Tolerance (%)", minval=0.01, step=0.01, group=g_liq)
+
+g_mtf = "Multi-Timeframe Bias"
+showMTFTable  = input.bool(true, "Show HTF Bias Table", group=g_mtf)
+htf1          = input.timeframe("60", "Higher Timeframe 1", group=g_mtf)
+htf2          = input.timeframe("240", "Higher Timeframe 2", group=g_mtf)
+
+g_col = "Colors"
+bullOBColor   = input.color(color.new(color.blue, 75), "Bullish OB", group=g_col)
+bearOBColor   = input.color(color.new(color.red, 75), "Bearish OB", group=g_col)
+bullFVGColor  = input.color(color.new(color.teal, 80), "Bullish FVG", group=g_col)
+bearFVGColor  = input.color(color.new(color.maroon, 80), "Bearish FVG", group=g_col)
+bosColor      = input.color(color.new(color.gray, 0), "BOS/CHoCH Line", group=g_col)
+liqColor      = input.color(color.new(color.orange, 0), "Liquidity Line", group=g_col)
+
+g_alert = "Alerts"
+alertOnBOS    = input.bool(true, "Alert on BOS", group=g_alert)
+alertOnCHoCH  = input.bool(true, "Alert on CHoCH", group=g_alert)
+alertOnOB     = input.bool(true, "Alert on New Order Block", group=g_alert)
+alertOnFVG    = input.bool(true, "Alert on New FVG", group=g_alert)
+alertOnLiq    = input.bool(true, "Alert on Liquidity Sweep", group=g_alert)
+
+// ============================= SWING DETECTION ==============================
+swingHigh = ta.pivothigh(high, swingLen, swingLen)
+swingLow  = ta.pivotlow(low, swingLen, swingLen)
+
+var float lastSwingHighVal = na
+var int   lastSwingHighBar = na
+var float prevSwingHighVal = na
+
+var float lastSwingLowVal  = na
+var int   lastSwingLowBar  = na
+var float prevSwingLowVal  = na
+
+var bool brokeHigh = false
+var bool brokeLow  = false
+
+var int trend = 0   // 1 = bullish structure, -1 = bearish structure, 0 = undefined
+
+if not na(swingHigh)
+    prevSwingHighVal := lastSwingHighVal
+    lastSwingHighVal := swingHigh
+    lastSwingHighBar := bar_index - swingLen
+    brokeHigh := false
+
+    // ---- Liquidity: Equal Highs ----
+    if showLiquidity and not na(prevSwingHighVal)
+        if math.abs(swingHigh - prevSwingHighVal) / prevSwingHighVal * 100 <= liqPercentTol
+            line.new(lastSwingHighBar, swingHigh, bar_index, swingHigh, color=liqColor, style=line.style_dotted, width=1)
+            label.new(bar_index, swingHigh, "EQH", style=label.style_label_down, textcolor=liqColor, color=color.new(color.white, 100), size=size.tiny)
+            if alertOnLiq
+                alert("Equal Highs (Liquidity Pool) - " + syminfo.ticker, alert.freq_once_per_bar_close)
+
+if not na(swingLow)
+    prevSwingLowVal := lastSwingLowVal
+    lastSwingLowVal := swingLow
+    lastSwingLowBar := bar_index - swingLen
+    brokeLow := false
+
+    // ---- Liquidity: Equal Lows ----
+    if showLiquidity and not na(prevSwingLowVal)
+        if math.abs(swingLow - prevSwingLowVal) / prevSwingLowVal * 100 <= liqPercentTol
+            line.new(lastSwingLowBar, swingLow, bar_index, swingLow, color=liqColor, style=line.style_dotted, width=1)
+            label.new(bar_index, swingLow, "EQL", style=label.style_label_up, textcolor=liqColor, color=color.new(color.white, 100), size=size.tiny)
+            if alertOnLiq
+                alert("Equal Lows (Liquidity Pool) - " + syminfo.ticker, alert.freq_once_per_bar_close)
+
+// ============================= ORDER BLOCK FINDER ============================
+f_findBullOB() =>
+    float obTop = na
+    float obBot = na
+    int   obOff = na
+    for i = 1 to obLookback
+        if close[i] < open[i] and na(obTop)
+            obTop := high[i]
+            obBot := low[i]
+            obOff := i
+    [obTop, obBot, obOff]
+
+f_findBearOB() =>
+    float obTop = na
+    float obBot = na
+    int   obOff = na
+    for i = 1 to obLookback
+        if close[i] > open[i] and na(obTop)
+            obTop := high[i]
+            obBot := low[i]
+            obOff := i
+    [obTop, obBot, obOff]
+
+var box[] bullOBBoxes = array.new<box>(0)
+var box[] bearOBBoxes = array.new<box>(0)
+
+// ============================= FVG STORAGE ===================================
+var box[] bullFVGBoxes = array.new<box>(0)
+var box[] bearFVGBoxes = array.new<box>(0)
+
+// ============================= BOS / CHoCH DETECTION =========================
+bullBreak = not na(lastSwingHighVal) and not brokeHigh and close > lastSwingHighVal
+bearBreak = not na(lastSwingLowVal) and not brokeLow and close < lastSwingLowVal
+
+if bullBreak
+    isCHoCH = trend == -1
+    brokeHigh := true
+    line.new(lastSwingHighBar, lastSwingHighVal, bar_index, lastSwingHighVal, color=bosColor, width=structLineW, style=line.style_dashed)
+    if isCHoCH and showCHoCH
+        label.new(bar_index, lastSwingHighVal, "CHoCH", style=label.style_label_down, textcolor=color.blue, color=color.new(color.white, 100), size=size.small)
+        if alertOnCHoCH
+            alert("CHoCH Bullish - " + syminfo.ticker, alert.freq_once_per_bar_close)
+    else if showBOS
+        label.new(bar_index, lastSwingHighVal, "BOS", style=label.style_label_down, textcolor=color.blue, color=color.new(color.white, 100), size=size.small)
+        if alertOnBOS
+            alert("BOS Bullish - " + syminfo.ticker, alert.freq_once_per_bar_close)
+    trend := 1
+
+    if showOB
+        [obTop, obBot, obOff] = f_findBullOB()
+        if not na(obTop)
+            newOB = box.new(bar_index - obOff, obTop, bar_index + obExtendBars, obBot, border_color=color.blue, bgcolor=bullOBColor, text="OB", text_color=color.blue, text_size=size.tiny)
+            array.unshift(bullOBBoxes, newOB)
+            if array.size(bullOBBoxes) > obMaxCount
+                box.delete(array.pop(bullOBBoxes))
+            if alertOnOB
+                alert("New Bullish Order Block - " + syminfo.ticker, alert.freq_once_per_bar_close)
+
+if bearBreak
+    isCHoCH = trend == 1
+    brokeLow := true
+    line.new(lastSwingLowBar, lastSwingLowVal, bar_index, lastSwingLowVal, color=bosColor, width=structLineW, style=line.style_dashed)
+    if isCHoCH and showCHoCH
+        label.new(bar_index, lastSwingLowVal, "CHoCH", style=label.style_label_up, textcolor=color.red, color=color.new(color.white, 100), size=size.small)
+        if alertOnCHoCH
+            alert("CHoCH Bearish - " + syminfo.ticker, alert.freq_once_per_bar_close)
+    else if showBOS
+        label.new(bar_index, lastSwingLowVal, "BOS", style=label.style_label_up, textcolor=color.red, color=color.new(color.white, 100), size=size.small)
+        if alertOnBOS
+            alert("BOS Bearish - " + syminfo.ticker, alert.freq_once_per_bar_close)
+    trend := -1
+
+    if showOB
+        [obTop, obBot, obOff] = f_findBearOB()
+        if not na(obTop)
+            newOB = box.new(bar_index - obOff, obTop, bar_index + obExtendBars, obBot, border_color=color.red, bgcolor=bearOBColor, text="OB", text_color=color.red, text_size=size.tiny)
+            array.unshift(bearOBBoxes, newOB)
+            if array.size(bearOBBoxes) > obMaxCount
+                box.delete(array.pop(bearOBBoxes))
+            if alertOnOB
+                alert("New Bearish Order Block - " + syminfo.ticker, alert.freq_once_per_bar_close)
+
+// ============================= OB MITIGATION ==================================
+if showOB
+    if array.size(bullOBBoxes) > 0
+        for i = array.size(bullOBBoxes) - 1 to 0
+            b = array.get(bullOBBoxes, i)
+            top = box.get_top(b)
+            mitigated = obMitigation == "Wick" ? low <= top : close <= top
+            if mitigated
+                box.delete(b)
+                array.remove(bullOBBoxes, i)
+            else
+                box.set_right(b, bar_index + obExtendBars)
+
+    if array.size(bearOBBoxes) > 0
+        for i = array.size(bearOBBoxes) - 1 to 0
+            b = array.get(bearOBBoxes, i)
+            bot = box.get_bottom(b)
+            mitigated = obMitigation == "Wick" ? high >= bot : close >= bot
+            if mitigated
+                box.delete(b)
+                array.remove(bearOBBoxes, i)
+            else
+                box.set_right(b, bar_index + obExtendBars)
+
+// ============================= FVG DETECTION ===================================
+bullFVGCond = low > high[2]
+bearFVGCond = high < low[2]
+
+if showFVG and bullFVGCond
+    newFVG = box.new(bar_index[2], high[2], bar_index + fvgExtendBars, low, border_color=color.new(color.teal, 40), bgcolor=bullFVGColor, text="FVG", text_color=color.teal, text_size=size.tiny)
+    array.unshift(bullFVGBoxes, newFVG)
+    if alertOnFVG
+        alert("New Bullish FVG - " + syminfo.ticker, alert.freq_once_per_bar_close)
+
+if showFVG and bearFVGCond
+    newFVG = box.new(bar_index[2], low[2], bar_index + fvgExtendBars, high, border_color=color.new(color.maroon, 40), bgcolor=bearFVGColor, text="FVG", text_color=color.maroon, text_size=size.tiny)
+    array.unshift(bearFVGBoxes, newFVG)
+    if alertOnFVG
+        alert("New Bearish FVG - " + syminfo.ticker, alert.freq_once_per_bar_close)
+
+if showFVG
+    if array.size(bullFVGBoxes) > 0
+        for i = array.size(bullFVGBoxes) - 1 to 0
+            b = array.get(bullFVGBoxes, i)
+            bot = box.get_bottom(b)
+            if fvgAutoDelete and close < bot
+                box.delete(b)
+                array.remove(bullFVGBoxes, i)
+            else
+                box.set_right(b, bar_index + fvgExtendBars)
+
+    if array.size(bearFVGBoxes) > 0
+        for i = array.size(bearFVGBoxes) - 1 to 0
+            b = array.get(bearFVGBoxes, i)
+            top = box.get_top(b)
+            if fvgAutoDelete and close > top
+                box.delete(b)
+                array.remove(bearFVGBoxes, i)
+            else
+                box.set_right(b, bar_index + fvgExtendBars)
+
+// ============================= LIQUIDITY SWEEP DETECTION =======================
+liqSweepHigh = showSweeps and not na(lastSwingHighVal) and not brokeHigh and high > lastSwingHighVal and close < lastSwingHighVal
+liqSweepLow  = showSweeps and not na(lastSwingLowVal) and not brokeLow and low < lastSwingLowVal and close > lastSwingLowVal
+
+if liqSweepHigh
+    label.new(bar_index, high, "Sweep", style=label.style_label_down, textcolor=color.white, color=color.new(color.red, 20), size=size.small)
+    if alertOnLiq
+        alert("Liquidity Sweep - Sell Side Grabbed High - " + syminfo.ticker, alert.freq_once_per_bar_close)
+
+if liqSweepLow
+    label.new(bar_index, low, "Sweep", style=label.style_label_up, textcolor=color.white, color=color.new(color.green, 20), size=size.small)
+    if alertOnLiq
+        alert("Liquidity Sweep - Buy Side Grabbed Low - " + syminfo.ticker, alert.freq_once_per_bar_close)
+
+// ============================= MULTI-TIMEFRAME BIAS ============================
+f_bias() =>
+    ema50 = ta.ema(close, 50)
+    ema200 = ta.ema(close, 200)
+    bias = close > ema50 and ema50 > ema200 ? 1 : close < ema50 and ema50 < ema200 ? -1 : (close > ema50 ? 1 : -1)
+    bias
+
+htf1Bias = request.security(syminfo.tickerid, htf1, f_bias())
+htf2Bias = request.security(syminfo.tickerid, htf2, f_bias())
+
+var table biasTable = table.new(position.top_right, 2, 4, border_width=1, border_color=color.new(color.gray, 50))
+
+if showMTFTable and barstate.islast
+    table.cell(biasTable, 0, 0, "Timeframe", text_color=color.white, bgcolor=color.new(color.gray, 30), text_size=size.small)
+    table.cell(biasTable, 1, 0, "Bias", text_color=color.white, bgcolor=color.new(color.gray, 30), text_size=size.small)
+
+    table.cell(biasTable, 0, 1, "Current (" + timeframe.period + ")", text_color=color.white, bgcolor=color.new(color.black, 60), text_size=size.small)
+    table.cell(biasTable, 1, 1, trend == 1 ? "Bullish" : trend == -1 ? "Bearish" : "N/A", text_color = trend == 1 ? color.green : trend == -1 ? color.red : color.gray, bgcolor=color.new(color.black, 60), text_size=size.small)
+
+    table.cell(biasTable, 0, 2, htf1, text_color=color.white, bgcolor=color.new(color.black, 60), text_size=size.small)
+    table.cell(biasTable, 1, 2, htf1Bias == 1 ? "Bullish" : "Bearish", text_color = htf1Bias == 1 ? color.green : color.red, bgcolor=color.new(color.black, 60), text_size=size.small)
+
+    table.cell(biasTable, 0, 3, htf2, text_color=color.white, bgcolor=color.new(color.black, 60), text_size=size.small)
+    table.cell(biasTable, 1, 3, htf2Bias == 1 ? "Bullish" : "Bearish", text_color = htf2Bias == 1 ? color.green : color.red, bgcolor=color.new(color.black, 60), text_size=size.small)
+
+// ============================= ALERT CONDITIONS (Alert Dialog Compatible) ======
+alertcondition(bullBreak, title="Bullish Structure Break", message="Bullish BOS/CHoCH on {{ticker}}")
+alertcondition(bearBreak, title="Bearish Structure Break", message="Bearish BOS/CHoCH on {{ticker}}")
+alertcondition(bullFVGCond, title="Bullish FVG Formed", message="New Bullish FVG on {{ticker}}")
+alertcondition(bearFVGCond, title="Bearish FVG Formed", message="New Bearish FVG on {{ticker}}")
+alertcondition(liqSweepHigh, title="Liquidity Sweep (High)", message="Sell-side liquidity swept on {{ticker}}")
+alertcondition(liqSweepLow, title="Liquidity Sweep (Low)", message="Buy-side liquidity swept on {{ticker}}")
