@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#050505">
+<meta name="description" content="SMC TRADE — Gold trading technology and automated XAUUSD market analysis.">
 <title>SMC TRADE — Gold Trading Technology</title>
 
 <style>
@@ -24,9 +25,15 @@
   --shadow:0 20px 70px rgba(0,0,0,.45);
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   font-family:Inter,Segoe UI,Arial,sans-serif;
@@ -52,14 +59,16 @@ body:before{
   mask-image:linear-gradient(to bottom,black,transparent);
 }
 
-/* NAVBAR */
+/* =========================
+   NAVBAR
+========================= */
 
 header{
   position:sticky;
   top:0;
   z-index:1000;
   backdrop-filter:blur(20px);
-  background:rgba(4,5,5,.78);
+  background:rgba(4,5,5,.82);
   border-bottom:1px solid rgba(217,169,40,.13);
 }
 
@@ -147,9 +156,12 @@ header{
   color:white;
   border:0;
   font-size:25px;
+  cursor:pointer;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero{
   max-width:1250px;
@@ -202,7 +214,9 @@ header{
   flex-wrap:wrap;
 }
 
-/* TRADING TERMINAL */
+/* =========================
+   TERMINAL
+========================= */
 
 .terminal{
   position:relative;
@@ -309,7 +323,9 @@ header{
   font-weight:900;
 }
 
-/* SECTION */
+/* =========================
+   SECTIONS
+========================= */
 
 section{
   max-width:1250px;
@@ -331,7 +347,9 @@ section{
   margin-top:8px;
 }
 
-/* GRID / CARDS */
+/* =========================
+   CARDS
+========================= */
 
 .grid{
   display:grid;
@@ -409,54 +427,9 @@ section{
   font-size:13px;
 }
 
-/* SECURITY */
-
-.security-list{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.security-item{
-  padding:20px;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:15px;
-  background:#0b0d0e;
-}
-
-.security-item strong{
-  display:inline-block;
-  margin-right:8px;
-}
-
-.security-item p{
-  color:#75828a;
-  font-size:12px;
-  margin-top:8px;
-}
-
-.status{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:100px;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.5px;
-}
-
-.status-green{
-  color:#5bf0a1;
-  background:rgba(40,209,124,.09);
-  border:1px solid rgba(40,209,124,.17);
-}
-
-.status-yellow{
-  color:#f0cb61;
-  background:rgba(217,169,40,.08);
-  border:1px solid rgba(217,169,40,.17);
-}
-
-/* ACCESS */
+/* =========================
+   ACCESS
+========================= */
 
 .steps{
   display:grid;
@@ -490,7 +463,9 @@ section{
   margin-top:5px;
 }
 
-/* DASHBOARD */
+/* =========================
+   DASHBOARD
+========================= */
 
 .dashboard{
   border:1px solid rgba(217,169,40,.18);
@@ -544,7 +519,9 @@ section{
   background:linear-gradient(90deg,#a87912,#f2d265);
 }
 
-/* SETTINGS */
+/* =========================
+   SETTINGS
+========================= */
 
 .settings-grid{
   display:grid;
@@ -577,7 +554,9 @@ section{
   outline:none;
 }
 
-/* MODALS */
+/* =========================
+   MODALS
+========================= */
 
 .modal{
   display:none;
@@ -657,7 +636,8 @@ input,select{
   outline:none;
 }
 
-input:focus,select:focus{
+input:focus,
+select:focus{
   border-color:rgba(217,169,40,.6);
 }
 
@@ -695,7 +675,9 @@ input:focus,select:focus{
   cursor:pointer;
 }
 
-/* PAYMENT */
+/* =========================
+   PAYMENT
+========================= */
 
 .payment-options{
   display:grid;
@@ -729,7 +711,9 @@ input:focus,select:focus{
   font-size:11px;
 }
 
-/* CHAT */
+/* =========================
+   CHAT BOT
+========================= */
 
 .chat-button{
   position:fixed;
@@ -752,7 +736,7 @@ input:focus,select:focus{
   position:fixed;
   right:22px;
   bottom:92px;
-  width:min(360px,calc(100% - 30px));
+  width:min(380px,calc(100% - 30px));
   z-index:1500;
   border:1px solid rgba(217,169,40,.22);
   background:#0a0c0d;
@@ -766,20 +750,27 @@ input:focus,select:focus{
   background:#111416;
   display:flex;
   justify-content:space-between;
+  align-items:center;
+}
+
+.chat-status{
+  color:var(--green);
+  font-size:10px;
+  margin-top:3px;
 }
 
 .chat-body{
-  height:260px;
+  height:300px;
   padding:14px;
   overflow:auto;
 }
 
 .message{
-  padding:10px;
+  padding:11px;
   border-radius:10px;
   margin-bottom:9px;
   font-size:12px;
-  line-height:1.5;
+  line-height:1.6;
 }
 
 .bot-message{
@@ -800,7 +791,9 @@ input:focus,select:focus{
   border-top:1px solid #202427;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer{
   border-top:1px solid rgba(255,255,255,.06);
@@ -835,65 +828,129 @@ footer p{
   font-size:12px;
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(max-width:950px){
-  .nav-links{display:none}
-  .mobile-menu{display:block}
-  .hero{grid-template-columns:1fr;padding-top:65px}
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .steps{grid-template-columns:repeat(3,1fr)}
-  .dashboard-grid{grid-template-columns:repeat(2,1fr)}
+
+  .nav-links{
+    display:none;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+    padding-top:65px;
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .steps{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .dashboard-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
 @media(max-width:650px){
-  .navbar{min-height:65px}
-  .nav-actions{display:none}
-  .hero h1{font-size:47px}
-  section{padding:50px 16px}
-  .hero{padding:55px 16px}
-  .grid,.grid-3,
-  .security-list,
+
+  .navbar{
+    min-height:65px;
+  }
+
+  .nav-actions{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:47px;
+  }
+
+  section{
+    padding:50px 16px;
+  }
+
+  .hero{
+    padding:55px 16px;
+  }
+
+  .grid,
+  .grid-3,
   .settings-grid,
   .dashboard-grid,
   .payment-options{
     grid-template-columns:1fr;
   }
-  .steps{grid-template-columns:repeat(2,1fr)}
-  .terminal{padding:14px}
-  .chart{height:230px}
-  .footer-inner{flex-direction:column}
+
+  .steps{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .terminal{
+    padding:14px;
+  }
+
+  .chart{
+    height:230px;
+  }
+
+  .footer-inner{
+    flex-direction:column;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================
+     NAVIGATION
+========================= -->
+
 <header>
 <nav class="navbar">
 
-  <div class="logo">SMC <span>TRADE</span></div>
+  <div class="logo">
+    SMC <span>TRADE</span>
+  </div>
 
   <div class="nav-links">
+
     <a href="#home">Home</a>
     <a href="#markets">Markets</a>
     <a href="#technology">Technology</a>
-    <a href="#security">Security</a>
     <a href="#access">Access</a>
     <a href="#dashboard">Dashboard</a>
+
   </div>
 
   <div class="nav-actions">
-    <button class="btn btn-dark" onclick="openModal('loginModal')">
+
+    <button
+      class="btn btn-dark"
+      onclick="openModal('loginModal')">
       Login
     </button>
 
-    <button class="btn btn-primary" onclick="startAccess()">
+    <button
+      class="btn btn-primary"
+      onclick="startAccess()">
       Get Started
     </button>
+
   </div>
 
-  <button class="mobile-menu" onclick="toggleMobile()">
+  <button
+    class="mobile-menu"
+    onclick="toggleMobile()">
     ☰
   </button>
 
@@ -902,6 +959,10 @@ footer p{
 
 
 <main id="home">
+
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero">
 
@@ -924,11 +985,14 @@ footer p{
 
   <div class="hero-buttons">
 
-    <button class="btn btn-primary" onclick="startAccess()">
+    <button
+      class="btn btn-primary"
+      onclick="startAccess()">
       Get Secure Access
     </button>
 
-    <button class="btn btn-dark"
+    <button
+      class="btn btn-dark"
       onclick="document.getElementById('technology').scrollIntoView({behavior:'smooth'})">
       Explore Technology
     </button>
@@ -937,6 +1001,8 @@ footer p{
 
 </div>
 
+
+<!-- TRADING TERMINAL -->
 
 <div class="terminal">
 
@@ -958,26 +1024,34 @@ footer p{
   </div>
 
   <div class="chart-tools">
+
     <button class="active">1m</button>
     <button>5m</button>
     <button>15m</button>
     <button>1H</button>
     <button>4H</button>
+
   </div>
 
   <div class="chart-info">
 
     <div>
+
       <div style="color:#718089;font-size:11px">
         XAUUSD
       </div>
 
-      <div class="price" id="goldPrice">
+      <div
+        class="price"
+        id="goldPrice">
         $2,650.40
       </div>
+
     </div>
 
-    <div class="up" id="goldChange">
+    <div
+      class="up"
+      id="goldChange">
       +1.28%
     </div>
 
@@ -988,184 +1062,341 @@ footer p{
 </section>
 
 
+<!-- =========================
+     MARKETS
+========================= -->
+
 <section id="markets">
 
 <div class="section-title">
+
   <h2>Market Overview</h2>
-  <p>Markets monitored by the trading system.</p>
+
+  <p>
+    Markets monitored by the SMC trading system.
+  </p>
+
 </div>
 
 <div class="grid">
 
   <div class="card">
-    <div class="market-symbol">XAUUSD</div>
-    <div class="market-price" id="mGold">$2,650.40</div>
-    <div class="up">+1.28%</div>
+
+    <div class="market-symbol">
+      XAUUSD
+    </div>
+
+    <div
+      class="market-price"
+      id="mGold">
+      $2,650.40
+    </div>
+
+    <div class="up">
+      +1.28%
+    </div>
+
   </div>
 
-  <div class="card">
-    <div class="market-symbol">EURUSD</div>
-    <div class="market-price">1.0852</div>
-    <div class="up">+0.31%</div>
-  </div>
 
   <div class="card">
-    <div class="market-symbol">GBPUSD</div>
-    <div class="market-price">1.2941</div>
-    <div class="up">+0.46%</div>
+
+    <div class="market-symbol">
+      EURUSD
+    </div>
+
+    <div class="market-price">
+      1.0852
+    </div>
+
+    <div class="up">
+      +0.31%
+    </div>
+
   </div>
 
+
   <div class="card">
-    <div class="market-symbol">BTCUSD</div>
-    <div class="market-price">$68,420</div>
-    <div class="up">+2.10%</div>
+
+    <div class="market-symbol">
+      GBPUSD
+    </div>
+
+    <div class="market-price">
+      1.2941
+    </div>
+
+    <div class="up">
+      +0.46%
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="market-symbol">
+      BTCUSD
+    </div>
+
+    <div class="market-price">
+      $68,420
+    </div>
+
+    <div class="up">
+      +2.10%
+    </div>
+
   </div>
 
 </div>
+
 </section>
 
+
+<!-- =========================
+     TECHNOLOGY
+========================= -->
 
 <section id="technology">
 
 <div class="section-title">
+
   <h2>SMC Trading Engine</h2>
-  <p>Market intelligence designed around Smart Money Concepts.</p>
+
+  <p>
+    Market intelligence designed around Smart Money Concepts.
+  </p>
+
 </div>
+
 
 <div class="grid grid-3">
 
   <div class="card">
-    <div class="feature-icon">↗</div>
-    <h3>Market Structure</h3>
-    <p>Detects HH, HL, LH, LL, BOS and CHoCH conditions.</p>
+
+    <div class="feature-icon">
+      ↗
+    </div>
+
+    <h3>
+      Market Structure
+    </h3>
+
+    <p>
+      Detects HH, HL, LH, LL, BOS and CHoCH conditions
+      to understand directional market structure.
+    </p>
+
   </div>
 
-  <div class="card">
-    <div class="feature-icon">◈</div>
-    <h3>Liquidity Analysis</h3>
-    <p>Identifies liquidity areas and potential sweep zones.</p>
-  </div>
 
   <div class="card">
-    <div class="feature-icon">▱</div>
-    <h3>Fair Value Gap</h3>
-    <p>Detects imbalance and FVG areas for trade analysis.</p>
+
+    <div class="feature-icon">
+      ◈
+    </div>
+
+    <h3>
+      Liquidity Analysis
+    </h3>
+
+    <p>
+      Identifies liquidity areas and potential sweep zones
+      for market analysis.
+    </p>
+
   </div>
 
-  <div class="card">
-    <div class="feature-icon">◫</div>
-    <h3>Multi-Timeframe Bias</h3>
-    <p>Combines higher and lower timeframe market information.</p>
-  </div>
 
   <div class="card">
-    <div class="feature-icon">◎</div>
-    <h3>Risk Management</h3>
-    <p>Designed around controlled position sizing, SL and TP.</p>
+
+    <div class="feature-icon">
+      ▱
+    </div>
+
+    <h3>
+      Fair Value Gap
+    </h3>
+
+    <p>
+      Detects imbalance and FVG areas for trade analysis.
+    </p>
+
   </div>
 
+
   <div class="card">
-    <div class="feature-icon">✓</div>
-    <h3>Protected Access</h3>
-    <p>Bot access depends on verified account and entitlement status.</p>
+
+    <div class="feature-icon">
+      ◫
+    </div>
+
+    <h3>
+      Multi-Timeframe Bias
+    </h3>
+
+    <p>
+      Combines higher and lower timeframe market information.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="feature-icon">
+      ◎
+    </div>
+
+    <h3>
+      Risk Management
+    </h3>
+
+    <p>
+      Designed around controlled position sizing,
+      stop-loss and take-profit management.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="feature-icon">
+      ✓
+    </div>
+
+    <h3>
+      Automated MT5
+    </h3>
+
+    <p>
+      Built for automated XAUUSD trading through a
+      MetaTrader 5 Expert Advisor.
+    </p>
+
   </div>
 
 </div>
+
 </section>
 
 
-<section id="security">
-
-<div class="section-title">
-  <h2>Account Security</h2>
-  <p>Security architecture prepared for the production backend.</p>
-</div>
-
-<div class="security-list">
-
-  <div class="security-item">
-    <strong>Google / Email / Phone</strong>
-    <span class="status status-green">SUPPORTED</span>
-    <p>Multiple secure account login methods.</p>
-  </div>
-
-  <div class="security-item">
-    <strong>OTP + 2FA</strong>
-    <span class="status status-yellow">BACKEND REQUIRED</span>
-    <p>One-time verification and second-factor protection.</p>
-  </div>
-
-  <div class="security-item">
-    <strong>New Device Protection</strong>
-    <span class="status status-yellow">BACKEND REQUIRED</span>
-    <p>New device/session alerts and session management.</p>
-  </div>
-
-  <div class="security-item">
-    <strong>Rate Limiting</strong>
-    <span class="status status-yellow">BACKEND REQUIRED</span>
-    <p>OTP and login attempts must be limited server-side.</p>
-  </div>
-
-  <div class="security-item">
-    <strong>KYC Protection</strong>
-    <span class="status status-yellow">BACKEND REQUIRED</span>
-    <p>Identity, document and liveness verification.</p>
-  </div>
-
-  <div class="security-item">
-    <strong>Payment Verification</strong>
-    <span class="status status-yellow">BACKEND REQUIRED</span>
-    <p>Payment webhook confirms entitlement before bot access.</p>
-  </div>
-
-</div>
-</section>
-
+<!-- =========================
+     ACCESS
+========================= -->
 
 <section id="access">
 
 <div class="section-title">
-  <h2>Secure Access</h2>
-  <p>Complete the account verification process before trading-bot access.</p>
+
+  <h2>
+    Secure Access
+  </h2>
+
+  <p>
+    Complete the required access process before
+    trading-bot activation.
+  </p>
+
 </div>
+
 
 <div class="steps">
 
   <div class="step">
-    <div class="step-number">1</div>
-    <strong>18+</strong>
-    <p>Age requirement</p>
+
+    <div class="step-number">
+      1
+    </div>
+
+    <strong>
+      18+
+    </strong>
+
+    <p>
+      Age requirement
+    </p>
+
   </div>
 
-  <div class="step">
-    <div class="step-number">2</div>
-    <strong>Account</strong>
-    <p>Secure login</p>
-  </div>
 
   <div class="step">
-    <div class="step-number">3</div>
-    <strong>KYC</strong>
-    <p>ID verification</p>
+
+    <div class="step-number">
+      2
+    </div>
+
+    <strong>
+      Account
+    </strong>
+
+    <p>
+      Secure login
+    </p>
+
   </div>
 
-  <div class="step">
-    <div class="step-number">4</div>
-    <strong>Payment</strong>
-    <p>Verified payment</p>
-  </div>
 
   <div class="step">
-    <div class="step-number">5</div>
-    <strong>MT5 Bot</strong>
-    <p>Entitlement access</p>
+
+    <div class="step-number">
+      3
+    </div>
+
+    <strong>
+      KYC
+    </strong>
+
+    <p>
+      Identity verification
+    </p>
+
+  </div>
+
+
+  <div class="step">
+
+    <div class="step-number">
+      4
+    </div>
+
+    <strong>
+      Payment
+    </strong>
+
+    <p>
+      Verified payment
+    </p>
+
+  </div>
+
+
+  <div class="step">
+
+    <div class="step-number">
+      5
+    </div>
+
+    <strong>
+      MT5 Bot
+    </strong>
+
+    <p>
+      Access activation
+    </p>
+
   </div>
 
 </div>
 
 </section>
 
+
+<!-- =========================
+     DASHBOARD
+========================= -->
 
 <section id="dashboard">
 
@@ -1174,11 +1405,20 @@ footer p{
   <div class="dashboard-top">
 
     <div>
-      <div class="badge">SECURE USER DASHBOARD</div>
-      <h2 style="margin-top:12px">Trading Account</h2>
+
+      <div class="badge">
+        SECURE USER DASHBOARD
+      </div>
+
+      <h2 style="margin-top:12px">
+        Trading Account
+      </h2>
+
     </div>
 
-    <button class="btn btn-danger" onclick="logout()">
+    <button
+      class="btn btn-danger"
+      onclick="logout()">
       Logout
     </button>
 
@@ -1187,45 +1427,75 @@ footer p{
 
   <div class="dashboard-grid">
 
+
     <div class="dashboard-card">
-      <h3>Identity</h3>
+
+      <h3>
+        Identity
+      </h3>
+
       <p>
         Verification status:
-        <span class="status status-yellow">Pending</span>
+        <span class="status status-yellow">
+          Pending
+        </span>
       </p>
 
       <div class="progress">
         <span style="width:40%"></span>
       </div>
+
     </div>
 
 
     <div class="dashboard-card">
-      <h3>Age Requirement</h3>
-      <p>18+ requirement</p>
+
+      <h3>
+        Age Requirement
+      </h3>
+
+      <p>
+        18+ requirement
+      </p>
+
       <br>
+
       <span class="status status-green">
         ACCOUNT REQUIREMENT
       </span>
+
     </div>
 
 
     <div class="dashboard-card">
-      <h3>Subscription</h3>
-      <p>Payment entitlement</p>
+
+      <h3>
+        Subscription
+      </h3>
+
+      <p>
+        Payment entitlement
+      </p>
+
       <br>
+
       <span class="status status-yellow">
         NOT CONFIRMED
       </span>
+
     </div>
 
 
     <div class="dashboard-card">
-      <h3>Trading Bot</h3>
+
+      <h3>
+        Trading Bot
+      </h3>
 
       <p>
-        MT5 access is locked until server-confirmed
-        KYC and payment entitlement.
+        MT5 access is locked until the required
+        account, verification and payment process
+        is completed.
       </p>
 
       <button
@@ -1234,29 +1504,40 @@ footer p{
         disabled>
         🔒 Bot Locked
       </button>
+
     </div>
 
 
     <div class="dashboard-card">
-      <h3>Two-Factor Authentication</h3>
+
+      <h3>
+        Two-Factor Authentication
+      </h3>
 
       <p>
-        Protect your account with an additional verification layer.
+        Additional verification protection for
+        your account.
       </p>
 
       <button
         class="btn btn-blue"
         style="margin-top:15px;width:100%"
-        onclick="showMessage('2FA setup will be available after backend activation.')">
+        onclick="showMessage('2FA setup requires the production backend.')">
         Configure 2FA
       </button>
+
     </div>
 
 
     <div class="dashboard-card">
-      <h3>Active Sessions</h3>
 
-      <p>Current browser session</p>
+      <h3>
+        Active Sessions
+      </h3>
+
+      <p>
+        Current browser session
+      </p>
 
       <br>
 
@@ -1270,6 +1551,7 @@ footer p{
         onclick="showMessage('Session management requires the production backend.')">
         Manage Sessions
       </button>
+
     </div>
 
   </div>
@@ -1278,57 +1560,147 @@ footer p{
   <div style="margin-top:25px">
 
     <div class="section-title">
-      <h2 style="font-size:24px">Trading Settings</h2>
-      <p>Configure your preferred trading environment.</p>
+
+      <h2 style="font-size:24px">
+        Trading Settings
+      </h2>
+
+      <p>
+        Configure your preferred trading environment.
+      </p>
+
     </div>
+
 
     <div class="settings-grid">
 
-      <div class="setting">
-        <span>Risk Percentage</span>
-        <input type="number" value="1" min=".1" max="10" step=".1">
-      </div>
 
       <div class="setting">
-        <span>Stop Loss</span>
-        <select>
-          <option>ATR Based</option>
-          <option>Fixed</option>
-        </select>
+
+        <span>
+          Risk Percentage
+        </span>
+
+        <input
+          type="number"
+          value="1"
+          min=".1"
+          max="10"
+          step=".1">
+
       </div>
 
-      <div class="setting">
-        <span>Take Profit</span>
-        <select>
-          <option>ATR Based</option>
-          <option>Risk / Reward</option>
-        </select>
-      </div>
 
       <div class="setting">
-        <span>Timeframe</span>
+
+        <span>
+          Stop Loss
+        </span>
+
         <select>
-          <option>1 Minute</option>
-          <option>5 Minutes</option>
-          <option>15 Minutes</option>
-          <option>1 Hour</option>
+
+          <option>
+            ATR Based
+          </option>
+
+          <option>
+            Fixed
+          </option>
+
         </select>
+
       </div>
 
-      <div class="setting">
-        <span>Trailing Stop</span>
-        <select>
-          <option>Enabled</option>
-          <option>Disabled</option>
-        </select>
-      </div>
 
       <div class="setting">
-        <span>Break Even</span>
+
+        <span>
+          Take Profit
+        </span>
+
         <select>
-          <option>Enabled</option>
-          <option>Disabled</option>
+
+          <option>
+            ATR Based
+          </option>
+
+          <option>
+            Risk / Reward
+          </option>
+
         </select>
+
+      </div>
+
+
+      <div class="setting">
+
+        <span>
+          Timeframe
+        </span>
+
+        <select>
+
+          <option>
+            1 Minute
+          </option>
+
+          <option>
+            5 Minutes
+          </option>
+
+          <option>
+            15 Minutes
+          </option>
+
+          <option>
+            1 Hour
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="setting">
+
+        <span>
+          Trailing Stop
+        </span>
+
+        <select>
+
+          <option>
+            Enabled
+          </option>
+
+          <option>
+            Disabled
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="setting">
+
+        <span>
+          Break Even
+        </span>
+
+        <select>
+
+          <option>
+            Enabled
+          </option>
+
+          <option>
+            Disabled
+          </option>
+
+        </select>
+
       </div>
 
     </div>
@@ -1336,48 +1708,76 @@ footer p{
   </div>
 
 </div>
+
 </section>
 
 </main>
 
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN MODAL
+========================= -->
 
-<div class="modal" id="loginModal">
+<div
+  class="modal"
+  id="loginModal">
 
 <div class="modal-box">
 
   <div class="modal-head">
 
     <div>
-      <h2>Secure Login</h2>
-      <p>Sign in to your SMC TRADE account.</p>
+
+      <h2>
+        Secure Login
+      </h2>
+
+      <p>
+        Sign in to your SMC TRADE account.
+      </p>
+
     </div>
 
-    <button class="close" onclick="closeModal('loginModal')">
+    <button
+      class="close"
+      onclick="closeModal('loginModal')">
       ×
     </button>
 
   </div>
 
-  <div class="notice">
-    Production authentication must be processed by a secure server.
-    Never store passwords or API secrets inside GitHub.
-  </div>
 
-  <button class="google" onclick="googleLogin()">
+  <button
+    class="google"
+    onclick="googleLogin()">
     Continue with Google
   </button>
 
-  <div class="divider">OR</div>
 
-  <div class="form-group">
-    <label>Email</label>
-    <input id="loginEmail" type="email" placeholder="you@example.com">
+  <div class="divider">
+    OR
   </div>
 
+
   <div class="form-group">
-    <label>Password</label>
+
+    <label>
+      Email
+    </label>
+
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="you@example.com">
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label>
+      Password
+    </label>
 
     <div class="password-wrap">
 
@@ -1393,7 +1793,9 @@ footer p{
       </button>
 
     </div>
+
   </div>
+
 
   <button
     class="btn btn-primary"
@@ -1402,12 +1804,25 @@ footer p{
     Login with Email
   </button>
 
-  <div class="divider">PHONE OTP</div>
+
+  <div class="divider">
+    PHONE OTP
+  </div>
+
 
   <div class="form-group">
-    <label>Phone Number</label>
-    <input id="phoneNumber" type="tel" placeholder="+251...">
+
+    <label>
+      Phone Number
+    </label>
+
+    <input
+      id="phoneNumber"
+      type="tel"
+      placeholder="+251...">
+
   </div>
+
 
   <button
     class="btn btn-blue"
@@ -1416,44 +1831,67 @@ footer p{
     Send OTP
   </button>
 
+
   <div id="loginMessage"></div>
 
 </div>
 </div>
 
 
-<!-- AGE -->
+<!-- =========================
+     AGE MODAL
+========================= -->
 
-<div class="modal" id="ageModal">
+<div
+  class="modal"
+  id="ageModal">
 
 <div class="modal-box">
 
   <div class="modal-head">
 
     <div>
-      <h2>Age Requirement</h2>
-      <p>You must meet the minimum age requirement to continue.</p>
+
+      <h2>
+        Age Requirement
+      </h2>
+
+      <p>
+        You must meet the minimum age requirement
+        to continue.
+      </p>
+
     </div>
 
-    <button class="close" onclick="closeModal('ageModal')">×</button>
+    <button
+      class="close"
+      onclick="closeModal('ageModal')">
+      ×
+    </button>
 
   </div>
+
 
   <div class="notice">
-    This age check is only a frontend step.
-    Final age verification must be completed through KYC.
+    Please confirm that you meet the required
+    age before continuing.
   </div>
 
-  <label style="display:flex;gap:10px;align-items:flex-start;margin-bottom:20px">
+
+  <label
+    style="display:flex;gap:10px;align-items:flex-start;margin-bottom:20px">
 
     <input
       id="ageConfirm"
       type="checkbox"
       style="width:auto;margin-top:4px">
 
-    <span>I confirm that I meet the required age.</span>
+    <span>
+      I confirm that I meet the required age.
+    </span>
 
   </label>
+
 
   <button
     class="btn btn-primary"
@@ -1466,61 +1904,124 @@ footer p{
 </div>
 
 
-<!-- KYC -->
+<!-- =========================
+     KYC MODAL
+========================= -->
 
-<div class="modal" id="kycModal">
+<div
+  class="modal"
+  id="kycModal">
 
 <div class="modal-box">
 
   <div class="modal-head">
 
     <div>
-      <h2>Identity Verification</h2>
-      <p>Secure KYC verification.</p>
+
+      <h2>
+        Identity Verification
+      </h2>
+
+      <p>
+        Secure KYC verification.
+      </p>
+
     </div>
 
-    <button class="close" onclick="closeModal('kycModal')">×</button>
+    <button
+      class="close"
+      onclick="closeModal('kycModal')">
+      ×
+    </button>
 
   </div>
+
 
   <div class="notice">
-    Your identity must be verified before payment and MT5
-    bot access can be enabled.
+    Identity verification is required before
+    payment and MT5 bot access can be enabled.
   </div>
+
 
   <div class="form-group">
 
-    <label>Document Type</label>
+    <label>
+      Document Type
+    </label>
 
     <select id="documentType">
-      <option value="">Select document</option>
-      <option>Passport</option>
-      <option>National ID</option>
-      <option>Driving Licence</option>
+
+      <option value="">
+        Select document
+      </option>
+
+      <option>
+        Passport
+      </option>
+
+      <option>
+        National ID
+      </option>
+
+      <option>
+        Driving Licence
+      </option>
+
     </select>
 
   </div>
 
+
   <div class="form-group">
 
-    <label>Country</label>
+    <label>
+      Country
+    </label>
 
     <select id="country">
-      <option value="">Select country</option>
-      <option>Ethiopia</option>
-      <option>United States</option>
-      <option>United Kingdom</option>
-      <option>Canada</option>
-      <option>United Arab Emirates</option>
-      <option>Kenya</option>
-      <option>Other</option>
+
+      <option value="">
+        Select country
+      </option>
+
+      <option>
+        Ethiopia
+      </option>
+
+      <option>
+        United States
+      </option>
+
+      <option>
+        United Kingdom
+      </option>
+
+      <option>
+        Canada
+      </option>
+
+      <option>
+        United Arab Emirates
+      </option>
+
+      <option>
+        Kenya
+      </option>
+
+      <option>
+        Other
+      </option>
+
     </select>
 
   </div>
 
+
   <div class="form-group">
 
-    <label>Selfie / Face Verification</label>
+    <label>
+      Selfie / Face Verification
+    </label>
 
     <input
       type="file"
@@ -1529,9 +2030,12 @@ footer p{
 
   </div>
 
+
   <div class="form-group">
 
-    <label>Identity Document</label>
+    <label>
+      Identity Document
+    </label>
 
     <input
       type="file"
@@ -1540,6 +2044,7 @@ footer p{
 
   </div>
 
+
   <button
     class="btn btn-primary"
     style="width:100%"
@@ -1547,119 +2052,222 @@ footer p{
     Submit Verification
   </button>
 
+
   <div id="kycMessage"></div>
 
 </div>
 </div>
 
 
-<!-- PAYMENT -->
+<!-- =========================
+     PAYMENT MODAL
+========================= -->
 
-<div class="modal" id="paymentModal">
+<div
+  class="modal"
+  id="paymentModal">
 
 <div class="modal-box">
 
   <div class="modal-head">
 
     <div>
-      <h2>Secure Payment</h2>
-      <p>Choose your preferred payment method.</p>
+
+      <h2>
+        Secure Payment
+      </h2>
+
+      <p>
+        Choose your preferred payment method.
+      </p>
+
     </div>
 
-    <button class="close" onclick="closeModal('paymentModal')">×</button>
+    <button
+      class="close"
+      onclick="closeModal('paymentModal')">
+      ×
+    </button>
 
   </div>
+
 
   <div class="notice">
-    Payment confirmation must come from the payment provider's
-    server-side webhook before trading-bot access is enabled.
+    Choose your preferred payment method.
+    Real payment confirmation must be verified
+    by the production payment backend.
   </div>
 
-  <div class="card" style="margin-bottom:15px">
 
-    <h3>SMC TRADE Access</h3>
+  <div
+    class="card"
+    style="margin-bottom:15px">
 
-    <p>Premium trading-bot subscription</p>
+    <h3>
+      SMC TRADE Access
+    </h3>
 
-    <div style="font-size:31px;font-weight:950;margin:15px 0">
+    <p>
+      Premium trading-bot subscription
+    </p>
+
+    <div
+      style="font-size:31px;font-weight:950;margin:15px 0">
       Secure Access
     </div>
 
   </div>
 
+
   <div class="payment-options">
 
-    <button class="payment-option"
+
+    <button
+      class="payment-option"
       onclick="choosePayment('Binance Pay')">
 
-      <strong>🟡 Binance Pay</strong>
-      <span>Continue with Binance Pay</span>
+      <strong>
+        🟡 Binance Pay
+      </strong>
+
+      <span>
+        Continue with Binance Pay
+      </span>
 
     </button>
 
-    <button class="payment-option"
+
+    <button
+      class="payment-option"
       onclick="choosePayment('Bybit Pay')">
 
-      <strong>🔵 Bybit Pay</strong>
-      <span>Continue with Bybit Pay</span>
+      <strong>
+        🔵 Bybit Pay
+      </strong>
+
+      <span>
+        Continue with Bybit Pay
+      </span>
 
     </button>
 
-    <button class="payment-option"
+
+    <button
+      class="payment-option"
       onclick="choosePayment('USDT')">
 
-      <strong>₮ USDT / Crypto</strong>
-      <span>Crypto payment option</span>
+      <strong>
+        ₮ USDT / Crypto
+      </strong>
+
+      <span>
+        Crypto payment option
+      </span>
 
     </button>
 
-    <button class="payment-option"
+
+    <button
+      class="payment-option"
       onclick="choosePayment('Card')">
 
-      <strong>💳 Card</strong>
-      <span>Available payment provider</span>
+      <strong>
+        💳 Card
+      </strong>
+
+      <span>
+        Available payment provider
+      </span>
 
     </button>
 
   </div>
 
-  <div id="paymentMessage" style="margin-top:15px"></div>
+
+  <div
+    id="paymentMessage"
+    style="margin-top:15px">
+  </div>
 
 </div>
 </div>
 
 
-<!-- CHAT -->
+<!-- =========================
+     AI SUPPORT BOT
+========================= -->
 
-<button class="chat-button" onclick="toggleChat()">
+<button
+  class="chat-button"
+  onclick="toggleChat()">
   ✦
 </button>
 
-<div class="chat-box" id="chatBox">
+
+<div
+  class="chat-box"
+  id="chatBox">
+
 
   <div class="chat-head">
 
-    <strong>SMC AI Support</strong>
+    <div>
 
-    <button class="close" onclick="toggleChat()">×</button>
+      <strong>
+        SMC AI Support
+      </strong>
+
+      <div class="chat-status">
+        ● ONLINE
+      </div>
+
+    </div>
+
+    <button
+      class="close"
+      onclick="toggleChat()">
+      ×
+    </button>
 
   </div>
 
-  <div class="chat-body" id="chatBody">
+
+  <div
+    class="chat-body"
+    id="chatBody">
 
     <div class="message bot-message">
-      Hello. I'm SMC TRADE Support.
-      Ask me about account access, KYC, payment,
-      MT5 or the trading system.
+
+      Hello. I'm SMC TRADE AI Support.
+
+      <br><br>
+
+      I can explain:
+
+      <br>• SMC Trading Technology
+      <br>• XAUUSD / Gold
+      <br>• Market Structure
+      <br>• Liquidity
+      <br>• FVG
+      <br>• MT5 Bot
+      <br>• Account Access
+      <br>• KYC
+      <br>• Payment
+
+      <br><br>
+
+      Ask me anything about SMC TRADE.
+
     </div>
 
   </div>
+
 
   <div class="chat-input">
 
     <input
       id="chatInput"
-      placeholder="Type your question..."
+      placeholder="Ask SMC AI..."
       onkeydown="if(event.key==='Enter')sendChat()">
 
     <button
@@ -1673,6 +2281,10 @@ footer p{
 </div>
 
 
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
 
 <div class="footer-inner">
@@ -1684,26 +2296,36 @@ footer p{
     </div>
 
     <p style="margin-top:10px">
-      Automated trading technology and market-analysis tools.
-      Trading involves substantial risk. Past performance does not
-      guarantee future results.
+
+      Automated trading technology and
+      market-analysis tools.
+
+      Trading involves substantial risk.
+      Past performance does not guarantee
+      future results.
+
     </p>
 
   </div>
 
+
   <div class="footer-links">
 
-    <a href="tel:+251988407460">📞 Call Support</a>
+    <a href="tel:+251988407460">
+      📞 Call Support
+    </a>
 
-    <a href="https://wa.me/251988407460"
-       target="_blank"
-       rel="noopener">
+    <a
+      href="https://wa.me/251988407460"
+      target="_blank"
+      rel="noopener">
       WhatsApp
     </a>
 
-    <a href="https://t.me/+251988407460"
-       target="_blank"
-       rel="noopener">
+    <a
+      href="https://t.me/+251988407460"
+      target="_blank"
+      rel="noopener">
       Telegram
     </a>
 
@@ -1716,204 +2338,389 @@ footer p{
 
 <script>
 
-/* MODALS */
+/* =========================
+   MODALS
+========================= */
 
 function openModal(id){
-  document.getElementById(id).style.display="block";
+
+  const modal=document.getElementById(id);
+
+  if(!modal)return;
+
+  modal.style.display="block";
+
   document.body.style.overflow="hidden";
 }
 
+
 function closeModal(id){
-  document.getElementById(id).style.display="none";
+
+  const modal=document.getElementById(id);
+
+  if(!modal)return;
+
+  modal.style.display="none";
+
   document.body.style.overflow="";
 }
 
-window.onclick=function(e){
-  document.querySelectorAll(".modal").forEach(m=>{
-    if(e.target===m){
-      m.style.display="none";
+
+window.addEventListener("click",function(e){
+
+  document.querySelectorAll(".modal").forEach(function(modal){
+
+    if(e.target===modal){
+
+      modal.style.display="none";
+
       document.body.style.overflow="";
     }
+
   });
-};
+
+});
 
 
-/* ACCESS FLOW */
+/* =========================
+   ACCESS FLOW
+========================= */
 
 function startAccess(){
+
   openModal("ageModal");
 }
 
+
 function confirmAge(){
 
-  const checked=document.getElementById("ageConfirm").checked;
+  const checked=
+    document.getElementById("ageConfirm").checked;
 
   if(!checked){
-    alert("Please confirm the age requirement.");
+
+    alert(
+      "Please confirm the age requirement."
+    );
+
     return;
   }
 
   closeModal("ageModal");
+
   openModal("loginModal");
 }
 
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 
 function googleLogin(){
-  showMessage("Google authentication requires a production OAuth backend.");
+
+  showLogin(
+    "Google authentication requires a production OAuth backend."
+  );
 }
+
 
 function emailLogin(){
 
-  const email=document.getElementById("loginEmail").value;
+  const email=
+    document.getElementById("loginEmail").value.trim();
 
   if(!email){
-    showLogin("Enter your email address.");
+
+    showLogin(
+      "Enter your email address."
+    );
+
     return;
   }
 
-  showLogin("Demo login submitted. Connect your secure backend to authenticate users.");
+  showLogin(
+    "Demo login submitted. Connect your secure backend to authenticate users."
+  );
 }
+
 
 function requestOTP(){
 
-  const phone=document.getElementById("phoneNumber").value;
+  const phone=
+    document.getElementById("phoneNumber").value.trim();
 
   if(!phone){
-    showLogin("Enter your phone number.");
+
+    showLogin(
+      "Enter your phone number."
+    );
+
     return;
   }
 
-  showLogin("OTP request created. Connect your SMS provider/backend to send the real code.");
+  showLogin(
+    "OTP request created. Connect your SMS provider/backend to send the real code."
+  );
 }
 
+
 function showLogin(msg){
-  document.getElementById("loginMessage").innerHTML=
-    `<div class="notice" style="margin-top:15px">${msg}</div>`;
+
+  document.getElementById(
+    "loginMessage"
+  ).innerHTML=
+    `<div class="notice" style="margin-top:15px">
+      ${escapeHTML(msg)}
+    </div>`;
 }
+
 
 function togglePassword(id,button){
 
-  const input=document.getElementById(id);
+  const input=
+    document.getElementById(id);
 
   if(input.type==="password"){
+
     input.type="text";
+
     button.textContent="Hide";
+
   }else{
+
     input.type="password";
+
     button.textContent="Show";
   }
 }
 
 
-/* KYC */
+/* =========================
+   KYC
+========================= */
 
 function submitKYC(){
 
-  const type=document.getElementById("documentType").value;
-  const country=document.getElementById("country").value;
+  const type=
+    document.getElementById("documentType").value;
+
+  const country=
+    document.getElementById("country").value;
 
   if(!type || !country){
-    document.getElementById("kycMessage").innerHTML=
+
+    document.getElementById(
+      "kycMessage"
+    ).innerHTML=
       `<div class="notice" style="margin-top:15px">
         Please select document type and country.
       </div>`;
+
     return;
   }
 
-  document.getElementById("kycMessage").innerHTML=
+  document.getElementById(
+    "kycMessage"
+  ).innerHTML=
     `<div class="notice" style="margin-top:15px">
-      KYC submission prepared. A secure backend/KYC provider
-      must receive and verify the documents before approval.
+      KYC submission prepared. A secure backend/KYC
+      provider must receive and verify the documents
+      before approval.
     </div>`;
 }
 
 
-/* PAYMENT */
+/* =========================
+   PAYMENT
+========================= */
 
 function choosePayment(method){
 
-  document.getElementById("paymentMessage").innerHTML=
+  document.getElementById(
+    "paymentMessage"
+  ).innerHTML=
     `<div class="notice">
-      Selected: <strong>${method}</strong><br><br>
-      Payment integration is ready for backend connection.
-      The server must create the real payment order and verify
-      the provider webhook before unlocking MT5 access.
+
+      Selected:
+      <strong>${escapeHTML(method)}</strong>
+
+      <br><br>
+
+      Payment integration is ready for backend
+      connection.
+
     </div>`;
 }
 
 
-/* DASHBOARD */
+/* =========================
+   DASHBOARD
+========================= */
 
 function logout(){
-  alert("You have been logged out.");
+
+  alert(
+    "You have been logged out."
+  );
 }
 
+
 function showMessage(message){
+
   alert(message);
 }
 
 
-/* CHAT */
+/* =========================
+   AI SUPPORT BOT
+========================= */
 
 function toggleChat(){
 
-  const box=document.getElementById("chatBox");
+  const box=
+    document.getElementById("chatBox");
 
-  box.style.display =
-    box.style.display==="block" ? "none" : "block";
+  box.style.display=
+    box.style.display==="block"
+      ? "none"
+      : "block";
 }
+
 
 function sendChat(){
 
-  const input=document.getElementById("chatInput");
-  const body=document.getElementById("chatBody");
+  const input=
+    document.getElementById("chatInput");
 
-  const text=input.value.trim();
+  const body=
+    document.getElementById("chatBody");
+
+  const text=
+    input.value.trim();
 
   if(!text)return;
 
-  body.innerHTML +=
-    `<div class="message user-message">${escapeHTML(text)}</div>`;
+  body.innerHTML+=
+    `<div class="message user-message">
+      ${escapeHTML(text)}
+    </div>`;
 
   input.value="";
 
-  setTimeout(()=>{
+  const q=
+    text.toLowerCase();
 
-    let reply=
-      "I can help with SMC TRADE account access, KYC, payment and MT5.";
+  let reply=
+    "SMC TRADE is designed for automated market analysis and XAUUSD trading technology. I can explain the system, MT5 bot, SMC concepts, access or payment process.";
 
-    const q=text.toLowerCase();
 
-    if(q.includes("payment") ||
-       q.includes("binance") ||
-       q.includes("bybit")){
-      reply=
-        "Payment options include Binance Pay, Bybit Pay and crypto. Real payment confirmation must be verified by the secure backend.";
-    }
+  if(
+    q.includes("smc") ||
+    q.includes("smart money")
+  ){
 
-    if(q.includes("mt5") ||
-       q.includes("bot")){
-      reply=
-        "MT5 bot access remains locked until the server confirms the required account, KYC and payment entitlement.";
-    }
+    reply=
+      "SMC means Smart Money Concepts. The system focuses on market structure, liquidity, BOS, CHoCH, Fair Value Gaps and multi-timeframe analysis.";
+  }
 
-    if(q.includes("kyc") ||
-       q.includes("verification")){
-      reply=
-        "KYC requires identity verification through the production verification system.";
-    }
 
-    body.innerHTML +=
-      `<div class="message bot-message">${reply}</div>`;
+  if(
+    q.includes("gold") ||
+    q.includes("xauusd")
+  ){
 
-    body.scrollTop=body.scrollHeight;
+    reply=
+      "XAUUSD represents Gold versus the US Dollar. SMC TRADE is designed around XAUUSD market analysis and automated MT5 trading.";
+  }
 
-  },500);
+
+  if(
+    q.includes("market structure") ||
+    q.includes("bos") ||
+    q.includes("choch")
+  ){
+
+    reply=
+      "Market structure studies HH, HL, LH and LL. BOS can indicate a break of structure, while CHoCH can indicate a possible change in market direction.";
+  }
+
+
+  if(
+    q.includes("liquidity")
+  ){
+
+    reply=
+      "Liquidity analysis looks for areas where orders may be concentrated. SMC TRADE uses liquidity concepts together with other conditions rather than relying on one signal alone.";
+  }
+
+
+  if(
+    q.includes("fvg") ||
+    q.includes("fair value")
+  ){
+
+    reply=
+      "An FVG, or Fair Value Gap, represents a price imbalance. The trading system can use FVG information as part of broader market analysis.";
+  }
+
+
+  if(
+    q.includes("mt5") ||
+    q.includes("bot")
+  ){
+
+    reply=
+      "The MT5 bot is designed for automated XAUUSD trading. Real trading requires MetaTrader 5, a broker account and a properly configured Expert Advisor.";
+  }
+
+
+  if(
+    q.includes("payment") ||
+    q.includes("binance") ||
+    q.includes("bybit")
+  ){
+
+    reply=
+      "SMC TRADE can present payment options such as Binance Pay, Bybit Pay, crypto or card. Real payment confirmation must be verified by the production backend.";
+  }
+
+
+  if(
+    q.includes("kyc") ||
+    q.includes("verification")
+  ){
+
+    reply=
+      "KYC means identity verification. The production system should use a secure verification provider before activating protected services.";
+  }
+
+
+  if(
+    q.includes("access") ||
+    q.includes("login")
+  ){
+
+    reply=
+      "Start with Get Started, complete the required account process and then continue through the access flow. The real authentication system needs a secure backend.";
+  }
+
+
+  setTimeout(function(){
+
+    body.innerHTML+=
+      `<div class="message bot-message">
+        ${escapeHTML(reply)}
+      </div>`;
+
+    body.scrollTop=
+      body.scrollHeight;
+
+  },350);
 }
 
+
 function escapeHTML(str){
+
   return str
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
@@ -1923,61 +2730,131 @@ function escapeHTML(str){
 }
 
 
-/* MOBILE */
+/* =========================
+   MOBILE NAVIGATION
+========================= */
 
 function toggleMobile(){
 
-  const links=document.querySelector(".nav-links");
+  const links=
+    document.querySelector(".nav-links");
 
-  if(links.style.display==="flex"){
+  const open=
+    links.dataset.open==="true";
+
+  if(open){
+
     links.style.display="";
-  }else{
-    links.style.display="flex";
-    links.style.position="absolute";
-    links.style.top="65px";
-    links.style.left="0";
-    links.style.right="0";
-    links.style.padding="20px";
-    links.style.flexDirection="column";
-    links.style.background="#080a0b";
-    links.style.borderBottom="1px solid rgba(217,169,40,.2)";
+
+    links.dataset.open="false";
+
+    return;
   }
+
+  links.style.display="flex";
+
+  links.style.position="absolute";
+
+  links.style.top="65px";
+
+  links.style.left="0";
+
+  links.style.right="0";
+
+  links.style.padding="20px";
+
+  links.style.flexDirection="column";
+
+  links.style.background="#080a0b";
+
+  links.style.borderBottom=
+    "1px solid rgba(217,169,40,.2)";
+
+  links.dataset.open="true";
 }
 
 
-/* REAL-TIME STYLE GOLD PRICE */
+/* Close mobile menu after navigation */
+
+document.querySelectorAll(
+  ".nav-links a"
+).forEach(function(link){
+
+  link.addEventListener("click",function(){
+
+    const links=
+      document.querySelector(".nav-links");
+
+    links.style.display="";
+
+    links.dataset.open="false";
+
+  });
+
+});
+
+
+/* =========================
+   GOLD PRICE DEMO
+========================= */
 
 let goldPrice=2650.40;
 
-setInterval(()=>{
+setInterval(function(){
 
-  goldPrice += (Math.random()-.48)*1.8;
+  goldPrice +=
+    (Math.random()-.48)*1.8;
 
-  document.getElementById("goldPrice").textContent=
+  document.getElementById(
+    "goldPrice"
+  ).textContent=
     "$"+goldPrice.toFixed(2);
 
-  document.getElementById("mGold").textContent=
+  document.getElementById(
+    "mGold"
+  ).textContent=
     "$"+goldPrice.toFixed(2);
 
 },1200);
 
 
-/* ANIMATED CANDLESTICK CHART */
+/* =========================
+   CANDLE CHART
+========================= */
 
-const canvas=document.getElementById("goldChart");
-const ctx=canvas.getContext("2d");
+const canvas=
+  document.getElementById("goldChart");
+
+const ctx=
+  canvas.getContext("2d");
 
 let candles=[];
 
+
 function resizeCanvas(){
 
-  const rect=canvas.getBoundingClientRect();
+  const rect=
+    canvas.getBoundingClientRect();
 
-  canvas.width=rect.width*devicePixelRatio;
-  canvas.height=rect.height*devicePixelRatio;
+  const ratio=
+    window.devicePixelRatio || 1;
 
-  ctx.scale(devicePixelRatio,devicePixelRatio);
+  canvas.width=
+    rect.width*ratio;
+
+  canvas.height=
+    rect.height*ratio;
+
+  ctx.setTransform(
+    ratio,
+    0,
+    0,
+    ratio,
+    0,
+    0
+  );
 }
+
 
 function createCandles(){
 
@@ -1988,9 +2865,17 @@ function createCandles(){
   for(let i=0;i<42;i++){
 
     const open=price;
-    const close=open+(Math.random()-.46)*7;
-    const high=Math.max(open,close)+Math.random()*5;
-    const low=Math.min(open,close)-Math.random()*5;
+
+    const close=
+      open+(Math.random()-.46)*7;
+
+    const high=
+      Math.max(open,close)
+      +Math.random()*5;
+
+    const low=
+      Math.min(open,close)
+      -Math.random()*5;
 
     candles.push({
       open,
@@ -2003,54 +2888,95 @@ function createCandles(){
   }
 }
 
+
 function drawChart(){
 
-  const w=canvas.clientWidth;
-  const h=canvas.clientHeight;
+  const w=
+    canvas.clientWidth;
 
-  ctx.clearRect(0,0,w,h);
+  const h=
+    canvas.clientHeight;
+
+  ctx.clearRect(
+    0,
+    0,
+    w,
+    h
+  );
 
   if(!candles.length)return;
 
-  let min=Math.min(...candles.map(c=>c.low));
-  let max=Math.max(...candles.map(c=>c.high));
+  const min=
+    Math.min(
+      ...candles.map(c=>c.low)
+    );
 
-  const range=max-min || 1;
+  const max=
+    Math.max(
+      ...candles.map(c=>c.high)
+    );
 
-  const y=p =>
-    h-((p-min)/range)*(h-25)-12;
+  const range=
+    max-min || 1;
 
-  const gap=w/candles.length;
-  const body=Math.max(3,gap*.48);
+  const y=
+    p =>
+      h-
+      ((p-min)/range)*
+      (h-25)-12;
 
-  candles.forEach((c,i)=>{
+  const gap=
+    w/candles.length;
 
-    const x=i*gap+gap/2;
+  const body=
+    Math.max(
+      3,
+      gap*.48
+    );
+
+
+  candles.forEach(function(c,i){
+
+    const x=
+      i*gap+gap/2;
 
     const yo=y(c.open);
     const yc=y(c.close);
     const yh=y(c.high);
     const yl=y(c.low);
 
-    const bullish=c.close>=c.open;
+    const bullish=
+      c.close>=c.open;
 
-    ctx.strokeStyle=bullish
-      ? "#29d17b"
-      : "#ff5268";
+    ctx.strokeStyle=
+      bullish
+        ? "#29d17b"
+        : "#ff5268";
 
     ctx.lineWidth=1;
 
     ctx.beginPath();
+
     ctx.moveTo(x,yh);
+
     ctx.lineTo(x,yl);
+
     ctx.stroke();
 
-    ctx.fillStyle=bullish
-      ? "#29d17b"
-      : "#ff5268";
 
-    const top=Math.min(yo,yc);
-    const height=Math.max(2,Math.abs(yc-yo));
+    ctx.fillStyle=
+      bullish
+        ? "#29d17b"
+        : "#ff5268";
+
+    const top=
+      Math.min(yo,yc);
+
+    const height=
+      Math.max(
+        2,
+        Math.abs(yc-yo)
+      );
 
     ctx.fillRect(
       x-body/2,
@@ -2058,84 +2984,167 @@ function drawChart(){
       body,
       height
     );
+
   });
+
 
   /* GOLD PRICE LINE */
 
-  const last=candles[candles.length-1].close;
+  ctx.strokeStyle=
+    "rgba(245,211,107,.55)";
 
-  ctx.strokeStyle="rgba(245,211,107,.55)";
   ctx.lineWidth=1;
 
   ctx.beginPath();
 
-  candles.forEach((c,i)=>{
 
-    const x=i*gap+gap/2;
-    const yy=y(c.close);
+  candles.forEach(function(c,i){
 
-    if(i===0)ctx.moveTo(x,yy);
-    else ctx.lineTo(x,yy);
+    const x=
+      i*gap+gap/2;
+
+    const yy=
+      y(c.close);
+
+    if(i===0)
+      ctx.moveTo(x,yy);
+    else
+      ctx.lineTo(x,yy);
 
   });
 
   ctx.stroke();
 
-  /* FVG MARKER */
 
-  const fx=w*.58;
+  /* FVG */
 
-  ctx.fillStyle="rgba(217,169,40,.09)";
-  ctx.fillRect(fx,35,90,42);
+  const fx=
+    w*.58;
 
-  ctx.strokeStyle="rgba(217,169,40,.35)";
-  ctx.strokeRect(fx,35,90,42);
+  ctx.fillStyle=
+    "rgba(217,169,40,.09)";
 
-  ctx.fillStyle="#d9a928";
-  ctx.font="9px Arial";
-  ctx.fillText("FVG",fx+8,51);
+  ctx.fillRect(
+    fx,
+    35,
+    90,
+    42
+  );
+
+  ctx.strokeStyle=
+    "rgba(217,169,40,.35)";
+
+  ctx.strokeRect(
+    fx,
+    35,
+    90,
+    42
+  );
+
+  ctx.fillStyle=
+    "#d9a928";
+
+  ctx.font=
+    "9px Arial";
+
+  ctx.fillText(
+    "FVG",
+    fx+8,
+    51
+  );
+
 
   /* BOS */
 
-  ctx.fillStyle="#3fa7ff";
-  ctx.fillText("BOS",w*.72,105);
+  ctx.fillStyle=
+    "#3fa7ff";
+
+  ctx.fillText(
+    "BOS",
+    w*.72,
+    105
+  );
 }
+
 
 function animateChart(){
 
   if(candles.length){
-    const last=candles[candles.length-1];
 
-    last.close += (Math.random()-.5)*.8;
-    last.high=Math.max(last.high,last.close);
-    last.low=Math.min(last.low,last.close);
+    const last=
+      candles[candles.length-1];
+
+    last.close +=
+      (Math.random()-.5)*.8;
+
+    last.high=
+      Math.max(
+        last.high,
+        last.close
+      );
+
+    last.low=
+      Math.min(
+        last.low,
+        last.close
+      );
+
 
     if(Math.random()<.04){
+
       candles.shift();
 
-      const previous=candles[candles.length-1].close;
-      const close=previous+(Math.random()-.45)*7;
+      const previous=
+        candles[candles.length-1].close;
+
+      const close=
+        previous+
+        (Math.random()-.45)*7;
 
       candles.push({
+
         open:previous,
+
         close,
-        high:Math.max(previous,close)+Math.random()*4,
-        low:Math.min(previous,close)-Math.random()*4
+
+        high:
+          Math.max(previous,close)
+          +Math.random()*4,
+
+        low:
+          Math.min(previous,close)
+          -Math.random()*4
+
       });
+
     }
+
   }
 
   drawChart();
-  requestAnimationFrame(animateChart);
+
+  requestAnimationFrame(
+    animateChart
+  );
 }
 
-window.addEventListener("resize",()=>{
-  resizeCanvas();
-  createCandles();
-});
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    resizeCanvas();
+
+    createCandles();
+
+  }
+);
+
 
 resizeCanvas();
+
 createCandles();
+
 animateChart();
 
 </script>
