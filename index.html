@@ -1,2315 +1,2144 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<meta name="theme-color" content="#03070d">  
-<title>SMC TRADE | Secure Gold Trading System</title>  <style>  
-:root{  
-  --bg:#03070d;  
-  --panel:#08111c;  
-  --panel2:#0c1724;  
-  --line:#173044;  
-  --green:#00e59b;  
-  --blue:#19a7ff;  
-  --red:#ff4d6d;  
-  --yellow:#ffd166;  
-  --text:#f4f8fb;  
-  --muted:#8fa5b8;  
-  --shadow:0 20px 60px rgba(0,0,0,.45);  
-}  
-  
-*{  
-  box-sizing:border-box;  
-  margin:0;  
-  padding:0;  
-}  
-  
-body{  
-  background:  
-    radial-gradient(circle at 20% 0%,rgba(25,167,255,.12),transparent 35%),  
-    radial-gradient(circle at 80% 20%,rgba(0,229,155,.08),transparent 35%),  
-    var(--bg);  
-  color:var(--text);  
-  font-family:Arial,Helvetica,sans-serif;  
-  line-height:1.5;  
-}  
-  
-button,input,select{  
-  font:inherit;  
-}  
-  
-button{  
-  cursor:pointer;  
-}  
-  
-a{  
-  color:inherit;  
-  text-decoration:none;  
-}  
-  
-/* NAV */  
-  
-.nav{  
-  position:sticky;  
-  top:0;  
-  z-index:100;  
-  background:rgba(3,7,13,.88);  
-  backdrop-filter:blur(18px);  
-  border-bottom:1px solid rgba(255,255,255,.06);  
-}  
-  
-.nav-inner{  
-  max-width:1200px;  
-  margin:auto;  
-  min-height:72px;  
-  padding:0 20px;  
-  display:flex;  
-  align-items:center;  
-  justify-content:space-between;  
-  gap:20px;  
-}  
-  
-.logo{  
-  font-size:22px;  
-  font-weight:900;  
-  letter-spacing:1px;  
-}  
-  
-.logo span{  
-  color:var(--green);  
-}  
-  
-.nav-links{  
-  display:flex;  
-  align-items:center;  
-  gap:22px;  
-}  
-  
-.nav-links a{  
-  color:var(--muted);  
-  font-size:14px;  
-}  
-  
-.nav-links a:hover{  
-  color:white;  
-}  
-  
-.nav-actions{  
-  display:flex;  
-  gap:10px;  
-}  
-  
-.btn{  
-  border:0;  
-  border-radius:10px;  
-  padding:12px 18px;  
-  font-weight:800;  
-  transition:.2s;  
-}  
-  
-.btn:hover{  
-  transform:translateY(-1px);  
-}  
-  
-.btn-primary{  
-  background:linear-gradient(135deg,var(--green),#00b878);  
-  color:#00150e;  
-}  
-  
-.btn-blue{  
-  background:linear-gradient(135deg,var(--blue),#147bc0);  
-  color:white;  
-}  
-  
-.btn-dark{  
-  background:#0c1724;  
-  color:white;  
-  border:1px solid var(--line);  
-}  
-  
-.btn-danger{  
-  background:rgba(255,77,109,.12);  
-  border:1px solid rgba(255,77,109,.35);  
-  color:#ff8ca2;  
-}  
-  
-.mobile-menu{  
-  display:none;  
-  background:none;  
-  border:0;  
-  color:white;  
-  font-size:25px;  
-}  
-  
-/* HERO */  
-  
-.hero{  
-  max-width:1200px;  
-  margin:auto;  
-  padding:90px 20px 60px;  
-  display:grid;  
-  grid-template-columns:1.1fr .9fr;  
-  gap:45px;  
-  align-items:center;  
-}  
-  
-.badge{  
-  display:inline-flex;  
-  padding:7px 12px;  
-  border:1px solid rgba(0,229,155,.25);  
-  background:rgba(0,229,155,.06);  
-  color:var(--green);  
-  border-radius:999px;  
-  font-size:12px;  
-  font-weight:800;  
-  margin-bottom:18px;  
-}  
-  
-.hero h1{  
-  font-size:clamp(42px,6vw,72px);  
-  line-height:1.02;  
-  margin-bottom:20px;  
-}  
-  
-.hero h1 span{  
-  background:linear-gradient(90deg,var(--green),var(--blue));  
-  -webkit-background-clip:text;  
-  color:transparent;  
-}  
-  
-.hero p{  
-  color:var(--muted);  
-  max-width:650px;  
-  font-size:17px;  
-}  
-  
-.hero-buttons{  
-  display:flex;  
-  gap:12px;  
-  margin-top:28px;  
-  flex-wrap:wrap;  
-}  
-  
-/* TERMINAL */  
-  
-.terminal{  
-  background:linear-gradient(145deg,#08121e,#050a11);  
-  border:1px solid var(--line);  
-  border-radius:22px;  
-  box-shadow:var(--shadow);  
-  overflow:hidden;  
-}  
-  
-.terminal-head{  
-  padding:15px 18px;  
-  display:flex;  
-  justify-content:space-between;  
-  border-bottom:1px solid var(--line);  
-}  
-  
-.live{  
-  color:var(--green);  
-  font-size:12px;  
-  font-weight:800;  
-}  
-  
-.chart{  
-  height:300px;  
-  position:relative;  
-  padding:20px;  
-  display:flex;  
-  align-items:flex-end;  
-  gap:8px;  
-  overflow:hidden;  
-}  
-  
-.chart:before{  
-  content:"";  
-  position:absolute;  
-  inset:0;  
-  background:  
-    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),  
-    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);  
-  background-size:45px 45px;  
-}  
-  
-.candle{  
-  width:10px;  
-  position:relative;  
-  z-index:2;  
-  border-radius:2px;  
-}  
-  
-.candle:before{  
-  content:"";  
-  position:absolute;  
-  width:2px;  
-  left:4px;  
-  top:-14px;  
-  bottom:-14px;  
-  background:currentColor;  
-}  
-  
-.green-candle{  
-  height:80px;  
-  background:var(--green);  
-  color:var(--green);  
-}  
-  
-.red-candle{  
-  height:55px;  
-  background:var(--red);  
-  color:var(--red);  
-}  
-  
-.chart-info{  
-  padding:18px;  
-  border-top:1px solid var(--line);  
-  display:flex;  
-  justify-content:space-between;  
-}  
-  
-.price{  
-  font-size:28px;  
-  font-weight:900;  
-}  
-  
-.up{  
-  color:var(--green);  
-}  
-  
-/* SECTIONS */  
-  
-.section{  
-  max-width:1200px;  
-  margin:auto;  
-  padding:70px 20px;  
-}  
-  
-.section-title{  
-  margin-bottom:35px;  
-}  
-  
-.section-title h2{  
-  font-size:34px;  
-}  
-  
-.section-title p{  
-  color:var(--muted);  
-  margin-top:8px;  
-}  
-  
-/* CARDS */  
-  
-.grid{  
-  display:grid;  
-  grid-template-columns:repeat(4,1fr);  
-  gap:15px;  
-}  
-  
-.card{  
-  background:linear-gradient(145deg,rgba(12,23,36,.9),rgba(5,10,17,.9));  
-  border:1px solid var(--line);  
-  border-radius:17px;  
-  padding:22px;  
-  box-shadow:0 10px 30px rgba(0,0,0,.15);  
-}  
-  
-.card:hover{  
-  border-color:#24506a;  
-}  
-  
-.card h3{  
-  margin:10px 0;  
-}  
-  
-.card p{  
-  color:var(--muted);  
-  font-size:14px;  
-}  
-  
-.market-symbol{  
-  color:var(--blue);  
-  font-weight:900;  
-}  
-  
-.market-price{  
-  font-size:25px;  
-  font-weight:900;  
-  margin-top:15px;  
-}  
-  
-/* FEATURES */  
-  
-.feature-grid{  
-  display:grid;  
-  grid-template-columns:repeat(3,1fr);  
-  gap:18px;  
-}  
-  
-.feature-icon{  
-  width:45px;  
-  height:45px;  
-  border-radius:12px;  
-  display:grid;  
-  place-items:center;  
-  background:rgba(0,229,155,.1);  
-  color:var(--green);  
-  font-size:20px;  
-}  
-  
-/* ACCESS */  
-  
-.access{  
-  display:grid;  
-  grid-template-columns:repeat(5,1fr);  
-  gap:12px;  
-}  
-  
-.step{  
-  padding:18px;  
-  background:#07101a;  
-  border:1px solid var(--line);  
-  border-radius:15px;  
-  text-align:center;  
-}  
-  
-.step-number{  
-  width:36px;  
-  height:36px;  
-  border-radius:50%;  
-  background:rgba(25,167,255,.12);  
-  color:var(--blue);  
-  display:grid;  
-  place-items:center;  
-  margin:auto auto 10px;  
-  font-weight:900;  
-}  
-  
-/* SECURITY */  
-  
-.security-panel{  
-  border:1px solid rgba(0,229,155,.18);  
-  background:linear-gradient(145deg,rgba(0,229,155,.05),rgba(25,167,255,.04));  
-  border-radius:22px;  
-  padding:28px;  
-}  
-  
-.security-list{  
-  display:grid;  
-  grid-template-columns:repeat(3,1fr);  
-  gap:14px;  
-}  
-  
-.security-item{  
-  padding:18px;  
-  background:rgba(0,0,0,.18);  
-  border:1px solid var(--line);  
-  border-radius:14px;  
-}  
-  
-.security-item strong{  
-  display:block;  
-  margin-bottom:5px;  
-}  
-  
-.status{  
-  display:inline-flex;  
-  padding:5px 9px;  
-  border-radius:999px;  
-  font-size:11px;  
-  font-weight:800;  
-}  
-  
-.status-green{  
-  color:var(--green);  
-  background:rgba(0,229,155,.08);  
-}  
-  
-.status-yellow{  
-  color:var(--yellow);  
-  background:rgba(255,209,102,.08);  
-}  
-  
-.status-red{  
-  color:#ff8ca2;  
-  background:rgba(255,77,109,.08);  
-}  
-  
-/* MODAL */  
-  
-.modal{  
-  position:fixed;  
-  inset:0;  
-  background:rgba(0,0,0,.78);  
-  backdrop-filter:blur(10px);  
-  display:none;  
-  align-items:center;  
-  justify-content:center;  
-  padding:18px;  
-  z-index:1000;  
-}  
-  
-.modal.show{  
-  display:flex;  
-}  
-  
-.modal-box{  
-  width:min(520px,100%);  
-  max-height:90vh;  
-  overflow:auto;  
-  background:#07101a;  
-  border:1px solid var(--line);  
-  border-radius:20px;  
-  padding:25px;  
-  box-shadow:0 30px 90px rgba(0,0,0,.6);  
-}  
-  
-.modal-head{  
-  display:flex;  
-  justify-content:space-between;  
-  gap:15px;  
-  margin-bottom:22px;  
-}  
-  
-.close{  
-  border:0;  
-  background:none;  
-  color:#91a6b7;  
-  font-size:24px;  
-}  
-  
-.form-group{  
-  margin-bottom:15px;  
-}  
-  
-.form-group label{  
-  display:block;  
-  margin-bottom:7px;  
-  font-size:13px;  
-  color:#c5d2dc;  
-}  
-  
-input,select{  
-  width:100%;  
-  padding:13px 14px;  
-  background:#03070d;  
-  border:1px solid var(--line);  
-  color:white;  
-  border-radius:10px;  
-  outline:none;  
-}  
-  
-input:focus,select:focus{  
-  border-color:var(--blue);  
-}  
-  
-.password-wrap{  
-  position:relative;  
-}  
-  
-.password-wrap input{  
-  padding-right:65px;  
-}  
-  
-.password-toggle{  
-  position:absolute;  
-  right:8px;  
-  top:7px;  
-  padding:7px;  
-  background:#0b1722;  
-  color:#9fb3c3;  
-  border:0;  
-  border-radius:7px;  
-}  
-  
-.divider{  
-  display:flex;  
-  align-items:center;  
-  gap:10px;  
-  margin:17px 0;  
-  color:#6f8393;  
-  font-size:12px;  
-}  
-  
-.divider:before,  
-.divider:after{  
-  content:"";  
-  height:1px;  
-  background:var(--line);  
-  flex:1;  
-}  
-  
-.google{  
-  width:100%;  
-  padding:13px;  
-  background:white;  
-  color:#111;  
-  border:0;  
-  border-radius:10px;  
-  font-weight:800;  
-}  
-  
-.notice{  
-  padding:12px;  
-  border-radius:10px;  
-  background:rgba(255,209,102,.07);  
-  border:1px solid rgba(255,209,102,.2);  
-  color:#dfc77f;  
-  font-size:12px;  
-  margin-bottom:15px;  
-}  
-  
-.error{  
-  color:#ff8ca2;  
-  font-size:12px;  
-  margin-top:7px;  
-}  
-  
-.success{  
-  color:var(--green);  
-  font-size:12px;  
-  margin-top:7px;  
-}  
-  
-/* DASHBOARD */  
-  
-.dashboard{  
-  max-width:1200px;  
-  margin:auto;  
-  padding:40px 20px 80px;  
-  display:none;  
-}  
-  
-.dashboard.show{  
-  display:block;  
-}  
-  
-.dashboard-header{  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-  gap:15px;  
-  margin-bottom:25px;  
-  flex-wrap:wrap;  
-}  
-  
-.dashboard-grid{  
-  display:grid;  
-  grid-template-columns:repeat(3,1fr);  
-  gap:15px;  
-}  
-  
-.dashboard-card{  
-  background:#07101a;  
-  border:1px solid var(--line);  
-  border-radius:17px;  
-  padding:22px;  
-}  
-  
-.dashboard-card h3{  
-  margin-bottom:12px;  
-}  
-  
-.progress{  
-  height:8px;  
-  background:#12202d;  
-  border-radius:20px;  
-  overflow:hidden;  
-  margin-top:12px;  
-}  
-  
-.progress span{  
-  display:block;  
-  height:100%;  
-  width:75%;  
-  background:linear-gradient(90deg,var(--green),var(--blue));  
-}  
-  
-/* CHAT */  
-  
-.chat-button{  
-  position:fixed;  
-  right:20px;  
-  bottom:20px;  
-  width:58px;  
-  height:58px;  
-  border-radius:50%;  
-  border:0;  
-  background:linear-gradient(135deg,var(--green),var(--blue));  
-  color:#00140e;  
-  font-size:22px;  
-  z-index:500;  
-}  
-  
-.chat-box{  
-  position:fixed;  
-  right:20px;  
-  bottom:90px;  
-  width:min(370px,calc(100% - 30px));  
-  background:#07101a;  
-  border:1px solid var(--line);  
-  border-radius:18px;  
-  overflow:hidden;  
-  display:none;  
-  z-index:600;  
-  box-shadow:var(--shadow);  
-}  
-  
-.chat-box.show{  
-  display:block;  
-}  
-  
-.chat-head{  
-  padding:15px;  
-  border-bottom:1px solid var(--line);  
-  display:flex;  
-  justify-content:space-between;  
-}  
-  
-.chat-messages{  
-  height:280px;  
-  overflow:auto;  
-  padding:15px;  
-}  
-  
-.message{  
-  padding:10px 12px;  
-  border-radius:12px;  
-  margin-bottom:10px;  
-  max-width:85%;  
-  font-size:13px;  
-}  
-  
-.bot-message{  
-  background:#0d1a28;  
-  color:#cbd8e1;  
-}  
-  
-.user-message{  
-  background:rgba(0,229,155,.1);  
-  color:#bff8e5;  
-  margin-left:auto;  
-}  
-  
-.chat-input{  
-  display:flex;  
-  gap:7px;  
-  padding:10px;  
-  border-top:1px solid var(--line);  
-}  
-  
-.chat-input input{  
-  min-width:0;  
-}  
-  
-/* FOOTER */  
-  
-footer{  
-  border-top:1px solid var(--line);  
-  padding:35px 20px;  
-  color:#728697;  
-  text-align:center;  
-  font-size:12px;  
-}  
-  
-.support-buttons{  
-  display:flex;  
-  gap:8px;  
-  margin-top:12px;  
-  flex-wrap:wrap;  
-}  
-  
-.support-buttons a{  
-  padding:8px 11px;  
-  border-radius:8px;  
-  background:#0c1724;  
-  border:1px solid var(--line);  
-}  
-  
-/* MOBILE */  
-  
-@media(max-width:900px){  
-  .hero{  
-    grid-template-columns:1fr;  
-  }  
-  
-  .grid{  
-    grid-template-columns:repeat(2,1fr);  
-  }  
-  
-  .feature-grid{  
-    grid-template-columns:repeat(2,1fr);  
-  }  
-  
-  .access{  
-    grid-template-columns:repeat(2,1fr);  
-  }  
-  
-  .security-list{  
-    grid-template-columns:1fr;  
-  }  
-  
-  .dashboard-grid{  
-    grid-template-columns:1fr;  
-  }  
-}  
-  
-@media(max-width:700px){  
-  .nav-links,  
-  .nav-actions{  
-    display:none;  
-  }  
-  
-  .mobile-menu{  
-    display:block;  
-  }  
-  
-  .hero{  
-    padding-top:55px;  
-  }  
-  
-  .grid,  
-  .feature-grid{  
-    grid-template-columns:1fr;  
-  }  
-  
-  .access{  
-    grid-template-columns:1fr;  
-  }  
-  
-  .hero h1{  
-    font-size:43px;  
-  }  
-}  
-</style>  </head>  <body>  <!-- NAV -->  <nav class="nav">  
-  <div class="nav-inner">  <div class="logo">  
-  SMC <span>TRADE</span>  
-</div>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>SMC TRADE — Gold Trading Technology</title>
 
-<div class="nav-links">  
-  <a href="#home">Home</a>  
-  <a href="#markets">Markets</a>  
-  <a href="#technology">Technology</a>  
-  <a href="#security">Security</a>  
-  <a href="#access">Access</a>  
-  <a href="#dashboard">Dashboard</a>  
-</div>  
+<style>
+:root{
+  --bg:#050505;
+  --bg2:#090909;
+  --panel:#0d0f11;
+  --panel2:#111416;
+  --gold:#d9a928;
+  --gold2:#f5d36b;
+  --gold3:#9d7214;
+  --text:#f4f4f4;
+  --muted:#84919b;
+  --green:#28d17c;
+  --red:#ff5268;
+  --blue:#3fa7ff;
+  --border:rgba(217,169,40,.20);
+  --shadow:0 20px 70px rgba(0,0,0,.45);
+}
 
-<div class="nav-actions">  
-  <button class="btn btn-dark" onclick="openModal('loginModal')">  
-    Login  
-  </button>  
+*{box-sizing:border-box;margin:0;padding:0}
 
-  <button class="btn btn-primary" onclick="startAccess()">  
-    Get Started  
-  </button>  
-</div>  
+html{scroll-behavior:smooth}
 
-<button class="mobile-menu" onclick="mobileNav()">  
-  ☰  
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(217,169,40,.10),transparent 28%),
+    radial-gradient(circle at 85% 25%,rgba(217,169,40,.06),transparent 25%),
+    linear-gradient(180deg,#030303,#080909 50%,#040404);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.13;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:50px 50px;
+  mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+/* NAVBAR */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  backdrop-filter:blur(20px);
+  background:rgba(4,5,5,.78);
+  border-bottom:1px solid rgba(217,169,40,.13);
+}
+
+.navbar{
+  max-width:1250px;
+  margin:auto;
+  min-height:76px;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:950;
+  letter-spacing:2px;
+  white-space:nowrap;
+  text-shadow:0 0 22px rgba(217,169,40,.25);
+}
+
+.logo span{
+  color:var(--gold2);
+}
+
+.nav-links{
+  display:flex;
+  gap:24px;
+}
+
+.nav-links a{
+  color:#aeb7bd;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  transition:.25s;
+}
+
+.nav-links a:hover{
+  color:var(--gold2);
+}
+
+.nav-actions{
+  display:flex;
+  gap:9px;
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  font-weight:850;
+  cursor:pointer;
+  transition:.25s;
+  color:white;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#f4cf64,#b98419);
+  color:#090909;
+  box-shadow:0 8px 30px rgba(217,169,40,.20);
+}
+
+.btn-dark{
+  background:#111416;
+  border:1px solid #252b2f;
+}
+
+.btn-blue{
+  background:#1574c9;
+}
+
+.btn-danger{
+  background:#7e1828;
+}
+
+.mobile-menu{
+  display:none;
+  background:none;
+  color:white;
+  border:0;
+  font-size:25px;
+}
+
+/* HERO */
+
+.hero{
+  max-width:1250px;
+  margin:auto;
+  padding:95px 22px 65px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:60px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 13px;
+  border-radius:100px;
+  border:1px solid var(--border);
+  background:rgba(217,169,40,.055);
+  color:var(--gold2);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.4px;
+}
+
+.hero h1{
+  margin-top:20px;
+  font-size:clamp(44px,6vw,78px);
+  line-height:.98;
+  letter-spacing:-3px;
+}
+
+.hero h1 span{
+  display:block;
+  color:var(--gold2);
+  text-shadow:0 0 35px rgba(217,169,40,.18);
+}
+
+.hero p{
+  max-width:650px;
+  color:#9aa5ac;
+  line-height:1.8;
+  margin:25px 0;
+  font-size:15px;
+}
+
+.hero-buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+/* TRADING TERMINAL */
+
+.terminal{
+  position:relative;
+  padding:20px;
+  border:1px solid rgba(217,169,40,.25);
+  border-radius:22px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01)),
+    #080a0b;
+  box-shadow:var(--shadow),0 0 80px rgba(217,169,40,.07);
+  overflow:hidden;
+}
+
+.terminal:after{
+  content:"";
+  position:absolute;
+  width:230px;
+  height:230px;
+  right:-120px;
+  top:-120px;
+  background:rgba(217,169,40,.13);
+  filter:blur(70px);
+}
+
+.terminal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:relative;
+  z-index:2;
+}
+
+.symbol{
+  font-size:21px;
+  font-weight:950;
+}
+
+.symbol small{
+  display:block;
+  color:#65727b;
+  font-size:10px;
+  margin-top:3px;
+  letter-spacing:1px;
+}
+
+.live{
+  color:var(--green);
+  font-size:10px;
+  font-weight:900;
+}
+
+.chart{
+  height:270px;
+  position:relative;
+  margin-top:18px;
+  overflow:hidden;
+  border-radius:13px;
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:45px 45px;
+}
+
+.chart canvas{
+  width:100%;
+  height:100%;
+}
+
+.chart-tools{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
+}
+
+.chart-tools button{
+  background:#101416;
+  color:#81909a;
+  border:1px solid #20272b;
+  padding:6px 9px;
+  border-radius:7px;
+  font-size:10px;
+  cursor:pointer;
+}
+
+.chart-tools button.active{
+  color:#080808;
+  background:var(--gold2);
+}
+
+.chart-info{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-top:17px;
+}
+
+.price{
+  font-size:28px;
+  font-weight:950;
+}
+
+.up{
+  color:var(--green);
+  font-weight:900;
+}
+
+/* SECTION */
+
+section{
+  max-width:1250px;
+  margin:auto;
+  padding:70px 22px;
+}
+
+.section-title{
+  margin-bottom:30px;
+}
+
+.section-title h2{
+  font-size:35px;
+  letter-spacing:-1px;
+}
+
+.section-title p{
+  color:#78858d;
+  margin-top:8px;
+}
+
+/* GRID / CARDS */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.grid-3{
+  grid-template-columns:repeat(3,1fr);
+}
+
+.card{
+  position:relative;
+  padding:22px;
+  border-radius:17px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012)),
+    #0c0e10;
+  border:1px solid rgba(255,255,255,.07);
+  box-shadow:0 12px 35px rgba(0,0,0,.25);
+  overflow:hidden;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(217,169,40,.35);
+  box-shadow:0 15px 45px rgba(217,169,40,.08);
+}
+
+.card:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:15px;
+  right:15px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:.45;
+}
+
+.market-symbol{
+  color:#89969e;
+  font-size:11px;
+  letter-spacing:1.3px;
+}
+
+.market-price{
+  font-size:23px;
+  font-weight:950;
+  margin:8px 0;
+}
+
+.feature-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  color:var(--gold2);
+  background:rgba(217,169,40,.09);
+  border:1px solid rgba(217,169,40,.17);
+  font-size:20px;
+  margin-bottom:17px;
+}
+
+.card h3{
+  font-size:17px;
+  margin-bottom:9px;
+}
+
+.card p{
+  color:#78858d;
+  line-height:1.65;
+  font-size:13px;
+}
+
+/* SECURITY */
+
+.security-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.security-item{
+  padding:20px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:15px;
+  background:#0b0d0e;
+}
+
+.security-item strong{
+  display:inline-block;
+  margin-right:8px;
+}
+
+.security-item p{
+  color:#75828a;
+  font-size:12px;
+  margin-top:8px;
+}
+
+.status{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:100px;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.status-green{
+  color:#5bf0a1;
+  background:rgba(40,209,124,.09);
+  border:1px solid rgba(40,209,124,.17);
+}
+
+.status-yellow{
+  color:#f0cb61;
+  background:rgba(217,169,40,.08);
+  border:1px solid rgba(217,169,40,.17);
+}
+
+/* ACCESS */
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
+
+.step{
+  text-align:center;
+  padding:23px 10px;
+  border-radius:16px;
+  background:#0b0d0e;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.step-number{
+  margin:auto auto 13px;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:linear-gradient(135deg,#e8c04d,#986b10);
+  color:#080808;
+  font-weight:950;
+}
+
+.step p{
+  color:#6f7d85;
+  font-size:11px;
+  margin-top:5px;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+  border:1px solid rgba(217,169,40,.18);
+  border-radius:22px;
+  padding:24px;
+  background:#080a0b;
+  box-shadow:var(--shadow);
+}
+
+.dashboard-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.dashboard-card{
+  padding:21px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:15px;
+  background:#0d0f11;
+}
+
+.dashboard-card h3{
+  margin-bottom:10px;
+}
+
+.dashboard-card p{
+  color:#7c8991;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.progress{
+  height:6px;
+  background:#202428;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,#a87912,#f2d265);
+}
+
+/* SETTINGS */
+
+.settings-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.setting{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+  background:#0c0e10;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+}
+
+.setting span{
+  color:#8d999f;
+  font-size:13px;
+}
+
+.setting input,
+.setting select{
+  background:#14181a;
+  color:white;
+  border:1px solid #292f33;
+  border-radius:8px;
+  padding:8px;
+  outline:none;
+}
+
+/* MODALS */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(12px);
+  padding:20px;
+  overflow:auto;
+}
+
+.modal-box{
+  width:min(560px,100%);
+  margin:5vh auto;
+  padding:25px;
+  border-radius:20px;
+  background:#0b0d0f;
+  border:1px solid rgba(217,169,40,.23);
+  box-shadow:0 30px 100px rgba(0,0,0,.7);
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.modal-head h2{
+  font-size:25px;
+}
+
+.modal-head p{
+  color:#77848c;
+  font-size:12px;
+  margin-top:5px;
+}
+
+.close{
+  background:none;
+  border:0;
+  color:#87939a;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.notice{
+  padding:13px;
+  border-radius:10px;
+  background:rgba(217,169,40,.055);
+  border:1px solid rgba(217,169,40,.12);
+  color:#a9b1b5;
+  font-size:11px;
+  line-height:1.6;
+  margin-bottom:18px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  color:#89959c;
+  font-size:11px;
+  margin-bottom:7px;
+}
+
+input,select{
+  width:100%;
+  padding:12px;
+  background:#111416;
+  border:1px solid #252b2e;
+  color:white;
+  border-radius:9px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:rgba(217,169,40,.6);
+}
+
+.google{
+  width:100%;
+  padding:13px;
+  border-radius:10px;
+  border:1px solid #303538;
+  background:#f4f4f4;
+  color:#111;
+  font-weight:850;
+  cursor:pointer;
+}
+
+.divider{
+  text-align:center;
+  color:#5f6b72;
+  font-size:10px;
+  margin:18px 0;
+}
+
+.password-wrap{
+  position:relative;
+}
+
+.password-toggle{
+  position:absolute;
+  right:8px;
+  top:7px;
+  padding:7px 9px;
+  border:0;
+  border-radius:6px;
+  background:#24292c;
+  color:#bdc6ca;
+  cursor:pointer;
+}
+
+/* PAYMENT */
+
+.payment-options{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.payment-option{
+  text-align:left;
+  padding:18px;
+  border-radius:14px;
+  background:#101315;
+  border:1px solid #252a2e;
+  color:white;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.payment-option:hover{
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+
+.payment-option strong{
+  display:block;
+  margin-bottom:6px;
+}
+
+.payment-option span{
+  color:#718087;
+  font-size:11px;
+}
+
+/* CHAT */
+
+.chat-button{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  border:1px solid rgba(217,169,40,.35);
+  background:linear-gradient(145deg,#e8c04d,#9b6c0f);
+  color:#080808;
+  font-size:22px;
+  cursor:pointer;
+  z-index:1500;
+  box-shadow:0 10px 35px rgba(217,169,40,.22);
+}
+
+.chat-box{
+  display:none;
+  position:fixed;
+  right:22px;
+  bottom:92px;
+  width:min(360px,calc(100% - 30px));
+  z-index:1500;
+  border:1px solid rgba(217,169,40,.22);
+  background:#0a0c0d;
+  border-radius:17px;
+  overflow:hidden;
+  box-shadow:0 25px 70px rgba(0,0,0,.6);
+}
+
+.chat-head{
+  padding:16px;
+  background:#111416;
+  display:flex;
+  justify-content:space-between;
+}
+
+.chat-body{
+  height:260px;
+  padding:14px;
+  overflow:auto;
+}
+
+.message{
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:9px;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.bot-message{
+  background:#15191b;
+  color:#aeb8bd;
+}
+
+.user-message{
+  background:rgba(217,169,40,.13);
+  color:#e7d48e;
+  text-align:right;
+}
+
+.chat-input{
+  display:flex;
+  gap:7px;
+  padding:10px;
+  border-top:1px solid #202427;
+}
+
+/* FOOTER */
+
+footer{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:45px 22px;
+  background:#030404;
+}
+
+.footer-inner{
+  max-width:1250px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  gap:25px;
+}
+
+footer p{
+  color:#69767e;
+  max-width:520px;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.footer-links{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.footer-links a{
+  color:#9aa4a9;
+  text-decoration:none;
+  font-size:12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+  .nav-links{display:none}
+  .mobile-menu{display:block}
+  .hero{grid-template-columns:1fr;padding-top:65px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(3,1fr)}
+  .dashboard-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:650px){
+  .navbar{min-height:65px}
+  .nav-actions{display:none}
+  .hero h1{font-size:47px}
+  section{padding:50px 16px}
+  .hero{padding:55px 16px}
+  .grid,.grid-3,
+  .security-list,
+  .settings-grid,
+  .dashboard-grid,
+  .payment-options{
+    grid-template-columns:1fr;
+  }
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .terminal{padding:14px}
+  .chart{height:230px}
+  .footer-inner{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<nav class="navbar">
+
+  <div class="logo">SMC <span>TRADE</span></div>
+
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#markets">Markets</a>
+    <a href="#technology">Technology</a>
+    <a href="#security">Security</a>
+    <a href="#access">Access</a>
+    <a href="#dashboard">Dashboard</a>
+  </div>
+
+  <div class="nav-actions">
+    <button class="btn btn-dark" onclick="openModal('loginModal')">
+      Login
+    </button>
+
+    <button class="btn btn-primary" onclick="startAccess()">
+      Get Started
+    </button>
+  </div>
+
+  <button class="mobile-menu" onclick="toggleMobile()">
+    ☰
+  </button>
+
+</nav>
+</header>
+
+
+<main id="home">
+
+<section class="hero">
+
+<div>
+
+  <div class="badge">
+    ● SECURE XAUUSD TRADING TECHNOLOGY
+  </div>
+
+  <h1>
+    Smarter Gold Trading
+    <span>With SMC Technology</span>
+  </h1>
+
+  <p>
+    Advanced market-structure, liquidity, FVG,
+    multi-timeframe and risk-management technology
+    designed for automated XAUUSD trading.
+  </p>
+
+  <div class="hero-buttons">
+
+    <button class="btn btn-primary" onclick="startAccess()">
+      Get Secure Access
+    </button>
+
+    <button class="btn btn-dark"
+      onclick="document.getElementById('technology').scrollIntoView({behavior:'smooth'})">
+      Explore Technology
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="terminal">
+
+  <div class="terminal-head">
+
+    <div class="symbol">
+      XAUUSD
+      <small>GOLD / USD</small>
+    </div>
+
+    <div class="live">
+      ● MARKET LIVE
+    </div>
+
+  </div>
+
+  <div class="chart">
+    <canvas id="goldChart"></canvas>
+  </div>
+
+  <div class="chart-tools">
+    <button class="active">1m</button>
+    <button>5m</button>
+    <button>15m</button>
+    <button>1H</button>
+    <button>4H</button>
+  </div>
+
+  <div class="chart-info">
+
+    <div>
+      <div style="color:#718089;font-size:11px">
+        XAUUSD
+      </div>
+
+      <div class="price" id="goldPrice">
+        $2,650.40
+      </div>
+    </div>
+
+    <div class="up" id="goldChange">
+      +1.28%
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section id="markets">
+
+<div class="section-title">
+  <h2>Market Overview</h2>
+  <p>Markets monitored by the trading system.</p>
+</div>
+
+<div class="grid">
+
+  <div class="card">
+    <div class="market-symbol">XAUUSD</div>
+    <div class="market-price" id="mGold">$2,650.40</div>
+    <div class="up">+1.28%</div>
+  </div>
+
+  <div class="card">
+    <div class="market-symbol">EURUSD</div>
+    <div class="market-price">1.0852</div>
+    <div class="up">+0.31%</div>
+  </div>
+
+  <div class="card">
+    <div class="market-symbol">GBPUSD</div>
+    <div class="market-price">1.2941</div>
+    <div class="up">+0.46%</div>
+  </div>
+
+  <div class="card">
+    <div class="market-symbol">BTCUSD</div>
+    <div class="market-price">$68,420</div>
+    <div class="up">+2.10%</div>
+  </div>
+
+</div>
+</section>
+
+
+<section id="technology">
+
+<div class="section-title">
+  <h2>SMC Trading Engine</h2>
+  <p>Market intelligence designed around Smart Money Concepts.</p>
+</div>
+
+<div class="grid grid-3">
+
+  <div class="card">
+    <div class="feature-icon">↗</div>
+    <h3>Market Structure</h3>
+    <p>Detects HH, HL, LH, LL, BOS and CHoCH conditions.</p>
+  </div>
+
+  <div class="card">
+    <div class="feature-icon">◈</div>
+    <h3>Liquidity Analysis</h3>
+    <p>Identifies liquidity areas and potential sweep zones.</p>
+  </div>
+
+  <div class="card">
+    <div class="feature-icon">▱</div>
+    <h3>Fair Value Gap</h3>
+    <p>Detects imbalance and FVG areas for trade analysis.</p>
+  </div>
+
+  <div class="card">
+    <div class="feature-icon">◫</div>
+    <h3>Multi-Timeframe Bias</h3>
+    <p>Combines higher and lower timeframe market information.</p>
+  </div>
+
+  <div class="card">
+    <div class="feature-icon">◎</div>
+    <h3>Risk Management</h3>
+    <p>Designed around controlled position sizing, SL and TP.</p>
+  </div>
+
+  <div class="card">
+    <div class="feature-icon">✓</div>
+    <h3>Protected Access</h3>
+    <p>Bot access depends on verified account and entitlement status.</p>
+  </div>
+
+</div>
+</section>
+
+
+<section id="security">
+
+<div class="section-title">
+  <h2>Account Security</h2>
+  <p>Security architecture prepared for the production backend.</p>
+</div>
+
+<div class="security-list">
+
+  <div class="security-item">
+    <strong>Google / Email / Phone</strong>
+    <span class="status status-green">SUPPORTED</span>
+    <p>Multiple secure account login methods.</p>
+  </div>
+
+  <div class="security-item">
+    <strong>OTP + 2FA</strong>
+    <span class="status status-yellow">BACKEND REQUIRED</span>
+    <p>One-time verification and second-factor protection.</p>
+  </div>
+
+  <div class="security-item">
+    <strong>New Device Protection</strong>
+    <span class="status status-yellow">BACKEND REQUIRED</span>
+    <p>New device/session alerts and session management.</p>
+  </div>
+
+  <div class="security-item">
+    <strong>Rate Limiting</strong>
+    <span class="status status-yellow">BACKEND REQUIRED</span>
+    <p>OTP and login attempts must be limited server-side.</p>
+  </div>
+
+  <div class="security-item">
+    <strong>KYC Protection</strong>
+    <span class="status status-yellow">BACKEND REQUIRED</span>
+    <p>Identity, document and liveness verification.</p>
+  </div>
+
+  <div class="security-item">
+    <strong>Payment Verification</strong>
+    <span class="status status-yellow">BACKEND REQUIRED</span>
+    <p>Payment webhook confirms entitlement before bot access.</p>
+  </div>
+
+</div>
+</section>
+
+
+<section id="access">
+
+<div class="section-title">
+  <h2>Secure Access</h2>
+  <p>Complete the account verification process before trading-bot access.</p>
+</div>
+
+<div class="steps">
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <strong>18+</strong>
+    <p>Age requirement</p>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <strong>Account</strong>
+    <p>Secure login</p>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <strong>KYC</strong>
+    <p>ID verification</p>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <strong>Payment</strong>
+    <p>Verified payment</p>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <strong>MT5 Bot</strong>
+    <p>Entitlement access</p>
+  </div>
+
+</div>
+
+</section>
+
+
+<section id="dashboard">
+
+<div class="dashboard">
+
+  <div class="dashboard-top">
+
+    <div>
+      <div class="badge">SECURE USER DASHBOARD</div>
+      <h2 style="margin-top:12px">Trading Account</h2>
+    </div>
+
+    <button class="btn btn-danger" onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+
+  <div class="dashboard-grid">
+
+    <div class="dashboard-card">
+      <h3>Identity</h3>
+      <p>
+        Verification status:
+        <span class="status status-yellow">Pending</span>
+      </p>
+
+      <div class="progress">
+        <span style="width:40%"></span>
+      </div>
+    </div>
+
+
+    <div class="dashboard-card">
+      <h3>Age Requirement</h3>
+      <p>18+ requirement</p>
+      <br>
+      <span class="status status-green">
+        ACCOUNT REQUIREMENT
+      </span>
+    </div>
+
+
+    <div class="dashboard-card">
+      <h3>Subscription</h3>
+      <p>Payment entitlement</p>
+      <br>
+      <span class="status status-yellow">
+        NOT CONFIRMED
+      </span>
+    </div>
+
+
+    <div class="dashboard-card">
+      <h3>Trading Bot</h3>
+
+      <p>
+        MT5 access is locked until server-confirmed
+        KYC and payment entitlement.
+      </p>
+
+      <button
+        class="btn btn-dark"
+        style="margin-top:15px;width:100%"
+        disabled>
+        🔒 Bot Locked
+      </button>
+    </div>
+
+
+    <div class="dashboard-card">
+      <h3>Two-Factor Authentication</h3>
+
+      <p>
+        Protect your account with an additional verification layer.
+      </p>
+
+      <button
+        class="btn btn-blue"
+        style="margin-top:15px;width:100%"
+        onclick="showMessage('2FA setup will be available after backend activation.')">
+        Configure 2FA
+      </button>
+    </div>
+
+
+    <div class="dashboard-card">
+      <h3>Active Sessions</h3>
+
+      <p>Current browser session</p>
+
+      <br>
+
+      <span class="status status-green">
+        ACTIVE
+      </span>
+
+      <button
+        class="btn btn-dark"
+        style="margin-top:15px;width:100%"
+        onclick="showMessage('Session management requires the production backend.')">
+        Manage Sessions
+      </button>
+    </div>
+
+  </div>
+
+
+  <div style="margin-top:25px">
+
+    <div class="section-title">
+      <h2 style="font-size:24px">Trading Settings</h2>
+      <p>Configure your preferred trading environment.</p>
+    </div>
+
+    <div class="settings-grid">
+
+      <div class="setting">
+        <span>Risk Percentage</span>
+        <input type="number" value="1" min=".1" max="10" step=".1">
+      </div>
+
+      <div class="setting">
+        <span>Stop Loss</span>
+        <select>
+          <option>ATR Based</option>
+          <option>Fixed</option>
+        </select>
+      </div>
+
+      <div class="setting">
+        <span>Take Profit</span>
+        <select>
+          <option>ATR Based</option>
+          <option>Risk / Reward</option>
+        </select>
+      </div>
+
+      <div class="setting">
+        <span>Timeframe</span>
+        <select>
+          <option>1 Minute</option>
+          <option>5 Minutes</option>
+          <option>15 Minutes</option>
+          <option>1 Hour</option>
+        </select>
+      </div>
+
+      <div class="setting">
+        <span>Trailing Stop</span>
+        <select>
+          <option>Enabled</option>
+          <option>Disabled</option>
+        </select>
+      </div>
+
+      <div class="setting">
+        <span>Break Even</span>
+        <select>
+          <option>Enabled</option>
+          <option>Disabled</option>
+        </select>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+</main>
+
+
+<!-- LOGIN -->
+
+<div class="modal" id="loginModal">
+
+<div class="modal-box">
+
+  <div class="modal-head">
+
+    <div>
+      <h2>Secure Login</h2>
+      <p>Sign in to your SMC TRADE account.</p>
+    </div>
+
+    <button class="close" onclick="closeModal('loginModal')">
+      ×
+    </button>
+
+  </div>
+
+  <div class="notice">
+    Production authentication must be processed by a secure server.
+    Never store passwords or API secrets inside GitHub.
+  </div>
+
+  <button class="google" onclick="googleLogin()">
+    Continue with Google
+  </button>
+
+  <div class="divider">OR</div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input id="loginEmail" type="email" placeholder="you@example.com">
+  </div>
+
+  <div class="form-group">
+    <label>Password</label>
+
+    <div class="password-wrap">
+
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Password">
+
+      <button
+        class="password-toggle"
+        onclick="togglePassword('loginPassword',this)">
+        Show
+      </button>
+
+    </div>
+  </div>
+
+  <button
+    class="btn btn-primary"
+    style="width:100%"
+    onclick="emailLogin()">
+    Login with Email
+  </button>
+
+  <div class="divider">PHONE OTP</div>
+
+  <div class="form-group">
+    <label>Phone Number</label>
+    <input id="phoneNumber" type="tel" placeholder="+251...">
+  </div>
+
+  <button
+    class="btn btn-blue"
+    style="width:100%"
+    onclick="requestOTP()">
+    Send OTP
+  </button>
+
+  <div id="loginMessage"></div>
+
+</div>
+</div>
+
+
+<!-- AGE -->
+
+<div class="modal" id="ageModal">
+
+<div class="modal-box">
+
+  <div class="modal-head">
+
+    <div>
+      <h2>Age Requirement</h2>
+      <p>You must meet the minimum age requirement to continue.</p>
+    </div>
+
+    <button class="close" onclick="closeModal('ageModal')">×</button>
+
+  </div>
+
+  <div class="notice">
+    This age check is only a frontend step.
+    Final age verification must be completed through KYC.
+  </div>
+
+  <label style="display:flex;gap:10px;align-items:flex-start;margin-bottom:20px">
+
+    <input
+      id="ageConfirm"
+      type="checkbox"
+      style="width:auto;margin-top:4px">
+
+    <span>I confirm that I meet the required age.</span>
+
+  </label>
+
+  <button
+    class="btn btn-primary"
+    style="width:100%"
+    onclick="confirmAge()">
+    Continue
+  </button>
+
+</div>
+</div>
+
+
+<!-- KYC -->
+
+<div class="modal" id="kycModal">
+
+<div class="modal-box">
+
+  <div class="modal-head">
+
+    <div>
+      <h2>Identity Verification</h2>
+      <p>Secure KYC verification.</p>
+    </div>
+
+    <button class="close" onclick="closeModal('kycModal')">×</button>
+
+  </div>
+
+  <div class="notice">
+    Your identity must be verified before payment and MT5
+    bot access can be enabled.
+  </div>
+
+  <div class="form-group">
+
+    <label>Document Type</label>
+
+    <select id="documentType">
+      <option value="">Select document</option>
+      <option>Passport</option>
+      <option>National ID</option>
+      <option>Driving Licence</option>
+    </select>
+
+  </div>
+
+  <div class="form-group">
+
+    <label>Country</label>
+
+    <select id="country">
+      <option value="">Select country</option>
+      <option>Ethiopia</option>
+      <option>United States</option>
+      <option>United Kingdom</option>
+      <option>Canada</option>
+      <option>United Arab Emirates</option>
+      <option>Kenya</option>
+      <option>Other</option>
+    </select>
+
+  </div>
+
+  <div class="form-group">
+
+    <label>Selfie / Face Verification</label>
+
+    <input
+      type="file"
+      id="selfieFile"
+      accept="image/*">
+
+  </div>
+
+  <div class="form-group">
+
+    <label>Identity Document</label>
+
+    <input
+      type="file"
+      id="documentFile"
+      accept="image/*,.pdf">
+
+  </div>
+
+  <button
+    class="btn btn-primary"
+    style="width:100%"
+    onclick="submitKYC()">
+    Submit Verification
+  </button>
+
+  <div id="kycMessage"></div>
+
+</div>
+</div>
+
+
+<!-- PAYMENT -->
+
+<div class="modal" id="paymentModal">
+
+<div class="modal-box">
+
+  <div class="modal-head">
+
+    <div>
+      <h2>Secure Payment</h2>
+      <p>Choose your preferred payment method.</p>
+    </div>
+
+    <button class="close" onclick="closeModal('paymentModal')">×</button>
+
+  </div>
+
+  <div class="notice">
+    Payment confirmation must come from the payment provider's
+    server-side webhook before trading-bot access is enabled.
+  </div>
+
+  <div class="card" style="margin-bottom:15px">
+
+    <h3>SMC TRADE Access</h3>
+
+    <p>Premium trading-bot subscription</p>
+
+    <div style="font-size:31px;font-weight:950;margin:15px 0">
+      Secure Access
+    </div>
+
+  </div>
+
+  <div class="payment-options">
+
+    <button class="payment-option"
+      onclick="choosePayment('Binance Pay')">
+
+      <strong>🟡 Binance Pay</strong>
+      <span>Continue with Binance Pay</span>
+
+    </button>
+
+    <button class="payment-option"
+      onclick="choosePayment('Bybit Pay')">
+
+      <strong>🔵 Bybit Pay</strong>
+      <span>Continue with Bybit Pay</span>
+
+    </button>
+
+    <button class="payment-option"
+      onclick="choosePayment('USDT')">
+
+      <strong>₮ USDT / Crypto</strong>
+      <span>Crypto payment option</span>
+
+    </button>
+
+    <button class="payment-option"
+      onclick="choosePayment('Card')">
+
+      <strong>💳 Card</strong>
+      <span>Available payment provider</span>
+
+    </button>
+
+  </div>
+
+  <div id="paymentMessage" style="margin-top:15px"></div>
+
+</div>
+</div>
+
+
+<!-- CHAT -->
+
+<button class="chat-button" onclick="toggleChat()">
+  ✦
 </button>
 
-  </div>  
-</nav>  <!-- HERO -->  <section class="hero" id="home">    <div>  <div class="badge">  
-  ● SECURE XAUUSD TRADING TECHNOLOGY  
-</div>  
+<div class="chat-box" id="chatBox">
 
-<h1>  
-  Smarter Gold Trading  
-  <span>With SMC Technology</span>  
-</h1>  
+  <div class="chat-head">
 
-<p>  
-  Advanced market-structure, liquidity, FVG, multi-timeframe  
-  and risk-management technology designed for automated  
-  XAUUSD trading.  
-</p>  
+    <strong>SMC AI Support</strong>
 
-<div class="hero-buttons">  
+    <button class="close" onclick="toggleChat()">×</button>
 
-  <button class="btn btn-primary" onclick="startAccess()">  
-    Get Secure Access  
-  </button>  
+  </div>
 
-  <button class="btn btn-dark" onclick="document.getElementById('technology').scrollIntoView({behavior:'smooth'})">  
-    Explore Technology  
-  </button>  
+  <div class="chat-body" id="chatBody">
 
-</div>
+    <div class="message bot-message">
+      Hello. I'm SMC TRADE Support.
+      Ask me about account access, KYC, payment,
+      MT5 or the trading system.
+    </div>
 
-  </div>    <div class="terminal">  <div class="terminal-head">  
+  </div>
 
-  <div>  
-    <strong>XAUUSD</strong>  
-    <div style="font-size:11px;color:#71889a">  
-      GOLD / USD  
-    </div>  
-  </div>  
+  <div class="chat-input">
 
-  <div class="live">  
-    ● MARKET LIVE  
-  </div>  
+    <input
+      id="chatInput"
+      placeholder="Type your question..."
+      onkeydown="if(event.key==='Enter')sendChat()">
 
-</div>  
+    <button
+      class="btn btn-primary"
+      onclick="sendChat()">
+      Send
+    </button>
 
-<div class="chart">  
-
-  <div class="candle green-candle"></div>  
-  <div class="candle red-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle red-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle red-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle red-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle green-candle"></div>  
-  <div class="candle green-candle"></div>  
-
-</div>  
-
-<div class="chart-info">  
-
-  <div>  
-    <div style="color:#7d92a3;font-size:12px">  
-      XAUUSD  
-    </div>  
-    <div class="price">  
-      $2,650.40  
-    </div>  
-  </div>  
-
-  <div class="up">  
-    +1.28%  
-  </div>  
+  </div>
 
 </div>
 
-  </div>  </section>  <!-- MARKETS -->  <section class="section" id="markets">    <div class="section-title">  
-    <h2>Market Overview</h2>  
-    <p>Markets monitored by the trading system.</p>  
-  </div>    <div class="grid">  <div class="card">  
-  <div class="market-symbol">XAUUSD</div>  
-  <div class="market-price">$2,650.40</div>  
-  <div class="up">+1.28%</div>  
-</div>  
 
-<div class="card">  
-  <div class="market-symbol">EURUSD</div>  
-  <div class="market-price">1.0852</div>  
-  <div class="up">+0.31%</div>  
-</div>  
+<footer>
 
-<div class="card">  
-  <div class="market-symbol">GBPUSD</div>  
-  <div class="market-price">1.2941</div>  
-  <div class="up">+0.46%</div>  
-</div>  
+<div class="footer-inner">
 
-<div class="card">  
-  <div class="market-symbol">BTCUSD</div>  
-  <div class="market-price">$68,420</div>  
-  <div class="up">+2.10%</div>  
-</div>
+  <div>
 
-  </div>  </section>  <!-- TECHNOLOGY -->  <section class="section" id="technology">    <div class="section-title">  
-    <h2>SMC Trading Engine</h2>  
-    <p>  
-      Market intelligence designed around Smart Money Concepts.  
-    </p>  
-  </div>    <div class="feature-grid">  <div class="card">  
-  <div class="feature-icon">↗</div>  
-  <h3>Market Structure</h3>  
-  <p>  
-    Detects HH, HL, LH, LL, BOS and CHoCH conditions.  
-  </p>  
-</div>  
+    <div class="logo">
+      SMC <span>TRADE</span>
+    </div>
 
-<div class="card">  
-  <div class="feature-icon">◈</div>  
-  <h3>Liquidity Analysis</h3>  
-  <p>  
-    Identifies liquidity areas and potential sweep zones.  
-  </p>  
-</div>  
+    <p style="margin-top:10px">
+      Automated trading technology and market-analysis tools.
+      Trading involves substantial risk. Past performance does not
+      guarantee future results.
+    </p>
 
-<div class="card">  
-  <div class="feature-icon">▱</div>  
-  <h3>Fair Value Gap</h3>  
-  <p>  
-    Detects imbalance and FVG areas for trade analysis.  
-  </p>  
-</div>  
+  </div>
 
-<div class="card">  
-  <div class="feature-icon">◫</div>  
-  <h3>Multi-Timeframe Bias</h3>  
-  <p>  
-    Combines higher and lower timeframe market information.  
-  </p>  
-</div>  
+  <div class="footer-links">
 
-<div class="card">  
-  <div class="feature-icon">◎</div>  
-  <h3>Risk Management</h3>  
-  <p>  
-    Designed around controlled position sizing, SL and TP.  
-  </p>  
-</div>  
+    <a href="tel:+251988407460">📞 Call Support</a>
 
-<div class="card">  
-  <div class="feature-icon">✓</div>  
-  <h3>Protected Access</h3>  
-  <p>  
-    Trading-bot access is designed to depend on verified  
-    account and entitlement status.  
-  </p>  
-</div>
+    <a href="https://wa.me/251988407460"
+       target="_blank"
+       rel="noopener">
+      WhatsApp
+    </a>
 
-  </div>  </section>  <!-- SECURITY -->  <section class="section" id="security">    <div class="security-panel">  <div class="section-title">  
-  <h2>Account Security</h2>  
-  <p>  
-    Security architecture prepared for the production backend.  
-  </p>  
-</div>  
+    <a href="https://t.me/+251988407460"
+       target="_blank"
+       rel="noopener">
+      Telegram
+    </a>
 
-<div class="security-list">  
-
-  <div class="security-item">  
-    <strong>Google / Email / Phone</strong>  
-    <span class="status status-green">SUPPORTED</span>  
-    <p>  
-      Multiple secure account login methods.  
-    </p>  
-  </div>  
-
-  <div class="security-item">  
-    <strong>OTP + 2FA</strong>  
-    <span class="status status-yellow">BACKEND REQUIRED</span>  
-    <p>  
-      One-time verification and second-factor protection.  
-    </p>  
-  </div>  
-
-  <div class="security-item">  
-    <strong>New Device Protection</strong>  
-    <span class="status status-yellow">BACKEND REQUIRED</span>  
-    <p>  
-      New device/session alerts and session management.  
-    </p>  
-  </div>  
-
-  <div class="security-item">  
-    <strong>Rate Limiting</strong>  
-    <span class="status status-yellow">BACKEND REQUIRED</span>  
-    <p>  
-      OTP and login attempts must be limited server-side.  
-    </p>  
-  </div>  
-
-  <div class="security-item">  
-    <strong>KYC Protection</strong>  
-    <span class="status status-yellow">BACKEND REQUIRED</span>  
-    <p>  
-      Identity, document and liveness verification.  
-    </p>  
-  </div>  
-
-  <div class="security-item">  
-    <strong>Payment Verification</strong>  
-    <span class="status status-yellow">BACKEND REQUIRED</span>  
-    <p>  
-      Payment webhook must confirm entitlement before bot access.  
-    </p>  
-  </div>  
+  </div>
 
 </div>
 
-  </div>  </section>  <!-- ACCESS -->  <section class="section" id="access">    <div class="section-title">  
-    <h2>Secure Access</h2>  
-    <p>  
-      Complete the account verification process before trading-bot access.  
-    </p>  
-  </div>    <div class="access">  <div class="step">  
-  <div class="step-number">1</div>  
-  <strong>18+</strong>  
-  <p>Age requirement</p>  
-</div>  
+</footer>
 
-<div class="step">  
-  <div class="step-number">2</div>  
-  <strong>Account</strong>  
-  <p>Secure login</p>  
-</div>  
 
-<div class="step">  
-  <div class="step-number">3</div>  
-  <strong>KYC</strong>  
-  <p>ID verification</p>  
-</div>  
+<script>
 
-<div class="step">  
-  <div class="step-number">4</div>  
-  <strong>Payment</strong>  
-  <p>Verified payment</p>  
-</div>  
+/* MODALS */
 
-<div class="step">  
-  <div class="step-number">5</div>  
-  <strong>MT5 Bot</strong>  
-  <p>Entitlement access</p>  
-</div>
+function openModal(id){
+  document.getElementById(id).style.display="block";
+  document.body.style.overflow="hidden";
+}
 
-  </div>  </section>  <!-- DASHBOARD -->  <section class="dashboard" id="dashboard">    <div class="dashboard-header">  <div>  
-  <div class="badge">SECURE USER DASHBOARD</div>  
-  <h2>Trading Account</h2>  
-</div>  
+function closeModal(id){
+  document.getElementById(id).style.display="none";
+  document.body.style.overflow="";
+}
 
-<button class="btn btn-danger" onclick="logout()">  
-  Logout  
-</button>
+window.onclick=function(e){
+  document.querySelectorAll(".modal").forEach(m=>{
+    if(e.target===m){
+      m.style.display="none";
+      document.body.style.overflow="";
+    }
+  });
+};
 
-  </div>    <div class="dashboard-grid">  <div class="dashboard-card">  
 
-  <h3>Identity</h3>  
+/* ACCESS FLOW */
 
-  <p>  
-    Verification status:  
-    <span class="status status-yellow">  
-      Pending  
-    </span>  
-  </p>  
+function startAccess(){
+  openModal("ageModal");
+}
 
-  <div class="progress">  
-    <span style="width:40%"></span>  
-  </div>  
+function confirmAge(){
 
-</div>  
+  const checked=document.getElementById("ageConfirm").checked;
 
+  if(!checked){
+    alert("Please confirm the age requirement.");
+    return;
+  }
 
-<div class="dashboard-card">  
+  closeModal("ageModal");
+  openModal("loginModal");
+}
 
-  <h3>Age Requirement</h3>  
 
-  <p>  
-    18+ requirement  
-  </p>  
+/* LOGIN */
 
-  <span class="status status-green">  
-    ACCOUNT REQUIREMENT  
-  </span>  
+function googleLogin(){
+  showMessage("Google authentication requires a production OAuth backend.");
+}
 
-</div>  
+function emailLogin(){
 
+  const email=document.getElementById("loginEmail").value;
 
-<div class="dashboard-card">  
+  if(!email){
+    showLogin("Enter your email address.");
+    return;
+  }
 
-  <h3>Subscription</h3>  
+  showLogin("Demo login submitted. Connect your secure backend to authenticate users.");
+}
 
-  <p>  
-    Payment entitlement  
-  </p>  
+function requestOTP(){
 
-  <span class="status status-yellow">  
-    NOT CONFIRMED  
-  </span>  
+  const phone=document.getElementById("phoneNumber").value;
 
-</div>  
+  if(!phone){
+    showLogin("Enter your phone number.");
+    return;
+  }
 
+  showLogin("OTP request created. Connect your SMS provider/backend to send the real code.");
+}
 
-<div class="dashboard-card">  
+function showLogin(msg){
+  document.getElementById("loginMessage").innerHTML=
+    `<div class="notice" style="margin-top:15px">${msg}</div>`;
+}
 
-  <h3>Trading Bot</h3>  
+function togglePassword(id,button){
 
-  <p>  
-    MT5 access is locked until server-confirmed  
-    KYC and payment entitlement.  
-  </p>  
+  const input=document.getElementById(id);
 
-  <button  
-    class="btn btn-dark"  
-    style="margin-top:15px;width:100%"  
-    id="botButton"  
-    disabled>  
-    🔒 Bot Locked  
-  </button>  
+  if(input.type==="password"){
+    input.type="text";
+    button.textContent="Hide";
+  }else{
+    input.type="password";
+    button.textContent="Show";
+  }
+}
 
-</div>  
 
+/* KYC */
 
-<div class="dashboard-card">  
+function submitKYC(){
 
-  <h3>Two-Factor Authentication</h3>  
+  const type=document.getElementById("documentType").value;
+  const country=document.getElementById("country").value;
 
-  <p>  
-    Protect your account with an additional verification layer.  
-  </p>  
+  if(!type || !country){
+    document.getElementById("kycMessage").innerHTML=
+      `<div class="notice" style="margin-top:15px">
+        Please select document type and country.
+      </div>`;
+    return;
+  }
 
-  <button  
-    class="btn btn-blue"  
-    style="margin-top:15px;width:100%"  
-    onclick="showSecurityMessage()">  
-    Configure 2FA  
-  </button>  
+  document.getElementById("kycMessage").innerHTML=
+    `<div class="notice" style="margin-top:15px">
+      KYC submission prepared. A secure backend/KYC provider
+      must receive and verify the documents before approval.
+    </div>`;
+}
 
-</div>  
 
+/* PAYMENT */
 
-<div class="dashboard-card">  
+function choosePayment(method){
 
-  <h3>Active Sessions</h3>  
+  document.getElementById("paymentMessage").innerHTML=
+    `<div class="notice">
+      Selected: <strong>${method}</strong><br><br>
+      Payment integration is ready for backend connection.
+      The server must create the real payment order and verify
+      the provider webhook before unlocking MT5 access.
+    </div>`;
+}
 
-  <p>  
-    Current browser session  
-  </p>  
 
-  <span class="status status-green">  
-    ACTIVE  
-  </span>  
+/* DASHBOARD */
 
-  <button  
-    class="btn btn-dark"  
-    style="margin-top:15px;width:100%"  
-    onclick="showSecurityMessage()">  
-    Manage Sessions  
-  </button>  
+function logout(){
+  alert("You have been logged out.");
+}
 
-</div>
+function showMessage(message){
+  alert(message);
+}
 
-  </div>  </section>  <!-- LOGIN MODAL -->  <div class="modal" id="loginModal">    <div class="modal-box">  <div class="modal-head">  
-  <div>  
-    <h2>Secure Login</h2>  
-    <p style="color:#8196a7;font-size:13px">  
-      Sign in to your SMC TRADE account.  
-    </p>  
-  </div>  
 
-  <button class="close" onclick="closeModal('loginModal')">  
-    ×  
-  </button>  
-</div>  
+/* CHAT */
 
+function toggleChat(){
 
-<div class="notice">  
-  Production authentication must be processed by a secure  
-  server. Never store passwords or API secrets inside GitHub.  
-</div>  
+  const box=document.getElementById("chatBox");
 
+  box.style.display =
+    box.style.display==="block" ? "none" : "block";
+}
 
-<button class="google" onclick="googleLogin()">  
-  Continue with Google  
-</button>  
+function sendChat(){
 
+  const input=document.getElementById("chatInput");
+  const body=document.getElementById("chatBody");
 
-<div class="divider">OR</div>  
+  const text=input.value.trim();
 
+  if(!text)return;
 
-<div class="form-group">  
+  body.innerHTML +=
+    `<div class="message user-message">${escapeHTML(text)}</div>`;
 
-  <label>Email</label>  
+  input.value="";
 
-  <input  
-    id="loginEmail"  
-    type="email"  
-    placeholder="you@example.com"  
-    autocomplete="email">  
+  setTimeout(()=>{
 
-</div>  
+    let reply=
+      "I can help with SMC TRADE account access, KYC, payment and MT5.";
 
+    const q=text.toLowerCase();
 
-<div class="form-group">  
+    if(q.includes("payment") ||
+       q.includes("binance") ||
+       q.includes("bybit")){
+      reply=
+        "Payment options include Binance Pay, Bybit Pay and crypto. Real payment confirmation must be verified by the secure backend.";
+    }
 
-  <label>Password</label>  
+    if(q.includes("mt5") ||
+       q.includes("bot")){
+      reply=
+        "MT5 bot access remains locked until the server confirms the required account, KYC and payment entitlement.";
+    }
 
-  <div class="password-wrap">  
+    if(q.includes("kyc") ||
+       q.includes("verification")){
+      reply=
+        "KYC requires identity verification through the production verification system.";
+    }
 
-    <input  
-      id="loginPassword"  
-      type="password"  
-      placeholder="Password"  
-      autocomplete="current-password">  
+    body.innerHTML +=
+      `<div class="message bot-message">${reply}</div>`;
 
-    <button  
-      class="password-toggle"  
-      type="button"  
-      onclick="togglePassword('loginPassword',this)">  
-      Show  
-    </button>  
+    body.scrollTop=body.scrollHeight;
 
-  </div>  
+  },500);
+}
 
-</div>  
+function escapeHTML(str){
+  return str
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
 
 
-<button  
-  class="btn btn-primary"  
-  style="width:100%"  
-  onclick="emailLogin()">  
-  Login with Email  
-</button>  
+/* MOBILE */
 
+function toggleMobile(){
 
-<div class="divider">PHONE OTP</div>  
+  const links=document.querySelector(".nav-links");
 
+  if(links.style.display==="flex"){
+    links.style.display="";
+  }else{
+    links.style.display="flex";
+    links.style.position="absolute";
+    links.style.top="65px";
+    links.style.left="0";
+    links.style.right="0";
+    links.style.padding="20px";
+    links.style.flexDirection="column";
+    links.style.background="#080a0b";
+    links.style.borderBottom="1px solid rgba(217,169,40,.2)";
+  }
+}
 
-<div class="form-group">  
 
-  <label>Phone Number</label>  
+/* REAL-TIME STYLE GOLD PRICE */
 
-  <input  
-    id="phoneNumber"  
-    type="tel"  
-    placeholder="+251..."  
-    autocomplete="tel">  
+let goldPrice=2650.40;
 
-</div>  
+setInterval(()=>{
 
+  goldPrice += (Math.random()-.48)*1.8;
 
-<button  
-  class="btn btn-blue"  
-  style="width:100%"  
-  onclick="requestOTP()">  
-  Send OTP  
-</button>  
+  document.getElementById("goldPrice").textContent=
+    "$"+goldPrice.toFixed(2);
 
-<div id="loginMessage"></div>
+  document.getElementById("mGold").textContent=
+    "$"+goldPrice.toFixed(2);
 
-  </div>  </div>  <!-- AGE MODAL -->  <div class="modal" id="ageModal">    <div class="modal-box">  <div class="modal-head">  
+},1200);
 
-  <div>  
-    <h2>Age Requirement</h2>  
-    <p style="color:#8196a7;font-size:13px">  
-      You must meet the minimum age requirement to continue.  
-    </p>  
-  </div>  
 
-  <button class="close" onclick="closeModal('ageModal')">  
-    ×  
-  </button>  
+/* ANIMATED CANDLESTICK CHART */
 
-</div>  
+const canvas=document.getElementById("goldChart");
+const ctx=canvas.getContext("2d");
 
+let candles=[];
 
-<div class="notice">  
-  This age check is only a frontend step.  
-  Final age verification must be completed through KYC.  
-</div>  
+function resizeCanvas(){
 
+  const rect=canvas.getBoundingClientRect();
 
-<label style="display:flex;gap:10px;align-items:flex-start;margin-bottom:20px">  
+  canvas.width=rect.width*devicePixelRatio;
+  canvas.height=rect.height*devicePixelRatio;
 
-  <input  
-    id="ageConfirm"  
-    type="checkbox"  
-    style="width:auto;margin-top:4px">  
+  ctx.scale(devicePixelRatio,devicePixelRatio);
+}
 
-  <span>  
-    I confirm that I meet the required age.  
-  </span>  
+function createCandles(){
 
-</label>  
+  candles=[];
 
+  let price=2650;
 
-<button  
-  class="btn btn-primary"  
-  style="width:100%"  
-  onclick="confirmAge()">  
-  Continue  
-</button>
+  for(let i=0;i<42;i++){
 
-  </div>  </div>  <!-- KYC MODAL -->  <div class="modal" id="kycModal">    <div class="modal-box">  <div class="modal-head">  
+    const open=price;
+    const close=open+(Math.random()-.46)*7;
+    const high=Math.max(open,close)+Math.random()*5;
+    const low=Math.min(open,close)-Math.random()*5;
 
-  <div>  
-    <h2>Identity Verification</h2>  
-    <p style="color:#8196a7;font-size:13px">  
-      Secure KYC verification.  
-    </p>  
-  </div>  
+    candles.push({
+      open,
+      close,
+      high,
+      low
+    });
 
-  <button class="close" onclick="closeModal('kycModal')">  
-    ×  
-  </button>  
+    price=close;
+  }
+}
 
-</div>  
+function drawChart(){
 
+  const w=canvas.clientWidth;
+  const h=canvas.clientHeight;
 
-<div class="notice">  
-  Your identity must be verified before payment and MT5  
-  bot access can be enabled.  
-</div>  
+  ctx.clearRect(0,0,w,h);
 
+  if(!candles.length)return;
 
-<div class="form-group">  
+  let min=Math.min(...candles.map(c=>c.low));
+  let max=Math.max(...candles.map(c=>c.high));
 
-  <label>Document Type</label>  
+  const range=max-min || 1;
 
-  <select id="documentType">  
+  const y=p =>
+    h-((p-min)/range)*(h-25)-12;
 
-    <option value="">  
-      Select document  
-    </option>  
+  const gap=w/candles.length;
+  const body=Math.max(3,gap*.48);
 
-    <option>  
-      Passport  
-    </option>  
+  candles.forEach((c,i)=>{
 
-    <option>  
-      National ID  
-    </option>  
+    const x=i*gap+gap/2;
 
-    <option>  
-      Driving Licence  
-    </option>  
+    const yo=y(c.open);
+    const yc=y(c.close);
+    const yh=y(c.high);
+    const yl=y(c.low);
 
-  </select>  
+    const bullish=c.close>=c.open;
 
-</div>  
+    ctx.strokeStyle=bullish
+      ? "#29d17b"
+      : "#ff5268";
 
+    ctx.lineWidth=1;
 
-<div class="form-group">  
+    ctx.beginPath();
+    ctx.moveTo(x,yh);
+    ctx.lineTo(x,yl);
+    ctx.stroke();
 
-  <label>Country</label>  
+    ctx.fillStyle=bullish
+      ? "#29d17b"
+      : "#ff5268";
 
-  <select id="country">  
+    const top=Math.min(yo,yc);
+    const height=Math.max(2,Math.abs(yc-yo));
 
-    <option value="">  
-      Select country  
-    </option>  
+    ctx.fillRect(
+      x-body/2,
+      top,
+      body,
+      height
+    );
+  });
 
-    <option>Ethiopia</option>  
-    <option>United States</option>  
-    <option>United Kingdom</option>  
-    <option>Canada</option>  
-    <option>United Arab Emirates</option>  
-    <option>Kenya</option>  
-    <option>Other</option>  
+  /* GOLD PRICE LINE */
 
-  </select>  
+  const last=candles[candles.length-1].close;
 
-</div>  
+  ctx.strokeStyle="rgba(245,211,107,.55)";
+  ctx.lineWidth=1;
 
+  ctx.beginPath();
 
-<div class="form-group">  
+  candles.forEach((c,i)=>{
 
-  <label>Selfie / Face Verification</label>  
+    const x=i*gap+gap/2;
+    const yy=y(c.close);
 
-  <input  
-    type="file"  
-    id="selfieFile"  
-    accept="image/*">  
+    if(i===0)ctx.moveTo(x,yy);
+    else ctx.lineTo(x,yy);
 
-</div>  
+  });
 
+  ctx.stroke();
 
-<div class="form-group">  
+  /* FVG MARKER */
 
-  <label>Identity Document</label>  
+  const fx=w*.58;
 
-  <input  
-    type="file"  
-    id="documentFile"  
-    accept="image/*,.pdf">  
+  ctx.fillStyle="rgba(217,169,40,.09)";
+  ctx.fillRect(fx,35,90,42);
 
-</div>  
+  ctx.strokeStyle="rgba(217,169,40,.35)";
+  ctx.strokeRect(fx,35,90,42);
 
+  ctx.fillStyle="#d9a928";
+  ctx.font="9px Arial";
+  ctx.fillText("FVG",fx+8,51);
 
-<button  
-  class="btn btn-primary"  
-  style="width:100%"  
-  onclick="submitKYC()">  
-  Submit Verification  
-</button>  
+  /* BOS */
 
+  ctx.fillStyle="#3fa7ff";
+  ctx.fillText("BOS",w*.72,105);
+}
 
-<div id="kycMessage"></div>
+function animateChart(){
 
-  </div>  </div>  <!-- PAYMENT MODAL -->  <div class="modal" id="paymentModal">    <div class="modal-box">  <div class="modal-head">  
+  if(candles.length){
+    const last=candles[candles.length-1];
 
-  <div>  
-    <h2>Secure Payment</h2>  
+    last.close += (Math.random()-.5)*.8;
+    last.high=Math.max(last.high,last.close);
+    last.low=Math.min(last.low,last.close);
 
-    <p style="color:#8196a7;font-size:13px">  
-      Payment becomes available after server-confirmed KYC.  
-    </p>  
+    if(Math.random()<.04){
+      candles.shift();
 
-  </div>  
+      const previous=candles[candles.length-1].close;
+      const close=previous+(Math.random()-.45)*7;
 
-  <button class="close" onclick="closeModal('paymentModal')">  
-    ×  
-  </button>  
+      candles.push({
+        open:previous,
+        close,
+        high:Math.max(previous,close)+Math.random()*4,
+        low:Math.min(previous,close)-Math.random()*4
+      });
+    }
+  }
 
-</div>  
+  drawChart();
+  requestAnimationFrame(animateChart);
+}
 
+window.addEventListener("resize",()=>{
+  resizeCanvas();
+  createCandles();
+});
 
-<div class="notice">  
-  Payment confirmation must come from the payment provider  
-  webhook. A frontend button cannot verify a real payment.  
-</div>  
+resizeCanvas();
+createCandles();
+animateChart();
 
+</script>
 
-<div class="card">  
-
-  <h3>SMC TRADE Access</h3>  
-
-  <p>  
-    Subscription entitlement  
-  </p>  
-
-  <div style="font-size:30px;font-weight:900;margin:15px 0">  
-    Secure Access  
-  </div>  
-
-  <button  
-    class="btn btn-primary"  
-    style="width:100%"  
-    onclick="startPayment()">  
-    Continue to Payment  
-  </button>  
-
-</div>  
-
-
-<div id="paymentMessage"></div>
-
-  </div>  </div>  <!-- CHAT -->  <button class="chat-button" onclick="toggleChat()">  
-  ✦  
-</button>  <div class="chat-box" id="chatBox">    <div class="chat-head">  <strong>SMC AI Support</strong>  
-
-<button  
-  class="close"  
-  onclick="toggleChat()">  
-  ×  
-</button>
-
-  </div>    <div class="chat-messages" id="chatMessages">  <div class="message bot-message">  
-  Hello. I'm SMC TRADE Support. Ask me about  
-  account access, KYC, payment, MT5 or the trading system.  
-</div>
-
-  </div>    <div class="chat-input">  <input  
-  id="chatInput"  
-  placeholder="Type your question..."  
-  onkeydown="if(event.key==='Enter')sendChat()">  
-
-<button  
-  class="btn btn-primary"  
-  onclick="sendChat()">  
-  Send  
-</button>
-
-  </div>  </div>  <!-- FOOTER -->  <footer>  <strong>SMC TRADE</strong>
-
-  <p style="margin-top:8px">  
-    Automated trading technology and market-analysis tools.  
-  </p>    <p style="margin-top:12px">  
-    Trading involves substantial risk. Past performance does not  
-    guarantee future results.  
-  </p>    <div class="support-buttons">  <a href="tel:+251988407460">  
-  📞 Call Support  
-</a>  
-
-<a  
-  href="https://wa.me/251988407460"  
-  target="_blank"  
-  rel="noopener noreferrer">  
-  WhatsApp  
-</a>  
-
-<a  
-  href="https://t.me/+251988407460"  
-  target="_blank"  
-  rel="noopener noreferrer">  
-  Telegram  
-</a>
-
-  </div>  </footer>  <script>  
-  
-/*  
-====================================================  
-SMC TRADE FRONTEND  
-====================================================  
-  
-IMPORTANT:  
-  
-This file is the FRONTEND.  
-  
-Real production security requires a backend for:  
-  
-- Google OAuth  
-- Email authentication  
-- Phone OTP  
-- 2FA  
-- Password hashing  
-- Sessions  
-- Device management  
-- Rate limiting  
-- KYC provider  
-- Face/liveness verification  
-- Duplicate identity checks  
-- Payment verification  
-- Webhooks  
-- MT5 entitlement  
-- API secrets  
-- AI backend  
-- Audit logs  
-  
-NEVER put private API keys or secrets in GitHub.  
-====================================================  
-*/  
-  
-  
-/* -----------------------------------------------  
-   BACKEND CONFIG  
------------------------------------------------- */  
-  
-const API_BASE = "";  
-  
-  
-/* -----------------------------------------------  
-   APP STATE  
------------------------------------------------- */  
-  
-let currentUser = null;  
-let ageConfirmed = false;  
-let otpCooldown = false;  
-  
-  
-/* -----------------------------------------------  
-   MODALS  
------------------------------------------------- */  
-  
-function openModal(id){  
-  
-  const modal = document.getElementById(id);  
-  
-  if(modal){  
-    modal.classList.add("show");  
-  }  
-  
-}  
-  
-  
-function closeModal(id){  
-  
-  const modal = document.getElementById(id);  
-  
-  if(modal){  
-    modal.classList.remove("show");  
-  }  
-  
-}  
-  
-  
-/* Close modal when clicking outside */  
-  
-document.querySelectorAll(".modal").forEach(modal => {  
-  
-  modal.addEventListener("click", function(e){  
-  
-    if(e.target === modal){  
-      modal.classList.remove("show");  
-    }  
-  
-  });  
-  
-});  
-  
-  
-/* Escape key */  
-  
-document.addEventListener("keydown", function(e){  
-  
-  if(e.key === "Escape"){  
-  
-    document.querySelectorAll(".modal.show")  
-      .forEach(m => m.classList.remove("show"));  
-  
-  }  
-  
-});  
-  
-  
-/* -----------------------------------------------  
-   START ACCESS  
------------------------------------------------- */  
-  
-function startAccess(){  
-  
-  if(!ageConfirmed){  
-  
-    openModal("ageModal");  
-  
-    return;  
-  
-  }  
-  
-  openModal("loginModal");  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   AGE  
------------------------------------------------- */  
-  
-function confirmAge(){  
-  
-  const checkbox =  
-    document.getElementById("ageConfirm");  
-  
-  if(!checkbox.checked){  
-  
-    alert("Please confirm the age requirement.");  
-  
-    return;  
-  
-  }  
-  
-  ageConfirmed = true;  
-  
-  closeModal("ageModal");  
-  
-  openModal("loginModal");  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   PASSWORD  
------------------------------------------------- */  
-  
-function togglePassword(id,button){  
-  
-  const input =  
-    document.getElementById(id);  
-  
-  if(input.type === "password"){  
-  
-    input.type = "text";  
-  
-    button.textContent = "Hide";  
-  
-  }else{  
-  
-    input.type = "password";  
-  
-    button.textContent = "Show";  
-  
-  }  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   EMAIL LOGIN  
------------------------------------------------- */  
-  
-function emailLogin(){  
-  
-  const email =  
-    document.getElementById("loginEmail").value.trim();  
-  
-  const password =  
-    document.getElementById("loginPassword").value;  
-  
-  const message =  
-    document.getElementById("loginMessage");  
-  
-  
-  if(!email || !email.includes("@")){  
-  
-    message.innerHTML =  
-      '<div class="error">Enter a valid email address.</div>';  
-  
-    return;  
-  
-  }  
-  
-  
-  if(password.length < 8){  
-  
-    message.innerHTML =  
-      '<div class="error">Password must contain at least 8 characters.</div>';  
-  
-    return;  
-  
-  }  
-  
-  
-  /*  
-  ------------------------------------------------  
-  DEMO ONLY  
-  ------------------------------------------------  
-  Replace this section with:  
-  
-  POST /api/auth/login  
-  
-  Server should verify password hash,  
-  session, device, rate limits and 2FA.  
-  ------------------------------------------------  
-  */  
-  
-  currentUser = {  
-    email: email,  
-    loginMethod: "email"  
-  };  
-  
-  
-  message.innerHTML =  
-    '<div class="success">Login request accepted. Continue to verification.</div>';  
-  
-  
-  setTimeout(() => {  
-  
-    closeModal("loginModal");  
-  
-    openModal("kycModal");  
-  
-  },800);  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   GOOGLE  
------------------------------------------------- */  
-  
-function googleLogin(){  
-  
-  /*  
-  Production:  
-  
-  window.location.href =  
-  API_BASE + "/api/auth/google";  
-  
-  The server must perform real OAuth.  
-  */  
-  
-  currentUser = {  
-    loginMethod:"google"  
-  };  
-  
-  
-  closeModal("loginModal");  
-  
-  openModal("kycModal");  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   PHONE OTP  
------------------------------------------------- */  
-  
-function requestOTP(){  
-  
-  if(otpCooldown){  
-  
-    showLoginMessage(  
-      "Please wait before requesting another OTP.",  
-      "error"  
-    );  
-  
-    return;  
-  
-  }  
-  
-  
-  const phone =  
-    document.getElementById("phoneNumber").value.trim();  
-  
-  
-  if(phone.length < 8){  
-  
-    showLoginMessage(  
-      "Enter a valid phone number.",  
-      "error"  
-    );  
-  
-    return;  
-  
-  }  
-  
-  
-  /*  
-  Production:  
-  
-  POST /api/auth/request-otp  
-  
-  Server requirements:  
-  
-  - Rate limit  
-  - CAPTCHA / abuse protection  
-  - OTP expiration  
-  - Secure random OTP  
-  - SMS provider  
-  - Never log OTP  
-  */  
-  
-  
-  otpCooldown = true;  
-  
-  showLoginMessage(  
-    "OTP request prepared. Real SMS delivery requires the backend.",  
-    "success"  
-  );  
-  
-  
-  let seconds = 30;  
-  
-  const timer = setInterval(() => {  
-  
-    seconds--;  
-  
-    if(seconds <= 0){  
-  
-      clearInterval(timer);  
-  
-      otpCooldown = false;  
-  
-    }  
-  
-  },1000);  
-  
-}  
-  
-  
-function showLoginMessage(text,type){  
-  
-  const el =  
-    document.getElementById("loginMessage");  
-  
-  el.innerHTML =  
-    `<div class="${type}">${escapeHTML(text)}</div>`;  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   KYC  
------------------------------------------------- */  
-  
-function submitKYC(){  
-  
-  const documentType =  
-    document.getElementById("documentType").value;  
-  
-  const country =  
-    document.getElementById("country").value;  
-  
-  const documentFile =  
-    document.getElementById("documentFile").files[0];  
-  
-  const selfieFile =  
-    document.getElementById("selfieFile").files[0];  
-  
-  const message =  
-    document.getElementById("kycMessage");  
-  
-  
-  if(!documentType || !country){  
-  
-    message.innerHTML =  
-      '<div class="error">Select document type and country.</div>';  
-  
-    return;  
-  
-  }  
-  
-  
-  if(!documentFile || !selfieFile){  
-  
-    message.innerHTML =  
-      '<div class="error">Document and selfie are required.</div>';  
-  
-    return;  
-  
-  }  
-  
-  
-  /*  
-  Production:  
-  
-  Upload directly to approved KYC provider  
-  or securely through backend.  
-  
-  Backend verifies:  
-  
-  - document authenticity  
-  - DOB  
-  - 18+  
-  - face match  
-  - liveness  
-  - duplicate identity  
-  - sanctions/compliance where applicable  
-  
-  Do NOT store raw ID images in GitHub.  
-  */  
-  
-  
-  message.innerHTML =  
-    '<div class="success">KYC submission prepared. Server verification is required.</div>';  
-  
-  
-  setTimeout(() => {  
-  
-    closeModal("kycModal");  
-  
-    showDashboard();  
-  
-  },1000);  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   DASHBOARD  
------------------------------------------------- */  
-  
-function showDashboard(){  
-  
-  const dashboard =  
-    document.getElementById("dashboard");  
-  
-  dashboard.classList.add("show");  
-  
-  dashboard.scrollIntoView({  
-    behavior:"smooth"  
-  });  
-  
-}  
-  
-  
-function logout(){  
-  
-  currentUser = null;  
-  
-  document.getElementById("dashboard")  
-    .classList.remove("show");  
-  
-  alert("You have been logged out.");  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   PAYMENT  
------------------------------------------------- */  
-  
-function startPayment(){  
-  
-  /*  
-  Production:  
-  
-  Payment must be created on the backend.  
-  
-  Example:  
-  
-  POST /api/payment/create  
-  
-  Backend checks:  
-  
-  VERIFIED KYC  
-  +  
-  valid user  
-  +  
-  creates payment session  
-  +  
-  receives provider webhook  
-  +  
-  confirms payment  
-  +  
-  grants entitlement  
-  */  
-  
-  
-  const message =  
-    document.getElementById("paymentMessage");  
-  
-  
-  message.innerHTML =  
-    '<div class="success">Payment flow prepared. A secure backend payment provider is required.</div>';  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   BOT ACCESS  
------------------------------------------------- */  
-  
-function serverConfirmedKYC(){  
-  
-  /*  
-  This function should ONLY be called after the backend  
-  confirms KYC.  
-  
-  Example server response:  
-  
-  {  
-    verified: true,  
-    payment: true,  
-    botAccess: true  
-  }  
-  */  
-  
-  
-  const botButton =  
-    document.getElementById("botButton");  
-  
-  
-  botButton.disabled = false;  
-  
-  botButton.className =  
-    "btn btn-primary";  
-  
-  botButton.textContent =  
-    "Open MT5 Bot";  
-  
-  
-  botButton.onclick = function(){  
-  
-    /*  
-    Production:  
-    request a short-lived bot entitlement/token  
-    from backend.  
-    */  
-  
-    alert(  
-      "MT5 Bot entitlement confirmed by server."  
-    );  
-  
-  };  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   SECURITY MESSAGE  
------------------------------------------------- */  
-  
-function showSecurityMessage(){  
-  
-  alert(  
-    "Production security features such as 2FA, device management and session controls require the secure backend."  
-  );  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   CHAT  
------------------------------------------------- */  
-  
-function toggleChat(){  
-  
-  document  
-    .getElementById("chatBox")  
-    .classList.toggle("show");  
-  
-}  
-  
-  
-function sendChat(){  
-  
-  const input =  
-    document.getElementById("chatInput");  
-  
-  const text =  
-    input.value.trim();  
-  
-  
-  if(!text) return;  
-  
-  
-  addMessage(text,"user-message");  
-  
-  input.value = "";  
-  
-  
-  setTimeout(() => {  
-  
-    const answer =  
-      getAnswer(text);  
-  
-    addMessage(answer,"bot-message");  
-  
-  },500);  
-  
-}  
-  
-  
-function addMessage(text,className){  
-  
-  const container =  
-    document.getElementById("chatMessages");  
-  
-  
-  const div =  
-    document.createElement("div");  
-  
-  div.className =  
-    "message " + className;  
-  
-  /*  
-  Use textContent instead of innerHTML  
-  for user-controlled content.  
-  */  
-  
-  div.textContent = text;  
-  
-  container.appendChild(div);  
-  
-  container.scrollTop =  
-    container.scrollHeight;  
-  
-}  
-  
-  
-function getAnswer(question){  
-  
-  const q =  
-    question.toLowerCase();  
-  
-  
-  if(  
-    q.includes("kyc") ||  
-    q.includes("verification")  
-  ){  
-  
-    return "KYC requires an approved identity document and face/liveness verification. Final verification must be confirmed by the secure server.";  
-  
-  }  
-  
-  
-  if(  
-    q.includes("payment") ||  
-    q.includes("pay")  
-  ){  
-  
-    return "Payment access should become available only after server-confirmed KYC. Payment confirmation must come from the payment provider.";  
-  
-  }  
-  
-  
-  if(  
-    q.includes("bot") ||  
-    q.includes("mt5")  
-  ){  
-  
-    return "MT5 Bot access is protected by account, KYC and payment entitlement. The production server must confirm all three.";  
-  
-  }  
-  
-  
-  if(  
-    q.includes("otp") ||  
-    q.includes("phone")  
-  ){  
-  
-    return "Phone OTP requires a secure SMS backend with rate limiting and expiration.";  
-  
-  }  
-  
-  
-  if(  
-    q.includes("2fa") ||  
-    q.includes("security")  
-  ){  
-  
-    return "SMC TRADE is designed to support 2FA, new-device protection, session management and rate limiting through the production backend.";  
-  
-  }  
-  
-  
-  return "I can help with SMC TRADE account access, KYC, payment, MT5 bot access and security. For direct support, use the Call, WhatsApp or Telegram buttons below.";  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   SAFE TEXT  
------------------------------------------------- */  
-  
-function escapeHTML(value){  
-  
-  return String(value)  
-    .replaceAll("&","&amp;")  
-    .replaceAll("<","&lt;")  
-    .replaceAll(">","&gt;")  
-    .replaceAll('"',"&quot;")  
-    .replaceAll("'","&#039;");  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   MOBILE NAV  
------------------------------------------------- */  
-  
-function mobileNav(){  
-  
-  const links =  
-    document.querySelector(".nav-links");  
-  
-  const actions =  
-    document.querySelector(".nav-actions");  
-  
-  
-  if(  
-    links.style.display === "flex"  
-  ){  
-  
-    links.style.display = "";  
-  
-    actions.style.display = "";  
-  
-  }else{  
-  
-    links.style.display = "flex";  
-  
-    links.style.flexDirection = "column";  
-  
-    links.style.position = "absolute";  
-  
-    links.style.top = "72px";  
-  
-    links.style.left = "0";  
-  
-    links.style.right = "0";  
-  
-    links.style.background = "#050b12";  
-  
-    links.style.padding = "20px";  
-  
-    actions.style.display = "flex";  
-  
-    actions.style.position = "absolute";  
-  
-    actions.style.top = "330px";  
-  
-    actions.style.left = "20px";  
-  
-  }  
-  
-}  
-  
-  
-/* -----------------------------------------------  
-   INITIALIZATION  
------------------------------------------------- */  
-  
-document.addEventListener("DOMContentLoaded", () => {  
-  
-  console.log(  
-    "SMC TRADE frontend initialized."  
-  );  
-  
-});  
-  
-</script>  </body>  
-</html>  
+</body>
+</html>
