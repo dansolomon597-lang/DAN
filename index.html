@@ -1,1 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>SMC TRADE | Automated Market Analysis</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#050505;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+:root{
+    --gold:#d4af37;
+    --gold2:#f5d76e;
+    --dark:#050505;
+    --card:#101010;
+    --muted:#9b9b9b;
+    --border:rgba(212,175,55,.25);
+}
+
+/* NAVBAR */
+nav{
+    width:100%;
+    padding:20px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+    background:rgba(5,5,5,.94);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    backdrop-filter:blur(15px);
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:2px;
+    color:var(--gold2);
+}
+
+.logo span{
+    color:white;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+    list-style:none;
+}
+
+.nav-links a{
+    color:#ddd;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--gold2);
+}
+
+.nav-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    padding:12px 22px;
+    border-radius:8px;
+    border:1px solid var(--gold);
+    background:transparent;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:var(--gold);
+    color:#000;
+}
+
+.btn-gold{
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+    color:#000;
+}
+
+/* HERO */
+.hero{
+    min-height:88vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:70px 7%;
+    position:relative;
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:rgba(212,175,55,.12);
+    filter:blur(130px);
+    border-radius:50%;
+}
+
+.hero-content{
+    max-width:950px;
+    position:relative;
+    z-index:2;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 15px;
+    border:1px solid var(--border);
+    border-radius:30px;
+    color:var(--gold2);
+    background:rgba(212,175,55,.06);
+    margin-bottom:25px;
+    font-size:13px;
+    letter-spacing:1px;
+}
+
+.hero h1{
+    font-size:clamp(45px,8vw,90px);
+    line-height:1;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:var(--gold2);
+}
+
+.hero p{
+    color:#aaa;
+    max-width:700px;
+    margin:auto;
+    line-height:1.8;
+    font-size:18px;
+}
+
+.hero-actions{
+    margin-top:35px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    max-width:900px;
+    margin:0 auto 80px;
+    border:1px solid var(--border);
+    background:#0b0b0b;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.stat{
+    padding:30px;
+    text-align:center;
+    border-right:1px solid var(--border);
+}
+
+.stat:last-child{
+    border-right:none;
+}
+
+.stat h2{
+    color:var(--gold2);
+    font-size:30px;
+}
+
+.stat p{
+    color:#888;
+    margin-top:7px;
+}
+
+/* SECTIONS */
+section{
+    padding:90px 7%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:55px;
+}
+
+.section-title small{
+    color:var(--gold2);
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:42px;
+    margin-top:12px;
+}
+
+.section-title p{
+    color:#999;
+    max-width:650px;
+    margin:15px auto;
+    line-height:1.7;
+}
+
+/* CARDS */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+    max-width:1150px;
+    margin:auto;
+}
+
+.card{
+    background:linear-gradient(145deg,#111,#080808);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:30px;
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+    border-color:var(--gold);
+    box-shadow:0 15px 50px rgba(212,175,55,.08);
+}
+
+.icon{
+    width:50px;
+    height:50px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(212,175,55,.1);
+    color:var(--gold2);
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.card h3{
+    margin-bottom:12px;
+}
+
+.card p{
+    color:#999;
+    line-height:1.7;
+}
+
+/* SECURITY */
+.security{
+    background:#080808;
+}
+
+.security-grid{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.security-box{
+    padding:30px;
+    background:#0d0d0d;
+    border:1px solid var(--border);
+    border-radius:18px;
+}
+
+.security-box h3{
+    color:var(--gold2);
+    margin-bottom:20px;
+}
+
+.security-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:18px 0;
+    border-bottom:1px solid #222;
+}
+
+.security-item:last-child{
+    border-bottom:none;
+}
+
+.check{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(212,175,55,.12);
+    color:var(--gold2);
+}
+
+.security-item strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.security-item span{
+    color:#888;
+    font-size:13px;
+}
+
+/* LOGIN */
+.access{
+    max-width:500px;
+    margin:auto;
+    padding:35px;
+    background:#0d0d0d;
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.access h2{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.access .sub{
+    text-align:center;
+    color:#888;
+    margin-bottom:25px;
+}
+
+.input{
+    width:100%;
+    padding:15px;
+    margin-bottom:15px;
+    background:#050505;
+    color:white;
+    border:1px solid #292929;
+    border-radius:9px;
+    outline:none;
+}
+
+.input:focus{
+    border-color:var(--gold);
+}
+
+.access .btn{
+    width:100%;
+    margin-top:5px;
+}
+
+.login-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.login-options button{
+    padding:13px;
+    border:1px solid #292929;
+    background:#111;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.login-options button:hover{
+    border-color:var(--gold);
+}
+
+/* LANGUAGE */
+.language{
+    text-align:center;
+    margin-top:30px;
+}
+
+.language select{
+    background:#111;
+    color:white;
+    border:1px solid var(--border);
+    padding:10px 15px;
+    border-radius:8px;
+}
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--border);
+    padding:35px 7%;
+    text-align:center;
+    color:#777;
+}
+
+footer strong{
+    color:var(--gold2);
+}
+
+/* MOBILE */
+@media(max-width:800px){
+
+    nav{
+        padding:17px 5%;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .nav-buttons .btn:first-child{
+        display:none;
+    }
+
+    .hero{
+        min-height:80vh;
+        padding:50px 6%;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+        margin:0 6% 40px;
+    }
+
+    .stat{
+        border-right:none;
+        border-bottom:1px solid var(--border);
+    }
+
+    .stat:last-child{
+        border-bottom:none;
+    }
+
+    section{
+        padding:65px 6%;
+    }
+
+    .section-title h2{
+        font-size:32px;
+    }
+
+    .cards,
+    .security-grid{
+        grid-template-columns:1fr;
+    }
+
+    .login-options{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+
+<div class="logo">
+    SMC <span>TRADE</span>
+</div>
+
+<ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#markets">Markets</a></li>
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="#access">Access</a></li>
+</ul>
+
+<div class="nav-buttons">
+    <a href="#access" class="btn">Login</a>
+    <a href="#access" class="btn btn-gold">Get Started</a>
+</div>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="badge">
+    ● AUTOMATED MARKET ANALYSIS
+</div>
+
+<h1>
+    Trade Smarter.<br>
+    <span>Move Faster.</span>
+</h1>
+
+<p>
+    Advanced market-analysis technology designed to help traders
+    understand market movement, structure, liquidity and momentum
+    through one modern trading platform.
+</p>
+
+<div class="hero-actions">
+    <a href="#access" class="btn btn-gold">
+        Get Started
+    </a>
+
+    <a href="#technology" class="btn">
+        Explore Technology
+    </a>
+</div>
+
+</div>
+</section>
+
+
+<!-- STATS -->
+<div class="stats">
+
+<div class="stat">
+    <h2>24/7</h2>
+    <p>Market Monitoring</p>
+</div>
+
+<div class="stat">
+    <h2>AI</h2>
+    <p>Market Analysis</p>
+</div>
+
+<div class="stat">
+    <h2>MT5</h2>
+    <p>Trading Technology</p>
+</div>
+
+</div>
+
+
+<!-- MARKETS -->
+<section id="markets">
+
+<div class="section-title">
+    <small>MARKETS</small>
+    <h2>Built for Modern Markets</h2>
+    <p>
+        Monitor market conditions and identify important price
+        movements from one centralized environment.
+    </p>
+</div>
+
+<div class="cards">
+
+<div class="card">
+    <div class="icon">◈</div>
+    <h3>Gold</h3>
+    <p>
+        Monitor XAUUSD price movement, momentum and important
+        market structures.
+    </p>
+</div>
+
+<div class="card">
+    <div class="icon">↗</div>
+    <h3>Momentum</h3>
+    <p>
+        Detect strong market movement and changing momentum
+        conditions.
+    </p>
+</div>
+
+<div class="card">
+    <div class="icon">◆</div>
+    <h3>Liquidity</h3>
+    <p>
+        Analyze liquidity areas, breakouts, reactions and
+        important market zones.
+    </p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- TECHNOLOGY -->
+<section id="technology">
+
+<div class="section-title">
+    <small>TECHNOLOGY</small>
+    <h2>Advanced Trading Infrastructure</h2>
+    <p>
+        Designed around speed, structure and security for a modern
+        automated trading environment.
+    </p>
+</div>
+
+<div class="cards">
+
+<div class="card">
+    <div class="icon">⚡</div>
+    <h3>Fast Analysis</h3>
+    <p>
+        Analyze price movement and changing market conditions
+        quickly.
+    </p>
+</div>
+
+<div class="card">
+    <div class="icon">◉</div>
+    <h3>Smart Signals</h3>
+    <p>
+        Combine trend, momentum and market structure information
+        into one analysis system.
+    </p>
+</div>
+
+<div class="card">
+    <div class="icon">▣</div>
+    <h3>MT5 Ready</h3>
+    <p>
+        Built with MetaTrader 5 trading environments in mind.
+    </p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SECURITY -->
+<section class="security" id="security">
+
+<div class="section-title">
+
+<small>ACCOUNT SECURITY</small>
+
+<h2>Security First</h2>
+
+<p>
+Modern account protection architecture designed for a secure
+trading-platform experience.
+</p>
+
+</div>
+
+
+<div class="security-grid">
+
+<div class="security-box">
+
+<h3>Secure Access</h3>
+
+<div class="security-item">
+
+<div class="check">✓</div>
+
+<div>
+<strong>Google / Email / Phone</strong>
+<span>Multiple secure account login methods.</span>
+</div>
+
+</div>
+
+
+<div class="security-item">
+
+<div class="check">✓</div>
+
+<div>
+<strong>OTP + 2FA</strong>
+<span>Additional verification for account protection.</span>
+</div>
+
+</div>
+
+
+<div class="security-item">
+
+<div class="check">✓</div>
+
+<div>
+<strong>Protected Sessions</strong>
+<span>Secure access management for user sessions.</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="security-box">
+
+<h3>Platform Protection</h3>
+
+<div class="security-item">
+
+<div class="check">✓</div>
+
+<div>
+<strong>Encrypted Communication</strong>
+<span>Protected communication between the platform and users.</span>
+</div>
+
+</div>
+
+
+<div class="security-item">
+
+<div class="check">✓</div>
+
+<div>
+<strong>Access Control</strong>
+<span>Account access can be managed through secure permissions.</span>
+</div>
+
+</div>
+
+
+<div class="security-item">
+
+<div class="check">✓</div>
+
+<div>
+<strong>Security Monitoring</strong>
+<span>Designed for continuous platform protection.</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ACCESS -->
+<section id="access">
+
+<div class="section-title">
+
+<small>SECURE ACCESS</small>
+
+<h2>Access Your Account</h2>
+
+<p>
+Sign in to continue to your trading environment.
+</p>
+
+</div>
+
+
+<div class="access">
+
+<h2>Welcome Back</h2>
+
+<p class="sub">
+Secure account access
+</p>
+
+<input
+    type="email"
+    class="input"
+    placeholder="Email address"
+>
+
+<input
+    type="password"
+    class="input"
+    placeholder="Password"
+>
+
+<button
+    class="btn btn-gold"
+    onclick="loginDemo()">
+    Login Securely
+</button>
+
+
+<div class="login-options">
+
+<button onclick="socialLogin('Google')">
+    Google
+</button>
+
+<button onclick="socialLogin('Phone')">
+    Phone
+</button>
+
+</div>
+
+
+<div class="language">
+
+<select onchange="changeLanguage(this.value)">
+
+<option value="en">English</option>
+<option value="am">አማርኛ</option>
+<option value="fr">Français</option>
+<option value="es">Español</option>
+<option value="ar">العربية</option>
+<option value="de">Deutsch</option>
+<option value="pt">Português</option>
+<option value="tr">Türkçe</option>
+<option value="zh">中文</option>
+<option value="ja">日本語</option>
+<option value="ko">한국어</option>
+<option value="ru">Русский</option>
+
+</select>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+<p>
+© 2026 <strong>SMC TRADE</strong>.
+All rights reserved.
+</p>
+
+<p style="margin-top:10px;">
+Automated Market Analysis • Secure Access • MT5 Technology
+</p>
+
+</footer>
+
+
+<script>
+
+function loginDemo(){
+
+    alert(
+        "Secure login interface ready. Connect your backend authentication system to enable real account login."
+    );
+
+}
+
+function socialLogin(type){
+
+    alert(
+        type + " authentication requires a connected backend/API."
+    );
+
+}
+
+function changeLanguage(language){
+
+    if(language === "am"){
+        alert("የአማርኛ ቋንቋ ተመርጧል።");
+    }
+    else{
+        alert("Language selected: " + language);
+    }
+
+}
+
+</script>
+
+</body>
+</html>
