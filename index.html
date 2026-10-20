@@ -4,25 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#050505">
-<meta name="description" content="SMC TRADE — Gold trading technology and automated XAUUSD market analysis.">
-<title>SMC TRADE — Gold Trading Technology</title>
+<meta name="description" content="SMC TRADE — Automated XAUUSD trading technology">
+
+<title>SMC TRADE | Automated Gold Trading</title>
 
 <style>
 :root{
   --bg:#050505;
-  --bg2:#090909;
-  --panel:#0d0f11;
-  --panel2:#111416;
-  --gold:#d9a928;
-  --gold2:#f5d36b;
-  --gold3:#9d7214;
-  --text:#f4f4f4;
-  --muted:#84919b;
-  --green:#28d17c;
-  --red:#ff5268;
-  --blue:#3fa7ff;
-  --border:rgba(217,169,40,.20);
-  --shadow:0 20px 70px rgba(0,0,0,.45);
+  --panel:#0d0d0d;
+  --panel2:#121212;
+  --gold:#d9ad45;
+  --gold2:#f5d77a;
+  --text:#f7f7f7;
+  --muted:#999;
+  --border:rgba(217,173,69,.22);
+  --green:#35d07f;
 }
 
 *{
@@ -36,75 +32,53 @@ html{
 }
 
 body{
-  font-family:Inter,Segoe UI,Arial,sans-serif;
   background:
-    radial-gradient(circle at 15% 10%,rgba(217,169,40,.10),transparent 28%),
-    radial-gradient(circle at 85% 25%,rgba(217,169,40,.06),transparent 25%),
-    linear-gradient(180deg,#030303,#080909 50%,#040404);
+    radial-gradient(circle at 50% -10%,rgba(217,173,69,.13),transparent 35%),
+    var(--bg);
   color:var(--text);
-  min-height:100vh;
-  overflow-x:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6;
 }
 
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.13;
-  background-image:
-    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:50px 50px;
-  mask-image:linear-gradient(to bottom,black,transparent);
+a{
+  color:inherit;
+  text-decoration:none;
 }
 
-/* =========================
-   NAVBAR
-========================= */
-
-header{
+/* NAVBAR */
+.navbar{
   position:sticky;
   top:0;
   z-index:1000;
-  backdrop-filter:blur(20px);
-  background:rgba(4,5,5,.82);
-  border-bottom:1px solid rgba(217,169,40,.13);
-}
-
-.navbar{
-  max-width:1250px;
-  margin:auto;
-  min-height:76px;
-  padding:0 22px;
+  min-height:72px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:20px;
+  padding:14px 5%;
+  background:rgba(5,5,5,.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
 }
 
 .logo{
   font-size:23px;
-  font-weight:950;
-  letter-spacing:2px;
-  white-space:nowrap;
-  text-shadow:0 0 22px rgba(217,169,40,.25);
+  font-weight:900;
+  letter-spacing:1.5px;
 }
 
 .logo span{
-  color:var(--gold2);
+  color:var(--gold);
 }
 
 .nav-links{
   display:flex;
-  gap:24px;
+  gap:25px;
+  align-items:center;
 }
 
 .nav-links a{
-  color:#aeb7bd;
-  text-decoration:none;
-  font-size:13px;
-  font-weight:700;
+  color:#bbb;
+  font-size:14px;
   transition:.25s;
 }
 
@@ -114,98 +88,79 @@ header{
 
 .nav-actions{
   display:flex;
-  gap:9px;
+  gap:10px;
 }
 
 .btn{
   border:0;
   border-radius:10px;
-  padding:12px 18px;
-  font-weight:850;
+  padding:11px 18px;
   cursor:pointer;
+  font-weight:700;
   transition:.25s;
-  color:white;
+}
+
+.btn-dark{
+  background:#151515;
+  color:#fff;
+  border:1px solid #292929;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#080808;
 }
 
 .btn:hover{
   transform:translateY(-2px);
 }
 
-.btn-primary{
-  background:linear-gradient(135deg,#f4cf64,#b98419);
-  color:#090909;
-  box-shadow:0 8px 30px rgba(217,169,40,.20);
-}
-
-.btn-dark{
-  background:#111416;
-  border:1px solid #252b2f;
-}
-
-.btn-blue{
-  background:#1574c9;
-}
-
-.btn-danger{
-  background:#7e1828;
-}
-
 .mobile-menu{
   display:none;
   background:none;
-  color:white;
   border:0;
-  font-size:25px;
+  color:white;
+  font-size:27px;
   cursor:pointer;
 }
 
-/* =========================
-   HERO
-========================= */
-
+/* HERO */
 .hero{
-  max-width:1250px;
-  margin:auto;
-  padding:95px 22px 65px;
+  min-height:calc(100vh - 72px);
   display:grid;
-  grid-template-columns:1.05fr .95fr;
-  gap:60px;
+  grid-template-columns:1.1fr .9fr;
   align-items:center;
+  gap:50px;
+  padding:80px 7%;
 }
 
 .badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 13px;
-  border-radius:100px;
+  display:inline-block;
+  padding:7px 13px;
   border:1px solid var(--border);
-  background:rgba(217,169,40,.055);
+  border-radius:30px;
   color:var(--gold2);
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:1.4px;
+  background:rgba(217,173,69,.06);
+  font-size:12px;
+  letter-spacing:1px;
+  margin-bottom:20px;
 }
 
 .hero h1{
-  margin-top:20px;
-  font-size:clamp(44px,6vw,78px);
-  line-height:.98;
-  letter-spacing:-3px;
+  font-size:clamp(42px,6vw,78px);
+  line-height:1;
+  margin-bottom:22px;
 }
 
 .hero h1 span{
-  display:block;
-  color:var(--gold2);
-  text-shadow:0 0 35px rgba(217,169,40,.18);
+  color:var(--gold);
 }
 
 .hero p{
   max-width:650px;
-  color:#9aa5ac;
-  line-height:1.8;
-  margin:25px 0;
-  font-size:15px;
+  color:#aaa;
+  font-size:17px;
+  margin-bottom:30px;
 }
 
 .hero-buttons{
@@ -214,627 +169,309 @@ header{
   flex-wrap:wrap;
 }
 
-/* =========================
-   TERMINAL
-========================= */
-
+/* TERMINAL */
 .terminal{
-  position:relative;
-  padding:20px;
-  border:1px solid rgba(217,169,40,.25);
+  background:linear-gradient(145deg,#111,#080808);
+  border:1px solid var(--border);
   border-radius:22px;
-  background:
-    linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.01)),
-    #080a0b;
-  box-shadow:var(--shadow),0 0 80px rgba(217,169,40,.07);
-  overflow:hidden;
+  padding:20px;
+  box-shadow:0 20px 70px rgba(0,0,0,.45);
 }
 
-.terminal:after{
-  content:"";
-  position:absolute;
-  width:230px;
-  height:230px;
-  right:-120px;
-  top:-120px;
-  background:rgba(217,169,40,.13);
-  filter:blur(70px);
-}
-
-.terminal-head{
+.terminal-top{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  position:relative;
-  z-index:2;
+  align-items:center;
+  margin-bottom:18px;
 }
 
-.symbol{
-  font-size:21px;
-  font-weight:950;
-}
-
-.symbol small{
-  display:block;
-  color:#65727b;
-  font-size:10px;
-  margin-top:3px;
-  letter-spacing:1px;
+.market-name{
+  font-weight:800;
 }
 
 .live{
   color:var(--green);
-  font-size:10px;
-  font-weight:900;
-}
-
-.chart{
-  height:270px;
-  position:relative;
-  margin-top:18px;
-  overflow:hidden;
-  border-radius:13px;
-  background:
-    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:45px 45px;
-}
-
-.chart canvas{
-  width:100%;
-  height:100%;
-}
-
-.chart-tools{
-  display:flex;
-  gap:7px;
-  margin-top:10px;
-}
-
-.chart-tools button{
-  background:#101416;
-  color:#81909a;
-  border:1px solid #20272b;
-  padding:6px 9px;
-  border-radius:7px;
-  font-size:10px;
-  cursor:pointer;
-}
-
-.chart-tools button.active{
-  color:#080808;
-  background:var(--gold2);
-}
-
-.chart-info{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-top:17px;
+  font-size:12px;
 }
 
 .price{
-  font-size:28px;
-  font-weight:950;
-}
-
-.up{
-  color:var(--green);
+  font-size:42px;
   font-weight:900;
+  color:var(--gold2);
 }
 
-/* =========================
-   SECTIONS
-========================= */
+.chart{
+  height:220px;
+  position:relative;
+  overflow:hidden;
+  border-radius:14px;
+  background:
+    linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:40px 40px;
+}
 
+.chart-line{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:35px;
+  height:130px;
+  background:
+    linear-gradient(135deg,
+      transparent 0 8%,
+      var(--gold) 8% 9%,
+      transparent 9% 17%,
+      var(--gold) 17% 18%,
+      transparent 18% 29%,
+      var(--gold) 29% 30%,
+      transparent 30% 42%,
+      var(--gold) 42% 43%,
+      transparent 43% 55%,
+      var(--gold) 55% 56%,
+      transparent 56% 66%,
+      var(--gold) 66% 67%,
+      transparent 67% 78%,
+      var(--gold) 78% 79%,
+      transparent 79% 100%);
+  filter:drop-shadow(0 0 7px rgba(217,173,69,.45));
+  transform:skewY(-7deg);
+}
+
+.terminal-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:15px;
+}
+
+.stat{
+  background:#151515;
+  border-radius:12px;
+  padding:12px;
+}
+
+.stat small{
+  color:#777;
+}
+
+.stat strong{
+  display:block;
+  margin-top:4px;
+}
+
+/* SECTIONS */
 section{
-  max-width:1250px;
-  margin:auto;
-  padding:70px 22px;
+  padding:85px 7%;
 }
 
 .section-title{
-  margin-bottom:30px;
+  text-align:center;
+  margin-bottom:45px;
 }
 
 .section-title h2{
-  font-size:35px;
-  letter-spacing:-1px;
+  font-size:38px;
+  margin-bottom:10px;
 }
 
 .section-title p{
-  color:#78858d;
-  margin-top:8px;
+  color:#888;
 }
 
-/* =========================
-   CARDS
-========================= */
-
-.grid{
+/* CARDS */
+.cards{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-}
-
-.grid-3{
   grid-template-columns:repeat(3,1fr);
+  gap:20px;
 }
 
 .card{
-  position:relative;
-  padding:22px;
-  border-radius:17px;
-  background:
-    linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012)),
-    #0c0e10;
-  border:1px solid rgba(255,255,255,.07);
-  box-shadow:0 12px 35px rgba(0,0,0,.25);
-  overflow:hidden;
+  background:linear-gradient(145deg,#111,#090909);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:25px;
   transition:.3s;
 }
 
 .card:hover{
   transform:translateY(-5px);
-  border-color:rgba(217,169,40,.35);
-  box-shadow:0 15px 45px rgba(217,169,40,.08);
+  border-color:rgba(217,173,69,.55);
 }
 
-.card:before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:15px;
-  right:15px;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  opacity:.45;
-}
-
-.market-symbol{
-  color:#89969e;
-  font-size:11px;
-  letter-spacing:1.3px;
-}
-
-.market-price{
-  font-size:23px;
-  font-weight:950;
-  margin:8px 0;
-}
-
-.feature-icon{
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border-radius:12px;
-  color:var(--gold2);
-  background:rgba(217,169,40,.09);
-  border:1px solid rgba(217,169,40,.17);
-  font-size:20px;
-  margin-bottom:17px;
-}
-
-.card h3{
-  font-size:17px;
-  margin-bottom:9px;
-}
-
-.card p{
-  color:#78858d;
-  line-height:1.65;
-  font-size:13px;
-}
-
-/* =========================
-   ACCESS
-========================= */
-
-.steps{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:12px;
-}
-
-.step{
-  text-align:center;
-  padding:23px 10px;
-  border-radius:16px;
-  background:#0b0d0e;
-  border:1px solid rgba(255,255,255,.06);
-}
-
-.step-number{
-  margin:auto auto 13px;
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:linear-gradient(135deg,#e8c04d,#986b10);
-  color:#080808;
-  font-weight:950;
-}
-
-.step p{
-  color:#6f7d85;
-  font-size:11px;
-  margin-top:5px;
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-.dashboard{
-  border:1px solid rgba(217,169,40,.18);
-  border-radius:22px;
-  padding:24px;
-  background:#080a0b;
-  box-shadow:var(--shadow);
-}
-
-.dashboard-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-.dashboard-card{
-  padding:21px;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:15px;
-  background:#0d0f11;
-}
-
-.dashboard-card h3{
-  margin-bottom:10px;
-}
-
-.dashboard-card p{
-  color:#7c8991;
-  font-size:13px;
-  line-height:1.6;
-}
-
-.progress{
-  height:6px;
-  background:#202428;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:15px;
-}
-
-.progress span{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,#a87912,#f2d265);
-}
-
-/* =========================
-   SETTINGS
-========================= */
-
-.settings-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-}
-
-.setting{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:16px;
-  background:#0c0e10;
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:12px;
-}
-
-.setting span{
-  color:#8d999f;
-  font-size:13px;
-}
-
-.setting input,
-.setting select{
-  background:#14181a;
-  color:white;
-  border:1px solid #292f33;
-  border-radius:8px;
-  padding:8px;
-  outline:none;
-}
-
-/* =========================
-   MODALS
-========================= */
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:2000;
-  background:rgba(0,0,0,.78);
-  backdrop-filter:blur(12px);
-  padding:20px;
-  overflow:auto;
-}
-
-.modal-box{
-  width:min(560px,100%);
-  margin:5vh auto;
-  padding:25px;
-  border-radius:20px;
-  background:#0b0d0f;
-  border:1px solid rgba(217,169,40,.23);
-  box-shadow:0 30px 100px rgba(0,0,0,.7);
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:20px;
-}
-
-.modal-head h2{
-  font-size:25px;
-}
-
-.modal-head p{
-  color:#77848c;
-  font-size:12px;
-  margin-top:5px;
-}
-
-.close{
-  background:none;
-  border:0;
-  color:#87939a;
-  font-size:25px;
-  cursor:pointer;
-}
-
-.notice{
-  padding:13px;
-  border-radius:10px;
-  background:rgba(217,169,40,.055);
-  border:1px solid rgba(217,169,40,.12);
-  color:#a9b1b5;
-  font-size:11px;
-  line-height:1.6;
-  margin-bottom:18px;
-}
-
-.form-group{
+.icon{
+  font-size:30px;
   margin-bottom:15px;
 }
 
-.form-group label{
-  display:block;
-  color:#89959c;
-  font-size:11px;
-  margin-bottom:7px;
+.card h3{
+  margin-bottom:10px;
 }
 
-input,select{
-  width:100%;
-  padding:12px;
-  background:#111416;
-  border:1px solid #252b2e;
-  color:white;
-  border-radius:9px;
-  outline:none;
+.card p{
+  color:#888;
+  font-size:14px;
 }
 
-input:focus,
-select:focus{
-  border-color:rgba(217,169,40,.6);
-}
-
-.google{
-  width:100%;
-  padding:13px;
-  border-radius:10px;
-  border:1px solid #303538;
-  background:#f4f4f4;
-  color:#111;
-  font-weight:850;
-  cursor:pointer;
-}
-
-.divider{
-  text-align:center;
-  color:#5f6b72;
-  font-size:10px;
-  margin:18px 0;
-}
-
-.password-wrap{
-  position:relative;
-}
-
-.password-toggle{
-  position:absolute;
-  right:8px;
-  top:7px;
-  padding:7px 9px;
-  border:0;
-  border-radius:6px;
-  background:#24292c;
-  color:#bdc6ca;
-  cursor:pointer;
-}
-
-/* =========================
-   PAYMENT
-========================= */
-
-.payment-options{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.payment-option{
-  text-align:left;
-  padding:18px;
-  border-radius:14px;
-  background:#101315;
-  border:1px solid #252a2e;
-  color:white;
-  cursor:pointer;
-  transition:.25s;
-}
-
-.payment-option:hover{
-  border-color:var(--gold);
-  transform:translateY(-2px);
-}
-
-.payment-option strong{
-  display:block;
-  margin-bottom:6px;
-}
-
-.payment-option span{
-  color:#718087;
-  font-size:11px;
-}
-
-/* =========================
-   CHAT BOT
-========================= */
-
-.chat-button{
+/* BOT */
+.bot{
   position:fixed;
   right:22px;
   bottom:22px;
+  z-index:2000;
+}
+
+.bot-button{
   width:58px;
   height:58px;
   border-radius:50%;
-  border:1px solid rgba(217,169,40,.35);
-  background:linear-gradient(145deg,#e8c04d,#9b6c0f);
-  color:#080808;
-  font-size:22px;
+  border:1px solid var(--gold);
+  background:linear-gradient(135deg,#161616,var(--gold));
   cursor:pointer;
-  z-index:1500;
-  box-shadow:0 10px 35px rgba(217,169,40,.22);
+  font-size:25px;
+  box-shadow:0 8px 30px rgba(217,173,69,.25);
 }
 
-.chat-box{
+.chat{
   display:none;
-  position:fixed;
-  right:22px;
-  bottom:92px;
-  width:min(380px,calc(100% - 30px));
-  z-index:1500;
-  border:1px solid rgba(217,169,40,.22);
-  background:#0a0c0d;
-  border-radius:17px;
+  position:absolute;
+  right:0;
+  bottom:70px;
+  width:330px;
+  max-width:calc(100vw - 35px);
+  background:#0d0d0d;
+  border:1px solid var(--border);
+  border-radius:18px;
   overflow:hidden;
-  box-shadow:0 25px 70px rgba(0,0,0,.6);
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
 
 .chat-head{
-  padding:16px;
-  background:#111416;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.chat-status{
-  color:var(--green);
-  font-size:10px;
-  margin-top:3px;
+  padding:15px;
+  background:#141414;
+  border-bottom:1px solid #252525;
+  font-weight:800;
 }
 
 .chat-body{
   height:300px;
-  padding:14px;
-  overflow:auto;
+  padding:15px;
+  overflow-y:auto;
 }
 
 .message{
-  padding:11px;
-  border-radius:10px;
-  margin-bottom:9px;
-  font-size:12px;
-  line-height:1.6;
-}
-
-.bot-message{
-  background:#15191b;
-  color:#aeb8bd;
-}
-
-.user-message{
-  background:rgba(217,169,40,.13);
-  color:#e7d48e;
-  text-align:right;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#171717;
+  color:#ccc;
+  margin-bottom:10px;
+  font-size:13px;
 }
 
 .chat-input{
   display:flex;
-  gap:7px;
-  padding:10px;
-  border-top:1px solid #202427;
+  border-top:1px solid #252525;
 }
 
-/* =========================
-   FOOTER
-========================= */
+.chat-input input{
+  flex:1;
+  background:#090909;
+  border:0;
+  outline:0;
+  color:white;
+  padding:13px;
+}
 
+.chat-input button{
+  border:0;
+  background:var(--gold);
+  padding:0 15px;
+  cursor:pointer;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:3000;
+  background:rgba(0,0,0,.78);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal-box{
+  width:420px;
+  max-width:100%;
+  background:#101010;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px;
+}
+
+.modal-box h2{
+  margin-bottom:8px;
+}
+
+.modal-box p{
+  color:#888;
+  font-size:13px;
+  margin-bottom:20px;
+}
+
+.input{
+  width:100%;
+  padding:13px;
+  margin-bottom:12px;
+  border-radius:10px;
+  border:1px solid #292929;
+  background:#080808;
+  color:#fff;
+  outline:none;
+}
+
+.close{
+  float:right;
+  background:none;
+  color:#aaa;
+  border:0;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* SECURITY RESPONSE */
+.security-result{
+  margin-top:15px;
+  display:none;
+}
+
+.security-card{
+  padding:15px;
+  border:1px solid var(--border);
+  background:#151515;
+  border-radius:13px;
+  margin-bottom:10px;
+}
+
+.verified{
+  color:var(--green);
+  font-weight:800;
+}
+
+/* FOOTER */
 footer{
-  border-top:1px solid rgba(255,255,255,.06);
-  padding:45px 22px;
-  background:#030404;
+  padding:40px 7%;
+  text-align:center;
+  border-top:1px solid #181818;
+  color:#666;
+  font-size:13px;
 }
 
-.footer-inner{
-  max-width:1250px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  gap:25px;
-}
-
-footer p{
-  color:#69767e;
-  max-width:520px;
-  font-size:12px;
-  line-height:1.7;
-}
-
-.footer-links{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.footer-links a{
-  color:#9aa4a9;
-  text-decoration:none;
-  font-size:12px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:950px){
-
-  .nav-links{
+/* MOBILE */
+@media(max-width:900px){
+  .nav-links,
+  .nav-actions{
     display:none;
   }
 
@@ -844,66 +481,29 @@ footer p{
 
   .hero{
     grid-template-columns:1fr;
-    padding-top:65px;
+    padding-top:55px;
   }
 
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .steps{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .dashboard-grid{
-    grid-template-columns:repeat(2,1fr);
+  .cards{
+    grid-template-columns:1fr;
   }
 }
 
-@media(max-width:650px){
-
-  .navbar{
-    min-height:65px;
-  }
-
-  .nav-actions{
-    display:none;
-  }
-
-  .hero h1{
-    font-size:47px;
-  }
-
+@media(max-width:600px){
   section{
-    padding:50px 16px;
+    padding:65px 5%;
   }
 
   .hero{
-    padding:55px 16px;
+    padding:55px 5%;
   }
 
-  .grid,
-  .grid-3,
-  .settings-grid,
-  .dashboard-grid,
-  .payment-options{
+  .hero h1{
+    font-size:48px;
+  }
+
+  .terminal-stats{
     grid-template-columns:1fr;
-  }
-
-  .steps{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .terminal{
-    padding:14px;
-  }
-
-  .chart{
-    height:230px;
-  }
-
-  .footer-inner{
-    flex-direction:column;
   }
 }
 </style>
@@ -911,2241 +511,624 @@ footer p{
 
 <body>
 
-<!-- =========================
-     NAVIGATION
-========================= -->
-
-<header>
-<nav class="navbar">
+<!-- NAVBAR -->
+<header class="navbar">
 
   <div class="logo">
     SMC <span>TRADE</span>
   </div>
 
-  <div class="nav-links">
-
+  <nav class="nav-links">
     <a href="#home">Home</a>
     <a href="#markets">Markets</a>
     <a href="#technology">Technology</a>
     <a href="#access">Access</a>
     <a href="#dashboard">Dashboard</a>
-
-  </div>
+  </nav>
 
   <div class="nav-actions">
-
-    <button
-      class="btn btn-dark"
-      onclick="openModal('loginModal')">
+    <button class="btn btn-dark" onclick="openModal('loginModal')">
       Login
     </button>
 
-    <button
-      class="btn btn-primary"
-      onclick="startAccess()">
+    <button class="btn btn-primary" onclick="startAccess()">
       Get Started
     </button>
-
   </div>
 
-  <button
-    class="mobile-menu"
-    onclick="toggleMobile()">
+  <button class="mobile-menu" onclick="mobileNav()">
     ☰
   </button>
 
-</nav>
 </header>
 
 
-<main id="home">
-
-<!-- =========================
-     HERO
-========================= -->
-
-<section class="hero">
-
-<div>
-
-  <div class="badge">
-    ● SECURE XAUUSD TRADING TECHNOLOGY
-  </div>
-
-  <h1>
-    Smarter Gold Trading
-    <span>With SMC Technology</span>
-  </h1>
-
-  <p>
-    Advanced market-structure, liquidity, FVG,
-    multi-timeframe and risk-management technology
-    designed for automated XAUUSD trading.
-  </p>
-
-  <div class="hero-buttons">
-
-    <button
-      class="btn btn-primary"
-      onclick="startAccess()">
-      Get Secure Access
-    </button>
-
-    <button
-      class="btn btn-dark"
-      onclick="document.getElementById('technology').scrollIntoView({behavior:'smooth'})">
-      Explore Technology
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- TRADING TERMINAL -->
-
-<div class="terminal">
-
-  <div class="terminal-head">
-
-    <div class="symbol">
-      XAUUSD
-      <small>GOLD / USD</small>
-    </div>
-
-    <div class="live">
-      ● MARKET LIVE
-    </div>
-
-  </div>
-
-  <div class="chart">
-    <canvas id="goldChart"></canvas>
-  </div>
-
-  <div class="chart-tools">
-
-    <button class="active">1m</button>
-    <button>5m</button>
-    <button>15m</button>
-    <button>1H</button>
-    <button>4H</button>
-
-  </div>
-
-  <div class="chart-info">
-
-    <div>
-
-      <div style="color:#718089;font-size:11px">
-        XAUUSD
-      </div>
-
-      <div
-        class="price"
-        id="goldPrice">
-        $2,650.40
-      </div>
-
-    </div>
-
-    <div
-      class="up"
-      id="goldChange">
-      +1.28%
-    </div>
-
-  </div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     MARKETS
-========================= -->
-
-<section id="markets">
-
-<div class="section-title">
-
-  <h2>Market Overview</h2>
-
-  <p>
-    Markets monitored by the SMC trading system.
-  </p>
-
-</div>
-
-<div class="grid">
-
-  <div class="card">
-
-    <div class="market-symbol">
-      XAUUSD
-    </div>
-
-    <div
-      class="market-price"
-      id="mGold">
-      $2,650.40
-    </div>
-
-    <div class="up">
-      +1.28%
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="market-symbol">
-      EURUSD
-    </div>
-
-    <div class="market-price">
-      1.0852
-    </div>
-
-    <div class="up">
-      +0.31%
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="market-symbol">
-      GBPUSD
-    </div>
-
-    <div class="market-price">
-      1.2941
-    </div>
-
-    <div class="up">
-      +0.46%
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="market-symbol">
-      BTCUSD
-    </div>
-
-    <div class="market-price">
-      $68,420
-    </div>
-
-    <div class="up">
-      +2.10%
-    </div>
-
-  </div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     TECHNOLOGY
-========================= -->
-
-<section id="technology">
-
-<div class="section-title">
-
-  <h2>SMC Trading Engine</h2>
-
-  <p>
-    Market intelligence designed around Smart Money Concepts.
-  </p>
-
-</div>
-
-
-<div class="grid grid-3">
-
-  <div class="card">
-
-    <div class="feature-icon">
-      ↗
-    </div>
-
-    <h3>
-      Market Structure
-    </h3>
-
-    <p>
-      Detects HH, HL, LH, LL, BOS and CHoCH conditions
-      to understand directional market structure.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="feature-icon">
-      ◈
-    </div>
-
-    <h3>
-      Liquidity Analysis
-    </h3>
-
-    <p>
-      Identifies liquidity areas and potential sweep zones
-      for market analysis.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="feature-icon">
-      ▱
-    </div>
-
-    <h3>
-      Fair Value Gap
-    </h3>
-
-    <p>
-      Detects imbalance and FVG areas for trade analysis.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="feature-icon">
-      ◫
-    </div>
-
-    <h3>
-      Multi-Timeframe Bias
-    </h3>
-
-    <p>
-      Combines higher and lower timeframe market information.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="feature-icon">
-      ◎
-    </div>
-
-    <h3>
-      Risk Management
-    </h3>
-
-    <p>
-      Designed around controlled position sizing,
-      stop-loss and take-profit management.
-    </p>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="feature-icon">
-      ✓
-    </div>
-
-    <h3>
-      Automated MT5
-    </h3>
-
-    <p>
-      Built for automated XAUUSD trading through a
-      MetaTrader 5 Expert Advisor.
-    </p>
-
-  </div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     ACCESS
-========================= -->
-
-<section id="access">
-
-<div class="section-title">
-
-  <h2>
-    Secure Access
-  </h2>
-
-  <p>
-    Complete the required access process before
-    trading-bot activation.
-  </p>
-
-</div>
-
-
-<div class="steps">
-
-  <div class="step">
-
-    <div class="step-number">
-      1
-    </div>
-
-    <strong>
-      18+
-    </strong>
-
-    <p>
-      Age requirement
-    </p>
-
-  </div>
-
-
-  <div class="step">
-
-    <div class="step-number">
-      2
-    </div>
-
-    <strong>
-      Account
-    </strong>
-
-    <p>
-      Secure login
-    </p>
-
-  </div>
-
-
-  <div class="step">
-
-    <div class="step-number">
-      3
-    </div>
-
-    <strong>
-      KYC
-    </strong>
-
-    <p>
-      Identity verification
-    </p>
-
-  </div>
-
-
-  <div class="step">
-
-    <div class="step-number">
-      4
-    </div>
-
-    <strong>
-      Payment
-    </strong>
-
-    <p>
-      Verified payment
-    </p>
-
-  </div>
-
-
-  <div class="step">
-
-    <div class="step-number">
-      5
-    </div>
-
-    <strong>
-      MT5 Bot
-    </strong>
-
-    <p>
-      Access activation
-    </p>
-
-  </div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     DASHBOARD
-========================= -->
-
-<section id="dashboard">
-
-<div class="dashboard">
-
-  <div class="dashboard-top">
-
-    <div>
-
-      <div class="badge">
-        SECURE USER DASHBOARD
-      </div>
-
-      <h2 style="margin-top:12px">
-        Trading Account
-      </h2>
-
-    </div>
-
-    <button
-      class="btn btn-danger"
-      onclick="logout()">
-      Logout
-    </button>
-
-  </div>
-
-
-  <div class="dashboard-grid">
-
-
-    <div class="dashboard-card">
-
-      <h3>
-        Identity
-      </h3>
-
-      <p>
-        Verification status:
-        <span class="status status-yellow">
-          Pending
-        </span>
-      </p>
-
-      <div class="progress">
-        <span style="width:40%"></span>
-      </div>
-
-    </div>
-
-
-    <div class="dashboard-card">
-
-      <h3>
-        Age Requirement
-      </h3>
-
-      <p>
-        18+ requirement
-      </p>
-
-      <br>
-
-      <span class="status status-green">
-        ACCOUNT REQUIREMENT
-      </span>
-
-    </div>
-
-
-    <div class="dashboard-card">
-
-      <h3>
-        Subscription
-      </h3>
-
-      <p>
-        Payment entitlement
-      </p>
-
-      <br>
-
-      <span class="status status-yellow">
-        NOT CONFIRMED
-      </span>
-
-    </div>
-
-
-    <div class="dashboard-card">
-
-      <h3>
-        Trading Bot
-      </h3>
-
-      <p>
-        MT5 access is locked until the required
-        account, verification and payment process
-        is completed.
-      </p>
-
-      <button
-        class="btn btn-dark"
-        style="margin-top:15px;width:100%"
-        disabled>
-        🔒 Bot Locked
-      </button>
-
-    </div>
-
-
-    <div class="dashboard-card">
-
-      <h3>
-        Two-Factor Authentication
-      </h3>
-
-      <p>
-        Additional verification protection for
-        your account.
-      </p>
-
-      <button
-        class="btn btn-blue"
-        style="margin-top:15px;width:100%"
-        onclick="showMessage('2FA setup requires the production backend.')">
-        Configure 2FA
-      </button>
-
-    </div>
-
-
-    <div class="dashboard-card">
-
-      <h3>
-        Active Sessions
-      </h3>
-
-      <p>
-        Current browser session
-      </p>
-
-      <br>
-
-      <span class="status status-green">
-        ACTIVE
-      </span>
-
-      <button
-        class="btn btn-dark"
-        style="margin-top:15px;width:100%"
-        onclick="showMessage('Session management requires the production backend.')">
-        Manage Sessions
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div style="margin-top:25px">
-
-    <div class="section-title">
-
-      <h2 style="font-size:24px">
-        Trading Settings
-      </h2>
-
-      <p>
-        Configure your preferred trading environment.
-      </p>
-
-    </div>
-
-
-    <div class="settings-grid">
-
-
-      <div class="setting">
-
-        <span>
-          Risk Percentage
-        </span>
-
-        <input
-          type="number"
-          value="1"
-          min=".1"
-          max="10"
-          step=".1">
-
-      </div>
-
-
-      <div class="setting">
-
-        <span>
-          Stop Loss
-        </span>
-
-        <select>
-
-          <option>
-            ATR Based
-          </option>
-
-          <option>
-            Fixed
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="setting">
-
-        <span>
-          Take Profit
-        </span>
-
-        <select>
-
-          <option>
-            ATR Based
-          </option>
-
-          <option>
-            Risk / Reward
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="setting">
-
-        <span>
-          Timeframe
-        </span>
-
-        <select>
-
-          <option>
-            1 Minute
-          </option>
-
-          <option>
-            5 Minutes
-          </option>
-
-          <option>
-            15 Minutes
-          </option>
-
-          <option>
-            1 Hour
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="setting">
-
-        <span>
-          Trailing Stop
-        </span>
-
-        <select>
-
-          <option>
-            Enabled
-          </option>
-
-          <option>
-            Disabled
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="setting">
-
-        <span>
-          Break Even
-        </span>
-
-        <select>
-
-          <option>
-            Enabled
-          </option>
-
-          <option>
-            Disabled
-          </option>
-
-        </select>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-</section>
-
-</main>
-
-
-<!-- =========================
-     LOGIN MODAL
-========================= -->
-
-<div
-  class="modal"
-  id="loginModal">
-
-<div class="modal-box">
-
-  <div class="modal-head">
-
-    <div>
-
-      <h2>
-        Secure Login
-      </h2>
-
-      <p>
-        Sign in to your SMC TRADE account.
-      </p>
-
-    </div>
-
-    <button
-      class="close"
-      onclick="closeModal('loginModal')">
-      ×
-    </button>
-
-  </div>
-
-
-  <button
-    class="google"
-    onclick="googleLogin()">
-    Continue with Google
-  </button>
-
-
-  <div class="divider">
-    OR
-  </div>
-
-
-  <div class="form-group">
-
-    <label>
-      Email
-    </label>
-
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="you@example.com">
-
-  </div>
-
-
-  <div class="form-group">
-
-    <label>
-      Password
-    </label>
-
-    <div class="password-wrap">
-
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Password">
-
-      <button
-        class="password-toggle"
-        onclick="togglePassword('loginPassword',this)">
-        Show
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <button
-    class="btn btn-primary"
-    style="width:100%"
-    onclick="emailLogin()">
-    Login with Email
-  </button>
-
-
-  <div class="divider">
-    PHONE OTP
-  </div>
-
-
-  <div class="form-group">
-
-    <label>
-      Phone Number
-    </label>
-
-    <input
-      id="phoneNumber"
-      type="tel"
-      placeholder="+251...">
-
-  </div>
-
-
-  <button
-    class="btn btn-blue"
-    style="width:100%"
-    onclick="requestOTP()">
-    Send OTP
-  </button>
-
-
-  <div id="loginMessage"></div>
-
-</div>
-</div>
-
-
-<!-- =========================
-     AGE MODAL
-========================= -->
-
-<div
-  class="modal"
-  id="ageModal">
-
-<div class="modal-box">
-
-  <div class="modal-head">
-
-    <div>
-
-      <h2>
-        Age Requirement
-      </h2>
-
-      <p>
-        You must meet the minimum age requirement
-        to continue.
-      </p>
-
-    </div>
-
-    <button
-      class="close"
-      onclick="closeModal('ageModal')">
-      ×
-    </button>
-
-  </div>
-
-
-  <div class="notice">
-    Please confirm that you meet the required
-    age before continuing.
-  </div>
-
-
-  <label
-    style="display:flex;gap:10px;align-items:flex-start;margin-bottom:20px">
-
-    <input
-      id="ageConfirm"
-      type="checkbox"
-      style="width:auto;margin-top:4px">
-
-    <span>
-      I confirm that I meet the required age.
-    </span>
-
-  </label>
-
-
-  <button
-    class="btn btn-primary"
-    style="width:100%"
-    onclick="confirmAge()">
-    Continue
-  </button>
-
-</div>
-</div>
-
-
-<!-- =========================
-     KYC MODAL
-========================= -->
-
-<div
-  class="modal"
-  id="kycModal">
-
-<div class="modal-box">
-
-  <div class="modal-head">
-
-    <div>
-
-      <h2>
-        Identity Verification
-      </h2>
-
-      <p>
-        Secure KYC verification.
-      </p>
-
-    </div>
-
-    <button
-      class="close"
-      onclick="closeModal('kycModal')">
-      ×
-    </button>
-
-  </div>
-
-
-  <div class="notice">
-    Identity verification is required before
-    payment and MT5 bot access can be enabled.
-  </div>
-
-
-  <div class="form-group">
-
-    <label>
-      Document Type
-    </label>
-
-    <select id="documentType">
-
-      <option value="">
-        Select document
-      </option>
-
-      <option>
-        Passport
-      </option>
-
-      <option>
-        National ID
-      </option>
-
-      <option>
-        Driving Licence
-      </option>
-
-    </select>
-
-  </div>
-
-
-  <div class="form-group">
-
-    <label>
-      Country
-    </label>
-
-    <select id="country">
-
-      <option value="">
-        Select country
-      </option>
-
-      <option>
-        Ethiopia
-      </option>
-
-      <option>
-        United States
-      </option>
-
-      <option>
-        United Kingdom
-      </option>
-
-      <option>
-        Canada
-      </option>
-
-      <option>
-        United Arab Emirates
-      </option>
-
-      <option>
-        Kenya
-      </option>
-
-      <option>
-        Other
-      </option>
-
-    </select>
-
-  </div>
-
-
-  <div class="form-group">
-
-    <label>
-      Selfie / Face Verification
-    </label>
-
-    <input
-      type="file"
-      id="selfieFile"
-      accept="image/*">
-
-  </div>
-
-
-  <div class="form-group">
-
-    <label>
-      Identity Document
-    </label>
-
-    <input
-      type="file"
-      id="documentFile"
-      accept="image/*,.pdf">
-
-  </div>
-
-
-  <button
-    class="btn btn-primary"
-    style="width:100%"
-    onclick="submitKYC()">
-    Submit Verification
-  </button>
-
-
-  <div id="kycMessage"></div>
-
-</div>
-</div>
-
-
-<!-- =========================
-     PAYMENT MODAL
-========================= -->
-
-<div
-  class="modal"
-  id="paymentModal">
-
-<div class="modal-box">
-
-  <div class="modal-head">
-
-    <div>
-
-      <h2>
-        Secure Payment
-      </h2>
-
-      <p>
-        Choose your preferred payment method.
-      </p>
-
-    </div>
-
-    <button
-      class="close"
-      onclick="closeModal('paymentModal')">
-      ×
-    </button>
-
-  </div>
-
-
-  <div class="notice">
-    Choose your preferred payment method.
-    Real payment confirmation must be verified
-    by the production payment backend.
-  </div>
-
-
-  <div
-    class="card"
-    style="margin-bottom:15px">
-
-    <h3>
-      SMC TRADE Access
-    </h3>
-
-    <p>
-      Premium trading-bot subscription
-    </p>
-
-    <div
-      style="font-size:31px;font-weight:950;margin:15px 0">
-      Secure Access
-    </div>
-
-  </div>
-
-
-  <div class="payment-options">
-
-
-    <button
-      class="payment-option"
-      onclick="choosePayment('Binance Pay')">
-
-      <strong>
-        🟡 Binance Pay
-      </strong>
-
-      <span>
-        Continue with Binance Pay
-      </span>
-
-    </button>
-
-
-    <button
-      class="payment-option"
-      onclick="choosePayment('Bybit Pay')">
-
-      <strong>
-        🔵 Bybit Pay
-      </strong>
-
-      <span>
-        Continue with Bybit Pay
-      </span>
-
-    </button>
-
-
-    <button
-      class="payment-option"
-      onclick="choosePayment('USDT')">
-
-      <strong>
-        ₮ USDT / Crypto
-      </strong>
-
-      <span>
-        Crypto payment option
-      </span>
-
-    </button>
-
-
-    <button
-      class="payment-option"
-      onclick="choosePayment('Card')">
-
-      <strong>
-        💳 Card
-      </strong>
-
-      <span>
-        Available payment provider
-      </span>
-
-    </button>
-
-  </div>
-
-
-  <div
-    id="paymentMessage"
-    style="margin-top:15px">
-  </div>
-
-</div>
-</div>
-
-
-<!-- =========================
-     AI SUPPORT BOT
-========================= -->
-
-<button
-  class="chat-button"
-  onclick="toggleChat()">
-  ✦
-</button>
-
-
-<div
-  class="chat-box"
-  id="chatBox">
-
-
-  <div class="chat-head">
-
-    <div>
-
-      <strong>
-        SMC AI Support
-      </strong>
-
-      <div class="chat-status">
-        ● ONLINE
-      </div>
-
-    </div>
-
-    <button
-      class="close"
-      onclick="toggleChat()">
-      ×
-    </button>
-
-  </div>
-
-
-  <div
-    class="chat-body"
-    id="chatBody">
-
-    <div class="message bot-message">
-
-      Hello. I'm SMC TRADE AI Support.
-
-      <br><br>
-
-      I can explain:
-
-      <br>• SMC Trading Technology
-      <br>• XAUUSD / Gold
-      <br>• Market Structure
-      <br>• Liquidity
-      <br>• FVG
-      <br>• MT5 Bot
-      <br>• Account Access
-      <br>• KYC
-      <br>• Payment
-
-      <br><br>
-
-      Ask me anything about SMC TRADE.
-
-    </div>
-
-  </div>
-
-
-  <div class="chat-input">
-
-    <input
-      id="chatInput"
-      placeholder="Ask SMC AI..."
-      onkeydown="if(event.key==='Enter')sendChat()">
-
-    <button
-      class="btn btn-primary"
-      onclick="sendChat()">
-      Send
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-<div class="footer-inner">
+<!-- HOME -->
+<section class="hero" id="home">
 
   <div>
+    <div class="badge">● AUTOMATED XAUUSD MARKET TECHNOLOGY</div>
 
-    <div class="logo">
-      SMC <span>TRADE</span>
-    </div>
+    <h1>
+      Trade Gold With<br>
+      <span>SMC Intelligence.</span>
+    </h1>
 
-    <p style="margin-top:10px">
-
-      Automated trading technology and
-      market-analysis tools.
-
-      Trading involves substantial risk.
-      Past performance does not guarantee
-      future results.
-
+    <p>
+      SMC TRADE is a modern trading technology platform designed to
+      analyze XAUUSD using market structure, liquidity, FVG, BOS/CHoCH,
+      momentum and risk-management logic.
     </p>
 
+    <div class="hero-buttons">
+      <button class="btn btn-primary" onclick="startAccess()">
+        Start Trading
+      </button>
+
+      <button class="btn btn-dark" onclick="document.getElementById('technology').scrollIntoView()">
+        Explore Technology
+      </button>
+    </div>
   </div>
 
 
-  <div class="footer-links">
+  <div class="terminal">
 
-    <a href="tel:+251988407460">
-      📞 Call Support
-    </a>
+    <div class="terminal-top">
+      <div class="market-name">XAUUSD · GOLD</div>
+      <div class="live">● LIVE MARKET</div>
+    </div>
 
-    <a
-      href="https://wa.me/251988407460"
-      target="_blank"
-      rel="noopener">
-      WhatsApp
-    </a>
+    <div class="price">$4,0XX.XX</div>
 
-    <a
-      href="https://t.me/+251988407460"
-      target="_blank"
-      rel="noopener">
-      Telegram
-    </a>
+    <div class="chart">
+      <div class="chart-line"></div>
+    </div>
+
+    <div class="terminal-stats">
+      <div class="stat">
+        <small>Market</small>
+        <strong>XAUUSD</strong>
+      </div>
+
+      <div class="stat">
+        <small>Engine</small>
+        <strong>SMC AI</strong>
+      </div>
+
+      <div class="stat">
+        <small>Status</small>
+        <strong class="verified">ACTIVE</strong>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MARKETS -->
+<section id="markets">
+
+  <div class="section-title">
+    <h2>Markets</h2>
+    <p>Focused technology for gold market analysis.</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon">🥇</div>
+      <h3>XAUUSD</h3>
+      <p>
+        Advanced analysis designed specifically for the gold market.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📊</div>
+      <h3>Market Structure</h3>
+      <p>
+        Detects potential BOS, CHoCH, HH, HL, LH and LL structures.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">⚡</div>
+      <h3>Momentum</h3>
+      <p>
+        Designed to react quickly when strong market movement appears.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TECHNOLOGY -->
+<section id="technology">
+
+  <div class="section-title">
+    <h2>SMC Technology</h2>
+    <p>Multiple market concepts working together.</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="icon">💧</div>
+      <h3>Liquidity</h3>
+      <p>
+        Identifies potential liquidity areas and market sweeps.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🧩</div>
+      <h3>Fair Value Gap</h3>
+      <p>
+        Monitors potential imbalance areas within market movement.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🧠</div>
+      <h3>SMC Engine</h3>
+      <p>
+        Combines multiple signals before generating a trading decision.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">⚙️</div>
+      <h3>Risk Management</h3>
+      <p>
+        Supports controlled position sizing, stop loss and trade limits.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📈</div>
+      <h3>Trend Analysis</h3>
+      <p>
+        Uses market direction and momentum to improve trade filtering.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🤖</div>
+      <h3>Automation</h3>
+      <p>
+        Designed for automated trading workflows through supported
+        trading infrastructure.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ACCESS -->
+<section id="access">
+
+  <div class="section-title">
+    <h2>Secure Access</h2>
+    <p>Access the SMC TRADE platform through your account.</p>
+  </div>
+
+  <div style="max-width:650px;margin:auto;text-align:center">
+
+    <div class="card">
+
+      <div class="icon">🔑</div>
+
+      <h3>Sign in to SMC TRADE</h3>
+
+      <p>
+        Use your supported account authentication to access your
+        trading environment and dashboard.
+      </p>
+
+      <br>
+
+      <button class="btn btn-primary" onclick="openModal('loginModal')">
+        Login
+      </button>
+
+      <button class="btn btn-dark" onclick="googleLogin()">
+        Continue with Google
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+
+  <div class="section-title">
+    <h2>Dashboard</h2>
+    <p>Your trading technology overview.</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>Bot Status</h3>
+      <p class="verified">● ONLINE</p>
+    </div>
+
+    <div class="card">
+      <h3>Market</h3>
+      <p>XAUUSD · Gold</p>
+    </div>
+
+    <div class="card">
+      <h3>Risk Engine</h3>
+      <p>Protected Mode</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal('loginModal')">
+      ×
+    </button>
+
+    <h2>SMC TRADE Login</h2>
+
+    <p>
+      Sign in to access your SMC TRADE account.
+    </p>
+
+    <input class="input" type="email" placeholder="Email address">
+    <input class="input" type="password" placeholder="Password">
+
+    <button class="btn btn-primary" style="width:100%" onclick="demoLogin()">
+      Login
+    </button>
+
+    <br><br>
+
+    <button class="btn btn-dark" style="width:100%" onclick="googleLogin()">
+      Continue with Google
+    </button>
+
+    <div class="security-result" id="loginSecurity">
+
+      <div class="security-card">
+        🔐 <strong>Security</strong><br>
+        Secure authentication is required.
+      </div>
+
+      <div class="security-card">
+        ✅ <strong>Verification Status</strong><br>
+        <span class="verified">Demo verification ready</span>
+      </div>
+
+    </div>
 
   </div>
 
 </div>
 
+
+<!-- AI / SECURITY BOT -->
+<div class="bot">
+
+  <div class="chat" id="chat">
+
+    <div class="chat-head">
+      🤖 SMC TRADE Assistant
+    </div>
+
+    <div class="chat-body" id="chatBody">
+
+      <div class="message">
+        Hello 👋 I'm the SMC TRADE assistant.<br><br>
+        Ask me about the bot, XAUUSD, trading technology,
+        account security, verification or access.
+      </div>
+
+    </div>
+
+    <div class="chat-input">
+
+      <input
+        id="chatInput"
+        type="text"
+        placeholder="Ask something..."
+        onkeydown="if(event.key==='Enter')sendMessage()"
+      >
+
+      <button onclick="sendMessage()">➤</button>
+
+    </div>
+
+  </div>
+
+  <button class="bot-button" onclick="toggleBot()">
+    🤖
+  </button>
+
+</div>
+
+
+<footer>
+  © 2026 SMC TRADE. Automated trading technology.
 </footer>
 
 
 <script>
 
-/* =========================
-   MODALS
-========================= */
-
+/* MODALS */
 function openModal(id){
-
-  const modal=document.getElementById(id);
-
-  if(!modal)return;
-
-  modal.style.display="block";
-
-  document.body.style.overflow="hidden";
+  document.getElementById(id).style.display="flex";
 }
-
 
 function closeModal(id){
-
-  const modal=document.getElementById(id);
-
-  if(!modal)return;
-
-  modal.style.display="none";
-
-  document.body.style.overflow="";
+  document.getElementById(id).style.display="none";
 }
 
-
-window.addEventListener("click",function(e){
-
-  document.querySelectorAll(".modal").forEach(function(modal){
-
-    if(e.target===modal){
-
-      modal.style.display="none";
-
-      document.body.style.overflow="";
-    }
-
-  });
-
-});
-
-
-/* =========================
-   ACCESS FLOW
-========================= */
-
-function startAccess(){
-
-  openModal("ageModal");
-}
-
-
-function confirmAge(){
-
-  const checked=
-    document.getElementById("ageConfirm").checked;
-
-  if(!checked){
-
-    alert(
-      "Please confirm the age requirement."
-    );
-
-    return;
+window.onclick=function(e){
+  if(e.target.classList.contains("modal")){
+    e.target.style.display="none";
   }
+};
 
-  closeModal("ageModal");
 
-  openModal("loginModal");
+/* ACCESS */
+function startAccess(){
+  document.getElementById("access").scrollIntoView({
+    behavior:"smooth"
+  });
 }
 
 
-/* =========================
-   LOGIN
-========================= */
+/* DEMO LOGIN */
+function demoLogin(){
 
+  document.getElementById("loginSecurity").style.display="block";
+
+}
+
+
+/*
+  IMPORTANT:
+  This is only a frontend demo.
+  Real Google authentication requires
+  Google OAuth + backend.
+*/
 function googleLogin(){
 
-  showLogin(
-    "Google authentication requires a production OAuth backend."
-  );
-}
-
-
-function emailLogin(){
-
-  const email=
-    document.getElementById("loginEmail").value.trim();
-
-  if(!email){
-
-    showLogin(
-      "Enter your email address."
-    );
-
-    return;
-  }
-
-  showLogin(
-    "Demo login submitted. Connect your secure backend to authenticate users."
-  );
-}
-
-
-function requestOTP(){
-
-  const phone=
-    document.getElementById("phoneNumber").value.trim();
-
-  if(!phone){
-
-    showLogin(
-      "Enter your phone number."
-    );
-
-    return;
-  }
-
-  showLogin(
-    "OTP request created. Connect your SMS provider/backend to send the real code."
-  );
-}
-
-
-function showLogin(msg){
-
-  document.getElementById(
-    "loginMessage"
-  ).innerHTML=
-    `<div class="notice" style="margin-top:15px">
-      ${escapeHTML(msg)}
-    </div>`;
-}
-
-
-function togglePassword(id,button){
-
-  const input=
-    document.getElementById(id);
-
-  if(input.type==="password"){
-
-    input.type="text";
-
-    button.textContent="Hide";
-
-  }else{
-
-    input.type="password";
-
-    button.textContent="Show";
-  }
-}
-
-
-/* =========================
-   KYC
-========================= */
-
-function submitKYC(){
-
-  const type=
-    document.getElementById("documentType").value;
-
-  const country=
-    document.getElementById("country").value;
-
-  if(!type || !country){
-
-    document.getElementById(
-      "kycMessage"
-    ).innerHTML=
-      `<div class="notice" style="margin-top:15px">
-        Please select document type and country.
-      </div>`;
-
-    return;
-  }
-
-  document.getElementById(
-    "kycMessage"
-  ).innerHTML=
-    `<div class="notice" style="margin-top:15px">
-      KYC submission prepared. A secure backend/KYC
-      provider must receive and verify the documents
-      before approval.
-    </div>`;
-}
-
-
-/* =========================
-   PAYMENT
-========================= */
-
-function choosePayment(method){
-
-  document.getElementById(
-    "paymentMessage"
-  ).innerHTML=
-    `<div class="notice">
-
-      Selected:
-      <strong>${escapeHTML(method)}</strong>
-
-      <br><br>
-
-      Payment integration is ready for backend
-      connection.
-
-    </div>`;
-}
-
-
-/* =========================
-   DASHBOARD
-========================= */
-
-function logout(){
-
   alert(
-    "You have been logged out."
+    "Google Sign-In UI is ready. Real Google authentication requires Google OAuth configuration and a secure backend."
   );
+
 }
 
 
-function showMessage(message){
+/* BOT */
+function toggleBot(){
 
-  alert(message);
+  const chat=document.getElementById("chat");
+
+  chat.style.display =
+    chat.style.display==="block" ? "none" : "block";
+
 }
 
 
-/* =========================
-   AI SUPPORT BOT
-========================= */
+function addBotMessage(text){
 
-function toggleChat(){
+  const body=document.getElementById("chatBody");
 
-  const box=
-    document.getElementById("chatBox");
+  const msg=document.createElement("div");
 
-  box.style.display=
-    box.style.display==="block"
-      ? "none"
-      : "block";
+  msg.className="message";
+
+  msg.innerHTML=text;
+
+  body.appendChild(msg);
+
+  body.scrollTop=body.scrollHeight;
+
 }
 
 
-function sendChat(){
+function sendMessage(){
 
-  const input=
-    document.getElementById("chatInput");
+  const input=document.getElementById("chatInput");
 
-  const body=
-    document.getElementById("chatBody");
+  const question=input.value.trim();
 
-  const text=
-    input.value.trim();
+  if(!question) return;
 
-  if(!text)return;
-
-  body.innerHTML+=
-    `<div class="message user-message">
-      ${escapeHTML(text)}
-    </div>`;
+  addBotMessage("<strong>You:</strong> "+question);
 
   input.value="";
 
-  const q=
-    text.toLowerCase();
+  const q=question.toLowerCase();
 
-  let reply=
-    "SMC TRADE is designed for automated market analysis and XAUUSD trading technology. I can explain the system, MT5 bot, SMC concepts, access or payment process.";
+  let answer="";
 
-
+  /* ACCOUNT SECURITY */
   if(
-    q.includes("smc") ||
-    q.includes("smart money")
+    q.includes("security") ||
+    q.includes("account security") ||
+    q.includes("secure") ||
+    q.includes("2fa") ||
+    q.includes("otp") ||
+    q.includes("password")
   ){
 
-    reply=
-      "SMC means Smart Money Concepts. The system focuses on market structure, liquidity, BOS, CHoCH, Fair Value Gaps and multi-timeframe analysis.";
+    answer=`
+      🔐 <strong>Account Security</strong><br><br>
+
+      Your SMC TRADE account security area can include:
+      <br>• Secure authentication
+      <br>• OTP verification
+      <br>• Two-Factor Authentication (2FA)
+      <br>• Secure login
+      <br>• Encrypted communication
+      <br><br>
+
+      <strong>Verification Status</strong><br>
+      ✅ Email verification<br>
+      ✅ Account verification status<br>
+      🛡️ 2FA status
+    `;
+
   }
 
+  /* VERIFICATION */
+  else if(
+    q.includes("verification") ||
+    q.includes("verified") ||
+    q.includes("verify")
+  ){
 
-  if(
+    answer=`
+      ✅ <strong>Verification Status</strong><br><br>
+
+      Your account can display:
+      <br>• Email verification
+      <br>• Phone verification
+      <br>• Account verification
+      <br>• 2FA status
+      <br><br>
+
+      The real status must come from the secure backend.
+    `;
+
+  }
+
+  /* GOOGLE */
+  else if(
+    q.includes("google") ||
+    q.includes("google account")
+  ){
+
+    answer=`
+      🔵 <strong>Google Account</strong><br><br>
+
+      SMC TRADE can support Google Sign-In.
+      After successful Google OAuth authentication,
+      the backend can create or connect your SMC TRADE account
+      and return the real verification/security status.
+    `;
+
+  }
+
+  /* BOT */
+  else if(
+    q.includes("bot") ||
+    q.includes("robot") ||
+    q.includes("ea")
+  ){
+
+    answer=`
+      🤖 <strong>SMC Trading Bot</strong><br><br>
+
+      The system is designed around XAUUSD market analysis,
+      market structure, liquidity, FVG, BOS/CHoCH,
+      momentum and risk-management concepts.
+      <br><br>
+      Strong movement detection can be used for faster reaction,
+      while risk controls help prevent uncontrolled entries.
+    `;
+
+  }
+
+  /* GOLD */
+  else if(
     q.includes("gold") ||
     q.includes("xauusd")
   ){
 
-    reply=
-      "XAUUSD represents Gold versus the US Dollar. SMC TRADE is designed around XAUUSD market analysis and automated MT5 trading.";
+    answer=`
+      🥇 <strong>XAUUSD / GOLD</strong><br><br>
+
+      SMC TRADE focuses on gold-market analysis.
+      The technology can monitor structure, liquidity,
+      momentum and other SMC concepts.
+    `;
+
   }
 
-
-  if(
-    q.includes("market structure") ||
-    q.includes("bos") ||
-    q.includes("choch")
+  /* LOGIN */
+  else if(
+    q.includes("login") ||
+    q.includes("sign in") ||
+    q.includes("access")
   ){
 
-    reply=
-      "Market structure studies HH, HL, LH and LL. BOS can indicate a break of structure, while CHoCH can indicate a possible change in market direction.";
+    answer=`
+      🔑 <strong>Account Access</strong><br><br>
+
+      Use the Login or Get Started buttons to enter
+      the SMC TRADE access flow.
+    `;
+
   }
 
+  /* DEFAULT */
+  else{
 
-  if(
-    q.includes("liquidity")
-  ){
+    answer=`
+      🤖 I can help with:
+      <br><br>
+      • Account Security 🔐
+      <br>• Verification Status ✅
+      <br>• Google Account 🔵
+      <br>• SMC Trading Bot 🤖
+      <br>• XAUUSD / Gold 🥇
+      <br>• Login & Access 🔑
+    `;
 
-    reply=
-      "Liquidity analysis looks for areas where orders may be concentrated. SMC TRADE uses liquidity concepts together with other conditions rather than relying on one signal alone.";
   }
-
-
-  if(
-    q.includes("fvg") ||
-    q.includes("fair value")
-  ){
-
-    reply=
-      "An FVG, or Fair Value Gap, represents a price imbalance. The trading system can use FVG information as part of broader market analysis.";
-  }
-
-
-  if(
-    q.includes("mt5") ||
-    q.includes("bot")
-  ){
-
-    reply=
-      "The MT5 bot is designed for automated XAUUSD trading. Real trading requires MetaTrader 5, a broker account and a properly configured Expert Advisor.";
-  }
-
-
-  if(
-    q.includes("payment") ||
-    q.includes("binance") ||
-    q.includes("bybit")
-  ){
-
-    reply=
-      "SMC TRADE can present payment options such as Binance Pay, Bybit Pay, crypto or card. Real payment confirmation must be verified by the production backend.";
-  }
-
-
-  if(
-    q.includes("kyc") ||
-    q.includes("verification")
-  ){
-
-    reply=
-      "KYC means identity verification. The production system should use a secure verification provider before activating protected services.";
-  }
-
-
-  if(
-    q.includes("access") ||
-    q.includes("login")
-  ){
-
-    reply=
-      "Start with Get Started, complete the required account process and then continue through the access flow. The real authentication system needs a secure backend.";
-  }
-
 
   setTimeout(function(){
-
-    body.innerHTML+=
-      `<div class="message bot-message">
-        ${escapeHTML(reply)}
-      </div>`;
-
-    body.scrollTop=
-      body.scrollHeight;
-
+    addBotMessage(answer);
   },350);
+
 }
 
 
-function escapeHTML(str){
-
-  return str
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-
-/* =========================
-   MOBILE NAVIGATION
-========================= */
-
-function toggleMobile(){
-
-  const links=
-    document.querySelector(".nav-links");
-
-  const open=
-    links.dataset.open==="true";
-
-  if(open){
-
-    links.style.display="";
-
-    links.dataset.open="false";
-
-    return;
-  }
-
-  links.style.display="flex";
-
-  links.style.position="absolute";
-
-  links.style.top="65px";
-
-  links.style.left="0";
-
-  links.style.right="0";
-
-  links.style.padding="20px";
-
-  links.style.flexDirection="column";
-
-  links.style.background="#080a0b";
-
-  links.style.borderBottom=
-    "1px solid rgba(217,169,40,.2)";
-
-  links.dataset.open="true";
-}
-
-
-/* Close mobile menu after navigation */
-
-document.querySelectorAll(
-  ".nav-links a"
-).forEach(function(link){
-
-  link.addEventListener("click",function(){
-
-    const links=
-      document.querySelector(".nav-links");
-
-    links.style.display="";
-
-    links.dataset.open="false";
-
-  });
-
-});
-
-
-/* =========================
-   GOLD PRICE DEMO
-========================= */
-
-let goldPrice=2650.40;
-
-setInterval(function(){
-
-  goldPrice +=
-    (Math.random()-.48)*1.8;
-
-  document.getElementById(
-    "goldPrice"
-  ).textContent=
-    "$"+goldPrice.toFixed(2);
-
-  document.getElementById(
-    "mGold"
-  ).textContent=
-    "$"+goldPrice.toFixed(2);
-
-},1200);
-
-
-/* =========================
-   CANDLE CHART
-========================= */
-
-const canvas=
-  document.getElementById("goldChart");
-
-const ctx=
-  canvas.getContext("2d");
-
-let candles=[];
-
-
-function resizeCanvas(){
-
-  const rect=
-    canvas.getBoundingClientRect();
-
-  const ratio=
-    window.devicePixelRatio || 1;
-
-  canvas.width=
-    rect.width*ratio;
-
-  canvas.height=
-    rect.height*ratio;
-
-  ctx.setTransform(
-    ratio,
-    0,
-    0,
-    ratio,
-    0,
-    0
-  );
-}
-
-
-function createCandles(){
-
-  candles=[];
-
-  let price=2650;
-
-  for(let i=0;i<42;i++){
-
-    const open=price;
-
-    const close=
-      open+(Math.random()-.46)*7;
-
-    const high=
-      Math.max(open,close)
-      +Math.random()*5;
-
-    const low=
-      Math.min(open,close)
-      -Math.random()*5;
-
-    candles.push({
-      open,
-      close,
-      high,
-      low
-    });
-
-    price=close;
-  }
-}
-
-
-function drawChart(){
-
-  const w=
-    canvas.clientWidth;
-
-  const h=
-    canvas.clientHeight;
-
-  ctx.clearRect(
-    0,
-    0,
-    w,
-    h
-  );
-
-  if(!candles.length)return;
-
-  const min=
-    Math.min(
-      ...candles.map(c=>c.low)
-    );
-
-  const max=
-    Math.max(
-      ...candles.map(c=>c.high)
-    );
-
-  const range=
-    max-min || 1;
-
-  const y=
-    p =>
-      h-
-      ((p-min)/range)*
-      (h-25)-12;
-
-  const gap=
-    w/candles.length;
-
-  const body=
-    Math.max(
-      3,
-      gap*.48
-    );
-
-
-  candles.forEach(function(c,i){
-
-    const x=
-      i*gap+gap/2;
-
-    const yo=y(c.open);
-    const yc=y(c.close);
-    const yh=y(c.high);
-    const yl=y(c.low);
-
-    const bullish=
-      c.close>=c.open;
-
-    ctx.strokeStyle=
-      bullish
-        ? "#29d17b"
-        : "#ff5268";
-
-    ctx.lineWidth=1;
-
-    ctx.beginPath();
-
-    ctx.moveTo(x,yh);
-
-    ctx.lineTo(x,yl);
-
-    ctx.stroke();
-
-
-    ctx.fillStyle=
-      bullish
-        ? "#29d17b"
-        : "#ff5268";
-
-    const top=
-      Math.min(yo,yc);
-
-    const height=
-      Math.max(
-        2,
-        Math.abs(yc-yo)
-      );
-
-    ctx.fillRect(
-      x-body/2,
-      top,
-      body,
-      height
-    );
-
-  });
-
-
-  /* GOLD PRICE LINE */
-
-  ctx.strokeStyle=
-    "rgba(245,211,107,.55)";
-
-  ctx.lineWidth=1;
-
-  ctx.beginPath();
-
-
-  candles.forEach(function(c,i){
-
-    const x=
-      i*gap+gap/2;
-
-    const yy=
-      y(c.close);
-
-    if(i===0)
-      ctx.moveTo(x,yy);
-    else
-      ctx.lineTo(x,yy);
-
-  });
-
-  ctx.stroke();
-
-
-  /* FVG */
-
-  const fx=
-    w*.58;
-
-  ctx.fillStyle=
-    "rgba(217,169,40,.09)";
-
-  ctx.fillRect(
-    fx,
-    35,
-    90,
-    42
-  );
-
-  ctx.strokeStyle=
-    "rgba(217,169,40,.35)";
-
-  ctx.strokeRect(
-    fx,
-    35,
-    90,
-    42
-  );
-
-  ctx.fillStyle=
-    "#d9a928";
-
-  ctx.font=
-    "9px Arial";
-
-  ctx.fillText(
-    "FVG",
-    fx+8,
-    51
-  );
-
-
-  /* BOS */
-
-  ctx.fillStyle=
-    "#3fa7ff";
-
-  ctx.fillText(
-    "BOS",
-    w*.72,
-    105
-  );
-}
-
-
-function animateChart(){
-
-  if(candles.length){
-
-    const last=
-      candles[candles.length-1];
-
-    last.close +=
-      (Math.random()-.5)*.8;
-
-    last.high=
-      Math.max(
-        last.high,
-        last.close
-      );
-
-    last.low=
-      Math.min(
-        last.low,
-        last.close
-      );
-
-
-    if(Math.random()<.04){
-
-      candles.shift();
-
-      const previous=
-        candles[candles.length-1].close;
-
-      const close=
-        previous+
-        (Math.random()-.45)*7;
-
-      candles.push({
-
-        open:previous,
-
-        close,
-
-        high:
-          Math.max(previous,close)
-          +Math.random()*4,
-
-        low:
-          Math.min(previous,close)
-          -Math.random()*4
-
-      });
-
-    }
+/* MOBILE NAV */
+function mobileNav(){
+
+  const nav=document.querySelector(".nav-links");
+
+  if(nav.style.display==="flex"){
+    nav.style.display="none";
+  }else{
+
+    nav.style.display="flex";
+    nav.style.flexDirection="column";
+    nav.style.position="absolute";
+    nav.style.top="72px";
+    nav.style.left="0";
+    nav.style.right="0";
+    nav.style.padding="20px";
+    nav.style.background="#090909";
+    nav.style.borderBottom="1px solid #292929";
 
   }
 
-  drawChart();
-
-  requestAnimationFrame(
-    animateChart
-  );
 }
-
-
-window.addEventListener(
-  "resize",
-  function(){
-
-    resizeCanvas();
-
-    createCandles();
-
-  }
-);
-
-
-resizeCanvas();
-
-createCandles();
-
-animateChart();
 
 </script>
 
