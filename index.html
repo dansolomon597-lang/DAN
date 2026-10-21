@@ -3,379 +3,988 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07111f">
-<meta name="description" content="SMC TRADE — Market analysis, gold charts and trading education">
-<title>SMC TRADE | Smart Trading</title>
+<meta name="theme-color" content="#1f2732">
+<meta name="description" content="SMC TRADE — SMC education, market charts and access requests">
+<title>SMC TRADE | Market Dashboard</title>
 <style>
-:root{--bg:#07111f;--panel:#101e30;--gold:#e6bd63;--text:#f5f7fa;--muted:#b8c5d6;--border:#27384d;--green:#52d6a0;--red:#ff7272}
+:root{--bg:#1e2631;--panel:#27313e;--panel2:#222c38;--line:#303c4b;--gold:#ffd52f;--text:#f4f6fa;--muted:#9ca8b8;--green:#32bd98;--red:#ef5270;--blue:#5e9cff}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:85px}
-body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+html{scroll-behavior:smooth;scroll-padding-top:78px}
+body{font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
 a{color:inherit;text-decoration:none}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-.container{width:90%;max-width:1150px;margin:auto}
-header{background:#0b1728;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
-.navbar{min-height:72px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.logo{color:var(--gold);font-size:24px;font-weight:800}
-.nav-links{display:flex;align-items:center;gap:16px}
-.nav-links a{color:#d7dfeb;font-size:13px}
-.nav-links a:hover{color:var(--gold)}
-.nav-actions{display:flex;align-items:center;gap:8px}
-.btn{display:inline-flex;justify-content:center;align-items:center;padding:11px 17px;border-radius:8px;font-weight:bold;border:1px solid transparent;transition:.2s}
-.btn:hover{transform:translateY(-1px)}
-.primary{background:var(--gold);color:#07111f}
-.secondary{background:transparent;border-color:#53647a;color:white}
-.small{padding:8px 12px;font-size:12px}
-.menu-toggle{display:none;background:transparent;color:white;border:1px solid var(--border);padding:8px 12px;border-radius:8px}
-.hero{min-height:560px;display:flex;align-items:center;padding:65px 0;background:radial-gradient(ellipse at 80% 0%,#183b48 0%,#07111f 60%)}
-.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:35px;align-items:center}
-.tag{color:var(--gold);font-size:12px;font-weight:bold;letter-spacing:1.5px}
-h1{font-size:clamp(36px,5vw,62px);line-height:1.12;margin:20px 0}
-h1 span{color:var(--gold)}
-.hero-description{color:var(--muted);max-width:650px;font-size:17px}
-.buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
-.small-note,.chart-caption{color:#91a2b8;font-size:12px;margin-top:14px}
-.market-panel,.card,.notice,.panel{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px}
-.panel-top,.chart-heading,.row-between{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.symbol,.muted{color:var(--muted)}
-.market-title{font-size:25px;margin-top:18px}
-.market-description{color:var(--muted);font-size:13px;margin-top:5px}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:18px}
-.stat{background:#07111f;border:1px solid var(--border);border-radius:9px;padding:10px;overflow-wrap:anywhere}
-.stat span{display:block;color:var(--muted);font-size:11px}
-.stat strong{font-size:12px}
-section{padding:65px 0}
-.section-heading{max-width:720px;margin-bottom:25px}
-h2{font-size:clamp(26px,4vw,36px);line-height:1.25;margin:10px 0}
-h3{color:var(--gold);margin-bottom:9px}
-.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:25px}
-.card p{color:var(--muted);font-size:14px}
-.card-icon{font-size:25px;margin-bottom:8px}
-.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
-.feature-list{list-style:none;margin-top:13px}
-.feature-list li{margin:8px 0;color:var(--muted)}
-.feature-list li:before{content:"✓";color:var(--green);margin-right:9px}
-.access-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.price{color:var(--gold);font-size:30px;font-weight:bold;margin:12px 0}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wrap{width:min(1180px,94%);margin:auto}
+header{background:#202934;border-bottom:1px solid #323c49;position:sticky;top:0;z-index:50}
+.topbar{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-size:22px;font-weight:900;letter-spacing:.3px;color:var(--gold);white-space:nowrap}
+.nav{display:flex;gap:18px;align-items:center}
+.nav a{font-size:13px;color:#c4ccd7}
+.nav a:hover{color:var(--gold)}
+.actions{display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:9px;padding:10px 15px;font-weight:750;transition:.15s}
+.btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.primary{background:var(--gold);color:#1d2530}
+.secondary{background:#303a47;color:#f4f6fa;border-color:#3c4756}
+.mini{padding:8px 11px;font-size:12px}
+.language{background:#303a47;color:white;border:1px solid #465263;border-radius:8px;padding:8px}
+.hamb{display:none;background:transparent;color:white;border:1px solid #465263;border-radius:8px;padding:8px 10px}
+main{padding-bottom:28px}
+.dashboard{padding:22px 0 12px}
+.dash-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.eyebrow{color:var(--gold);font-size:11px;font-weight:850;letter-spacing:1.4px}
+.dash-head h1{font-size:clamp(24px,4vw,36px);line-height:1.2;margin-top:5px}
+.sub{color:var(--muted);font-size:13px}
+.searchbar{background:#293340;border:1px solid #303c4b;border-radius:13px;display:flex;gap:10px;align-items:center;padding:12px 15px;margin:16px 0}
+.searchbar span{font-size:20px;color:#8794a5}
+.searchbar input{background:transparent;border:0;outline:0;color:white;width:100%;min-width:0}
+.dash-grid{display:grid;grid-template-columns:1.35fr .9fr;gap:16px}
+.panel{background:var(--panel);border:1px solid #2d3947;border-radius:17px;padding:20px;min-width:0}
+.panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.panel h2{font-size:19px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:20px;background:#1e493f;color:#66dfb8;padding:5px 9px;font-size:11px;font-weight:750}
+.dot{width:6px;height:6px;background:currentColor;border-radius:50%}
+.verify{margin-top:15px;background:#222c38;border-radius:13px;padding:18px}
+.steps{display:flex;gap:5px;margin:12px 0 18px}
+.steps i{height:5px;flex:1;border-radius:6px;background:#394451}
+.steps i:first-child{background:var(--gold)}
+.failed{font-size:24px;color:var(--red);font-weight:850;margin:5px 0 15px}
+.wide{width:100%}
+.verify-link{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #303b48;margin-top:16px;padding-top:15px}
+.verify-link p{font-weight:700}
+.verify-link small{display:block;color:var(--muted);font-weight:400}
+.market-mini{margin-top:14px}
+.quote{display:flex;align-items:center;gap:12px}
+.coin{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--gold);color:#1d2530;font-size:19px;flex:none}
+.quote strong{font-size:17px}
+.quote .symbol{color:var(--muted);font-size:12px}
+.quote-price{font-size:28px;font-weight:850;margin:12px 0 2px}
+.positive{color:var(--green);font-size:13px}
+.negative{color:var(--red)}
+.spark{height:50px;width:100%;margin-top:12px}
+.spark svg{width:100%;height:100%}
+.asset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.asset{background:var(--panel);border:1px solid #2d3947;border-radius:16px;padding:17px;min-width:0}
+.asset-top{display:flex;align-items:center;gap:10px;color:var(--muted)}
+.asset-top .coin{width:36px;height:36px;font-size:15px}
+.asset .quote-price{font-size:24px}
+.asset .spark{height:54px}
+.asset .spark path{fill:none;stroke:var(--green);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.bottom-tabs{display:flex;gap:23px;overflow:auto;padding:20px 4px 10px;color:var(--muted);font-weight:800;white-space:nowrap}
+.bottom-tabs a:first-child{color:var(--text);border-bottom:3px solid var(--gold);padding-bottom:8px}
+.section{padding:48px 0}
+.section-head{max-width:740px;margin-bottom:22px}
+.section h2{font-size:clamp(25px,4vw,35px);margin:7px 0 9px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid #303b49;border-radius:15px;padding:19px;min-width:0}
+.card h3{color:var(--gold);font-size:16px;margin:8px 0}
+.card p,.muted{color:var(--muted);font-size:14px}
+.icon{font-size:25px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.list{list-style:none;margin-top:12px}
+.list li{margin:8px 0;color:var(--muted)}
+.list li:before{content:"✓";color:var(--green);margin-right:9px}
+.price{color:var(--gold);font-size:29px;font-weight:900;margin:12px 0}
+.price small{font-size:13px;color:var(--muted)}
 .field{margin-top:13px}
-.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
-.field input,.field select,.field textarea{width:100%;padding:11px;border-radius:8px;border:1px solid #3a4c62;background:#07111f;color:white}
-.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--gold)}
-.full{width:100%;margin-top:12px}
-.notice{color:var(--muted)}
-.notice strong{color:white}
-.real-chart{height:490px;width:100%;overflow:hidden;border:1px solid var(--border);border-radius:12px;background:#07111f}
-.tradingview-widget-container,.tradingview-widget-container__widget{height:100%;width:100%}
-.live-label{color:var(--green);border:1px solid #285b4c;border-radius:20px;padding:5px 10px;font-size:12px}
-.status{padding:10px;border-radius:8px;background:#07111f;border:1px solid var(--border);font-size:13px;margin-top:12px;overflow-wrap:anywhere}
-.status.pending{color:var(--gold)}.status.ok{color:var(--green)}.status.error{color:var(--red)}
-hr{border:0;border-top:1px solid var(--border);margin:18px 0}
-.video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.video-frame{width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:#000}
-.modal-backdrop{position:fixed;inset:0;z-index:200;background:#000c;display:none;align-items:center;justify-content:center;padding:18px}
+.field label{display:block;color:var(--muted);font-size:13px;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:11px;border-radius:8px;border:1px solid #465466;background:#1e2732;color:white}
+.field input[type=file]{font-size:12px}
+.status{padding:11px;border-radius:8px;background:#1e2732;border:1px solid #3b4858;margin-top:12px;font-size:13px;overflow-wrap:anywhere}
+.status.pending{color:var(--gold)}
+.status.ok{color:var(--green)}
+.status.error{color:var(--red)}
+.chart{height:470px;width:100%;overflow:hidden;border:1px solid #354151;border-radius:14px;background:#111923}
+.tv{height:100%;width:100%}
+.tv .tradingview-widget-container__widget{height:100%;width:100%}
+.chart-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.note{background:#222c38;border:1px solid #344150;border-radius:12px;padding:17px;color:var(--muted);font-size:13px}
+.note strong{color:white}
+.modal-backdrop{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
 .modal-backdrop.open{display:flex}
-.modal{width:100%;max-width:460px;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:24px;position:relative;max-height:90vh;overflow-y:auto}
-.modal h2{font-size:25px;padding-right:24px}
-.close-modal{position:absolute;top:8px;right:14px;font-size:28px;background:transparent;border:0;color:white}
-.form-message{margin-top:12px;font-size:13px;color:var(--gold);overflow-wrap:anywhere}
-.modal-note{font-size:12px;color:var(--muted);margin-top:12px}
-.toast{position:fixed;z-index:300;bottom:20px;left:50%;transform:translateX(-50%);background:#16283b;border:1px solid #3a5067;border-radius:9px;padding:12px 16px;max-width:90%;font-size:13px;display:none}
+.modal{width:100%;max-width:440px;max-height:90vh;overflow:auto;background:var(--panel);border:1px solid #465263;border-radius:16px;padding:22px;position:relative}
+.modal h2{font-size:24px;margin-bottom:8px}
+.close{position:absolute;right:12px;top:8px;background:none;border:0;color:white;font-size:27px}
+.message{color:var(--gold);font-size:13px;margin-top:10px}
+.small-note{font-size:12px;color:var(--muted);margin-top:12px}
+.toast{position:fixed;z-index:120;bottom:20px;left:50%;transform:translateX(-50%);display:none;background:#182330;border:1px solid #465263;padding:12px 16px;border-radius:10px;max-width:90%;font-size:13px}
 .toast.show{display:block}
-footer{padding:26px 0;background:#0b1728;border-top:1px solid var(--border);color:#aab7c8;font-size:13px}
-.footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer{background:#202934;border-top:1px solid #323c49;padding:24px 0;color:var(--muted);font-size:13px}
+.footer-inner{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 [hidden]{display:none!important}
-@media(max-width:950px){.hero-grid{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.nav-links{gap:9px}}
-@media(max-width:650px){
- .navbar{padding:10px 0}.logo{font-size:21px}.menu-toggle{display:block}
- .nav-actions>.btn{display:none}
- .nav-links{display:none;width:100%;order:3;flex-direction:column;align-items:stretch;gap:0}
- .nav-links.open{display:flex}.nav-links a{padding:10px 0;border-top:1px solid var(--border)}
- .hero{padding:50px 0;min-height:auto}.hero-description{font-size:16px}
- section{padding:48px 0}.cards,.access-grid,.analysis-grid,.video-grid{grid-template-columns:1fr}
- .real-chart{height:400px}.market-panel{padding:17px}.footer-inner{flex-direction:column}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+@media(max-width:900px){.nav{gap:10px}.nav a{font-size:12px}.dash-grid{grid-template-columns:1fr 1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.topbar{padding:10px 0;flex-wrap:wrap}.brand{font-size:20px}.hamb{display:block}.nav{display:none;order:4;width:100%;flex-direction:column;align-items:stretch;gap:0}.nav.open{display:flex}.nav a{padding:10px 0;border-top:1px solid #323c49;font-size:14px}.actions .auth-btn{display:none}.language{max-width:105px}.dash-head{align-items:flex-start}.dash-grid,.two-col{grid-template-columns:1fr}.panel{padding:16px}.asset-grid{gap:10px}.asset{padding:13px}.asset .quote-price{font-size:21px}.cards{grid-template-columns:1fr}.section{padding:38px 0}.chart{height:390px}.bottom-tabs{gap:18px}.verify{padding:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
 </style>
 </head>
 <body>
 <header>
- <div class="container navbar">
-  <a class="logo" href="#home">SMC TRADE</a>
-  <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-   <a href="#home" data-i18n="home">Home</a>
-   <a href="#technology" data-i18n="technology">Technology</a>
-   <a href="#analysis" data-i18n="analysis">Analysis</a>
-   <a href="#live-market" data-i18n="charts">Live Charts</a>
-   <a href="#challenge" data-i18n="challenge">Challenge</a>
-   <a href="#access" data-i18n="access">Access</a>
-   <a href="#support" data-i18n="support">Support</a>
-  </nav>
-  <div class="nav-actions">
-   <select id="languageSelect" aria-label="Language" class="secondary small" style="background:#101e30;color:white">
-    <option value="en">English</option><option value="am">አማርኛ</option><option value="ar">العربية</option>
-   </select>
-   <button class="btn secondary small" data-auth="login" type="button" data-i18n="login">Log In</button>
-   <button class="btn primary small" data-auth="register" type="button" data-i18n="getStarted">Get Started</button>
-   <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks" type="button">☰ Menu</button>
+  <div class="wrap topbar">
+    <a class="brand" href="#home">SMC <span>TRADE</span></a>
+
+    <button class="hamb" id="menuBtn" aria-label="Open navigation">☰</button>
+
+    <nav class="nav" id="mainNav">
+      <a href="#home" data-i18n="home">Home</a>
+      <a href="#technology" data-i18n="technology">Technology</a>
+      <a href="#markets" data-i18n="markets">Markets</a>
+      <a href="#education" data-i18n="education">Education</a>
+      <a href="#access" data-i18n="access">Access</a>
+    </nav>
+
+    <div class="actions">
+      <select class="language" id="languageSelect" aria-label="Language">
+        <option value="en">English</option>
+        <option value="am">አማርኛ</option>
+        <option value="ar">العربية</option>
+      </select>
+      <button class="btn secondary mini auth-btn" data-open="loginModal" data-i18n="login">Login</button>
+      <a class="btn primary mini" href="#access" data-i18n="getStarted">Get Started</a>
+    </div>
   </div>
- </div>
 </header>
 
 <main>
-<section class="hero" id="home">
- <div class="container hero-grid">
-  <div>
-   <div class="tag">● SMC MARKET ANALYSIS TECHNOLOGY</div>
-   <h1 data-i18n="heroTitle">Smarter Gold Trading<br>With <span>SMC Technology</span></h1>
-   <p class="hero-description" data-i18n="heroDesc">Explore market structure, liquidity, Fair Value Gaps, multi-timeframe analysis and practical risk management for XAUUSD gold trading.</p>
-   <div class="buttons">
-    <a class="btn primary" href="#access" data-i18n="getStarted">Get Started</a>
-    <a class="btn secondary" href="#technology" data-i18n="explore">Explore Technology</a>
-   </div>
-   <p class="small-note" data-i18n="educationNote">Educational information only. Trading involves risk.</p>
-  </div>
-  <aside class="market-panel">
-   <div class="panel-top"><div><strong>XAUUSD</strong><div class="symbol">Gold / US Dollar</div></div><span class="live-label">CHART</span></div>
-   <div class="market-title" data-i18n="marketOverview">Gold Market Overview</div>
-   <p class="market-description" data-i18n="marketDesc">Use the interactive charts below to inspect market prices.</p>
-   <div class="stats">
-    <div class="stat"><span>Symbol</span><strong>XAUUSD</strong></div>
-    <div class="stat"><span>Market</span><strong>Gold / USD</strong></div>
-    <div class="stat"><span>Chart</span><strong>TradingView</strong></div>
-   </div>
-   <p class="chart-caption" data-i18n="providerNote">Real-time availability depends on the data provider.</p>
-  </aside>
- </div>
-</section>
+  <section class="dashboard wrap" id="home">
+    <div class="dash-head">
+      <div>
+        <div class="eyebrow" data-i18n="dashboardLabel">SMC AUTOMATED MARKET ANALYSIS</div>
+        <h1 data-i18n="dashboardTitle">Smarter Trading With SMC Technology</h1>
+        <p class="sub" data-i18n="dashboardSub">Market structure, liquidity and multi-timeframe analysis.</p>
+      </div>
+      <span class="pill"><i class="dot"></i><span data-i18n="marketWatch">Market Watch</span></span>
+    </div>
 
-<section id="live-market">
- <div class="container">
-  <div class="chart-heading"><div><div class="tag">MARKET DATA</div><h2>XAUUSD — Gold / US Dollar</h2><p class="muted">Interactive TradingView chart. Data availability depends on provider subscriptions.</p></div><span class="live-label">● TradingView</span></div>
-  <div class="real-chart"><div class="tradingview-widget-container">
-   <div class="tradingview-widget-container__widget"></div>
-   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-   {"autosize":true,"symbol":"OANDA:XAUUSD","interval":"60","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","withdateranges":true,"allow_symbol_change":true,"hide_side_toolbar":false,"save_image":true,"calendar":false,"support_host":"https://www.tradingview.com"}
-   </script>
-  </div></div>
-  <p class="chart-caption">TradingView chart; this chart does not place or execute trades.</p>
-  <hr>
-  <div class="chart-heading"><div><h2>BCH/USD — Bitcoin Cash / US Dollar</h2><p class="muted">Interactive cryptocurrency price chart.</p></div></div>
-  <div class="real-chart"><div class="tradingview-widget-container">
-   <div class="tradingview-widget-container__widget"></div>
-   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-   {"autosize":true,"symbol":"COINBASE:BCHUSD","interval":"60","timezone":"Etc/UTC","theme":"dark","style":"1","locale":"en","withdateranges":true,"allow_symbol_change":true,"hide_side_toolbar":false,"save_image":true,"calendar":false,"support_host":"https://www.tradingview.com"}
-   </script>
-  </div></div>
-  <p class="chart-caption">Quotes and market availability depend on the selected exchange and provider.</p>
- </div>
-</section>
+    <div class="searchbar">
+      <span>⌕</span>
+      <input id="marketSearch" type="search" placeholder="Search markets, topics or tools..." aria-label="Search">
+    </div>
 
-<section id="technology">
- <div class="container">
-  <div class="section-heading"><div class="tag">OUR TECHNOLOGY</div><h2 data-i18n="technologyTitle">Market Analysis Technology</h2><p class="muted" data-i18n="technologyDesc">A structured framework for understanding the market. Combine multiple factors instead of relying on one signal.</p></div>
-  <div class="cards">
-   <article class="card"><div class="card-icon">↗</div><h3>Market Structure</h3><p>Study trends, Break of Structure (BOS), and Change of Character (CHoCH) across multiple timeframes.</p></article>
-   <article class="card"><div class="card-icon">◎</div><h3>Liquidity Analysis</h3><p>Learn about liquidity zones, swing highs, swing lows and important price levels.</p></article>
-   <article class="card"><div class="card-icon">▤</div><h3>Fair Value Gaps</h3><p>Understand price imbalances and how they may fit into a wider market setup.</p></article>
-   <article class="card"><div class="card-icon">◇</div><h3>Risk Management</h3><p>Plan invalidation levels, stop-loss placement and position risk before considering a trade.</p></article>
-  </div>
- </div>
-</section>
+    <div class="dash-grid">
+      <section class="panel">
+        <div class="panel-title">
+          <h2 data-i18n="accountVerification">Account Verification</h2>
+          <span class="pill"><i class="dot"></i><span data-i18n="secureAccess">Secure Access</span></span>
+        </div>
 
-<section id="analysis">
- <div class="container analysis-grid">
-  <div><div class="tag">ANALYSIS WORKFLOW</div><h2>Build a Consistent Trading Plan</h2><p class="muted">Review higher-timeframe direction, mark important levels, wait for confirmation and define risk before considering a setup.</p><div class="buttons"><a class="btn secondary" href="#access">View Access Options</a></div></div>
-  <div class="notice"><strong>Before Any Trade</strong><ul class="feature-list"><li>Check broader market context.</li><li>Define entry and invalidation conditions.</li><li>Calculate position size and potential loss.</li><li>Never risk money you cannot afford to lose.</li></ul></div>
- </div>
-</section>
+        <div class="verify">
+          <div class="eyebrow" data-i18n="verificationProcess">VERIFICATION PROCESS</div>
+          <div class="steps" aria-label="Verification steps">
+            <i></i><i></i><i></i><i></i>
+          </div>
+          <div class="failed" data-i18n="notVerified">Not Verified</div>
+          <p class="sub" data-i18n="verifyDescription">
+            Sign in and submit an access request to begin verification.
+          </p>
+          <a class="btn primary wide" href="#access" data-i18n="startVerification">Start Verification →</a>
 
-<section id="challenge">
- <div class="container">
-  <div class="section-heading"><div class="tag">SMC TRADING CHALLENGE</div><h2>3-Month Trading Challenge</h2><p class="muted">Challenge details and participant results should be published only when officially confirmed.</p></div>
-  <div class="cards">
-   <article class="card"><h3>Duration</h3><p>Three-month challenge. Confirm official start and end dates before registering participants.</p></article>
-   <article class="card"><h3>Participants</h3><p>Participant numbers and rankings require a verified registration and results database.</p></article>
-   <article class="card"><h3>Leaderboard</h3><p>Show verified results only. No invented profit figures or simulated earnings presented as real.</p></article>
-   <article class="card"><h3>Prize Information</h3><p>Any Dubai prize must be confirmed with official terms, eligibility and award conditions.</p></article>
-  </div>
- </div>
-</section>
+          <div class="verify-link">
+            <div>
+              <p data-i18n="identityCheck">Identity Check</p>
+              <small data-i18n="identityDescription">Review your access request status.</small>
+            </div>
+            <span>🔐</span>
+          </div>
+        </div>
 
-<section id="access">
- <div class="container">
-  <div class="section-heading"><div class="tag">PLATFORM ACCESS</div><h2>Choose Your Access</h2><p class="muted">Review access options and submit payment evidence for manual review.</p></div>
-  <div class="access-grid">
-   <article class="card"><h3>Starter</h3><div class="price">Free</div><p class="muted">Explore SMC education and market analysis.</p><ul class="feature-list"><li>Educational content</li><li>Market analysis framework</li><li>Risk management basics</li></ul><button class="btn primary full" data-auth="register" type="button">Create Account</button></article>
-   <article class="card"><h3>SMC Bot Access</h3><div class="price">$80 <span style="font-size:15px">/ 4,600 ETB</span></div><p class="muted">Submit a payment receipt for administrator review. Bot access is not granted automatically.</p><ul class="feature-list"><li>Access request submission</li><li>Payment receipt upload</li><li>Pending / approved / rejected status</li></ul><button class="btn primary full" id="showPayment" type="button">Request Bot Access</button></article>
-  </div>
-  <div class="panel" id="paymentPanel" hidden style="margin-top:20px">
-   <h3>Bot Access Payment Request</h3>
-   <p class="muted">Price: $80 / 4,600 ETB. Use the official payment instructions provided by SMC TRADE support. Do not upload passwords or OTP codes.</p>
-   <form id="paymentForm">
-    <div class="field"><label for="payerName">Full name</label><input id="payerName" required maxlength="100" autocomplete="name" placeholder="Your full name"></div>
-    <div class="field"><label for="payerEmail">Email</label><input id="payerEmail" type="email" required maxlength="160" autocomplete="email" placeholder="you@example.com"></div>
-    <div class="field"><label for="paymentMethod">Payment method</label><select id="paymentMethod" required><option value="">Choose method</option><option>Bank transfer</option><option>Mobile money</option><option>Other official method</option></select></div>
-    <div class="field"><label for="receipt">Payment screenshot / receipt</label><input id="receipt" type="file" accept="image/png,image/jpeg,image/webp,application/pdf" required></div>
-    <div class="field"><label for="reference">Payment reference (if available)</label><input id="reference" maxlength="100" placeholder="Transaction reference"></div>
-    <button class="btn primary full" type="submit">Submit Access Request</button>
-    <div id="paymentStatus" class="status pending" role="status">No request submitted yet. Payment must be reviewed by an administrator.</div>
-    <p class="modal-note">This static website can only demonstrate the form. It does not securely transmit the receipt or create a server-side request. Connect a backend before accepting real payments.</p>
-   </form>
-  </div>
- </div>
-</section>
+        <div class="market-mini">
+          <div class="panel-title">
+            <h2 data-i18n="marketOverview">Market Overview</h2>
+            <span class="sub" data-i18n="liveCharts">Live charts below</span>
+          </div>
+          <div class="asset-grid">
+            <div class="asset searchable">
+              <div class="asset-top">
+                <div class="coin">Au</div>
+                <div><strong>Gold</strong><br><span class="sub">XAUUSD</span></div>
+              </div>
+              <div class="quote-price" id="goldPrice">—</div>
+              <div class="sub" data-i18n="chartProvided">Price shown by chart provider</div>
+            </div>
+            <div class="asset searchable">
+              <div class="asset-top">
+                <div class="coin" style="background:#f49c48">₿</div>
+                <div><strong>Bitcoin Cash</strong><br><span class="sub">BCHUSD</span></div>
+              </div>
+              <div class="quote-price" id="bchPrice">—</div>
+              <div class="sub" data-i18n="chartProvided">Price shown by chart provider</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<section id="verification">
- <div class="container">
-  <div class="section-heading"><div class="tag">ACCOUNT VERIFICATION</div><h2>Identity and Account Verification</h2><p class="muted">Real identity verification requires a secure provider and server-side validation.</p></div>
-  <div class="access-grid">
-   <article class="card"><h3>1. Account</h3><p>Create an account through a configured authentication provider. This sample does not create real accounts.</p><button class="btn secondary full" data-auth="register" type="button">Register</button></article>
-   <article class="card"><h3>2. Identity Check</h3><p>Fayda ID, passport, or driving licence verification and face/liveness checks must use an authorized secure verification provider.</p><a class="btn secondary full" href="https://t.me/SMC_TRADESUPPORT" target="_blank" rel="noopener noreferrer">Contact Verification Support</a></article>
-  </div>
-  <div class="notice" style="margin-top:18px"><strong>Security:</strong> Never submit passwords, OTP codes, full identity documents or face scans through this demo form or public chat. Use only a verified, secure identity provider.</div>
- </div>
-</section>
+      <section class="panel">
+        <div class="panel-title">
+          <h2 data-i18n="tradingOverview">Trading Overview</h2>
+          <span class="pill"><i class="dot"></i><span data-i18n="educational">Educational</span></span>
+        </div>
 
-<section id="videos">
- <div class="container">
-  <div class="section-heading"><div class="tag">LEARNING CENTER</div><h2>Trading Education Videos</h2><p class="muted">Educational videos are embedded below when the provider allows embedding.</p></div>
-  <div class="video-grid">
-   <div class="card"><h3>Market Structure Education</h3><iframe class="video-frame" src="https://www.youtube-nocookie.com/embed/9P2s3F3yQ8A" title="Market structure education video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><p class="chart-caption">If this video is unavailable, search for market structure and BOS/CHoCH lessons on YouTube.</p></div>
-   <div class="card"><h3>Risk Management Education</h3><iframe class="video-frame" src="https://www.youtube-nocookie.com/embed/2e8g6j4rJ6Q" title="Trading risk management education video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><p class="chart-caption">Video availability depends on the content owner's settings.</p></div>
-  </div>
- </div>
-</section>
+        <div class="verify">
+          <div class="eyebrow" data-i18n="smcFramework">SMART MONEY CONCEPTS</div>
+          <h2 style="margin-top:9px" data-i18n="structureFirst">Structure first. Risk always.</h2>
+          <p class="sub" style="margin-top:8px" data-i18n="frameworkDescription">
+            Study price structure and liquidity before considering a trade.
+          </p>
+          <ul class="list">
+            <li data-i18n="featureBos">BOS and CHoCH structure</li>
+            <li data-i18n="featureLiquidity">Liquidity zones and sweeps</li>
+            <li data-i18n="featureFvg">Fair Value Gap (FVG)</li>
+            <li data-i18n="featureMtf">Multi-timeframe confirmation</li>
+            <li data-i18n="featureRisk">Risk management and trade planning</li>
+          </ul>
+          <a class="btn primary wide" href="#technology" style="margin-top:15px" data-i18n="exploreTechnology">Explore Technology →</a>
+        </div>
 
-<section id="support">
- <div class="container">
-  <div class="section-heading"><div class="tag">SUPPORT CENTER</div><h2>SMC TRADE Support</h2><p class="muted">For account verification, payment requests and access questions, contact the official support account.</p></div>
-  <div class="access-grid">
-   <article class="card"><h3>Telegram Support</h3><p class="muted">Contact the SMC TRADE support team directly on Telegram.</p><a class="btn primary full" href="https://t.me/SMC_TRADESUPPORT" target="_blank" rel="noopener noreferrer">Open @SMC_TRADESUPPORT</a></article>
-   <article class="card"><h3>Quick Help</h3><div class="field"><label for="helpQuestion">What do you need help with?</label><select id="helpQuestion"><option value="payment">Payment status</option><option value="verification">Identity verification</option><option value="access">Bot access</option><option value="account">Account login</option></select></div><button class="btn secondary full" id="helpButton" type="button">Get Support Instructions</button><div id="helpAnswer" class="status" aria-live="polite">Choose a topic and select Get Support Instructions.</div></article>
-  </div>
- </div>
-</section>
+        <div class="verify">
+          <div class="panel-title">
+            <h2 data-i18n="riskReminder">Risk Reminder</h2>
+            <span style="font-size:23px">⚠️</span>
+          </div>
+          <p class="sub" style="margin-top:10px" data-i18n="riskDescription">
+            Trading leveraged products involves significant risk. No setup guarantees profit.
+          </p>
+        </div>
+      </section>
+    </div>
 
-<section>
- <div class="container"><div class="notice"><strong>Risk Warning:</strong> Gold, forex and cryptocurrency trading involve substantial risk and may not be suitable for everyone. Losses are possible. This website does not guarantee profits or provide personalized financial advice.</div></div>
-</section>
+    <nav class="bottom-tabs" aria-label="Dashboard shortcuts">
+      <a href="#home" data-i18n="overview">OVERVIEW</a>
+      <a href="#markets" data-i18n="charts">CHARTS</a>
+      <a href="#technology" data-i18n="analysis">ANALYSIS</a>
+      <a href="#education" data-i18n="learning">LEARNING</a>
+      <a href="#access" data-i18n="membership">MEMBERSHIP</a>
+    </nav>
+  </section>
+
+  <section class="section wrap" id="markets">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="marketsLabel">LIVE MARKET CHARTS</div>
+      <h2 data-i18n="marketChartsTitle">Follow the Market</h2>
+      <p class="sub" data-i18n="marketChartsDescription">
+        Interactive charts provided by TradingView. Prices and availability depend on the data provider.
+      </p>
+    </div>
+
+    <div class="two-col">
+      <div class="panel searchable">
+        <div class="chart-title">
+          <div><h2>Gold / US Dollar</h2><p class="sub">XAUUSD</p></div>
+          <span class="pill">XAUUSD</span>
+        </div>
+        <div class="chart">
+          <div id="goldChart" class="tv"></div>
+        </div>
+      </div>
+
+      <div class="panel searchable">
+        <div class="chart-title">
+          <div><h2>Bitcoin Cash / US Dollar</h2><p class="sub">BCHUSD</p></div>
+          <span class="pill">BCHUSD</span>
+        </div>
+        <div class="chart">
+          <div id="bchChart" class="tv"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="small-note" data-i18n="chartDisclaimer">
+      Charts are for informational and educational purposes only. Confirm symbols and data with the provider.
+    </p>
+  </section>
+
+  <section class="section wrap" id="technology">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="technologyLabel">OUR APPROACH</div>
+      <h2 data-i18n="technologyTitle">SMC Analysis Technology</h2>
+      <p class="sub" data-i18n="technologyDescription">
+        Learn the concepts traders use to read market structure. These tools do not guarantee results.
+      </p>
+    </div>
+
+    <div class="cards">
+      <article class="card searchable">
+        <div class="icon">📈</div>
+        <h3>BOS / CHoCH</h3>
+        <p data-i18n="bosDescription">Study breaks of structure and potential changes in market character.</p>
+      </article>
+      <article class="card searchable">
+        <div class="icon">💧</div>
+        <h3 data-i18n="liquidityTitle">Liquidity</h3>
+        <p data-i18n="liquidityDescription">Identify areas around previous highs and lows where orders may cluster.</p>
+      </article>
+      <article class="card searchable">
+        <div class="icon">🟨</div>
+        <h3>Fair Value Gap</h3>
+        <p data-i18n="fvgDescription">Learn to recognize price imbalances and assess them in context.</p>
+      </article>
+      <article class="card searchable">
+        <div class="icon">🕒</div>
+        <h3 data-i18n="multiTimeframeTitle">Multi-Timeframe</h3>
+        <p data-i18n="multiTimeframeDescription">Compare higher-timeframe context with lower-timeframe setups.</p>
+      </article>
+    </div>
+
+    <div class="two-col" style="margin-top:18px">
+      <div class="panel">
+        <h2 data-i18n="workflowTitle">Analysis Workflow</h2>
+        <ul class="list">
+          <li data-i18n="workflow1">Start with higher-timeframe market structure.</li>
+          <li data-i18n="workflow2">Mark meaningful highs, lows and liquidity areas.</li>
+          <li data-i18n="workflow3">Wait for confirmation; avoid chasing price.</li>
+          <li data-i18n="workflow4">Define invalidation and risk before entry.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2 data-i18n="riskTitle">Risk Management</h2>
+        <ul class="list">
+          <li data-i18n="risk1">Use a predefined risk limit.</li>
+          <li data-i18n="risk2">Never assume a setup must work.</li>
+          <li data-i18n="risk3">Avoid risking money you cannot afford to lose.</li>
+          <li data-i18n="risk4">Keep a journal and review decisions.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="education">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="educationLabel">LEARN THE BASICS</div>
+      <h2 data-i18n="educationTitle">SMC Education</h2>
+      <p class="sub" data-i18n="educationDescription">A simple starting point for understanding common SMC terms.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card searchable">
+        <div class="icon">01</div>
+        <h3>Market Structure</h3>
+        <p data-i18n="lesson1">Learn how swing highs and lows can help describe trend and structure.</p>
+      </article>
+      <article class="card searchable">
+        <div class="icon">02</div>
+        <h3>Liquidity Sweeps</h3>
+        <p data-i18n="lesson2">Understand how price can move beyond visible highs or lows before reversing or continuing.</p>
+      </article>
+      <article class="card searchable">
+        <div class="icon">03</div>
+        <h3>Fair Value Gaps</h3>
+        <p data-i18n="lesson3">Study imbalances and why context matters when interpreting them.</p>
+      </article>
+      <article class="card searchable">
+        <div class="icon">04</div>
+        <h3>Trade Planning</h3>
+        <p data-i18n="lesson4">Practice defining entry conditions, invalidation, stop loss and position risk.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section wrap" id="access">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="accessLabel">MEMBERSHIP ACCESS</div>
+      <h2 data-i18n="accessTitle">Request SMC TRADE Access</h2>
+      <p class="sub" data-i18n="accessDescription">
+        Submit your details to request access. This demo form does not verify identity or process payments.
+      </p>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="eyebrow" data-i18n="membershipPlan">MEMBERSHIP</div>
+        <h2 data-i18n="premiumAccess">Premium Access</h2>
+        <p class="sub" style="margin-top:8px" data-i18n="premiumDescription">
+          Request access to member resources and analysis education.
+        </p>
+        <div class="price" data-i18n="contactForPricing">Contact for pricing</div>
+        <ul class="list">
+          <li data-i18n="benefit1">SMC learning resources</li>
+          <li data-i18n="benefit2">Market chart access</li>
+          <li data-i18n="benefit3">Educational analysis framework</li>
+          <li data-i18n="benefit4">Support contact information</li>
+        </ul>
+        <div class="note" style="margin-top:18px">
+          <strong data-i18n="important">Important</strong>
+          <p data-i18n="paymentWarning">Do not submit card PINs, passwords, OTPs or sensitive identity documents through this demo page.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 data-i18n="requestForm">Access Request Form</h2>
+        <form id="accessForm">
+          <div class="field">
+            <label for="fullName" data-i18n="fullName">Full name</label>
+            <input id="fullName" name="fullName" required maxlength="100" autocomplete="name" placeholder="Your name">
+          </div>
+          <div class="field">
+            <label for="email" data-i18n="email">Email address</label>
+            <input id="email" name="email" type="email" required maxlength="160" autocomplete="email" placeholder="you@example.com">
+          </div>
+          <div class="field">
+            <label for="country" data-i18n="country">Country</label>
+            <select id="country" name="country" required>
+              <option value="" data-i18n="selectCountry">Select country</option>
+              <option>Ethiopia</option>
+              <option>Kenya</option>
+              <option>Somalia</option>
+              <option>United Arab Emirates</option>
+              <option>Saudi Arabia</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="experience" data-i18n="experience">Trading experience</label>
+            <select id="experience" name="experience" required>
+              <option value="" data-i18n="selectExperience">Select experience</option>
+              <option value="beginner" data-i18n="beginner">Beginner</option>
+              <option value="intermediate" data-i18n="intermediate">Intermediate</option>
+              <option value="advanced" data-i18n="advanced">Advanced</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="requestNote" data-i18n="message">Message (optional)</label>
+            <textarea id="requestNote" name="message" rows="3" maxlength="500" placeholder="Tell us what you need"></textarea>
+          </div>
+          <button class="btn primary wide" type="submit" data-i18n="submitRequest">Submit Access Request</button>
+          <div id="accessStatus" class="status" role="status" aria-live="polite" hidden></div>
+          <p class="small-note" data-i18n="formDemoNote">Demo only: this form stores no information and does not send requests to a server.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="support">
+    <div class="panel">
+      <div class="panel-title">
+        <div>
+          <div class="eyebrow" data-i18n="supportLabel">SUPPORT</div>
+          <h2 data-i18n="supportTitle">Need Help?</h2>
+          <p class="sub" data-i18n="supportDescription">Contact the official support account to ask about access.</p>
+        </div>
+        <a class="btn primary" href="https://t.me/SMC_TRADESUPPORT" target="_blank" rel="noopener noreferrer">@SMC_TRADESUPPORT ↗</a>
+      </div>
+      <p class="small-note" data-i18n="supportSafety">Check the account carefully before sharing information. Never share passwords or one-time codes.</p>
+    </div>
+  </section>
 </main>
 
-<footer><div class="container footer-inner"><span>© <span id="year"></span> SMC TRADE. All rights reserved.</span><span>Market education · Trading involves risk.</span></div></footer>
+<footer>
+  <div class="wrap footer-inner">
+    <div><a class="brand" href="#home">SMC TRADE</a><p style="margin-top:6px" data-i18n="footerText">SMC education and market analysis interface.</p></div>
+    <div>© <span id="year"></span> SMC TRADE</div>
+  </div>
+  <div class="wrap small-note" data-i18n="footerDisclaimer">
+    Educational content only. Not financial advice. Trading carries risk.
+  </div>
+</footer>
 
-<div class="modal-backdrop" id="authBackdrop" role="dialog" aria-modal="true" aria-labelledby="authTitle">
- <div class="modal">
-  <button class="close-modal" id="closeModal" type="button" aria-label="Close dialog">×</button>
-  <h2 id="authTitle">Create Your Account</h2>
-  <p class="muted">Demo form only; real authentication must be connected to a secure provider.</p>
-  <form id="authForm">
-   <div class="field" id="nameField"><label for="fullName">Full name</label><input id="fullName" name="fullName" type="text" autocomplete="name" maxlength="100" required></div>
-   <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="you@example.com"></div>
-   <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters"></div>
-   <button class="btn primary full" id="authSubmit" type="submit">Create Demo Account</button>
-   <div class="form-message" id="formMessage" aria-live="polite"></div>
-  </form>
-  <p class="modal-note">Do not use a real password in this demo. No account is created or stored.</p>
-  <hr>
-  <button class="btn secondary full" id="googleDemo" type="button">Continue with Google (setup required)</button>
-  <p class="modal-note">Google sign-in must be configured with OAuth and a trusted backend.</p>
- </div>
+<div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="modal">
+    <button class="close" type="button" data-close aria-label="Close">×</button>
+    <h2 id="loginTitle" data-i18n="login">Login</h2>
+    <p class="sub" data-i18n="loginDemo">Demo login interface. Real authentication requires a secure backend.</p>
+    <form id="loginForm">
+      <div class="field">
+        <label for="loginEmail" data-i18n="email">Email address</label>
+        <input id="loginEmail" type="email" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="loginPassword" data-i18n="password">Password</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" required minlength="6">
+      </div>
+      <button class="btn primary wide" type="submit" style="margin-top:16px" data-i18n="login">Login</button>
+      <p id="loginMessage" class="message" role="status" aria-live="polite"></p>
+      <p class="small-note" data-i18n="loginWarning">This demo does not authenticate users or save passwords.</p>
+    </form>
+  </div>
 </div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-document.addEventListener("DOMContentLoaded",function(){
- const $=id=>document.getElementById(id);
- $("year").textContent=new Date().getFullYear();
 
- const menu=$("menuToggle"),nav=$("navLinks");
- menu.addEventListener("click",function(){
-  const open=nav.classList.toggle("open");
-  menu.setAttribute("aria-expanded",String(open));
-  menu.textContent=open?"✕ Close":"☰ Menu";
- });
- nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{
-  nav.classList.remove("open");menu.setAttribute("aria-expanded","false");menu.textContent="☰ Menu";
- }));
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
 
- const backdrop=$("authBackdrop");
- let mode="register",previousFocus=null;
- function openAuth(nextMode){
-  mode=nextMode;previousFocus=document.activeElement;
-  const registering=mode==="register";
-  $("authTitle").textContent=registering?"Create Your Account":"Log In";
-  $("authSubmit").textContent=registering?"Create Demo Account":"Demo Log In";
-  $("nameField").hidden=!registering;
-  $("fullName").required=registering;
-  $("password").autocomplete=registering?"new-password":"current-password";
-  $("formMessage").textContent="";
-  backdrop.classList.add("open");document.body.style.overflow="hidden";
-  (registering?$("fullName"):$("email")).focus();
- }
- function closeAuth(){
-  backdrop.classList.remove("open");document.body.style.overflow="";
-  if(previousFocus&&previousFocus.focus)previousFocus.focus();
- }
- document.querySelectorAll("[data-auth]").forEach(b=>b.addEventListener("click",()=>openAuth(b.dataset.auth)));
- $("closeModal").addEventListener("click",closeAuth);
- backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeAuth()});
- document.addEventListener("keydown",e=>{if(e.key==="Escape"&&backdrop.classList.contains("open"))closeAuth()});
- $("authForm").addEventListener("submit",e=>{
-  e.preventDefault();if(!$("authForm").reportValidity())return;
-  $("formMessage").textContent=mode==="register"
-   ?"Demo only: no account was created. Connect secure authentication first."
-   :"Demo only: login is not connected to an authentication service.";
- });
- $("googleDemo").addEventListener("click",()=>{
-  $("formMessage").textContent="Google OAuth is not configured. Add a trusted authentication provider before enabling sign-in.";
- });
+const translations = {
+  en: {
+    home:"Home", technology:"Technology", markets:"Markets",
+    education:"Education", access:"Access", login:"Login",
+    getStarted:"Get Started",
+    dashboardLabel:"SMC AUTOMATED MARKET ANALYSIS",
+    dashboardTitle:"Smarter Trading With SMC Technology",
+    dashboardSub:"Market structure, liquidity and multi-timeframe analysis.",
+    marketWatch:"Market Watch",
+    accountVerification:"Account Verification", secureAccess:"Secure Access",
+    verificationProcess:"VERIFICATION PROCESS", notVerified:"Not Verified",
+    verifyDescription:"Sign in and submit an access request to begin verification.",
+    startVerification:"Start Verification →", identityCheck:"Identity Check",
+    identityDescription:"Review your access request status.",
+    marketOverview:"Market Overview", liveCharts:"Live charts below",
+    chartProvided:"Price shown by chart provider",
+    tradingOverview:"Trading Overview", educational:"Educational",
+    smcFramework:"SMART MONEY CONCEPTS", structureFirst:"Structure first. Risk always.",
+    frameworkDescription:"Study price structure and liquidity before considering a trade.",
+    featureBos:"BOS and CHoCH structure",
+    featureLiquidity:"Liquidity zones and sweeps",
+    featureFvg:"Fair Value Gap (FVG)",
+    featureMtf:"Multi-timeframe confirmation",
+    featureRisk:"Risk management and trade planning",
+    exploreTechnology:"Explore Technology →", riskReminder:"Risk Reminder",
+    riskDescription:"Trading leveraged products involves significant risk. No setup guarantees profit.",
+    overview:"OVERVIEW", charts:"CHARTS", analysis:"ANALYSIS",
+    learning:"LEARNING", membership:"MEMBERSHIP",
+    marketsLabel:"LIVE MARKET CHARTS", marketChartsTitle:"Follow the Market",
+    marketChartsDescription:"Interactive charts provided by TradingView. Prices and availability depend on the data provider.",
+    chartDisclaimer:"Charts are for informational and educational purposes only. Confirm symbols and data with the provider.",
+    technologyLabel:"OUR APPROACH", technologyTitle:"SMC Analysis Technology",
+    technologyDescription:"Learn the concepts traders use to read market structure. These tools do not guarantee results.",
+    bosDescription:"Study breaks of structure and potential changes in market character.",
+    liquidityTitle:"Liquidity",
+    liquidityDescription:"Identify areas around previous highs and lows where orders may cluster.",
+    fvgDescription:"Learn to recognize price imbalances and assess them in context.",
+    multiTimeframeTitle:"Multi-Timeframe",
+    multiTimeframeDescription:"Compare higher-timeframe context with lower-timeframe setups.",
+    workflowTitle:"Analysis Workflow", workflow1:"Start with higher-timeframe market structure.",
+    workflow2:"Mark meaningful highs, lows and liquidity areas.",
+    workflow3:"Wait for confirmation; avoid chasing price.",
+    workflow4:"Define invalidation and risk before entry.",
+    riskTitle:"Risk Management", risk1:"Use a predefined risk limit.",
+    risk2:"Never assume a setup must work.",
+    risk3:"Avoid risking money you cannot afford to lose.",
+    risk4:"Keep a journal and review decisions.",
+    educationLabel:"LEARN THE BASICS", educationTitle:"SMC Education",
+    educationDescription:"A simple starting point for understanding common SMC terms.",
+    lesson1:"Learn how swing highs and lows can help describe trend and structure.",
+    lesson2:"Understand how price can move beyond visible highs or lows before reversing or continuing.",
+    lesson3:"Study imbalances and why context matters when interpreting them.",
+    lesson4:"Practice defining entry conditions, invalidation, stop loss and position risk.",
+    accessLabel:"MEMBERSHIP ACCESS", accessTitle:"Request SMC TRADE Access",
+    accessDescription:"Submit your details to request access. This demo form does not verify identity or process payments.",
+    membershipPlan:"MEMBERSHIP", premiumAccess:"Premium Access",
+    premiumDescription:"Request access to member resources and analysis education.",
+    contactForPricing:"Contact for pricing",
+    benefit1:"SMC learning resources", benefit2:"Market chart access",
+    benefit3:"Educational analysis framework", benefit4:"Support contact information",
+    important:"Important",
+    paymentWarning:"Do not submit card PINs, passwords, OTPs or sensitive identity documents through this demo page.",
+    requestForm:"Access Request Form", fullName:"Full name",
+    email:"Email address", country:"Country", selectCountry:"Select country",
+    experience:"Trading experience", selectExperience:"Select experience",
+    beginner:"Beginner", intermediate:"Intermediate", advanced:"Advanced",
+    message:"Message (optional)", submitRequest:"Submit Access Request",
+    formDemoNote:"Demo only: this form stores no information and does not send requests to a server.",
+    supportLabel:"SUPPORT", supportTitle:"Need Help?",
+    supportDescription:"Contact the official support account to ask about access.",
+    supportSafety:"Check the account carefully before sharing information. Never share passwords or one-time codes.",
+    footerText:"SMC education and market analysis interface.",
+    footerDisclaimer:"Educational content only. Not financial advice. Trading carries risk.",
+    loginDemo:"Demo login interface. Real authentication requires a secure backend.",
+    password:"Password",
+    loginWarning:"This demo does not authenticate users or save passwords.",
+    requestSuccess:"Demo only: your request has not been sent. Connect a backend to receive real requests.",
+    loginDemoMessage:"Demo only: real login is not configured.",
+    noSearchResults:"No matching sections found.",
+    searchPlaceholder:"Search markets, topics or tools..."
+  },
 
- $("showPayment").addEventListener("click",()=>{
-  $("paymentPanel").hidden=false;$("paymentPanel").scrollIntoView({behavior:"smooth",block:"start"});
- });
- $("paymentForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const file=$("receipt").files[0];
-  if(!$("paymentForm").reportValidity())return;
-  if(!file)return;
-  const allowed=["image/png","image/jpeg","image/webp","application/pdf"];
-  if(!allowed.includes(file.type)){
-   $("paymentStatus").className="status error";
-   $("paymentStatus").textContent="Unsupported file type. Use PNG, JPG, WEBP or PDF.";
-   return;
+  am: {
+    home:"መነሻ", technology:"ቴክኖሎጂ", markets:"ገበያዎች",
+    education:"ትምህርት", access:"መግቢያ", login:"ግባ",
+    getStarted:"ጀምር",
+    dashboardLabel:"የSMC አውቶማቲክ የገበያ ትንተና",
+    dashboardTitle:"በSMC ቴክኖሎጂ የተሻለ የገበያ ትንተና",
+    dashboardSub:"የገበያ መዋቅር፣ ሊኩዊዲቲ እና የብዙ ጊዜ ክፍተት ትንተና።",
+    marketWatch:"የገበያ ክትትል",
+    accountVerification:"የአካውንት ማረጋገጫ",
+    secureAccess:"ደህንነቱ የተጠበቀ መግቢያ",
+    verificationProcess:"የማረጋገጫ ሂደት",
+    notVerified:"ገና አልተረጋገጠም",
+    verifyDescription:"ማረጋገጫ ለመጀመር ግባና የመግቢያ ጥያቄ አስገባ።",
+    startVerification:"ማረጋገጫ ጀምር →",
+    identityCheck:"የማንነት ማረጋገጫ",
+    identityDescription:"የመግቢያ ጥያቄህን ሁኔታ ተመልከት።",
+    marketOverview:"የገበያ አጠቃላይ እይታ",
+    liveCharts:"ቀጥታ ቻርቶች ከታች",
+    chartProvided:"ዋጋው ከቻርት አቅራቢው ይመጣል",
+    tradingOverview:"የትሬዲንግ አጠቃላይ እይታ",
+    educational:"ለትምህርት",
+    smcFramework:"SMART MONEY CONCEPTS",
+    structureFirst:"መጀመሪያ መዋቅር፤ ሁልጊዜ የአደጋ ቁጥጥር።",
+    frameworkDescription:"ትሬድ ከማድረግህ በፊት የዋጋ መዋቅርንና ሊኩዊዲቲን አጥና።",
+    featureBos:"BOS እና CHoCH መዋቅር",
+    featureLiquidity:"የሊኩዊዲቲ ዞኖችና ስዊፖች",
+    featureFvg:"Fair Value Gap (FVG)",
+    featureMtf:"የብዙ ጊዜ ክፍተት ማረጋገጫ",
+    featureRisk:"የአደጋ ቁጥጥርና የትሬድ እቅድ",
+    exploreTechnology:"ቴክኖሎጂውን ተመልከት →",
+    riskReminder:"የአደጋ ማስታወሻ",
+    riskDescription:"በሊቨሬጅ የሚደረግ ትሬዲንግ ከፍተኛ አደጋ አለው። ትርፍ የሚያረጋግጥ ስትራቴጂ የለም።",
+    overview:"አጠቃላይ", charts:"ቻርቶች", analysis:"ትንተና",
+    learning:"ትምህርት", membership:"አባልነት",
+    marketsLabel:"ቀጥታ የገበያ ቻርቶች",
+    marketChartsTitle:"ገበያውን ተከታተል",
+    marketChartsDescription:"በTradingView የሚቀርቡ ቻርቶች። የዋጋ መረጃው በአቅራቢው ላይ ይመረኮዛል።",
+    chartDisclaimer:"ቻርቶቹ ለመረጃና ለትምህርት ብቻ ናቸው።",
+    technologyLabel:"የእኛ አቀራረብ",
+    technologyTitle:"የSMC ትንተና ቴክኖሎጂ",
+    technologyDescription:"የገበያ መዋቅርን ለመረዳት የሚረዱ ጽንሰ-ሐሳቦችን ተማር።",
+    bosDescription:"የመዋቅር መሰበርንና የገበያ ባህሪ ለውጥን አጥና።",
+    liquidityTitle:"ሊኩዊዲቲ",
+    liquidityDescription:"በቀድሞ ከፍተኛና ዝቅተኛ ዋጋዎች አካባቢ ያሉ የትዕዛዝ ዞኖችን ተመልከት።",
+    fvgDescription:"የዋጋ ክፍተቶችን መለየትና በአገባቡ መተንተን ተማር።",
+    multiTimeframeTitle:"የብዙ ጊዜ ክፍተት",
+    multiTimeframeDescription:"የከፍተኛ ጊዜ ትንተናን ከዝቅተኛ ጊዜ ትንተና ጋር አወዳድር።",
+    workflowTitle:"የትንተና ሂደት",
+    workflow1:"በከፍተኛ የጊዜ ክፍተት ጀምር።",
+    workflow2:"አስፈላጊ ከፍተኛና ዝቅተኛ ዋጋዎችን ምልክት አድርግ።",
+    workflow3:"ማረጋገጫ ጠብቅ፤ ዋጋን አትከታተል።",
+    workflow4:"ከመግባትህ በፊት አደጋን ወስን።",
+    riskTitle:"የአደጋ ቁጥጥር",
+    risk1:"አስቀድመህ የአደጋ ገደብ ወስን።",
+    risk2:"ማንኛውም ስትራቴጂ ይሳካል ብለህ አትገምት።",
+    risk3:"ማጣት የማትችለውን ገንዘብ አታደጋግ።",
+    risk4:"የትሬድ መዝገብ ያዝና ውሳኔዎችህን ገምግም።",
+    educationLabel:"መሠረታዊ እውቀት",
+    educationTitle:"የSMC ትምህርት",
+    educationDescription:"የSMC ቃላትን ለመረዳት ቀላል መጀመሪያ።",
+    lesson1:"የዋጋ ከፍተኛና ዝቅተኛ ነጥቦች የገበያ አቅጣጫን እንዴት እንደሚያሳዩ ተማር።",
+    lesson2:"ዋጋ ከቀድሞ ከፍተኛ ወይም ዝቅተኛ ነጥብ በላይ አልፎ ሊመለስ ወይም ሊቀጥል እንደሚችል ተረዳ።",
+    lesson3:"የዋጋ ክፍተቶችንና የአገባቡን አስፈላጊነት አጥና።",
+    lesson4:"የመግቢያ ሁኔታ፣ የስቶፕ ሎስና የአደጋ መጠን ወስን።",
+    accessLabel:"የአባልነት መግቢያ",
+    accessTitle:"የSMC TRADE መግቢያ ጠይቅ",
+    accessDescription:"መግቢያ ለመጠየቅ መረጃህን አስገባ። ይህ የሙከራ ፎርም ማንነትን አያረጋግጥም ክፍያም አያስተናግድም።",
+    membershipPlan:"አባልነት", premiumAccess:"ፕሪሚየም መግቢያ",
+    premiumDescription:"የአባልነት ትምህርቶችንና የትንተና መርጃዎችን ለማግኘት ጠይቅ።",
+    contactForPricing:"ለዋጋ ያነጋግሩን",
+    benefit1:"የSMC የትምህርት መርጃዎች",
+    benefit2:"የገበያ ቻርቶች",
+    benefit3:"የትንተና የትምህርት ሂደት",
+    benefit4:"የድጋፍ መረጃ",
+    important:"አስፈላጊ",
+    paymentWarning:"የካርድ PIN፣ የይለፍ ቃል፣ OTP ወይም ሚስጥራዊ የማንነት ሰነድ በዚህ የሙከራ ገጽ አታስገባ።",
+    requestForm:"የመግቢያ ጥያቄ ፎርም",
+    fullName:"ሙሉ ስም", email:"ኢሜይል", country:"አገር",
+    selectCountry:"አገር ምረጥ", experience:"የትሬዲንግ ልምድ",
+    selectExperience:"ልምድ ምረጥ", beginner:"ጀማሪ",
+    intermediate:"መካከለኛ", advanced:"የላቀ",
+    message:"መልዕክት (አማራጭ)",
+    submitRequest:"የመግቢያ ጥያቄ ላክ",
+    formDemoNote:"የሙከራ ብቻ፦ መረጃ አያስቀምጥም ወይም ወደ ሰርቨር አይልክም።",
+    supportLabel:"ድጋፍ", supportTitle:"እርዳታ ይፈልጋሉ?",
+    supportDescription:"ስለ መግቢያ ለመጠየቅ የድጋፍ አካውንቱን ያነጋግሩ።",
+    supportSafety:"መረጃ ከማጋራትህ በፊት አካውንቱን አረጋግጥ። የይለፍ ቃልና OTP ፈጽሞ አታጋራ።",
+    footerText:"የSMC ትምህርትና የገበያ ትንተና ገጽ።",
+    footerDisclaimer:"ለትምህርት ብቻ ነው። የፋይናንስ ምክር አይደለም። ትሬዲንግ አደጋ አለው።",
+    loginDemo:"የሙከራ የመግቢያ ገጽ ነው። እውነተኛ ማረጋገጫ ደህንነቱ የተጠበቀ ሰርቨር ይፈልጋል።",
+    password:"የይለፍ ቃል",
+    loginWarning:"ይህ የሙከራ ገጽ ተጠቃሚን አያረጋግጥም ወይም የይለፍ ቃል አያስቀምጥም።",
+    requestSuccess:"የሙከራ ብቻ፦ ጥያቄህ አልተላከም። እውነተኛ ጥያቄ ለመቀበል backend ማገናኘት ያስፈልጋል።",
+    loginDemoMessage:"የሙከራ ብቻ፦ እውነተኛ Login አልተዘጋጀም።",
+    noSearchResults:"የሚዛመድ ክፍል አልተገኘም።",
+    searchPlaceholder:"ገበያ፣ ትምህርት ወይም መሳሪያ ፈልግ..."
+  },
+
+  ar: {
+    home:"الرئيسية", technology:"التقنية", markets:"الأسواق",
+    education:"التعليم", access:"الوصول", login:"تسجيل الدخول",
+    getStarted:"ابدأ الآن",
+    dashboardLabel:"تحليل السوق باستخدام SMC",
+    dashboardTitle:"تداول أكثر ذكاءً باستخدام تقنية SMC",
+    dashboardSub:"هيكل السوق والسيولة والتحليل متعدد الأطر الزمنية.",
+    marketWatch:"مراقبة السوق",
+    accountVerification:"التحقق من الحساب", secureAccess:"وصول آمن",
+    verificationProcess:"عملية التحقق", notVerified:"لم يتم التحقق",
+    verifyDescription:"قدّم طلب الوصول لبدء عملية التحقق.",
+    startVerification:"ابدأ التحقق ←", identityCheck:"التحقق من الهوية",
+    identityDescription:"راجع حالة طلب الوصول.",
+    marketOverview:"نظرة عامة على السوق", liveCharts:"الرسوم أدناه",
+    chartProvided:"السعر مقدم من مزود الرسم البياني",
+    tradingOverview:"نظرة عامة على التداول", educational:"تعليمي",
+    smcFramework:"مفاهيم الأموال الذكية",
+    structureFirst:"هيكل السوق أولاً، وإدارة المخاطر دائماً.",
+    frameworkDescription:"ادرس حركة السعر والسيولة قبل التفكير في التداول.",
+    featureBos:"هيكل BOS وCHoCH", featureLiquidity:"مناطق السيولة",
+    featureFvg:"فجوة القيمة العادلة FVG",
+    featureMtf:"تأكيد الأطر الزمنية المتعددة",
+    featureRisk:"إدارة المخاطر وتخطيط الصفقات",
+    exploreTechnology:"استكشف التقنية ←", riskReminder:"تنبيه المخاطر",
+    riskDescription:"التداول بالرافعة المالية ينطوي على مخاطر كبيرة ولا توجد استراتيجية تضمن الربح.",
+    overview:"نظرة عامة", charts:"الرسوم", analysis:"التحليل",
+    learning:"التعلم", membership:"العضوية",
+    marketsLabel:"رسوم السوق المباشرة", marketChartsTitle:"تابع السوق",
+    marketChartsDescription:"رسوم تفاعلية مقدمة من TradingView. تعتمد الأسعار على مزود البيانات.",
+    chartDisclaimer:"الرسوم لأغراض المعلومات والتعليم فقط.",
+    technologyLabel:"منهجيتنا", technologyTitle:"تقنية تحليل SMC",
+    technologyDescription:"تعلم مفاهيم فهم هيكل السوق. هذه الأدوات لا تضمن النتائج.",
+    bosDescription:"ادرس كسر الهيكل والتغيرات المحتملة في سلوك السوق.",
+    liquidityTitle:"السيولة",
+    liquidityDescription:"حدد المناطق حول القمم والقيعان السابقة.",
+    fvgDescription:"تعلم تحديد اختلالات السعر وتحليلها ضمن السياق.",
+    multiTimeframeTitle:"أطر زمنية متعددة",
+    multiTimeframeDescription:"قارن السياق الزمني الأعلى بإعدادات الأطر الأقل.",
+    workflowTitle:"خطوات التحليل",
+    workflow1:"ابدأ بهيكل السوق على الإطار الزمني الأعلى.",
+    workflow2:"حدد القمم والقيعان ومناطق السيولة المهمة.",
+    workflow3:"انتظر التأكيد ولا تطارد السعر.",
+    workflow4:"حدد مستوى إلغاء الفكرة والمخاطر قبل الدخول.",
+    riskTitle:"إدارة المخاطر",
+    risk1:"حدد مستوى المخاطر مسبقاً.",
+    risk2:"لا تفترض أن كل صفقة ستنجح.",
+    risk3:"لا تخاطر بأموال لا يمكنك تحمل خسارتها.",
+    risk4:"احتفظ بسجل وراجع قراراتك.",
+    educationLabel:"تعلم الأساسيات", educationTitle:"تعليم SMC",
+    educationDescription:"مقدمة بسيطة لفهم مصطلحات SMC الشائعة.",
+    lesson1:"تعلم كيف تساعد القمم والقيعان في وصف الاتجاه.",
+    lesson2:"افهم كيف يتجاوز السعر القمم أو القيعان قبل الانعكاس أو الاستمرار.",
+    lesson3:"ادرس اختلالات السعر وأهمية السياق.",
+    lesson4:"تدرب على تحديد الدخول والإبطال ووقف الخسارة والمخاطر.",
+    accessLabel:"الوصول للعضوية",
+    accessTitle:"اطلب الوصول إلى SMC TRADE",
+    accessDescription:"أدخل بياناتك لطلب الوصول. هذا النموذج التجريبي لا يتحقق من الهوية ولا يعالج المدفوعات.",
+    membershipPlan:"العضوية", premiumAccess:"الوصول المميز",
+    premiumDescription:"اطلب الوصول إلى موارد الأعضاء والتعليم التحليلي.",
+    contactForPricing:"تواصل لمعرفة السعر",
+    benefit1:"موارد تعليم SMC", benefit2:"الوصول إلى الرسوم",
+    benefit3:"منهج التحليل التعليمي", benefit4:"معلومات الدعم",
+    important:"مهم",
+    paymentWarning:"لا تدخل أرقام PIN أو كلمات المرور أو رموز OTP أو وثائق الهوية الحساسة في هذه الصفحة التجريبية.",
+    requestForm:"نموذج طلب الوصول", fullName:"الاسم الكامل",
+    email:"البريد الإلكتروني", country:"الدولة", selectCountry:"اختر الدولة",
+    experience:"خبرة التداول", selectExperience:"اختر مستوى الخبرة",
+    beginner:"مبتدئ", intermediate:"متوسط", advanced:"متقدم",
+    message:"رسالة (اختياري)", submitRequest:"إرسال طلب الوصول",
+    formDemoNote:"تجريبي فقط: لا يتم حفظ البيانات أو إرسالها إلى خادم.",
+    supportLabel:"الدعم", supportTitle:"هل تحتاج إلى مساعدة؟",
+    supportDescription:"تواصل مع حساب الدعم الرسمي للاستفسار عن الوصول.",
+    supportSafety:"تحقق من الحساب قبل مشاركة المعلومات. لا تشارك كلمات المرور أو الرموز.",
+    footerText:"واجهة تعليم SMC وتحليل السوق.",
+    footerDisclaimer:"للتعليم فقط وليس نصيحة مالية. التداول ينطوي على مخاطر.",
+    loginDemo:"واجهة دخول تجريبية. يتطلب تسجيل الدخول الحقيقي خادماً آمناً.",
+    password:"كلمة المرور",
+    loginWarning:"هذه النسخة لا تتحقق من المستخدمين ولا تحفظ كلمات المرور.",
+    requestSuccess:"تجريبي فقط: لم يتم إرسال طلبك. يلزم ربط خادم لاستقبال الطلبات الحقيقية.",
+    loginDemoMessage:"تجريبي فقط: تسجيل الدخول الحقيقي غير مهيأ.",
+    noSearchResults:"لم يتم العثور على أقسام مطابقة.",
+    searchPlaceholder:"ابحث عن الأسواق أو المواضيع أو الأدوات..."
   }
-  if(file.size>5*1024*1024){
-   $("paymentStatus").className="status error";
-   $("paymentStatus").textContent="File exceeds 5 MB. Please select a smaller receipt.";
-   return;
-  }
-  $("paymentStatus").className="status pending";
-  $("paymentStatus").textContent="Request prepared locally only. No receipt was sent and no payment has been verified. Connect a secure backend for administrator review.";
- });
- $("helpButton").addEventListener("click",()=>{
-  const answers={
-   payment:"Payment requests require manual administrator review. Send your reference and request details to official support. Never send OTPs or passwords.",
-   verification:"Identity verification must use the official secure verification provider. Contact support for approved instructions.",
-   access:"Bot access is granted only after the administrator confirms payment. A submitted screenshot alone does not confirm payment.",
-   account:"Account login requires a configured authentication provider. Do not enter your real password in this demo."
-  };
-  $("helpAnswer").textContent=answers[$("helpQuestion").value];
- });
- const translations={
-  en:{home:"Home",technology:"Technology",analysis:"Analysis",charts:"Live Charts",challenge:"Challenge",access:"Access",support:"Support",login:"Log In",getStarted:"Get Started",heroTitle:'Smarter Gold Trading<br>With <span>SMC Technology</span>',heroDesc:"Explore market structure, liquidity, Fair Value Gaps, multi-timeframe analysis and practical risk management for XAUUSD gold trading.",explore:"Explore Technology",educationNote:"Educational information only. Trading involves risk.",marketOverview:"Gold Market Overview",marketDesc:"Use the interactive charts below to inspect market prices.",providerNote:"Real-time availability depends on the data provider.",technologyTitle:"Market Analysis Technology",technologyDesc:"A structured framework for understanding the market. Combine multiple factors instead of relying on one signal."},
-  am:{home:"መነሻ",technology:"ቴክኖሎጂ",analysis:"ትንተና",charts:"የገበያ ገበታዎች",challenge:"ውድድር",access:"መዳረሻ",support:"ድጋፍ",login:"ግባ",getStarted:"ጀምር",heroTitle:'ብልህ የወርቅ ንግድ<br>በ<span>SMC ቴክኖሎጂ</span>',heroDesc:"የገበያ መዋቅርን፣ Liquidityን፣ Fair Value Gapsን፣ ባለብዙ የጊዜ ክፍል ትንተናን እና የአደጋ አስተዳደርን ይማሩ።",explore:"ቴክኖሎጂን ይመልከቱ",educationNote:"የትምህርት መረጃ ብቻ ነው። ንግድ አደጋ አለው።",marketOverview:"የወርቅ ገበያ አጠቃላይ እይታ",marketDesc:"የገበያ ዋጋን ለመመርመር ገበታዎቹን ይጠቀሙ።",providerNote:"የቀጥታ መረጃ በአቅራቢው ላይ ይመረኮዛል።",technologyTitle:"የገበያ ትንተና ቴክኖሎጂ",technologyDesc:"ገበያውን ለመረዳት የተዋቀረ ዘዴ። በአንድ ምልክት ብቻ አይደገፉ።"},
-  ar:{home:"الرئيسية",technology:"التقنية",analysis:"التحليل",charts:"الرسوم المباشرة",challenge:"التحدي",access:"الوصول",support:"الدعم",login:"تسجيل الدخول",getStarted:"ابدأ الآن",heroTitle:'تداول الذهب بذكاء<br>مع <span>تقنية SMC</span>',heroDesc:"تعرف على هيكل السوق والسيولة وفجوات القيمة العادلة وتحليل الأطر الزمنية وإدارة المخاطر لتداول الذهب.",explore:"استكشف التقنية",educationNote:"معلومات تعليمية فقط. التداول ينطوي على مخاطر.",marketOverview:"نظرة عامة على سوق الذهب",marketDesc:"استخدم الرسوم التفاعلية لفحص أسعار السوق.",providerNote:"يعتمد توفر البيانات المباشرة على مزود البيانات.",technologyTitle:"تقنية تحليل السوق",technologyDesc:"إطار منظم لفهم السوق. اجمع عدة عوامل ولا تعتمد على إشارة واحدة فقط."}
- };
- $("languageSelect").addEventListener("change",()=>{
-  const lang=$("languageSelect").value,dict=translations[lang];
-  document.documentElement.lang=lang;
-  document.documentElement.dir=lang==="ar"?"rtl":"ltr";
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-   const key=el.dataset.i18n;if(dict[key])el.innerHTML=dict[key];
+};
+
+function setLanguage(language) {
+  const lang = translations[language] ? language : "en";
+  const dictionary = translations[lang];
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+  $$("[data-i18n]").forEach((element) => {
+    const key = element.dataset.i18n;
+    if (dictionary[key]) {
+      element.textContent = dictionary[key];
+    }
   });
- });
+
+  const search = $("#marketSearch");
+  if (search) {
+    search.placeholder = dictionary.searchPlaceholder;
+  }
+
+  try {
+    localStorage.setItem("smcTradeLanguage", lang);
+  } catch (_) {
+    // Language selection still works if browser storage is unavailable.
+  }
+}
+
+$("#languageSelect").addEventListener("change", (event) => {
+  setLanguage(event.target.value);
+});
+
+try {
+  const savedLanguage = localStorage.getItem("smcTradeLanguage");
+  if (savedLanguage && translations[savedLanguage]) {
+    $("#languageSelect").value = savedLanguage;
+    setLanguage(savedLanguage);
+  }
+} catch (_) {
+  setLanguage("en");
+}
+
+// Mobile navigation
+$("#menuBtn").addEventListener("click", () => {
+  const nav = $("#mainNav");
+  const opened = nav.classList.toggle("open");
+  $("#menuBtn").setAttribute("aria-expanded", String(opened));
+});
+
+$("#mainNav").querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    $("#mainNav").classList.remove("open");
+    $("#menuBtn").setAttribute("aria-expanded", "false");
+  });
+});
+
+// Modal controls
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (!modal) return;
+
+  modal.classList.add("open");
+  const firstInput = modal.querySelector("input");
+  if (firstInput) firstInput.focus();
+}
+
+function closeModal(modal) {
+  modal.classList.remove("open");
+}
+
+$$("[data-open]").forEach((button) => {
+  button.addEventListener("click", () => openModal(button.dataset.open));
+});
+
+$$("[data-close]").forEach((button) => {
+  button.addEventListener("click", () => {
+    closeModal(button.closest(".modal-backdrop"));
+  });
+});
+
+$$(".modal-backdrop").forEach((modal) => {
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) closeModal(modal);
+  });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    $$(".modal-backdrop.open").forEach(closeModal);
+  }
+});
+
+// Demo login: does not authenticate or store credentials.
+$("#loginForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const message = translations[$("#languageSelect").value].loginDemoMessage;
+  $("#loginMessage").textContent = message;
+
+  $("#loginPassword").value = "";
+});
+
+// Demo access form: no data is sent or stored.
+$("#accessForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const status = $("#accessStatus");
+  const message = translations[$("#languageSelect").value].requestSuccess;
+
+  status.textContent = message;
+  status.className = "status pending";
+  status.hidden = false;
+});
+
+// Market/education search
+$("#marketSearch").addEventListener("input", (event) => {
+  const query = event.target.value.trim().toLowerCase();
+  let visibleCount = 0;
+
+  $$(".searchable").forEach((item) => {
+    const matches = item.textContent.toLowerCase().includes(query);
+    item.hidden = !matches;
+    if (matches) visibleCount++;
+  });
+
+  let result = $("#searchMessage");
+  if (!result) {
+    result = document.createElement("p");
+    result.id = "searchMessage";
+    result.className = "small-note";
+    $("#markets").prepend(result);
+  }
+
+  if (query && visibleCount === 0) {
+    result.textContent =
+      translations[$("#languageSelect").value].noSearchResults;
+  } else {
+    result.textContent = "";
+  }
+});
+
+// TradingView chart widgets
+function loadTradingViewChart(containerId, symbol) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.replaceChildren();
+
+  const widget = document.createElement("div");
+  widget.className = "tradingview-widget-container";
+  widget.style.height = "100%";
+  widget.style.width = "100%";
+
+  const inner = document.createElement("div");
+  inner.className = "tradingview-widget-container__widget";
+  inner.style.height = "calc(100% - 32px)";
+  inner.style.width = "100%";
+
+  const attribution = document.createElement("div");
+  attribution.style.cssText =
+    "height:32px;display:flex;align-items:center;justify-content:center;font:11px Arial;color:#9ca8b8";
+
+  const link = document.createElement("a");
+  link.href = "https://www.tradingview.com/";
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = "Charts by TradingView";
+  link.style.color = "#9ca8b8";
+
+  attribution.appendChild(link);
+  widget.append(inner, attribution);
+  container.appendChild(widget);
+
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src =
+    "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+  script.async = true;
+
+  const config = {
+    autosize: true,
+    symbol: symbol,
+    interval: "60",
+    timezone: "Etc/UTC",
+    theme: "dark",
+    style: "1",
+    locale: $("#languageSelect").value === "am" ? "en" :
+            $("#languageSelect").value,
+    allow_symbol_change: true,
+    calendar: false,
+    support_host: "https://www.tradingview.com"
+  };
+
+  script.textContent = JSON.stringify(config);
+  widget.appendChild(script);
+}
+
+function initializeCharts() {
+  loadTradingViewChart("goldChart", "OANDA:XAUUSD");
+  loadTradingViewChart("bchChart", "COINBASE:BCHUSD");
+}
+
+initializeCharts();
+
+// Update chart language when language selection changes.
+$("#languageSelect").addEventListener("change", () => {
+  initializeCharts();
+});
+
+// Footer year
+$("#year").textContent = new Date().getFullYear();
+
+// Friendly message if a chart cannot load.
+window.addEventListener("online", () => {
+  const toast = $("#toast");
+  toast.textContent = "Internet connection restored. Reload charts if needed.";
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 3500);
 });
 </script>
 </body>
