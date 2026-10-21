@@ -1,957 +1,1182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SMC TRADE | Automated Trading Technology</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="SMC TRADE - Smart Gold Trading and Market Analysis">
+  <title>SMC TRADE | Smart Gold Trading</title>
 
-<style>
-:root{
- --bg:#02070c;--card:#081522;--card2:#0b1c2b;
- --border:#17364e;--green:#00e59b;--blue:#19a7ff;
- --red:#ff4d6d;--text:#f4f8fc;--muted:#8195a8;
-}
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-html{scroll-behavior:smooth}
-body{
- background:
- radial-gradient(circle at 80% 10%,rgba(25,167,255,.08),transparent 25%),
- radial-gradient(circle at 15% 35%,rgba(0,229,155,.06),transparent 25%),
- var(--bg);
- color:var(--text)
-}
-button,input,select{font:inherit}
-button{cursor:pointer}
-nav{
- height:70px;padding:0 6%;display:flex;align-items:center;
- justify-content:space-between;position:sticky;top:0;z-index:100;
- background:rgba(2,7,12,.94);backdrop-filter:blur(14px);
- border-bottom:1px solid var(--border)
-}
-.logo{font-size:21px;font-weight:900;letter-spacing:1px}
-.logo span{color:var(--green)}
-.links{display:flex;gap:25px;list-style:none}
-.links a{color:#9babb9;text-decoration:none;font-size:14px}
-.links a:hover{color:var(--green)}
-.actions{display:flex;gap:8px}
-.btn{
- border:0;border-radius:9px;padding:12px 18px;font-weight:800;
- background:linear-gradient(135deg,var(--green),#52ffd4);color:#00140d
-}
-.btn:disabled{opacity:.35;cursor:not-allowed}
-.outline{
- border:1px solid #24445d;background:#07111d;color:white;
- border-radius:9px;padding:11px 17px
-}
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #101e30;
+      --gold: #e6bd63;
+      --text: #f5f7fa;
+      --muted: #b8c5d6;
+      --border: #27384d;
+      --green: #52d6a0;
+    }
 
-/* HERO */
-.hero{
- min-height:650px;padding:65px 7%;display:grid;
- grid-template-columns:1fr 1fr;gap:50px;align-items:center
-}
-.badge{
- display:inline-block;padding:8px 13px;border-radius:30px;
- border:1px solid rgba(0,229,155,.25);color:var(--green);
- background:rgba(0,229,155,.06);font-size:11px;margin-bottom:20px
-}
-.hero h1{font-size:57px;line-height:1.05}
-.gradient{
- background:linear-gradient(90deg,var(--green),var(--blue));
- -webkit-background-clip:text;color:transparent
-}
-.hero p{color:#8fa1b4;line-height:1.7;margin:22px 0}
-.hero-buttons{display:flex;gap:10px;flex-wrap:wrap}
-.trust{display:flex;gap:20px;margin-top:28px;color:#8193a5;font-size:12px}
-.trust span:before{content:"✓ ";color:var(--green)}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* TERMINAL */
-.terminal{
- background:linear-gradient(145deg,#07111c,#081724);
- border:1px solid #17334a;border-radius:18px;overflow:hidden;
- box-shadow:0 30px 80px #000
-}
-.terminal-head,.price{
- padding:16px 19px;display:flex;justify-content:space-between;
- align-items:center
-}
-.terminal-head{border-bottom:1px solid var(--border)}
-.symbol{display:flex;gap:10px;align-items:center}
-.coin{
- width:38px;height:38px;border-radius:50%;display:grid;
- place-items:center;background:#10283b;color:var(--blue);font-weight:bold
-}
-.symbol small{display:block;color:var(--muted)}
-.live{color:var(--green);font-size:12px}
-.price h2{font-size:28px}
-.green{color:var(--green)}.red{color:var(--red)}
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
 
-/* REAL OHLC CANVAS */
-.chart-wrap{
- height:315px;position:relative;
- background:
- linear-gradient(#102438 1px,transparent 1px),
- linear-gradient(90deg,#102438 1px,transparent 1px);
- background-size:55px 42px
-}
-#chart{width:100%;height:100%;display:block}
-.chart-label{
- position:absolute;left:10px;top:10px;color:#71869b;font-size:10px
-}
-.chart-status{
- position:absolute;right:10px;top:10px;
- padding:5px 8px;border-radius:5px;background:#071522;
- color:#8ca2b5;font-size:10px
-}
-.signals{display:grid;grid-template-columns:repeat(3,1fr)}
-.signal{text-align:center;padding:15px;border-right:1px solid var(--border)}
-.signal:last-child{border:0}
-.signal small{display:block;color:#70869b;margin-bottom:5px}
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-/* SECTIONS */
-.section{padding:80px 7%}
-.title{text-align:center;max-width:720px;margin:auto}
-.title h2{font-size:38px;margin-bottom:10px}
-.title p{color:var(--muted);line-height:1.6}
-.dark{background:#050c14;border-block:1px solid #102437}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
-.feature{
- padding:26px;background:linear-gradient(145deg,#091521,#07101a);
- border:1px solid var(--border);border-radius:14px
-}
-.icon{
- width:45px;height:45px;border-radius:10px;display:grid;place-items:center;
- background:rgba(0,229,155,.08);color:var(--green);
- border:1px solid rgba(0,229,155,.15);font-size:20px;margin-bottom:17px
-}
-.feature h3{margin-bottom:10px}
-.feature p{color:#8193a5;font-size:14px;line-height:1.6}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.steps{
- display:grid;grid-template-columns:repeat(7,1fr);
- gap:10px;margin-top:40px
-}
-.step{
- padding:20px 10px;text-align:center;background:var(--card);
- border:1px solid var(--border);border-radius:12px
-}
-.num{
- width:34px;height:34px;border-radius:50%;margin:0 auto 10px;
- display:grid;place-items:center;background:rgba(25,167,255,.1);
- color:var(--blue);border:1px solid rgba(25,167,255,.25)
-}
-.step p{font-size:11px;color:#8093a5;margin-top:6px}
+    button,
+    input {
+      font: inherit;
+    }
 
-/* MODAL */
-.modal{
- display:none;position:fixed;inset:0;background:rgba(0,0,0,.84);
- backdrop-filter:blur(8px);z-index:1000;align-items:center;
- justify-content:center;padding:16px
-}
-.modal.active{display:flex}
-.panel{
- width:100%;max-width:500px;max-height:92vh;overflow:auto;
- background:linear-gradient(145deg,#0a1723,#07111b);
- border:1px solid #1b3b54;border-radius:18px;padding:27px
-}
-.close{float:right;border:0;background:none;color:#8295a8;font-size:25px}
-.panel h2{margin:5px 0 8px}
-.panel>p{color:#899aaa;line-height:1.6;margin-bottom:18px}
-.field{margin:14px 0}
-.field label{display:block;font-size:12px;color:#a7b5c3;margin-bottom:6px}
-.field input,.field select{
- width:100%;padding:13px;border-radius:9px;border:1px solid #23415a;
- background:#050c14;color:white;outline:none
-}
-.full{width:100%;margin-top:8px}
-.google,.phone{
- width:100%;padding:13px;border-radius:9px;font-weight:bold;margin-top:8px
-}
-.google{background:white;color:#202124;border:0}
-.phone{background:#102334;color:white;border:1px solid #294b65}
-.notice{
- margin:13px 0;padding:12px;border-radius:9px;background:#071522;
- border:1px solid #183750;color:#9db0c1;font-size:12px;line-height:1.5
-}
-.error,.success{
- display:none;padding:11px;border-radius:8px;margin:10px 0;font-size:13px
-}
-.error{background:#260b13;border:1px solid #652036;color:#ff8298}
-.success{background:#052018;border:1px solid #126548;color:#58e4ae}
+    .container {
+      width: 90%;
+      max-width: 1150px;
+      margin: auto;
+    }
 
-/* DASHBOARD */
-.dashboard{display:none;padding:70px 7%}
-.dashboard-box{
- max-width:900px;margin:auto;padding:24px;background:#07121d;
- border:1px solid var(--border);border-radius:16px
-}
-.status{
- display:flex;justify-content:space-between;align-items:center;gap:10px;
- padding:16px;margin-top:11px;background:#050c14;
- border:1px solid #122b40;border-radius:9px
-}
-.verified{color:var(--green)}.locked{color:var(--red)}
+    header {
+      background: #0b1728;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-/* CHAT */
-.chat-button{
- position:fixed;right:20px;bottom:20px;width:58px;height:58px;
- border:0;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--blue));
- font-size:22px;z-index:800
-}
-.chat{
- display:none;position:fixed;right:20px;bottom:20px;width:370px;
- background:#07121d;border:1px solid #1b3b54;border-radius:15px;
- overflow:hidden;z-index:900;box-shadow:0 25px 70px #000
-}
-.chat.active{display:block}
-.chat-head{padding:15px;background:#0b1a28;display:flex;justify-content:space-between}
-.messages{height:330px;overflow:auto;padding:14px}
-.message{
- max-width:90%;padding:10px 12px;background:#102131;
- border-radius:10px;margin-bottom:9px;font-size:13px;line-height:1.5
-}
-.user-message{margin-left:auto;background:#073127}
-.chat-input{display:flex;border-top:1px solid var(--border)}
-.chat-input input{
- flex:1;border:0;outline:0;padding:14px;background:#050c14;color:white
-}
-.chat-input button{width:55px;border:0;background:var(--green)}
-.support-links{margin-top:8px;line-height:1.8}
-.support-links a{color:var(--green);text-decoration:none}
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
 
-footer{
- padding:30px 7%;border-top:1px solid var(--border);
- color:#667b8f;text-align:center;font-size:12px
-}
+    .logo {
+      color: var(--gold);
+      font-size: 25px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
 
-@media(max-width:1050px){.steps{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:900px){
- .links{display:none}.hero{grid-template-columns:1fr}
- .hero h1{font-size:44px}.features{grid-template-columns:1fr}
-}
-@media(max-width:550px){
- nav{padding:0 4%}.hero{padding:45px 5%}.hero h1{font-size:37px}
- .steps{grid-template-columns:1fr 1fr}.trust{flex-direction:column;gap:7px}
- .chat{left:10px;right:10px;width:auto}.signals{grid-template-columns:1fr}
- .signal{border-right:0;border-bottom:1px solid var(--border)}
-}
-</style>
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: #d7dfeb;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      color: white;
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 21px;
+      border-radius: 8px;
+      font-weight: bold;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      background: var(--gold);
+      color: #07111f;
+    }
+
+    .secondary {
+      background: transparent;
+      border-color: #53647a;
+      color: white;
+    }
+
+    .small {
+      padding: 9px 14px;
+      font-size: 13px;
+    }
+
+    .hero {
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      padding: 75px 0;
+      background:
+        radial-gradient(
+          ellipse at 80% 0%,
+          #183b48 0%,
+          #07111f 60%
+        );
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .tag {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 65px);
+      line-height: 1.12;
+      margin: 20px 0;
+    }
+
+    h1 span {
+      color: var(--gold);
+    }
+
+    .hero-description {
+      color: var(--muted);
+      max-width: 650px;
+      font-size: 17px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .small-note {
+      color: #91a2b8;
+      font-size: 12px;
+      margin-top: 18px;
+    }
+
+    .market-panel {
+      padding: 25px;
+      background: linear-gradient(145deg, #12253a, #0b1728);
+      border: 1px solid #30445b;
+      border-radius: 18px;
+      box-shadow: 0 20px 60px #0003;
+    }
+
+    .panel-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .symbol {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .demo-badge {
+      color: var(--green);
+      background: #1b3b35;
+      border-radius: 20px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .market-title {
+      font-size: 27px;
+      margin-top: 22px;
+    }
+
+    .market-description {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .chart {
+      width: 100%;
+      height: 115px;
+      margin-top: 20px;
+    }
+
+    .chart-caption {
+      font-size: 11px;
+      color: #91a2b8;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      background: #07111f;
+      border: 1px solid #26384c;
+      border-radius: 9px;
+      padding: 11px;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .stat strong {
+      font-size: 13px;
+    }
+
+    section {
+      padding: 75px 0;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-size: clamp(28px, 4vw, 38px);
+      line-height: 1.25;
+      margin: 12px 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .card-icon {
+      font-size: 25px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      color: var(--gold);
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: start;
+    }
+
+    .notice {
+      background: var(--panel);
+      border-left: 4px solid var(--gold);
+      border-radius: 8px;
+      padding: 20px;
+      color: var(--muted);
+    }
+
+    .notice strong {
+      color: white;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin-top: 15px;
+    }
+
+    .feature-list li {
+      margin: 9px 0;
+      color: var(--muted);
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      color: var(--green);
+      margin-right: 10px;
+    }
+
+    .access-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .price {
+      color: var(--gold);
+      font-size: 32px;
+      font-weight: bold;
+      margin: 14px 0;
+    }
+
+    .card .btn {
+      margin-top: 18px;
+    }
+
+    footer {
+      padding: 28px 0;
+      background: #0b1728;
+      border-top: 1px solid var(--border);
+      color: #aab7c8;
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    /* Login and registration dialog */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: #000b;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 430px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 25px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h2 {
+      font-size: 26px;
+      padding-right: 25px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      background: transparent;
+      border: 0;
+      color: white;
+      cursor: pointer;
+    }
+
+    .form-field {
+      margin-top: 15px;
+    }
+
+    .form-field label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .form-field input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #3a4c62;
+      background: #07111f;
+      color: white;
+    }
+
+    .form-field input:focus {
+      outline: 2px solid var(--gold);
+    }
+
+    .modal .btn {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .form-message {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--gold);
+    }
+
+    .modal-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 13px;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 300;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #16283b;
+      border: 1px solid #3a5067;
+      border-radius: 9px;
+      padding: 13px 17px;
+      max-width: 90%;
+      font-size: 13px;
+      display: none;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    @media (max-width: 950px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .market-panel {
+        max-width: 600px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        width: 90%;
+      }
+
+      .navbar {
+        min-height: 68px;
+        flex-wrap: wrap;
+        padding: 10px 0;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-actions > .btn {
+        display: none;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        order: 3;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 12px 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .hero {
+        padding: 55px 0;
+        min-height: auto;
+      }
+
+      .hero-description {
+        font-size: 16px;
+      }
+
+      section {
+        padding: 52px 0;
+      }
+
+      .cards,
+      .access-grid,
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .market-panel {
+        padding: 19px;
+      }
+
+      .stats {
+        gap: 6px;
+      }
+
+      .stat {
+        padding: 8px;
+      }
+
+      .stat strong {
+        font-size: 12px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
- <div class="logo">SMC <span>TRADE</span></div>
- <ul class="links">
-  <li><a href="#home">Home</a></li>
-  <li><a href="#technology">Technology</a></li>
-  <li><a href="#access">Access</a></li>
- </ul>
- <div class="actions">
-  <button class="outline" onclick="openLogin()">Login</button>
-  <button class="btn" onclick="openAge()">Get Started</button>
- </div>
-</nav>
+  <header>
+    <div class="container navbar">
 
-<section class="hero" id="home">
- <div>
-  <div class="badge">● SMC AUTOMATED MARKET ANALYSIS</div>
-  <h1>Smarter Gold Trading With <span class="gradient">SMC Technology</span></h1>
-  <p>
-   XAUUSD trading technology using market structure, liquidity,
-   Fair Value Gaps, multi-timeframe confirmation and risk management.
-  </p>
-  <div class="hero-buttons">
-   <button class="btn" onclick="openAge()">Start Now</button>
-   <button class="outline" onclick="document.getElementById('technology').scrollIntoView()">
-    Explore Technology
-   </button>
+      <a class="logo" href="#home">SMC TRADE</a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#technology">Technology</a>
+        <a href="#analysis">Analysis</a>
+        <a href="#access">Access</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn secondary small" type="button" data-auth="login">
+          Log In
+        </button>
+
+        <button class="btn primary small" type="button" data-auth="register">
+          Get Started
+        </button>
+
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="navLinks">
+          ☰ Menu
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HOME -->
+
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+
+        <div>
+          <div class="tag">● SMC MARKET ANALYSIS TECHNOLOGY</div>
+
+          <h1>
+            Smarter Gold Trading<br>
+            With <span>SMC Technology</span>
+          </h1>
+
+          <p class="hero-description">
+            Explore market structure, liquidity, Fair Value Gaps,
+            multi-timeframe analysis and practical risk management
+            for XAUUSD gold trading.
+          </p>
+
+          <div class="buttons">
+            <a class="btn primary" href="#access">Get Started</a>
+            <a class="btn secondary" href="#technology">
+              Explore Technology
+            </a>
+          </div>
+
+          <p class="small-note">
+            Educational information only. Trading involves risk.
+          </p>
+        </div>
+
+        <aside class="market-panel">
+          <div class="panel-top">
+            <div>
+              <strong>XAUUSD</strong>
+              <div class="symbol">Gold / US Dollar</div>
+            </div>
+
+            <span class="demo-badge">DEMO VIEW</span>
+          </div>
+
+          <div class="market-title">Market Overview</div>
+
+          <p class="market-description">
+            Connect a trusted market data provider to display live prices.
+          </p>
+
+          <svg
+            class="chart"
+            viewBox="0 0 420 110"
+            role="img"
+            aria-label="Illustrative gold price chart">
+
+            <g stroke="#263b50" stroke-width="1">
+              <path d="M0 20H420"/>
+              <path d="M0 45H420"/>
+              <path d="M0 70H420"/>
+              <path d="M0 95H420"/>
+            </g>
+
+            <path
+              d="M0 83 L28 70 L50 78 L76 48 L99 57
+                 L126 35 L150 48 L176 25 L200 39
+                 L224 31 L250 55 L278 43 L304 59
+                 L328 32 L354 39 L380 18 L420 27"
+              fill="none"
+              stroke="#e6bd63"
+              stroke-width="3"
+              stroke-linejoin="round"
+              stroke-linecap="round"/>
+
+            <path
+              d="M0 83 L28 70 L50 78 L76 48 L99 57
+                 L126 35 L150 48 L176 25 L200 39
+                 L224 31 L250 55 L278 43 L304 59
+                 L328 32 L354 39 L380 18 L420 27
+                 L420 110 L0 110 Z"
+              fill="#e6bd63"
+              opacity=".07"/>
+          </svg>
+
+          <p class="chart-caption">
+            Illustrative graphic — not real-time market data.
+          </p>
+
+          <div class="stats">
+            <div class="stat">
+              <span>Structure</span>
+              <strong>Study trend</strong>
+            </div>
+
+            <div class="stat">
+              <span>Liquidity</span>
+              <strong>Key levels</strong>
+            </div>
+
+            <div class="stat">
+              <span>Risk</span>
+              <strong>Plan first</strong>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- TECHNOLOGY -->
+
+    <section id="technology">
+      <div class="container">
+
+        <div class="section-heading">
+          <div class="tag">OUR TECHNOLOGY</div>
+
+          <h2>Market Analysis Technology</h2>
+
+          <p class="muted">
+            A structured framework for understanding the gold market.
+            Combine multiple factors rather than relying on one signal.
+          </p>
+        </div>
+
+        <div class="cards">
+
+          <article class="card">
+            <div class="card-icon">↗</div>
+            <h3>Market Structure</h3>
+            <p>
+              Study trends, breaks of structure and changes in
+              market direction across multiple timeframes.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">◎</div>
+            <h3>Liquidity Analysis</h3>
+            <p>
+              Learn to identify potential liquidity zones,
+              swing highs, swing lows and key price levels.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">▤</div>
+            <h3>Fair Value Gaps</h3>
+            <p>
+              Understand price imbalances and how they fit
+              into a broader market analysis.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">◇</div>
+            <h3>Risk Management</h3>
+            <p>
+              Plan invalidation levels, stop-loss placement
+              and position risk before considering a trade.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ANALYSIS -->
+
+    <section id="analysis">
+      <div class="container analysis-grid">
+
+        <div>
+          <div class="tag">ANALYSIS WORKFLOW</div>
+
+          <h2>Build a Consistent Trading Plan</h2>
+
+          <p class="muted">
+            Review higher-timeframe direction, identify important
+            price levels, wait for confirmation and define risk
+            before considering a setup.
+          </p>
+
+          <div class="buttons">
+            <a class="btn secondary" href="#access">
+              View Access Options
+            </a>
+          </div>
+        </div>
+
+        <div class="notice">
+          <strong>Before Any Trade</strong>
+
+          <ul class="feature-list">
+            <li>Check the broader market context.</li>
+            <li>Define entry and invalidation conditions.</li>
+            <li>Calculate position size and potential loss.</li>
+            <li>Never risk money you cannot afford to lose.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ACCESS -->
+
+    <section id="access">
+      <div class="container">
+
+        <div class="section-heading">
+          <div class="tag">PLATFORM ACCESS</div>
+
+          <h2>Choose Your Access</h2>
+
+          <p class="muted">
+            Explore the platform information and learn about
+            the available access options.
+          </p>
+        </div>
+
+        <div class="access-grid">
+
+          <article class="card">
+            <h3>Starter</h3>
+
+            <div class="price">Free</div>
+
+            <p class="muted">
+              Explore the platform information and SMC concepts.
+            </p>
+
+            <ul class="feature-list">
+              <li>Educational content</li>
+              <li>Market analysis framework</li>
+              <li>Risk management basics</li>
+            </ul>
+
+            <button
+              class="btn primary"
+              type="button"
+              data-auth="register">
+              Get Started
+            </button>
+          </article>
+
+          <article class="card">
+            <h3>Premium</h3>
+
+            <div class="price">Contact Us</div>
+
+            <p class="muted">
+              Ask about platform features and access requirements.
+            </p>
+
+            <ul class="feature-list">
+              <li>Feature information</li>
+              <li>Access requirements</li>
+              <li>Product updates</li>
+            </ul>
+
+            <a
+              class="btn secondary"
+              href="mailto:YOUR_EMAIL@example.com?subject=SMC%20TRADE%20Inquiry">
+              Ask for Information
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- RISK WARNING -->
+
+    <section>
+      <div class="container">
+        <div class="notice">
+          <strong>Risk Warning:</strong>
+          Gold and forex trading involve substantial risk and may not
+          be suitable for everyone. Losses are possible. This website
+          does not guarantee profits, provide personalized financial
+          advice or publish live trading signals.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>
+        © <span id="year"></span> SMC TRADE. All rights reserved.
+      </span>
+
+      <span>Market education · Trading involves risk.</span>
+    </div>
+  </footer>
+
+  <!-- LOGIN / REGISTER MODAL -->
+
+  <div
+    class="modal-backdrop"
+    id="authBackdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="authTitle">
+
+    <div class="modal">
+
+      <button
+        class="close-modal"
+        id="closeModal"
+        type="button"
+        aria-label="Close dialog">
+        ×
+      </button>
+
+      <h2 id="authTitle">Create Your Account</h2>
+
+      <p class="muted">
+        Demo form only. A secure backend is needed for real accounts.
+      </p>
+
+      <form id="authForm">
+
+        <div class="form-field" id="nameField">
+          <label for="fullName">Full Name</label>
+
+          <input
+            id="fullName"
+            name="fullName"
+            type="text"
+            autocomplete="name"
+            placeholder="Your name"
+            required>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email Address</label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required>
+        </div>
+
+        <div class="form-field">
+          <label for="password">Password</label>
+
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            minlength="8"
+            placeholder="At least 8 characters"
+            required>
+        </div>
+
+        <button
+          class="btn primary"
+          id="authSubmit"
+          type="submit">
+          Create Demo Account
+        </button>
+
+        <p
+          class="form-message"
+          id="formMessage"
+          aria-live="polite">
+        </p>
+
+      </form>
+
+      <p class="modal-note">
+        This demonstration does not securely save accounts,
+        passwords or authenticate users. Do not enter a real password.
+      </p>
+
+    </div>
   </div>
-  <div class="trust">
-   <span>18+ Verified</span><span>Identity Protected</span>
-   <span>MT5 System</span>
-  </div>
- </div>
-
- <div class="terminal">
-  <div class="terminal-head">
-   <div class="symbol">
-    <div class="coin">Au</div>
-    <div><strong>XAUUSD</strong><small>Gold / U.S. Dollar</small></div>
-   </div>
-   <span class="live">● MARKET</span>
-  </div>
-
-  <div class="price">
-   <div><small style="color:#71869b">Market</small><h2 id="marketPrice">—</h2></div>
-   <strong class="green">SMC ACTIVE</strong>
-  </div>
-
-  <div class="chart-wrap">
-   <canvas id="chart"></canvas>
-   <span class="chart-label">XAUUSD • OHLC</span>
-   <span class="chart-status" id="chartStatus">DEMO DATA</span>
-  </div>
-
-  <div class="signals">
-   <div class="signal"><small>STRUCTURE</small><strong class="green">ACTIVE</strong></div>
-   <div class="signal"><small>LIQUIDITY</small><strong>MONITORING</strong></div>
-   <div class="signal"><small>HTF BIAS</small><strong class="green">ANALYSIS</strong></div>
-  </div>
- </div>
-</section>
-
-<section class="section dark" id="technology">
- <div class="title">
-  <h2>Trading Engine</h2>
-  <p>Multiple confirmations are combined before a trading setup is evaluated.</p>
- </div>
-
- <div class="features">
-  <div class="feature"><div class="icon">⌁</div><h3>BOS / CHoCH</h3><p>Market structure and trend-change analysis.</p></div>
-  <div class="feature"><div class="icon">◇</div><h3>Liquidity</h3><p>Liquidity zones and sweep detection.</p></div>
-  <div class="feature"><div class="icon">▱</div><h3>Fair Value Gap</h3><p>Market imbalance and FVG confirmation.</p></div>
-  <div class="feature"><div class="icon">↗</div><h3>Multi-Timeframe</h3><p>Higher timeframe directional confirmation.</p></div>
-  <div class="feature"><div class="icon">◉</div><h3>Risk Management</h3><p>SL, TP, break-even, trailing and drawdown controls.</p></div>
-  <div class="feature"><div class="icon">✓</div><h3>Secure Access</h3><p>Identity, age, payment and subscription controls.</p></div>
- </div>
-</section>
-
-<section class="section" id="access">
- <div class="title">
-  <h2>Secure Access Process</h2>
-  <p>Bot access opens only after the required server-side checks are completed.</p>
- </div>
-
- <div class="steps">
-  <div class="step"><div class="num">1</div><b>Account</b><p>Google / Phone</p></div>
-  <div class="step"><div class="num">2</div><b>Document</b><p>ID / Passport / Licence</p></div>
-  <div class="step"><div class="num">3</div><b>Face</b><p>Selfie + Liveness</p></div>
-  <div class="step"><div class="num">4</div><b>18+</b><p>Verified DOB</p></div>
-  <div class="step"><div class="num">5</div><b>Duplicate</b><p>One identity</p></div>
-  <div class="step"><div class="num">6</div><b>Payment</b><p>Secure checkout</p></div>
-  <div class="step"><div class="num">7</div><b>Access</b><p>MT5 Bot</p></div>
- </div>
-</section>
-
-<!-- AGE -->
-<div class="modal" id="ageModal"><div class="panel">
- <button class="close" onclick="closeModal('ageModal')">×</button>
- <h2>Age Check</h2>
- <p>You must be at least 18 years old. Final age approval comes from your verified document.</p>
- <div class="field"><label>Date of Birth</label><input type="date" id="dob"></div>
- <div class="error" id="ageError"></div>
- <button class="btn full" onclick="checkAge()">Continue</button>
-</div></div>
-
-<!-- LOGIN -->
-<div class="modal" id="loginModal"><div class="panel">
- <button class="close" onclick="closeModal('loginModal')">×</button>
- <h2>Create Account</h2>
- <p>Continue using Google or your mobile phone number.</p>
-
- <button class="google" onclick="googleLogin()">G &nbsp; Continue with Google</button>
- <button class="phone" onclick="showPhone()">☎ &nbsp; Continue with Phone</button>
-
- <div id="phoneBox" style="display:none">
-  <div class="field">
-   <label>Phone Number</label>
-   <input type="tel" id="phone" placeholder="+251...">
-  </div>
-  <button class="btn full" onclick="requestOTP()">Send OTP</button>
-
-  <div id="otpBox" style="display:none">
-   <div class="field"><label>Verification Code</label><input id="otp" inputmode="numeric" placeholder="6-digit code"></div>
-   <button class="btn full" onclick="verifyOTP()">Verify Code</button>
-  </div>
- </div>
-
- <div class="error" id="loginError"></div>
-</div></div>
-
-<!-- KYC -->
-<div class="modal" id="kycModal"><div class="panel">
- <button class="close" onclick="closeModal('kycModal')">×</button>
- <h2>Identity Verification</h2>
- <p>Verify your identity securely before payment and bot access.</p>
-
- <div class="field">
-  <label>Document Type</label>
-  <select id="docType">
-   <option value="national_id">National ID</option>
-   <option value="passport">Passport</option>
-   <option value="driving_licence">Driving Licence</option>
-  </select>
- </div>
-
- <div class="field">
-  <label>Country</label>
-  <select id="country">
-   <option value="ET">Ethiopia</option>
-   <option value="US">United States</option>
-   <option value="GB">United Kingdom</option>
-   <option value="CA">Canada</option>
-   <option value="OTHER">Other</option>
-  </select>
- </div>
-
- <div class="notice">
-  Your KYC provider should perform document authenticity,
-  verified DOB, 18+ eligibility, selfie, liveness, face match
-  and duplicate-identity checks. Approval must be confirmed by your server.
- </div>
-
- <button class="btn full" onclick="startKYC()">Start Document + Face Verification</button>
- <div class="success" id="kycSuccess">Verification session created. Complete the provider's secure verification.</div>
- <div class="error" id="kycError"></div>
-</div></div>
-
-<!-- DASHBOARD -->
-<section class="dashboard" id="dashboard">
- <div class="dashboard-box">
-  <h2>User Dashboard</h2>
-
-  <div class="status"><span>Account</span><strong id="accountStatus">Authenticated</strong></div>
-  <div class="status"><span>Identity</span><strong class="locked" id="identityStatus">Pending 🔒</strong></div>
-  <div class="status"><span>Face / Liveness</span><strong class="locked" id="faceStatus">Pending 🔒</strong></div>
-  <div class="status"><span>Age</span><strong class="locked" id="ageStatus">Pending 🔒</strong></div>
-  <div class="status"><span>Duplicate Check</span><strong class="locked" id="duplicateStatus">Pending 🔒</strong></div>
-  <div class="status"><span>Payment</span><button class="btn" id="paymentBtn" onclick="startPayment()" disabled>Locked</button></div>
-  <div class="status"><span>MT5 Bot</span><button class="btn" id="botBtn" disabled>Locked</button></div>
- </div>
-</section>
-
-<!-- AI SUPPORT -->
-<button class="chat-button" id="chatButton" onclick="toggleChat()">💬</button>
-
-<div class="chat" id="chat">
- <div class="chat-head">
-  <strong>AI Support</strong>
-  <span onclick="toggleChat()" style="cursor:pointer">×</span>
- </div>
-
- <div class="messages" id="messages">
-  <div class="message">
-   Hello! Ask me about your account, verification, payment,
-   subscription, MT5 installation or trading system.
-  </div>
- </div>
-
- <div class="chat-input">
-  <input id="question" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendMessage()">
-  <button onclick="sendMessage()">➤</button>
- </div>
-</div>
-
-<footer>
- Trading involves financial risk. No profit or return is guaranteed.
-</footer>
-
-<script>
-/*
-=================================================================
-BACKEND ENDPOINTS
-
-Replace API_BASE with your production HTTPS backend.
-
-Expected routes:
-
-POST /auth/google
-POST /auth/phone/request
-POST /auth/phone/verify
-
-POST /kyc/session
-GET  /kyc/status
-
-POST /payments/session
-GET  /account/status
-
-POST /ai/chat
-
-GET /market/xauusd/candles
-
-Never put private API keys in this HTML file.
-=================================================================
-*/
-
-const API_BASE = "https://YOUR-SERVER.example.com/api";
-
-let ageGatePassed = false;
-
-/* ---------- MODALS ---------- */
-
-function openAge(){
- document.getElementById("ageModal").classList.add("active");
-}
-
-function closeModal(id){
- document.getElementById(id).classList.remove("active");
-}
-
-function openLogin(){
- if(!ageGatePassed){openAge();return;}
- document.getElementById("loginModal").classList.add("active");
-}
-
-/* ---------- AGE GATE ---------- */
-
-function calculateAge(value){
- const dob=new Date(value+"T00:00:00");
- const now=new Date();
-
- let age=now.getFullYear()-dob.getFullYear();
- const m=now.getMonth()-dob.getMonth();
-
- if(m<0||(m===0&&now.getDate()<dob.getDate())) age--;
-
- return age;
-}
-
-function checkAge(){
- const value=document.getElementById("dob").value;
- const error=document.getElementById("ageError");
-
- if(!value){
-  error.style.display="block";
-  error.textContent="Enter your date of birth.";
-  return;
- }
-
- if(calculateAge(value)<18){
-  ageGatePassed=false;
-  error.style.display="block";
-  error.textContent="Access denied. You must be at least 18 years old.";
-  return;
- }
-
- ageGatePassed=true;
- error.style.display="none";
- closeModal("ageModal");
- document.getElementById("loginModal").classList.add("active");
-}
-
-/* ---------- GOOGLE AUTH ---------- */
-
-async function googleLogin(){
- /*
-  Production recommendation:
-  Use the Google Identity Services SDK to obtain the credential,
-  send it to YOUR backend, and verify it server-side.
-
-  Do not mark the user authenticated here without server confirmation.
- */
- alert("Connect this button to Google Identity Services + your backend.");
-}
-
-/* ---------- PHONE + OTP ---------- */
-
-function showPhone(){
- document.getElementById("phoneBox").style.display="block";
-}
-
-async function requestOTP(){
- const phone=document.getElementById("phone").value.trim();
- const err=document.getElementById("loginError");
-
- if(!phone){
-  err.style.display="block";
-  err.textContent="Enter your phone number.";
-  return;
- }
-
- try{
-  const res=await fetch(API_BASE+"/auth/phone/request",{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({phone})
-  });
-
-  if(!res.ok) throw new Error();
-
-  err.style.display="none";
-  document.getElementById("otpBox").style.display="block";
-
- }catch{
-  err.style.display="block";
-  err.textContent="Unable to send the verification code.";
- }
-}
-
-async function verifyOTP(){
- const phone=document.getElementById("phone").value.trim();
- const code=document.getElementById("otp").value.trim();
- const err=document.getElementById("loginError");
-
- try{
-  const res=await fetch(API_BASE+"/auth/phone/verify",{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   credentials:"include",
-   body:JSON.stringify({phone,code})
-  });
-
-  if(!res.ok) throw new Error();
-
-  closeModal("loginModal");
-  document.getElementById("kycModal").classList.add("active");
-
- }catch{
-  err.style.display="block";
-  err.textContent="The verification code could not be confirmed.";
- }
-}
-
-/* ---------- KYC ---------- */
-
-async function startKYC(){
- const docType=document.getElementById("docType").value;
- const country=document.getElementById("country").value;
- const ok=document.getElementById("kycSuccess");
- const err=document.getElementById("kycError");
-
- try{
-  const res=await fetch(API_BASE+"/kyc/session",{
-   method:"POST",
-   credentials:"include",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({documentType:docType,country})
-  });
-
-  if(!res.ok) throw new Error();
-
-  const data=await res.json();
-
-  /*
-   data.verificationUrl should be generated by your KYC provider
-   through your backend.
-
-   Do NOT create "verified" state from the browser.
-  */
-
-  ok.style.display="block";
-  err.style.display="none";
-
-  if(data.verificationUrl){
-   window.location.href=data.verificationUrl;
-  }
-
- }catch{
-  err.style.display="block";
-  err.textContent="Unable to start secure identity verification.";
- }
-}
-
-/* ---------- SERVER ACCOUNT STATUS ---------- */
-
-async function refreshAccountStatus(){
- try{
-  const res=await fetch(API_BASE+"/account/status",{
-   credentials:"include"
-  });
-
-  if(!res.ok) return;
-
-  const s=await res.json();
-
-  document.getElementById("dashboard").style.display="block";
-
-  setState("identityStatus",s.identityVerified,"Verified ✓");
-  setState("faceStatus",s.faceVerified,"Face Match ✓");
-  setState("ageStatus",s.ageVerified,"18+ Verified ✓");
-  setState(
-   "duplicateStatus",
-   s.uniqueIdentity,
-   "Unique Identity ✓"
-  );
-
-  const allVerified=
-   s.identityVerified &&
-   s.faceVerified &&
-   s.ageVerified &&
-   s.uniqueIdentity;
-
-  const payment=document.getElementById("paymentBtn");
-
-  payment.disabled=!allVerified;
-  payment.textContent=allVerified
-   ? (s.paymentActive?"Payment Active ✓":"Continue to Payment")
-   : "Locked";
-
-  const bot=document.getElementById("botBtn");
-
-  bot.disabled=!s.paymentActive;
-  bot.textContent=s.paymentActive?"Open MT5 Bot":"Locked";
-
- }catch(e){}
-}
-
-function setState(id,passed,text){
- const el=document.getElementById(id);
-
- if(passed){
-  el.textContent=text;
-  el.className="verified";
- }else{
-  el.textContent="Pending 🔒";
-  el.className="locked";
- }
-}
-
-/* ---------- PAYMENT ---------- */
-
-async function startPayment(){
- try{
-  const res=await fetch(API_BASE+"/payments/session",{
-   method:"POST",
-   credentials:"include"
-  });
-
-  if(!res.ok) throw new Error();
-
-  const data=await res.json();
-
-  if(data.checkoutUrl){
-   window.location.href=data.checkoutUrl;
-  }
-
- }catch{
-  alert("Unable to start payment.");
- }
-}
-
-/* ---------- AI SUPPORT ---------- */
-
-function toggleChat(){
- const chat=document.getElementById("chat");
-
- chat.classList.toggle("active");
-
- document.getElementById("chatButton").style.display=
-  chat.classList.contains("active")?"none":"block";
-}
-
-function addMessage(text,user=false,html=false){
- const messages=document.getElementById("messages");
- const div=document.createElement("div");
-
- div.className="message"+(user?" user-message":"");
-
- if(html) div.innerHTML=text;
- else div.textContent=text;
-
- messages.appendChild(div);
- messages.scrollTop=messages.scrollHeight;
-}
-
-async function sendMessage(){
- const input=document.getElementById("question");
- const question=input.value.trim();
-
- if(!question) return;
-
- addMessage(question,true);
- input.value="";
-
- const loading=document.createElement("div");
- loading.className="message";
- loading.textContent="Thinking...";
-
- document.getElementById("messages").appendChild(loading);
-
- try{
-  const res=await fetch(API_BASE+"/ai/chat",{
-   method:"POST",
-   credentials:"include",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({
-    message:question
-   })
-  });
-
-  if(!res.ok) throw new Error();
-
-  const data=await res.json();
-
-  loading.remove();
-
-  if(data.answer){
-   addMessage(data.answer);
-  }else{
-   showHumanSupport();
-  }
 
- }catch{
-  loading.remove();
-  showHumanSupport();
- }
-}
-
-function showHumanSupport(){
- addMessage(
-  `I couldn't complete that request. Please contact support.<div class="support-links">
-  ☎ <a href="tel:+251988407460">+251988407460</a><br>
-  💬 <a href="https://wa.me/251988407460" target="_blank" rel="noopener">WhatsApp Support</a><br>
-  ✈ Telegram: contact support using your official Telegram account.
-  </div>`,
-  false,
-  true
- );
-}
-
-/* ---------- OHLC CANDLESTICK CHART ---------- */
-
-const canvas=document.getElementById("chart");
-const ctx=canvas.getContext("2d");
-
-let candles=[];
-
-/*
- Demo OHLC is displayed until your backend market-data endpoint
- returns real XAUUSD OHLC data.
-
- Expected:
- [
-   {time:...,open:...,high:...,low:...,close:...},
-   ...
- ]
-*/
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      // Current year
+      const year = document.getElementById("year");
+
+      if (year) {
+        year.textContent = new Date().getFullYear();
+      }
+
+      // Mobile navigation
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", function () {
+          const isOpen = navLinks.classList.toggle("open");
+
+          menuToggle.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+          );
+
+          menuToggle.textContent = isOpen
+            ? "✕ Close"
+            : "☰ Menu";
+        });
+
+        navLinks.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", function () {
+            navLinks.classList.remove("open");
+            menuToggle.setAttribute("aria-expanded", "false");
+            menuToggle.textContent = "☰ Menu";
+          });
+        });
+      }
+
+      // Login and registration dialog
+      const backdrop = document.getElementById("authBackdrop");
+      const closeModal = document.getElementById("closeModal");
+      const authForm = document.getElementById("authForm");
+      const authTitle = document.getElementById("authTitle");
+      const authSubmit = document.getElementById("authSubmit");
+      const nameField = document.getElementById("nameField");
+      const fullName = document.getElementById("fullName");
+      const password = document.getElementById("password");
+      const formMessage = document.getElementById("formMessage");
+
+      let authMode = "register";
+      let previousFocus = null;
+
+      function openAuth(mode) {
+        authMode = mode;
+        previousFocus = document.activeElement;
+
+        const registering = mode === "register";
+
+        authTitle.textContent = registering
+          ? "Create Your Account"
+          : "Log In";
+
+        authSubmit.textContent = registering
+          ? "Create Demo Account"
+          : "Demo Log In";
+
+        nameField.hidden = !registering;
+        fullName.required = registering;
+
+        password.autocomplete = registering
+          ? "new-password"
+          : "current-password";
+
+        formMessage.textContent = "";
+        backdrop.classList.add("open");
+        document.body.style.overflow = "hidden";
+
+        if (registering) {
+          fullName.focus();
+        } else {
+          document.getElementById("email").focus();
+        }
+      }
+
+      function closeAuth() {
+        backdrop.classList.remove("open");
+        document.body.style.overflow = "";
+
+        if (
+          previousFocus &&
+          typeof previousFocus.focus === "function"
+        ) {
+          previousFocus.focus();
+        }
+      }
+
+      document.querySelectorAll("[data-auth]").forEach(
+        function (button) {
+          button.addEventListener("click", function () {
+            openAuth(button.dataset.auth);
+          });
+        }
+      );
+
+      closeModal.addEventListener("click", closeAuth);
+
+      backdrop.addEventListener("click", function (event) {
+        if (event.target === backdrop) {
+          closeAuth();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (
+          event.key === "Escape" &&
+          backdrop.classList.contains("open")
+        ) {
+          closeAuth();
+        }
+      });
+
+      authForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        if (!authForm.reportValidity()) {
+          return;
+        }
+
+        formMessage.textContent = authMode === "register"
+          ? "Demo only: no account was created. A secure backend is required."
+          : "Demo only: login is not connected to an authentication service.";
+      });
+
+      // Warn about the example contact email
+      const toast = document.getElementById("toast");
+
+      document.querySelectorAll(
+        'a[href^="mailto:YOUR_EMAIL"]'
+      ).forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+
+          toast.textContent =
+            "Replace YOUR_EMAIL@example.com with your real email before publishing.";
+
+          toast.classList.add("show");
+
+          window.setTimeout(function () {
+            toast.classList.remove("show");
+          }, 4000);
+        });
+      });
+
+    });
+  </script>
 
-function createDemoCandles(){
- const data=[];
- let last=2725;
-
- for(let i=0;i<55;i++){
-  const open=last;
-  const close=open+(Math.random()-.47)*8;
-  const high=Math.max(open,close)+Math.random()*5;
-  const low=Math.min(open,close)-Math.random()*5;
-
-  data.push({open,high,low,close});
-  last=close;
- }
-
- return data;
-}
-
-function resizeChart(){
- const rect=canvas.getBoundingClientRect();
- const ratio=window.devicePixelRatio||1;
-
- canvas.width=Math.round(rect.width*ratio);
- canvas.height=Math.round(rect.height*ratio);
-
- ctx.setTransform(ratio,0,0,ratio,0,0);
-
- drawCandles();
-}
-
-function drawCandles(){
- if(!candles.length) return;
-
- const w=canvas.clientWidth;
- const h=canvas.clientHeight;
-
- ctx.clearRect(0,0,w,h);
-
- const highs=candles.map(c=>c.high);
- const lows=candles.map(c=>c.low);
-
- const max=Math.max(...highs);
- const min=Math.min(...lows);
-
- const range=(max-min)||1;
-
- const pad=25;
- const usable=h-pad*2;
-
- const y=price=>
-  pad+(max-price)/range*usable;
-
- const slot=w/candles.length;
- const bodyWidth=Math.max(3,Math.min(9,slot*.58));
-
- candles.forEach((c,i)=>{
-  const x=i*slot+slot/2;
-
-  const bullish=c.close>=c.open;
-
-  ctx.strokeStyle=bullish?"#00e59b":"#ff4d6d";
-  ctx.fillStyle=bullish?"#00e59b":"#ff4d6d";
-  ctx.lineWidth=1.2;
-
-  ctx.beginPath();
-  ctx.moveTo(x,y(c.high));
-  ctx.lineTo(x,y(c.low));
-  ctx.stroke();
-
-  const top=y(Math.max(c.open,c.close));
-  const bottom=y(Math.min(c.open,c.close));
-
-  ctx.fillRect(
-   x-bodyWidth/2,
-   top,
-   bodyWidth,
-   Math.max(2,bottom-top)
-  );
- });
-
- const latest=candles[candles.length-1];
-
- document.getElementById("marketPrice").textContent=
-  Number(latest.close).toFixed(2);
-}
-
-async function loadMarketData(){
- try{
-  const res=await fetch(
-   API_BASE+"/market/xauusd/candles?timeframe=M5&limit=60"
-  );
-
-  if(!res.ok) throw new Error();
-
-  const data=await res.json();
-
-  if(!Array.isArray(data)||!data.length) throw new Error();
-
-  candles=data.map(c=>({
-   open:Number(c.open),
-   high:Number(c.high),
-   low:Number(c.low),
-   close:Number(c.close)
-  })).filter(c=>
-   Number.isFinite(c.open)&&
-   Number.isFinite(c.high)&&
-   Number.isFinite(c.low)&&
-   Number.isFinite(c.close)
-  );
-
-  if(!candles.length) throw new Error();
-
-  document.getElementById("chartStatus").textContent="LIVE OHLC";
-
- }catch{
-  candles=createDemoCandles();
-  document.getElementById("chartStatus").textContent="DEMO OHLC";
- }
-
- resizeChart();
-}
-
-window.addEventListener("resize",resizeChart);
-
-loadMarketData();
-
-/*
- Refresh the displayed OHLC periodically.
- For production, WebSocket streaming is preferable for live data.
-*/
-setInterval(loadMarketData,30000);
-
-/*
- When the page is loaded after login/KYC/payment,
- this asks YOUR backend for the authoritative status.
-*/
-refreshAccountStatus();
-
-</script>
 </body>
 </html>
