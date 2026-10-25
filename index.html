@@ -5,645 +5,957 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080b14">
-<meta name="description" content="DAN AI VIDEO STUDIO - Create AI animated videos from up to five photos, with speech, lip sync, music, text and editing tools.">
+<meta name="description" content="DAN AI VIDEO STUDIO - Create, edit and animate photos and videos.">
 <title>DAN AI VIDEO STUDIO</title>
+
 <style>
-:root{--bg:#080b14;--panel:#121a2a;--panel2:#09111f;--green:#43f5b2;--muted:#9aabc2;--line:#2b3a51;--red:#ff7185}
+:root{
+ --bg:#080b14;--panel:#121a2a;--panel2:#18243a;
+ --pink:#ff3e9d;--purple:#9c6bff;--blue:#40c9ff;
+ --text:#f7f8ff;--muted:#9aa8c2;--border:#29354c;
+ --green:#42e6a4
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}
-header{padding:25px 15px;text-align:center;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#15243a,#080b14)}
-.logo{font-size:clamp(24px,6vw,38px);font-weight:900;color:var(--green);letter-spacing:2px}
-header p{color:var(--muted);font-size:14px}
-.tag,.pill{display:inline-block;background:#20352f;color:var(--green);padding:7px 12px;border-radius:20px;font-size:11px}
-main{width:min(100% - 24px,820px);margin:22px auto}
-.card{background:var(--panel);border:1px solid var(--line);padding:18px;border-radius:18px;margin-bottom:16px}
-h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:18px 0 8px}
-label{display:block;font-weight:bold;margin:16px 0 8px}
-input,select,textarea{width:100%;padding:13px;background:var(--panel2);color:#fff;border:1px solid var(--line);border-radius:10px}
-input[type=file]{padding:11px}textarea{min-height:90px;resize:vertical}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--green)}
-button{border:0;border-radius:10px;padding:13px;font-weight:bold}
-.primary{background:var(--green);color:#06130e;width:100%;margin-top:12px}
-.secondary{background:#26354b;color:#fff;width:100%;margin-top:10px}
-.tertiary{background:#20352f;color:var(--green);width:100%;margin-top:10px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.preview{display:block;width:100%;max-height:440px;object-fit:contain;border-radius:12px;margin-top:14px;background:#060a12}
-.hidden{display:none!important}.small{font-size:13px;color:var(--muted);line-height:1.7}
-.status{padding:13px;background:var(--panel2);border-radius:10px;color:var(--green);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-size:13px}
-.status.error{color:var(--red)}.status.info{color:#8fc7ff}
-.progress{width:100%;height:8px;background:#26354b;border-radius:10px;overflow:hidden;margin-top:12px}
-.progress div{height:100%;width:0;background:var(--green);transition:width .15s}
-hr{border:0;border-top:1px solid var(--line);margin:18px 0}a{color:var(--green)}
-.note{padding:12px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:12px;line-height:1.7}
-footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
-.dropzone{border:2px dashed #40516b;border-radius:14px;padding:16px;text-align:center}
-.dropzone.drag{border-color:var(--green);background:#142b28}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.actions>*{flex:1;min-width:120px}.actions a{text-decoration:none}.actions a button{margin:0}
-.check-row{display:flex;gap:10px;align-items:flex-start;margin:12px 0;color:var(--muted);font-size:13px;line-height:1.6}
-.check-row input{width:auto;margin-top:3px;accent-color:var(--green)}
-.photo-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
-.photo-item{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px;min-width:0}
-.photo-item img{width:100%;height:145px;object-fit:contain;background:#050812;border-radius:8px}
-.photo-item p{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
-.photo-controls{display:flex;gap:5px}.photo-controls button{flex:1;padding:9px;font-size:12px;background:#26354b;color:#fff}
-.landing{min-height:calc(100vh - 150px);display:flex;align-items:center;justify-content:center}
-.hero{text-align:center;padding:25px 14px}
-.robot{width:min(210px,55vw);margin:0 auto 15px;display:block}
-.hero h1{font-size:clamp(30px,8vw,55px);margin:8px 0;color:#fff}
-.hero h1 span{color:var(--green)}
-.hero p{color:var(--muted);line-height:1.8;max-width:560px;margin:12px auto}
-.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;text-align:left;margin-top:24px}
-.feature{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:13px;font-size:13px;color:var(--muted)}
-.feature b{display:block;color:var(--green);margin-bottom:5px}
-.studio-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.studio-nav button{flex:1;background:#26354b;color:#fff}
-.editor-preview{position:relative;background:#050812;border-radius:12px;overflow:hidden}
-.editor-preview video{margin:0;max-height:520px}
-@media(min-width:600px){.photo-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:480px){main{width:calc(100% - 16px);margin:12px auto}.card{padding:14px}.grid{gap:8px}.photo-item img{height:115px}}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:radial-gradient(ellipse at top,#211739 0,#080b14 58%);
+ font-family:Arial,sans-serif;color:var(--text);min-height:100vh
+}
+header{
+ position:sticky;top:0;z-index:20;background:#080b14ed;
+ backdrop-filter:blur(15px);border-bottom:1px solid var(--border);
+ padding:14px 5%;display:flex;align-items:center;
+ justify-content:space-between;gap:12px;flex-wrap:wrap
+}
+.logo{font-size:20px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--pink)}
+button,.btn{
+ border:1px solid transparent;border-radius:12px;padding:12px 16px;
+ font-weight:700;cursor:pointer;color:white;background:var(--panel2);
+ transition:.2s;font-size:13px
+}
+button:hover,.btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.primary{background:linear-gradient(110deg,var(--pink),var(--purple))}
+.blue{background:linear-gradient(110deg,#258dff,#6d66ff)}
+.green{background:linear-gradient(110deg,#079b79,#26cda5)}
+.danger{background:#582035}
+header button{padding:10px 14px}
+main{max-width:1250px;margin:auto;padding:25px 18px 60px}
+.hero{text-align:center;padding:35px 0}
+.eyebrow{color:var(--pink);font-size:11px;font-weight:800;letter-spacing:3px}
+h1{
+ font-size:clamp(30px,6vw,57px);margin:13px 0;
+ background:linear-gradient(90deg,#fff,#ff80bd,#a9a1ff);
+ background-clip:text;-webkit-background-clip:text;color:transparent
+}
+.hero p{color:var(--muted);max-width:650px;margin:auto;line-height:1.8;font-size:14px}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.pill{font-size:11px;color:#e8dcff;border:1px solid #49345f;background:#211a35;padding:8px 12px;border-radius:30px}
+.tabs{
+ display:flex;gap:8px;margin:10px auto 25px;max-width:500px;
+ background:#111827;padding:7px;border:1px solid var(--border);border-radius:16px
+}
+.tabs button{flex:1;background:transparent;color:var(--muted);padding:14px 8px}
+.tabs button.active{background:linear-gradient(110deg,var(--pink),var(--purple));color:white}
+.section{display:none}.section.active{display:block}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.card{
+ background:linear-gradient(145deg,#141d2e,#0e1522);
+ border:1px solid var(--border);border-radius:19px;padding:21px;min-width:0;
+ box-shadow:0 12px 40px #00000014
+}
+h2{font-size:21px;margin:0 0 7px}
+h3{font-size:14px;margin:22px 0 9px}
+.desc,.muted{font-size:13px;color:var(--muted);line-height:1.7}
+label{display:block;font-size:12px;font-weight:700;margin:16px 0 8px}
+input,select,textarea{
+ width:100%;border:1px solid var(--border);border-radius:11px;
+ padding:12px;background:#080e19;color:white;font:inherit;font-size:13px;outline:none
+}
+textarea{resize:vertical;min-height:95px;line-height:1.6}
+input:focus,select:focus,textarea:focus{border-color:var(--purple)}
+input[type=file]{font-size:12px}
+input[type=range]{padding:0;accent-color:var(--pink)}
+input[type=checkbox]{width:auto;accent-color:var(--pink)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.checkrow{display:flex;gap:9px;align-items:center;font-size:12px;color:var(--muted);margin:13px 0}
+.action{width:100%;margin-top:12px;padding:15px}
+.preview{
+ min-height:320px;border:1px dashed #3a4661;border-radius:15px;
+ background:radial-gradient(ellipse,#1a2440,#0a0f1b);
+ display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative
+}
+.preview img,.preview video{display:block;max-width:100%;max-height:480px;object-fit:contain}
+.placeholder{text-align:center;padding:25px;color:var(--muted);line-height:1.8;font-size:13px}
+.placeholder .symbol{font-size:48px;display:block;margin-bottom:12px;color:var(--pink)}
+.status{font-size:12px;line-height:1.7;color:var(--muted);margin-top:12px;overflow-wrap:anywhere}
+.status.error{color:#ff8caa}.status.ok{color:var(--green)}
+.preview-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.preview-actions button{flex:1;min-width:100px}
+.small{font-size:11px;color:var(--muted);line-height:1.7}
+hr{border:0;border-top:1px solid var(--border);margin:20px 0}
+.toolgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.toolbox{padding:12px;background:#0a1020;border:1px solid var(--border);border-radius:12px}
+.toolbox label{margin-top:0}
+.rangevalue{color:var(--pink);float:right}
+.progressbar{height:6px;background:#202b40;border-radius:10px;overflow:hidden;margin-top:12px}
+.progressbar div{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--purple));transition:width .15s}
+.history-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.history-item{background:#0b1120;border:1px solid var(--border);border-radius:10px;padding:8px;min-width:0}
+.history-item img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:7px}
+.history-item button{width:100%;padding:8px;margin-top:6px;font-size:11px}
+footer{text-align:center;color:#66738b;padding:24px;font-size:12px;line-height:1.8}
+.hidden{display:none!important}
+@media(max-width:760px){
+ .layout{grid-template-columns:1fr}.preview{min-height:240px}
+ main{padding:12px 10px 40px}header{padding:12px 4%}
+ .card{padding:15px}.hero{padding:25px 0}
+ .tabs button{font-size:11px}.toolgrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:360px){.row,.toolgrid{grid-template-columns:1fr}.logo{font-size:17px}}
 </style>
 </head>
+
 <body>
 <header>
- <div class="logo">DAN AI VIDEO STUDIO</div>
- <p>Create your own videos with AI</p>
- <span class="tag">PHOTO • VIDEO • AI</span>
+ <div class="logo">DAN <span>AI</span> STUDIO</div>
+ <div style="display:flex;gap:8px;flex-wrap:wrap">
+  <button onclick="document.getElementById('projectFile').click()">Open Project</button>
+  <button class="primary" onclick="saveProject()">Save Project</button>
+  <input id="projectFile" type="file" accept=".json,application/json" class="hidden">
+ </div>
 </header>
 
 <main>
-<section id="landing" class="card landing">
- <div class="hero">
-  <svg class="robot" viewBox="0 0 220 220" role="img" aria-label="DAN AI robot">
-   <defs><linearGradient id="rg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#43f5b2"/><stop offset="1" stop-color="#238aff"/></linearGradient></defs>
-   <circle cx="110" cy="110" r="99" fill="#111f32" stroke="#2b3a51" stroke-width="3"/>
-   <path d="M110 22V43" stroke="#43f5b2" stroke-width="7" stroke-linecap="round"/>
-   <circle cx="110" cy="17" r="10" fill="#43f5b2"/>
-   <rect x="42" y="53" width="136" height="111" rx="30" fill="url(#rg)"/>
-   <rect x="53" y="65" width="114" height="83" rx="22" fill="#09111f"/>
-   <ellipse cx="82" cy="101" rx="12" ry="16" fill="#43f5b2"/>
-   <ellipse cx="138" cy="101" rx="12" ry="16" fill="#43f5b2"/>
-   <path d="M81 126Q110 145 139 126" fill="none" stroke="#43f5b2" stroke-width="6" stroke-linecap="round"/>
-   <path d="M42 92H28M178 92H192" stroke="#43f5b2" stroke-width="7" stroke-linecap="round"/>
-   <rect x="76" y="168" width="68" height="22" rx="11" fill="#26354b" stroke="#43f5b2" stroke-width="3"/>
-   <text x="110" y="183" text-anchor="middle" font-size="12" font-weight="bold" fill="#43f5b2">DAN AI</text>
-  </svg>
-  <span class="tag">WELCOME TO YOUR STUDIO</span>
-  <h1>DAN <span>AI VIDEO</span></h1>
-  <p>Turn your photos into creative video projects. Arrange photos, add text and music, choose the format, and connect an AI video service for real character animation.</p>
-  <button id="nextButton" class="primary">NEXT — OPEN STUDIO</button>
-  <div class="feature-grid">
-   <div class="feature"><b>PHOTO TO VIDEO</b>Use up to five photos</div>
-   <div class="feature"><b>AI ANIMATION</b>Connect your AI provider</div>
-   <div class="feature"><b>VOICE & LIP SYNC</b>Multiple language settings</div>
-   <div class="feature"><b>VIDEO EDITOR</b>Text, music and ordering</div>
+ <section class="hero">
+  <div class="eyebrow">CREATE · EDIT · ANIMATE</div>
+  <h1>DAN AI VIDEO STUDIO</h1>
+  <p>Create image concepts, enhance photos, animate your pictures and export videos in one creative workspace.</p>
+  <div class="pills">
+   <span class="pill">PHOTO EDITOR</span>
+   <span class="pill">VIDEO MAKER</span>
+   <span class="pill">PROJECT SAVE</span>
+   <span class="pill">MOBILE FRIENDLY</span>
   </div>
- </div>
-</section>
-
-<section id="studio" class="hidden">
- <div class="studio-nav">
-  <button id="backButton">← HOME</button>
-  <button id="saveProjectTop">SAVE PROJECT</button>
-  <button id="loadProjectTop">LOAD PROJECT</button>
- </div>
-
- <section class="card">
-  <h2>1. Photos</h2>
-  <div id="dropzone" class="dropzone">
-   <p>Select up to five photos for one video</p>
-   <label for="photos">Choose photos</label>
-   <input id="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple>
-   <p class="small">JPG, PNG or WebP · Maximum 15 MB each · Maximum 5 photos</p>
-  </div>
-  <div id="photoList" class="photo-list"></div>
-  <p id="imageInfo" class="small">No photos selected.</p>
-  <button id="clearPhotos" class="secondary">REMOVE ALL PHOTOS</button>
-  <label for="prompt">Describe your video</label>
-  <textarea id="prompt" maxlength="1500" placeholder="Example: Show the person walking naturally, smiling, and speaking to the camera."></textarea>
-  <p class="small"><span id="promptCount">0</span>/1500 characters</p>
-  <button id="enhancePrompt" class="tertiary">ENHANCE PROMPT</button>
-  <label for="style">Camera movement</label>
-  <select id="style">
-   <option value="natural">Natural camera movement</option>
-   <option value="cinematic">Cinematic zoom and pan</option>
-   <option value="pan-left">Pan left</option>
-   <option value="pan-right">Pan right</option>
-   <option value="zoom-in">Zoom in</option>
-   <option value="zoom-out">Zoom out</option>
-   <option value="walking">Walking — AI service required</option>
-   <option value="smiling">Smiling — AI service required</option>
-   <option value="dancing">Dancing — AI service required</option>
-   <option value="talking">Talking — AI service required</option>
-   <option value="custom">Custom camera movement</option>
-  </select>
-  <label for="background">Background</label>
-  <select id="background">
-   <option value="original">Keep original background</option>
-   <option value="blur">Blur background — AI service required</option>
-   <option value="studio">Studio background — AI service required</option>
-   <option value="nature">Nature background — AI service required</option>
-   <option value="city">City background — AI service required</option>
-   <option value="custom">Custom background — AI service required</option>
-  </select>
-  <label for="backgroundPrompt">Background instructions</label>
-  <input id="backgroundPrompt" maxlength="500" placeholder="Describe the background you want">
  </section>
 
- <section class="card">
-  <h2>2. Video settings</h2>
-  <div class="grid">
-   <div>
-    <label for="quality">Quality</label>
-    <select id="quality">
-     <option value="480p">480p</option>
-     <option value="720p" selected>720p HD</option>
-     <option value="1080p">1080p Full HD</option>
-     <option value="4k">4K — AI service required</option>
-    </select>
-   </div>
-   <div>
-    <label for="duration">Duration</label>
-    <select id="duration">
-     <option value="5">5 seconds</option><option value="10">10 seconds</option>
-     <option value="15">15 seconds</option><option value="30">30 seconds</option>
-     <option value="45">45 seconds</option><option value="60">1 minute</option>
-     <option value="120">2 minutes</option><option value="180">3 minutes</option>
-     <option value="240">4 minutes</option><option value="300">5 minutes</option>
-     <option value="360">6 minutes</option><option value="420">7 minutes</option>
-     <option value="480">8 minutes</option><option value="540">9 minutes</option>
-     <option value="600">10 minutes</option><option value="660">11 minutes</option>
-     <option value="720">12 minutes</option>
-    </select>
-   </div>
-  </div>
-  <label for="ratio">Aspect ratio</label>
-  <select id="ratio">
-   <option value="9:16">9:16 — TikTok / Reels</option>
-   <option value="16:9">16:9 — YouTube</option>
-   <option value="1:1">1:1 — Square</option>
-  </select>
-  <label for="music">Music</label>
-  <select id="music">
-   <option value="none">No background music</option>
-   <option value="upbeat">Upbeat music — AI service required</option>
-   <option value="cinematic">Cinematic music — AI service required</option>
-   <option value="calm">Calm music — AI service required</option>
-   <option value="upload">Use my uploaded music</option>
-  </select>
-  <label for="musicFile">Upload music audio</label>
-  <input id="musicFile" type="file" accept="audio/*">
-  <p id="musicInfo" class="small">No music selected.</p>
-  <label for="overlayText">Text displayed on video</label>
-  <input id="overlayText" maxlength="180" placeholder="Add a title or caption">
-  <label for="textPosition">Text position</label>
-  <select id="textPosition">
-   <option value="bottom">Bottom</option><option value="top">Top</option>
-   <option value="center">Center</option>
-  </select>
- </section>
+ <nav class="tabs">
+  <button id="photoTab" class="active" onclick="switchMode('photo')">▧ PHOTO STUDIO</button>
+  <button id="videoTab" onclick="switchMode('video')">▶ VIDEO STUDIO</button>
+ </nav>
 
- <section class="card">
-  <h2>3. AI movement and speech</h2>
-  <label for="speechText">What should the person say?</label>
-  <textarea id="speechText" maxlength="2000" placeholder="Write the exact words to speak."></textarea>
-  <div class="grid">
-   <div>
-    <label for="speechLanguage">Speech language</label>
-    <select id="speechLanguage">
-     <option value="am-ET">Amharic</option><option value="en-US">English</option>
-     <option value="so-SO">Somali</option><option value="ar-SA">Arabic</option>
-     <option value="fr-FR">French</option><option value="sw-KE">Kiswahili</option>
-     <option value="om-ET">Afaan Oromoo</option>
-    </select>
+ <!-- PHOTO STUDIO -->
+ <section id="photoSection" class="section active">
+  <div class="layout">
+   <div class="card">
+    <h2>Photo Creator</h2>
+    <p class="desc">Upload a photo, apply visual adjustments or connect a real image-generation service.</p>
+
+    <label for="photoPrompt">Image description</label>
+    <textarea id="photoPrompt" placeholder="Describe your image: realistic portrait, black outfit, cinematic lighting..."></textarea>
+
+    <label for="photoReference">Upload reference photo</label>
+    <input id="photoReference" type="file" accept="image/*">
+
+    <div class="row">
+     <div>
+      <label for="photoStyle">Style</label>
+      <select id="photoStyle">
+       <option>Photorealistic</option>
+       <option>Cinematic</option>
+       <option>Fashion</option>
+       <option>Anime</option>
+       <option>3D Render</option>
+       <option>Product Photography</option>
+       <option>Fantasy</option>
+      </select>
+     </div>
+     <div>
+      <label for="photoRatio">Aspect ratio</label>
+      <select id="photoRatio">
+       <option value="1:1">Square 1:1</option>
+       <option value="4:5">Portrait 4:5</option>
+       <option value="9:16">Story 9:16</option>
+       <option value="16:9">Landscape 16:9</option>
+       <option value="3:2">Photo 3:2</option>
+      </select>
+     </div>
+    </div>
+
+    <h3>Photo adjustments</h3>
+    <div class="toolgrid">
+     <div class="toolbox">
+      <label for="brightness">Brightness <span id="brightnessValue" class="rangevalue">100%</span></label>
+      <input id="brightness" type="range" min="30" max="180" value="100">
+     </div>
+     <div class="toolbox">
+      <label for="contrast">Contrast <span id="contrastValue" class="rangevalue">100%</span></label>
+      <input id="contrast" type="range" min="30" max="180" value="100">
+     </div>
+     <div class="toolbox">
+      <label for="saturation">Saturation <span id="saturationValue" class="rangevalue">100%</span></label>
+      <input id="saturation" type="range" min="0" max="200" value="100">
+     </div>
+     <div class="toolbox">
+      <label for="photoFilter">Color filter</label>
+      <select id="photoFilter">
+       <option value="none">Original</option>
+       <option value="grayscale(100%)">Black & White</option>
+       <option value="sepia(75%)">Vintage</option>
+       <option value="hue-rotate(35deg)">Color Shift</option>
+       <option value="saturate(150%)">Vivid</option>
+      </select>
+     </div>
+    </div>
+
+    <button class="blue action" onclick="applyPhotoEdits()">Apply Photo Adjustments</button>
+    <button class="action" onclick="resetPhotoEdits()">Reset Adjustments</button>
+
+    <hr>
+    <h3>AI Image Generation</h3>
+    <label for="photoEndpoint">Image API endpoint</label>
+    <input id="photoEndpoint" type="url" placeholder="https://your-server.com/generate-image">
+    <p class="small">A working image-generation backend is required for real AI-generated images. The backend must accept POST JSON and return an image URL or base64 image.</p>
+    <button class="primary action" id="generatePhotoBtn" onclick="generatePhoto()">✦ GENERATE AI PHOTO</button>
+    <button class="action" onclick="makePromptPoster()">Create Prompt Poster</button>
+    <div id="photoStatus" class="status" role="status"></div>
    </div>
-   <div>
-    <label for="voiceStyle">Voice</label>
-    <select id="voiceStyle">
-     <option value="natural">Natural voice</option>
-     <option value="male">Male voice</option>
-     <option value="female">Female voice</option>
-    </select>
+
+   <div class="card">
+    <h2>Photo Preview</h2>
+    <p class="desc">Preview your photo before downloading it.</p>
+    <div id="photoPreview" class="preview">
+     <div class="placeholder"><span class="symbol">▧</span>Your photo preview will appear here.</div>
+    </div>
+    <div class="preview-actions">
+     <button class="primary" onclick="downloadPhoto()">Download Photo</button>
+     <button onclick="clearPhoto()">Clear</button>
+    </div>
+    <hr>
+    <h3>Recent photo creations</h3>
+    <div id="photoHistory" class="history-grid">
+     <p class="small">Your recent creations will appear here during this session.</p>
+    </div>
+    <p class="small">Prompt posters are locally generated designs, not AI-generated photographs.</p>
    </div>
   </div>
-  <label for="movement">Body movement</label>
-  <select id="movement">
-   <option value="none">Camera movement only</option>
-   <option value="talk">Talking and lip sync</option>
-   <option value="walk">Walking</option><option value="dance">Dancing</option>
-   <option value="smile">Smile and facial expressions</option>
-   <option value="wave">Wave hand</option><option value="custom">Follow my instructions</option>
-  </select>
-  <label for="aiPrompt">Additional AI instructions</label>
-  <textarea id="aiPrompt" maxlength="1500" placeholder="Describe the movements, expression and scene."></textarea>
-  <label class="check-row"><input id="lipSync" type="checkbox" checked><span>Synchronize lips with generated speech when supported.</span></label>
-  <label class="check-row"><input id="keepIdentity" type="checkbox" checked><span>Preserve the person's face, appearance and clothing as closely as possible.</span></label>
-  <label class="check-row"><input id="subtitles" type="checkbox"><span>Add subtitles when supported by the AI service.</span></label>
-  <button id="speakPreview" class="secondary">PREVIEW SPEECH ON THIS DEVICE</button>
-  <button id="stopSpeech" class="tertiary">STOP SPEECH PREVIEW</button>
-  <p class="note">Speech preview plays audio on this device only. Real character movement, generated speech, lip sync, background changes and 4K output require a compatible AI service.</p>
  </section>
 
- <section class="card">
-  <h2>4. AI service connection</h2>
-  <label for="apiEndpoint">AI backend URL</label>
-  <input id="apiEndpoint" type="url" placeholder="https://your-server.example/api/generate-video">
-  <label class="check-row"><input id="useAI" type="checkbox"><span>Use the connected AI backend for real AI video generation.</span></label>
-  <p class="note">Keep provider API keys on your secure server, never inside this HTML. The backend should accept multiple photos and settings and return a video file or JSON containing video_url or video_base64.</p>
-  <button id="generate" class="primary">GENERATE VIDEO</button>
-  <button id="cancel" class="tertiary hidden">CANCEL GENERATION</button>
-  <button id="clear" class="secondary">RESET PROJECT</button>
-  <div id="progressBox" class="hidden"><div class="progress"><div id="progressBar"></div></div><p id="progressText" class="small">Preparing video...</p></div>
-  <p id="status" class="status" role="status" aria-live="polite">Add photos to begin.</p>
- </section>
+ <!-- VIDEO STUDIO -->
+ <section id="videoSection" class="section">
+  <div class="layout">
+   <div class="card">
+    <h2>Video Creator</h2>
+    <p class="desc">Turn your photos into animated slideshow videos or connect an AI video service.</p>
 
- <section class="card">
-  <h2>5. Video preview and download</h2>
-  <div class="editor-preview"><video id="outputVideo" class="preview hidden" controls playsinline preload="metadata"></video></div>
-  <div class="actions">
-   <a id="download" class="hidden" download="dan-ai-video.webm"><button type="button" class="primary">DOWNLOAD VIDEO</button></a>
-   <button id="downloadProject" class="secondary">EXPORT PROJECT SETTINGS</button>
+    <label for="videoPhotos">Upload photos (up to 5)</label>
+    <input id="videoPhotos" type="file" accept="image/*" multiple>
+    <div id="photoUploadStatus" class="status">No photos selected.</div>
+
+    <label for="videoPrompt">Video prompt</label>
+    <textarea id="videoPrompt" placeholder="Describe the scene, movement, mood and camera style..."></textarea>
+
+    <div class="row">
+     <div>
+      <label for="cameraMove">Camera movement</label>
+      <select id="cameraMove">
+       <option value="zoom">Slow Zoom</option>
+       <option value="pan">Pan Movement</option>
+       <option value="drift">Cinematic Drift</option>
+       <option value="none">No Movement</option>
+      </select>
+     </div>
+     <div>
+      <label for="videoRatio">Aspect ratio</label>
+      <select id="videoRatio">
+       <option value="9:16">Vertical 9:16</option>
+       <option value="16:9">Landscape 16:9</option>
+       <option value="1:1">Square 1:1</option>
+       <option value="4:5">Portrait 4:5</option>
+      </select>
+     </div>
+    </div>
+
+    <div class="row">
+     <div>
+      <label for="videoDuration">Duration</label>
+      <select id="videoDuration">
+       <option value="5">5 seconds</option>
+       <option value="10" selected>10 seconds</option>
+       <option value="15">15 seconds</option>
+       <option value="20">20 seconds</option>
+      </select>
+     </div>
+     <div>
+      <label for="videoQuality">Resolution</label>
+      <select id="videoQuality">
+       <option value="720">HD 720p</option>
+       <option value="1080">Full HD 1080p</option>
+      </select>
+     </div>
+    </div>
+
+    <label for="overlayText">Text on video (optional)</label>
+    <input id="overlayText" type="text" maxlength="160" placeholder="Your title or caption">
+
+    <label for="videoEndpoint">AI video API endpoint</label>
+    <input id="videoEndpoint" type="url" placeholder="https://your-server.com/generate-video">
+    <p class="small">Without a working AI video backend, this studio creates a slideshow animation from your uploaded photos. It does not generate new AI motion.</p>
+
+    <button class="primary action" id="generateVideoBtn" onclick="generateVideo()">▶ CREATE VIDEO</button>
+    <button class="danger action" onclick="stopVideo()">Stop / Cancel</button>
+    <div id="videoStatus" class="status" role="status"></div>
+    <div class="progressbar"><div id="progressFill"></div></div>
+    <div id="videoProgress" class="status"></div>
+   </div>
+
+   <div class="card">
+    <h2>Video Preview</h2>
+    <p class="desc">Watch the result and download it to your device.</p>
+    <div id="videoPreview" class="preview">
+     <div class="placeholder"><span class="symbol">▶</span>Your video will appear here.</div>
+    </div>
+    <div class="preview-actions">
+     <button class="primary" onclick="downloadVideo()">Download Video</button>
+     <button onclick="clearVideo()">Clear</button>
+    </div>
+    <hr>
+    <h3>How video creation works</h3>
+    <p class="small">1. Select your photos.</p>
+    <p class="small">2. Choose the movement, ratio and duration.</p>
+    <p class="small">3. Press Create Video and wait for rendering.</p>
+    <p class="small">4. Preview and download your video.</p>
+    <p class="small">Browser recording support varies by device. WebM is the normal local export format; MP4 requires a compatible backend or separate video conversion.</p>
+   </div>
   </div>
-  <p id="videoInfo" class="small">Your completed video will appear here.</p>
  </section>
-
- <section class="card">
-  <h2>6. Save and load projects</h2>
-  <label for="projectName">Project name</label>
-  <input id="projectName" maxlength="60" placeholder="My video project">
-  <button id="saveProject" class="primary">SAVE PROJECT ON THIS DEVICE</button>
-  <label for="projectList">Saved projects</label>
-  <select id="projectList"><option value="">Choose a saved project</option></select>
-  <button id="loadProject" class="secondary">LOAD SELECTED PROJECT</button>
-  <button id="deleteProject" class="tertiary">DELETE SELECTED PROJECT</button>
-  <p class="note">Saved projects keep settings and text on this device. Photos and generated videos are not embedded in saved project settings. Browser storage may be cleared by your device.</p>
- </section>
-
- <section class="card">
-  <h2>7. Service status</h2>
-  <span id="serviceBadge" class="pill">LOCAL MODE</span>
-  <p id="serviceInfo" class="small">Local mode creates simple camera-motion video from your photos. It does not generate real body movement or speech.</p>
- </section>
-</section>
 </main>
-<footer>© DAN AI VIDEO STUDIO</footer>
+
+<footer>
+ DAN AI VIDEO STUDIO<br>
+ Creative photo and video workspace
+</footer>
 
 <script>
 "use strict";
+
+let photoResult=null;
+let photoOriginal=null;
+let videoResultUrl=null;
+let videoRecorder=null;
+let videoStream=null;
+let cancelVideo=false;
+let generationToken=0;
+let photoHistory=[];
+
 const $=id=>document.getElementById(id);
-const MAX_PHOTOS=5,MAX_IMAGE_SIZE=15*1024*1024;
-let photos=[],photoURLs=[],musicFile=null,musicURL=null,videoURL=null;
-let isGenerating=false,activeController=null,generationId=0;
 
-function setStatus(message,type="success"){
- $("status").textContent=message;
- $("status").className="status"+(type==="error"?" error":type==="info"?" info":"");
+function switchMode(mode){
+ $("photoSection").classList.toggle("active",mode==="photo");
+ $("videoSection").classList.toggle("active",mode==="video");
+ $("photoTab").classList.toggle("active",mode==="photo");
+ $("videoTab").classList.toggle("active",mode==="video");
+ window.scrollTo({top:0,behavior:"smooth"});
 }
-function setProgress(value,message){
- $("progressBox").classList.remove("hidden");
- $("progressBar").style.width=Math.max(0,Math.min(100,value))+"%";
- $("progressText").textContent=message;
+
+function setStatus(id,message,type=""){
+ const el=$(id);
+ el.textContent=message;
+ el.className="status "+type;
 }
-function hideProgress(){$("progressBox").classList.add("hidden");$("progressBar").style.width="0%";}
-function setBusy(value){
- isGenerating=value;$("generate").disabled=value;$("clear").disabled=value;
- $("photos").disabled=value;$("generate").textContent=value?"GENERATING...":"GENERATE VIDEO";
- $("cancel").classList.toggle("hidden",!value);
+
+function setProgress(percent,message=""){
+ $("progressFill").style.width=Math.max(0,Math.min(100,percent))+"%";
+ if(message)$("videoProgress").textContent=message;
 }
-function releasePhotoURLs(){photoURLs.forEach(URL.revokeObjectURL);photoURLs=[];}
-function clearVideo(){
- $("outputVideo").pause();$("outputVideo").removeAttribute("src");$("outputVideo").load();
- $("outputVideo").classList.add("hidden");$("download").classList.add("hidden");
- $("download").removeAttribute("href");
- if(videoURL){URL.revokeObjectURL(videoURL);videoURL=null;}
-}
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function renderPhotos(){
- const list=$("photoList");list.innerHTML="";
- photos.forEach((file,index)=>{
-  const url=photoURLs[index];const item=document.createElement("div");
-  item.className="photo-item";
-  item.innerHTML=`<img src="${url}" alt="Photo ${index+1}"><p>${index+1}. ${escapeHTML(file.name)}</p><div class="photo-controls"><button type="button" data-move="-1" data-index="${index}">↑</button><button type="button" data-move="1" data-index="${index}">↓</button><button type="button" data-remove="${index}">Remove</button></div>`;
-  list.appendChild(item);
- });
- $("imageInfo").textContent=photos.length?`${photos.length} photo(s) selected. Order is used in your video.`:"No photos selected.";
- list.querySelectorAll("[data-move]").forEach(button=>button.addEventListener("click",()=>{
-  const i=Number(button.dataset.index),j=i+Number(button.dataset.move);
-  if(j<0||j>=photos.length)return;
-  [photos[i],photos[j]]=[photos[j],photos[i]];
-  [photoURLs[i],photoURLs[j]]=[photoURLs[j],photoURLs[i]];
-  renderPhotos();
- }));
- list.querySelectorAll("[data-remove]").forEach(button=>button.addEventListener("click",()=>{
-  const i=Number(button.dataset.remove);URL.revokeObjectURL(photoURLs[i]);
-  photos.splice(i,1);photoURLs.splice(i,1);renderPhotos();
- }));
-}
-function addPhotos(files){
- if(isGenerating)return;
- const accepted=["image/jpeg","image/png","image/webp"];
- for(const file of files){
-  if(photos.length>=MAX_PHOTOS){setStatus("Maximum five photos allowed.", "error");break;}
-  if(!accepted.includes(file.type)){setStatus("Use JPG, PNG or WebP photos only.","error");continue;}
-  if(file.size>MAX_IMAGE_SIZE){setStatus(file.name+" is larger than 15 MB.","error");continue;}
-  if(photos.some(p=>p.name===file.name&&p.size===file.size&&p.lastModified===file.lastModified))continue;
-  photos.push(file);photoURLs.push(URL.createObjectURL(file));
- }
- $("photos").value="";renderPhotos();clearVideo();
- if(photos.length)setStatus("Photos ready. Add your instructions and generate a video.");
-}
-$("photos").addEventListener("change",e=>addPhotos([...e.target.files]));
-$("clearPhotos").addEventListener("click",()=>{
- if(isGenerating)return;releasePhotoURLs();photos=[];renderPhotos();clearVideo();setStatus("All photos removed.");
-});
-["dragenter","dragover"].forEach(name=>$("dropzone").addEventListener(name,e=>{
- e.preventDefault();if(!isGenerating)$("dropzone").classList.add("drag");
-}));
-["dragleave","drop"].forEach(name=>$("dropzone").addEventListener(name,e=>{
- e.preventDefault();$("dropzone").classList.remove("drag");
- if(name==="drop")addPhotos([...e.dataTransfer.files].filter(f=>f.type.startsWith("image/")));
-}));
-$("prompt").addEventListener("input",()=>$("promptCount").textContent=$("prompt").value.length);
-$("enhancePrompt").addEventListener("click",()=>{
- const p=$("prompt").value.trim();
- if(!p){setStatus("Write a short description first.","error");return;}
- const suffix=" Create a coherent, high-quality cinematic video with smooth motion, consistent lighting, natural expressions, stable composition, and smooth transitions between the selected photos. Avoid flicker, distortions, extra limbs, and sudden scene changes.";
- $("prompt").value=(p+suffix).slice(0,1500);
- $("promptCount").textContent=$("prompt").value.length;
- setStatus("Prompt enhanced. Review it before generating.");
-});
-$("musicFile").addEventListener("change",e=>{
- const file=e.target.files[0];if(musicURL)URL.revokeObjectURL(musicURL);
- musicFile=file||null;musicURL=file?URL.createObjectURL(file):null;
- $("musicInfo").textContent=file?file.name+" · "+(file.size/1024/1024).toFixed(2)+" MB":"No music selected.";
- if(file)$("music").value="upload";
-});
-function getSettings(){
- return {
-  prompt:$("prompt").value.trim(),style:$("style").value,background:$("background").value,
-  backgroundPrompt:$("backgroundPrompt").value.trim(),quality:$("quality").value,
-  duration:Number($("duration").value),aspectRatio:$("ratio").value,music:$("music").value,
-  overlayText:$("overlayText").value.trim(),textPosition:$("textPosition").value,
-  speechText:$("speechText").value.trim(),speechLanguage:$("speechLanguage").value,
-  voiceStyle:$("voiceStyle").value,movement:$("movement").value,
-  aiPrompt:$("aiPrompt").value.trim(),lipSync:$("lipSync").checked,
-  keepIdentity:$("keepIdentity").checked,subtitles:$("subtitles").checked
- };
-}
-function loadImage(file,signal){
+
+function fileToDataURL(file){
  return new Promise((resolve,reject)=>{
-  const url=URL.createObjectURL(file),img=new Image();let done=false;
-  const cleanup=()=>{URL.revokeObjectURL(url);signal.removeEventListener("abort",abort);};
-  const abort=()=>{if(done)return;done=true;cleanup();reject(new Error("Generation cancelled."));};
-  img.onload=()=>{if(done)return;done=true;cleanup();resolve(img);};
-  img.onerror=()=>{if(done)return;done=true;cleanup();reject(new Error("Could not read image "+file.name));};
-  signal.addEventListener("abort",abort,{once:true});if(signal.aborted){abort();return;}img.src=url;
+  const reader=new FileReader();
+  reader.onload=()=>resolve(reader.result);
+  reader.onerror=()=>reject(new Error("Could not read the selected file."));
+  reader.readAsDataURL(file);
  });
 }
-function dimensions(ratio,quality){
- const heights={"480p":480,"720p":720,"1080p":1080,"4k":2160};
- const h=heights[quality]||720;
- if(ratio==="16:9")return{width:Math.round(h*16/9),height:h};
- if(ratio==="1:1")return{width:h,height:h};
- return{width:Math.round(h*9/16),height:h};
-}
-function mimeType(){
- if(!window.MediaRecorder)return "";
- return ["video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"].find(t=>MediaRecorder.isTypeSupported(t))||"";
-}
-async function createLocalVideo(files,settings,signal){
- if(!window.MediaRecorder)throw new Error("Video recording is not supported. Use the latest Chrome.");
- if(!HTMLCanvasElement.prototype.captureStream)throw new Error("Canvas recording is not available in this browser.");
- if(settings.duration>60)throw new Error("Local mode supports videos up to 60 seconds. Use your AI backend for longer videos.");
- const images=[];
- for(const file of files){images.push(await loadImage(file,signal));if(signal.aborted)throw new Error("Generation cancelled.");}
- const d=dimensions(settings.aspectRatio,settings.quality);
- if(d.width*d.height>1920*1080)throw new Error("Local recording supports up to 1080p. Use an AI backend for 4K.");
- const canvas=document.createElement("canvas");canvas.width=d.width;canvas.height=d.height;
- const ctx=canvas.getContext("2d",{alpha:false});if(!ctx)throw new Error("Could not initialize video renderer.");
- const stream=canvas.captureStream(24),mime=mimeType();let recorder;
- try{recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);}
- catch(e){stream.getTracks().forEach(t=>t.stop());throw new Error("Video recording could not start on this device.");}
+
+function loadImage(src){
  return new Promise((resolve,reject)=>{
-  let frame=0,start=0,finished=false,cancelled=false;const chunks=[];
-  function cleanup(){cancelAnimationFrame(frame);stream.getTracks().forEach(t=>t.stop());signal.removeEventListener("abort",abort);}
-  function abort(){if(finished)return;cancelled=true;finished=true;cleanup();try{if(recorder.state!=="inactive")recorder.stop();}catch(e){}reject(new Error("Generation cancelled."));}
-  signal.addEventListener("abort",abort,{once:true});
-  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
-  recorder.onerror=()=>{if(finished)return;finished=true;cleanup();reject(new Error("Video recording failed."));};
-  recorder.onstop=()=>{if(cancelled)return;if(finished)return;finished=true;cleanup();if(!chunks.length){reject(new Error("No video data was created."));return;}resolve(new Blob(chunks,{type:recorder.mimeType||"video/webm"}));};
-  function draw(ts){
-   if(signal.aborted||finished)return;if(!start)start=ts;
-   const elapsed=(ts-start)/1000,progress=Math.min(elapsed/settings.duration,1);
-   const slide=progress*images.length,index=Math.min(images.length-1,Math.floor(slide));
-   const local=slide-index,img=images[index],ease=local*local*(3-2*local);
-   ctx.fillStyle="#050812";ctx.fillRect(0,0,canvas.width,canvas.height);
-   const fit=Math.max(canvas.width/img.width,canvas.height/img.height);
-   let zoom=1+0.08*ease,dx=0,dy=0;
-   if(settings.style==="zoom-in")zoom=1+.22*ease;
-   else if(settings.style==="zoom-out")zoom=1.22-.22*ease;
-   else if(settings.style==="pan-left")dx=canvas.width*.08*ease;
-   else if(settings.style==="pan-right")dx=-canvas.width*.08*ease;
-   else if(settings.style==="cinematic"){zoom=1+.16*ease;dx=Math.sin(local*Math.PI)*canvas.width*.025;dy=Math.cos(local*Math.PI)*canvas.height*.012;}
-   else{dx=Math.sin(local*Math.PI)*canvas.width*.02;dy=Math.sin(local*Math.PI)*canvas.height*.01;}
-   const w=img.width*fit*zoom,h=img.height*fit*zoom;
-   ctx.drawImage(img,(canvas.width-w)/2-dx,(canvas.height-h)/2-dy,w,h);
-   if(index<images.length-1&&local>.86){
-    const alpha=Math.min(1,(local-.86)/.14);ctx.globalAlpha=alpha;
-    const next=images[index+1],f=Math.max(canvas.width/next.width,canvas.height/next.height);
-    const nw=next.width*f,nh=next.height*f;
-    ctx.drawImage(next,(canvas.width-nw)/2,(canvas.height-nh)/2,nw,nh);ctx.globalAlpha=1;
-   }
-   if(settings.overlayText){
-    const size=Math.max(18,Math.round(canvas.width*.045));ctx.font="bold "+size+"px Arial";
-    ctx.textAlign="center";ctx.textBaseline="middle";
-    const y=settings.textPosition==="top"?size*1.6:settings.textPosition==="center"?canvas.height/2:canvas.height-size*1.8;
-    const text=settings.overlayText.slice(0,100);
-    ctx.lineWidth=Math.max(3,size*.12);ctx.strokeStyle="#000";ctx.strokeText(text,canvas.width/2,y,canvas.width*.9);
-    ctx.fillStyle="#fff";ctx.fillText(text,canvas.width/2,y,canvas.width*.9);
-   }
-   setProgress(Math.round(progress*100),"Rendering local photo video: "+Math.round(progress*100)+"%");
-   if(progress>=1){if(recorder.state!=="inactive")recorder.stop();return;}
-   frame=requestAnimationFrame(draw);
-  }
-  try{recorder.start(250);frame=requestAnimationFrame(draw);}
-  catch(e){if(!finished){finished=true;cleanup();reject(new Error("Could not start recording."));}}
+  const img=new Image();
+  img.onload=()=>resolve(img);
+  img.onerror=()=>reject(new Error("Could not load image."));
+  img.src=src;
  });
 }
-function showVideo(blob){
- clearVideo();videoURL=URL.createObjectURL(blob);$("outputVideo").src=videoURL;
- $("outputVideo").classList.remove("hidden");
- const ext=blob.type.includes("mp4")?"mp4":"webm";
- $("download").href=videoURL;$("download").download="dan-ai-video."+ext;$("download").classList.remove("hidden");
- $("videoInfo").textContent="Video ready · "+ext.toUpperCase()+" · "+(blob.size/1024/1024).toFixed(2)+" MB";
+
+function safeImageSource(src){
+ return typeof src==="string" &&
+  (src.startsWith("data:image/") || /^https?:\/\//i.test(src));
 }
-function getEndpoint(){
- const raw=$("apiEndpoint").value.trim();if(!raw)throw new Error("Enter your AI backend URL first.");
- let u;try{u=new URL(raw);}catch(e){throw new Error("The backend URL is invalid.");}
- if(!["https:","http:"].includes(u.protocol))throw new Error("Use an HTTP or HTTPS URL.");
- if(location.protocol==="https:"&&u.protocol!=="https:")throw new Error("An HTTPS page requires an HTTPS backend.");
- return u.href;
+
+function showPhoto(src,remember=true){
+ photoResult=src;
+ photoOriginal=src;
+ const box=$("photoPreview");
+ const img=document.createElement("img");
+ img.alt="Photo preview";
+ img.src=src;
+ box.replaceChildren(img);
+ resetPhotoEdits(false);
+ if(remember)addPhotoHistory(src);
 }
-async function createAIVideo(files,settings,signal){
- const form=new FormData();files.forEach((f,i)=>form.append("photos",f,f.name));
- form.append("photo",files[0],files[0].name);form.append("settings",JSON.stringify(settings));
- if(musicFile&&settings.music==="upload")form.append("music",musicFile,musicFile.name);
- setProgress(5,"Uploading photos and settings to your AI service...");
- const response=await fetch(getEndpoint(),{method:"POST",body:form,signal,credentials:"omit"});
- if(!response.ok){
-  let msg="AI backend returned HTTP "+response.status+".";
-  try{const d=await response.json();msg=String(d.error||d.message||msg);}catch(e){}
-  throw new Error(msg);
- }
- const type=(response.headers.get("content-type")||"").toLowerCase();
- if(type.startsWith("video/")||type==="application/octet-stream"){
-  const blob=await response.blob();if(!blob.size)throw new Error("AI service returned an empty video.");return blob;
- }
- let data;try{data=await response.json();}catch(e){throw new Error("Unexpected response. Return a video or JSON containing video_url.");}
- if(data.error)throw new Error(String(data.error));
- if(data.video_url){
-  const r=await fetch(data.video_url,{signal});if(!r.ok)throw new Error("Could not download the generated video.");
-  const b=await r.blob();if(!b.size)throw new Error("Returned video is empty.");return b;
- }
- if(data.video_base64){
-  const binary=atob(data.video_base64),bytes=new Uint8Array(binary.length);
-  for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
-  return new Blob([bytes],{type:data.mime_type||"video/mp4"});
- }
- if(data.job_id)throw new Error("Backend returned a job ID. Add the provider's job-status polling endpoint to retrieve the completed video.");
- throw new Error("Backend response needs video_url or video_base64.");
+
+function addPhotoHistory(src){
+ photoHistory.unshift(src);
+ photoHistory=photoHistory.slice(0,6);
+ const box=$("photoHistory");
+ box.replaceChildren();
+ photoHistory.forEach((item,index)=>{
+  const card=document.createElement("div");
+  card.className="history-item";
+  const img=document.createElement("img");
+  img.src=item;
+  img.alt="Recent creation "+(index+1);
+  const btn=document.createElement("button");
+  btn.textContent="Open";
+  btn.onclick=()=>showPhoto(item,false);
+  card.append(img,btn);
+  box.appendChild(card);
+ });
 }
-function speechPreview(){
- const text=$("speechText").value.trim();if(!text){setStatus("Enter the speech text first.","error");return;}
- if(!("speechSynthesis"in window)){setStatus("Speech preview is not supported by this browser.","error");return;}
- speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);
- utterance.lang=$("speechLanguage").value;utterance.rate=1;utterance.pitch=1;
- const pref=$("voiceStyle").value,lang=utterance.lang.split("-")[0];
- const voices=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().startsWith(lang.toLowerCase()));
- if(voices.length){
-  let v=voices[0];
-  if(pref==="female")v=voices.find(x=>/female|woman/i.test(x.name))||v;
-  if(pref==="male")v=voices.find(x=>/male|man/i.test(x.name))||v;
-  utterance.voice=v;
+
+async function generatePhoto(){
+ const prompt=$("photoPrompt").value.trim();
+ const endpoint=$("photoEndpoint").value.trim();
+ const file=$("photoReference").files[0];
+
+ if(!prompt){
+  setStatus("photoStatus","Please enter an image description.","error");
+  return;
  }
- utterance.onstart=()=>setStatus("Playing device speech preview. It is not added to the video.","info");
- utterance.onend=()=>setStatus("Speech preview finished.");
- utterance.onerror=()=>setStatus("Speech preview failed; check your device voices.","error");
- speechSynthesis.speak(utterance);
-}
-$("speakPreview").addEventListener("click",speechPreview);
-$("stopSpeech").addEventListener("click",()=>{if("speechSynthesis"in window)speechSynthesis.cancel();setStatus("Speech preview stopped.");});
-$("useAI").addEventListener("change",()=>{
- const enabled=$("useAI").checked;
- $("serviceBadge").textContent=enabled?"AI MODE SELECTED":"LOCAL MODE";
- $("serviceInfo").textContent=enabled?"A working backend and compatible AI provider are required.":"Local mode creates camera movement and transitions; it does not generate real body movement or speech.";
- if(enabled){$("style").value="talking";$("movement").value="talk";}
-});
-$("generate").addEventListener("click",async()=>{
- if(isGenerating)return;
- if(!photos.length){setStatus("Please upload at least one photo.","error");return;}
- const settings=getSettings(),useAI=$("useAI").checked;
- if(!settings.prompt&&!settings.aiPrompt&&!settings.speechText&&!settings.overlayText){setStatus("Describe your video or add text/speech first.","error");return;}
- if(settings.music==="upload"&&!musicFile){setStatus("Choose an audio file or select No background music.","error");return;}
- if(!useAI&&(settings.duration>60||settings.quality==="4k")){setStatus("Local mode supports up to 60 seconds and 1080p. Use a connected AI backend for longer videos or 4K.","error");return;}
- if(!useAI&&(["walking","smiling","dancing","talking"].includes(settings.style)||settings.background!=="original"||["talk","walk","dance","smile","wave","custom"].includes(settings.movement)||settings.speechText||settings.music!=="none"||settings.lipSync||settings.subtitles)){
-  setStatus("Your selected speech, body movement, background, music or subtitles need AI mode. Connect a compatible backend and enable Use the connected AI backend. Local mode can animate photos and overlay text only.","error");return;
+ if(!endpoint){
+  setStatus("photoStatus","Enter a working image API endpoint for real AI generation, or use Prompt Poster.","error");
+  return;
  }
- if(useAI){try{getEndpoint();}catch(e){setStatus(e.message,"error");$("apiEndpoint").focus();return;}}
- const id=++generationId;activeController=new AbortController();const signal=activeController.signal;
- setBusy(true);clearVideo();setProgress(0,"Starting video generation...");
- setStatus(useAI?"Sending photos to the configured AI service...":"Creating a local photo animation...","info");
+ try{new URL(endpoint)}catch(e){
+  setStatus("photoStatus","Please enter a valid API URL.","error");
+  return;
+ }
+
+ const btn=$("generatePhotoBtn");
+ btn.disabled=true;
+ setStatus("photoStatus","Connecting to the image service...");
  try{
-  const blob=useAI?await createAIVideo(photos,settings,signal):await createLocalVideo(photos,settings,signal);
-  if(signal.aborted||id!==generationId)return;
-  showVideo(blob);setProgress(100,"Video completed.");
-  setStatus(useAI?"AI service returned a video. Preview it and download when ready.":"Local photo video created successfully.");
- }catch(e){
-  setStatus(e.name==="AbortError"?"Generation cancelled.":e.message||"Video generation failed.","error");
-  $("videoInfo").textContent="Video creation did not complete.";
+  const payload={
+   prompt,
+   style:$("photoStyle").value,
+   aspectRatio:$("photoRatio").value
+  };
+  if(file){
+   if(!file.type.startsWith("image/"))throw new Error("Please choose an image file.");
+   if(file.size>15*1024*1024)throw new Error("Reference image must be 15 MB or smaller.");
+   payload.referenceImage=await fileToDataURL(file);
+   payload.referenceImageName=file.name;
+  }
+
+  const response=await fetch(endpoint,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify(payload)
+  });
+  if(!response.ok)throw new Error("Image service returned HTTP "+response.status);
+
+  const data=await response.json();
+  let src=data.image_url||data.url||data.image||data.output;
+  if(data.image_base64){
+   src="data:"+(data.mime_type||"image/png")+";base64,"+data.image_base64;
+  }
+  if(typeof src==="string"&&!src.startsWith("data:")&&!/^https?:\/\//i.test(src)){
+   src="data:image/png;base64,"+src;
+  }
+  if(!safeImageSource(src))throw new Error("The service returned no valid image URL or base64 image.");
+
+  const test=await loadImage(src);
+  if(!test.width)throw new Error("The returned image is invalid.");
+  showPhoto(src);
+  setStatus("photoStatus","Image received successfully.","ok");
+ }catch(err){
+  setStatus("photoStatus","Generation failed: "+err.message,"error");
  }finally{
-  if(id===generationId){activeController=null;setBusy(false);}
+  btn.disabled=false;
+ }
+}
+
+async function makePromptPoster(){
+ const prompt=$("photoPrompt").value.trim();
+ const file=$("photoReference").files[0];
+ const ratio=$("photoRatio").value;
+ const [rw,rh]=ratio.split(":").map(Number);
+ const canvas=document.createElement("canvas");
+ canvas.width=900;
+ canvas.height=Math.round(900*rh/rw);
+ const ctx=canvas.getContext("2d");
+
+ const grad=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+ grad.addColorStop(0,"#10172f");
+ grad.addColorStop(.55,"#5b236f");
+ grad.addColorStop(1,"#d83c8a");
+ ctx.fillStyle=grad;
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ if(file){
+  try{
+   const img=await loadImage(await fileToDataURL(file));
+   const scale=Math.max(canvas.width/img.width,canvas.height/img.height);
+   const w=img.width*scale,h=img.height*scale;
+   ctx.globalAlpha=.42;
+   ctx.drawImage(img,(canvas.width-w)/2,(canvas.height-h)/2,w,h);
+   ctx.globalAlpha=1;
+  }catch(e){}
+ }
+
+ ctx.fillStyle="#ffffff";
+ ctx.textAlign="center";
+ ctx.font="bold 38px Arial";
+ ctx.fillText("DAN AI STUDIO",canvas.width/2,canvas.height*.18);
+
+ ctx.font="bold 25px Arial";
+ const words=(prompt||"YOUR CREATIVE IDEA").split(/\s+/);
+ const lines=[];
+ let line="";
+ for(const word of words){
+  const test=line?line+" "+word:word;
+  if(ctx.measureText(test).width>canvas.width*.8&&line){
+   lines.push(line);line=word;
+  }else line=test;
+ }
+ if(line)lines.push(line);
+ const selected=lines.slice(0,8);
+ const lineHeight=36;
+ let y=canvas.height/2-(selected.length*lineHeight)/2;
+ for(const item of selected){
+  ctx.fillText(item,canvas.width/2,y);
+  y+=lineHeight;
+ }
+ ctx.font="18px Arial";
+ ctx.fillText("CREATED WITH DAN AI STUDIO",canvas.width/2,canvas.height*.92);
+
+ showPhoto(canvas.toDataURL("image/png"));
+ setStatus("photoStatus","Prompt poster created. This is a local graphic design, not an AI-generated photograph.","ok");
+}
+
+function photoFilterCSS(){
+ return "brightness("+$("brightness").value+"%) "+
+  "contrast("+$("contrast").value+"%) "+
+  "saturate("+$("saturation").value+"%) "+
+  $("photoFilter").value;
+}
+
+function applyPhotoEdits(){
+ const img=$("photoPreview").querySelector("img");
+ if(!img){
+  setStatus("photoStatus","Upload or create a photo first.","error");
+  return;
+ }
+ img.style.filter=photoFilterCSS();
+ $("brightnessValue").textContent=$("brightness").value+"%";
+ $("contrastValue").textContent=$("contrast").value+"%";
+ $("saturationValue").textContent=$("saturation").value+"%";
+ setStatus("photoStatus","Adjustments applied to the preview. Download Photo exports the adjusted image.","ok");
+}
+
+function resetPhotoEdits(update=true){
+ $("brightness").value=100;
+ $("contrast").value=100;
+ $("saturation").value=100;
+ $("photoFilter").value="none";
+ $("brightnessValue").textContent="100%";
+ $("contrastValue").textContent="100%";
+ $("saturationValue").textContent="100%";
+ const img=$("photoPreview").querySelector("img");
+ if(img)img.style.filter="none";
+ if(update)setStatus("photoStatus","Photo adjustments reset.","ok");
+}
+
+async function downloadPhoto(){
+ const img=$("photoPreview").querySelector("img");
+ if(!img||!photoResult){
+  setStatus("photoStatus","Create or upload a photo first.","error");
+  return;
+ }
+ try{
+  if(!img.complete)await new Promise((resolve,reject)=>{
+   img.onload=resolve;img.onerror=reject;
+  });
+  const ratio=$("photoRatio").value;
+  const [rw,rh]=ratio.split(":").map(Number);
+  const max=1600;
+  let w=img.naturalWidth,h=img.naturalHeight;
+  if(!w||!h)throw new Error("The image is not ready.");
+  const scale=Math.min(1,max/Math.max(w,h));
+  w=Math.round(w*scale);h=Math.round(h*scale);
+
+  const canvas=document.createElement("canvas");
+  canvas.width=w;canvas.height=h;
+  const ctx=canvas.getContext("2d");
+  ctx.filter=photoFilterCSS();
+  ctx.drawImage(img,0,0,w,h);
+
+  canvas.toBlob(blob=>{
+   if(!blob){
+    setStatus("photoStatus","Could not export the image. The remote image may block downloads.","error");
+    return;
+   }
+   const url=URL.createObjectURL(blob);
+   const a=document.createElement("a");
+   a.href=url;a.download="dan-ai-photo.png";a.click();
+   setTimeout(()=>URL.revokeObjectURL(url),1500);
+   setStatus("photoStatus","Adjusted photo downloaded.","ok");
+  },"image/png");
+ }catch(err){
+  setStatus("photoStatus","Download failed. Try using a local photo or an image URL that allows export.","error");
+ }
+}
+
+function clearPhoto(){
+ photoResult=null;photoOriginal=null;
+ $("photoPreview").innerHTML='<div class="placeholder"><span class="symbol">▧</span>Your photo preview will appear here.</div>';
+ resetPhotoEdits(false);
+ setStatus("photoStatus","");
+}
+
+function clearVideo(){
+ stopVideo();
+ if(videoResultUrl&&videoResultUrl.startsWith("blob:"))URL.revokeObjectURL(videoResultUrl);
+ videoResultUrl=null;
+ $("videoPreview").innerHTML='<div class="placeholder"><span class="symbol">▶</span>Your video will appear here.</div>';
+ $("videoProgress").textContent="";
+ setProgress(0);
+ setStatus("videoStatus","");
+}
+
+function stopVideo(){
+ cancelVideo=true;
+ generationToken++;
+ if(videoRecorder&&videoRecorder.state!=="inactive"){
+  try{videoRecorder.stop()}catch(e){}
+ }
+ if(videoStream){
+  videoStream.getTracks().forEach(track=>track.stop());
+  videoStream=null;
+ }
+}
+
+function drawCover(ctx,img,width,height,zoom,move,localT){
+ const scale=Math.max(width/img.width,height/img.height)*zoom;
+ const w=img.width*scale,h=img.height*scale;
+ let dx=(width-w)/2,dy=(height-h)/2;
+ if(move==="pan")dx-=(w-width)*localT;
+ if(move==="drift")dx+=(w-width)*Math.sin(localT*Math.PI)*.2;
+ ctx.drawImage(img,dx,dy,w,h);
+}
+
+function drawOverlay(ctx,text,width,height){
+ if(!text)return;
+ const size=Math.max(18,width*.035);
+ ctx.font="bold "+size+"px Arial";
+ ctx.textAlign="center";
+ ctx.lineWidth=4;
+ ctx.strokeStyle="#000000";
+ ctx.fillStyle="#ffffff";
+ ctx.strokeText(text,width/2,height*.88,width*.85);
+ ctx.fillText(text,width/2,height*.88,width*.85);
+}
+
+async function generateVideo(){
+ const endpoint=$("videoEndpoint").value.trim();
+ const files=[...$("videoPhotos").files].slice(0,5);
+ const prompt=$("videoPrompt").value.trim();
+
+ if(endpoint){
+  await generateAIVideo(endpoint,files,prompt);
+  return;
+ }
+ if(!files.length){
+  setStatus("videoStatus","Upload at least one photo first.","error");
+  return;
+ }
+ if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){
+  setStatus("videoStatus","This browser does not support local video recording. Try an updated Chrome browser.","error");
+  return;
+ }
+
+ cancelVideo=false;
+ const token=++generationToken;
+ const btn=$("generateVideoBtn");
+ btn.disabled=true;
+ setProgress(0,"Preparing photos...");
+
+ try{
+  const images=await Promise.all(files.map(async file=>{
+   if(!file.type.startsWith("image/"))throw new Error("One of the selected files is not an image.");
+   return loadImage(await fileToDataURL(file));
+  }));
+  if(token!==generationToken||cancelVideo)throw new Error("Video creation cancelled.");
+
+  const ratio=$("videoRatio").value;
+  const [rw,rh]=ratio.split(":").map(Number);
+  const quality=Number($("videoQuality").value);
+  const canvas=document.createElement("canvas");
+  canvas.width=quality;
+  canvas.height=Math.round(quality*rh/rw);
+  const ctx=canvas.getContext("2d");
+  if(!ctx)throw new Error("Could not create the video canvas.");
+
+  const fps=24;
+  const stream=canvas.captureStream(fps);
+  videoStream=stream;
+  let mime="video/webm;codecs=vp9";
+  if(!MediaRecorder.isTypeSupported(mime))mime="video/webm";
+  if(!MediaRecorder.isTypeSupported(mime))throw new Error("This browser cannot export WebM video.");
+
+  const chunks=[];
+  const recorder=new MediaRecorder(stream,{mimeType:mime});
+  videoRecorder=recorder;
+  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+
+  const done=new Promise((resolve,reject)=>{
+   recorder.onstop=()=>{
+    if(cancelVideo||token!==generationToken){resolve(null);return}
+    resolve(new Blob(chunks,{type:mime}));
+   };
+   recorder.onerror=()=>reject(new Error("Video recording failed."));
+  });
+
+  const duration=Number($("videoDuration").value);
+  const frames=duration*fps;
+  const move=$("cameraMove").value;
+  const overlay=$("overlayText").value.trim();
+  recorder.start(250);
+
+  for(let frame=0;frame<frames;frame++){
+   if(cancelVideo||token!==generationToken)break;
+   const t=frame/frames;
+   const index=Math.min(images.length-1,Math.floor(t*images.length));
+   const img=images[index];
+   const localT=(t*images.length)%1;
+   ctx.fillStyle="#080b14";
+   ctx.fillRect(0,0,canvas.width,canvas.height);
+
+   let zoom=1;
+   if(move==="zoom")zoom=1+localT*.12;
+   if(move==="drift")zoom=1+Math.sin(localT*Math.PI)*.08;
+   drawCover(ctx,img,canvas.width,canvas.height,zoom,move,localT);
+   drawOverlay(ctx,overlay,canvas.width,canvas.height);
+
+   setProgress(frame/frames*100,"Rendering video: "+Math.round(frame/frames*100)+"%");
+   await new Promise(resolve=>setTimeout(resolve,1000/fps));
+  }
+
+  if(recorder.state!=="inactive")recorder.stop();
+  const blob=await done;
+  if(!blob){
+   setStatus("videoStatus","Video creation cancelled.","error");
+   return;
+  }
+
+  if(videoResultUrl&&videoResultUrl.startsWith("blob:"))URL.revokeObjectURL(videoResultUrl);
+  videoResultUrl=URL.createObjectURL(blob);
+  const video=document.createElement("video");
+  video.src=videoResultUrl;
+  video.controls=true;
+  video.playsInline=true;
+  video.preload="metadata";
+  $("videoPreview").replaceChildren(video);
+  setProgress(100,"Video ready · "+(blob.size/1024/1024).toFixed(2)+" MB");
+  setStatus("videoStatus","Your slideshow video is ready. This is photo animation, not AI-generated motion.","ok");
+ }catch(err){
+  setStatus("videoStatus","Video failed: "+err.message,"error");
+ }finally{
+  if(videoStream){
+   videoStream.getTracks().forEach(track=>track.stop());
+   videoStream=null;
+  }
+  videoRecorder=null;
+  btn.disabled=false;
+ }
+}
+
+async function generateAIVideo(endpoint,files,prompt){
+ if(!prompt&&!files.length){
+  setStatus("videoStatus","Enter a prompt or upload photos.","error");
+  return;
+ }
+ try{new URL(endpoint)}catch(e){
+  setStatus("videoStatus","Please enter a valid API URL.","error");
+  return;
+ }
+
+ cancelVideo=false;
+ const token=++generationToken;
+ const btn=$("generateVideoBtn");
+ btn.disabled=true;
+ setStatus("videoStatus","Connecting to AI video service...");
+ setProgress(5,"Sending request...");
+
+ try{
+  const images=await Promise.all(files.map(async file=>{
+   if(!file.type.startsWith("image/"))throw new Error("Please upload image files only.");
+   if(file.size>15*1024*1024)throw new Error("Each photo must be 15 MB or smaller.");
+   return fileToDataURL(file);
+  }));
+  const payload={
+   prompt,
+   aspectRatio:$("videoRatio").value,
+   duration:Number($("videoDuration").value),
+   quality:Number($("videoQuality").value),
+   cameraMovement:$("cameraMove").value,
+   overlayText:$("overlayText").value.trim(),
+   images
+  };
+  const response=await fetch(endpoint,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify(payload)
+  });
+  if(token!==generationToken||cancelVideo)throw new Error("Video request cancelled.");
+  if(!response.ok)throw new Error("AI video service returned HTTP "+response.status);
+
+  const type=response.headers.get("content-type")||"";
+  let src;
+  if(type.includes("video/")){
+   src=URL.createObjectURL(await response.blob());
+  }else{
+   const data=await response.json();
+   src=data.video_url||data.url;
+   if(data.video_base64){
+    src="data:"+(data.mime_type||"video/mp4")+";base64,"+data.video_base64;
+   }
+   if(!src)throw new Error("Service returned no video_url, url or video_base64.");
+  }
+  if(token!==generationToken||cancelVideo){
+   if(src.startsWith("blob:"))URL.revokeObjectURL(src);
+   throw new Error("Video request cancelled.");
+  }
+  if(videoResultUrl&&videoResultUrl.startsWith("blob:"))URL.revokeObjectURL(videoResultUrl);
+  videoResultUrl=src;
+  const video=document.createElement("video");
+  video.src=src;
+  video.controls=true;
+  video.playsInline=true;
+  video.preload="metadata";
+  $("videoPreview").replaceChildren(video);
+  setProgress(100,"AI video ready.");
+  setStatus("videoStatus","The video service returned a video.","ok");
+ }catch(err){
+  setStatus("videoStatus","AI video failed: "+err.message,"error");
+ }finally{
+  btn.disabled=false;
+ }
+}
+
+function downloadVideo(){
+ if(!videoResultUrl){
+  setStatus("videoStatus","Create a video first.","error");
+  return;
+ }
+ const a=document.createElement("a");
+ a.href=videoResultUrl;
+ a.download=videoResultUrl.startsWith("blob:")&&videoRecorder===null?
+  "dan-ai-video.webm":"dan-ai-video";
+ a.click();
+}
+
+function saveProject(){
+ const data={
+  app:"DAN AI VIDEO STUDIO",
+  version:2,
+  photoPrompt:$("photoPrompt").value,
+  photoStyle:$("photoStyle").value,
+  photoRatio:$("photoRatio").value,
+  photoEndpoint:$("photoEndpoint").value,
+  brightness:$("brightness").value,
+  contrast:$("contrast").value,
+  saturation:$("saturation").value,
+  photoFilter:$("photoFilter").value,
+  videoPrompt:$("videoPrompt").value,
+  cameraMove:$("cameraMove").value,
+  videoRatio:$("videoRatio").value,
+  videoDuration:$("videoDuration").value,
+  videoQuality:$("videoQuality").value,
+  overlayText:$("overlayText").value,
+  videoEndpoint:$("videoEndpoint").value
+ };
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="dan-ai-studio-project.json";
+ a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+
+$("projectFile").addEventListener("change",async e=>{
+ const file=e.target.files[0];
+ if(!file)return;
+ try{
+  const data=JSON.parse(await file.text());
+  const fields=[
+   "photoPrompt","photoStyle","photoRatio","photoEndpoint",
+   "brightness","contrast","saturation","photoFilter",
+   "videoPrompt","cameraMove","videoRatio","videoDuration",
+   "videoQuality","overlayText","videoEndpoint"
+  ];
+  fields.forEach(id=>{
+   if(data[id]!==undefined&&$(id))$(id).value=data[id];
+  });
+  applyPhotoEdits();
+  setStatus("photoStatus","Project settings loaded.","ok");
+ }catch(err){
+  setStatus("photoStatus","Could not open this project file.","error");
+ }finally{
+  e.target.value="";
  }
 });
-$("cancel").addEventListener("click",()=>{if(activeController)activeController.abort();});
-function resetProject(){
- if(isGenerating){if(activeController)activeController.abort();return;}
- if("speechSynthesis"in window)speechSynthesis.cancel();
- releasePhotoURLs();photos=[];renderPhotos();clearVideo();
- $("prompt").value="";$("promptCount").textContent="0";$("style").value="natural";
- $("background").value="original";$("backgroundPrompt").value="";
- $("quality").value="720p";$("duration").value="5";$("ratio").value="9:16";
- $("music").value="none";$("musicFile").value="";musicFile=null;
- if(musicURL){URL.revokeObjectURL(musicURL);musicURL=null;}
- $("musicInfo").textContent="No music selected.";
- $("overlayText").value="";$("textPosition").value="bottom";
- $("speechText").value="";$("speechLanguage").value="am-ET";$("voiceStyle").value="natural";
- $("movement").value="none";$("aiPrompt").value="";$("lipSync").checked=true;
- $("keepIdentity").checked=true;$("subtitles").checked=false;$("useAI").checked=false;
- $("serviceBadge").textContent="LOCAL MODE";
- $("serviceInfo").textContent="Local mode creates simple camera-motion video. It does not generate real body movement or speech.";
- hideProgress();$("imageInfo").textContent="No photos selected.";
- $("videoInfo").textContent="Your completed video will appear here.";setStatus("Project reset. Add photos to begin.");
-}
-$("clear").addEventListener("click",resetProject);
-$("nextButton").addEventListener("click",()=>{$("landing").classList.add("hidden");$("studio").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});});
-$("backButton").addEventListener("click",()=>{$("studio").classList.add("hidden");$("landing").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});});
 
-const PROJECTS_KEY="danAiVideoStudioProjectsV2";
-function readProjects(){try{return JSON.parse(localStorage.getItem(PROJECTS_KEY)||"{}");}catch(e){return {};}}
-function refreshProjects(){
- const select=$("projectList"),old=select.value,projects=readProjects();
- select.innerHTML='<option value="">Choose a saved project</option>';
- Object.keys(projects).sort().forEach(name=>{const op=document.createElement("option");op.value=name;op.textContent=name;select.appendChild(op);});
- if(projects[old])select.value=old;
-}
-function projectData(){
- return {version:2,name:$("projectName").value.trim()||"My DAN project",savedAt:new Date().toISOString(),
- settings:getSettings(),apiEndpoint:$("apiEndpoint").value.trim(),useAI:$("useAI").checked};
-}
-function saveProject(){
- const data=projectData(),projects=readProjects();projects[data.name]=data;
- try{localStorage.setItem(PROJECTS_KEY,JSON.stringify(projects));refreshProjects();$("projectList").value=data.name;setStatus("Project settings saved on this device.");}
- catch(e){setStatus("Could not save. Browser storage may be full.","error");}
-}
-function applyProject(data){
- if(!data||!data.settings)return;
- const s=data.settings;
- const fields={prompt:"prompt",style:"style",background:"background",backgroundPrompt:"backgroundPrompt",
- quality:"quality",duration:"duration",aspectRatio:"ratio",music:"music",overlayText:"overlayText",
- textPosition:"textPosition",speechText:"speechText",speechLanguage:"speechLanguage",
- voiceStyle:"voiceStyle",movement:"movement",aiPrompt:"aiPrompt"};
- Object.entries(fields).forEach(([key,id])=>{if(s[key]!==undefined)$(id).value=s[key];});
- ["lipSync","keepIdentity","subtitles"].forEach(key=>{if(s[key]!==undefined)$(key).checked=!!s[key];});
- $("promptCount").textContent=$("prompt").value.length;
- $("apiEndpoint").value=data.apiEndpoint||"";$("useAI").checked=!!data.useAI;
- $("serviceBadge").textContent=data.useAI?"AI MODE SELECTED":"LOCAL MODE";
- $("projectName").value=data.name||"";setStatus("Project settings loaded. Re-select photos and music files if needed.");
-}
-$("saveProject").addEventListener("click",saveProject);
-$("saveProjectTop").addEventListener("click",saveProject);
-$("loadProject").addEventListener("click",()=>{
- const data=readProjects()[$("projectList").value];
- if(!data){setStatus("Choose a saved project first.","error");return;}applyProject(data);
+$("videoPhotos").addEventListener("change",e=>{
+ const files=[...e.target.files];
+ if(files.length>5){
+  setStatus("photoUploadStatus","Five photos maximum. Only the first five will be used.","error");
+ }else{
+  setStatus("photoUploadStatus",files.length+" photo(s) selected.",files.length?"ok":"");
+ }
 });
-$("loadProjectTop").addEventListener("click",()=>$("loadProject").click());
-$("deleteProject").addEventListener("click",()=>{
- const name=$("projectList").value;if(!name){setStatus("Choose a project to delete.","error");return;}
- const projects=readProjects();delete projects[name];
- try{localStorage.setItem(PROJECTS_KEY,JSON.stringify(projects));refreshProjects();setStatus("Saved project deleted.");}
- catch(e){setStatus("Could not update project storage.","error");}
+
+["brightness","contrast","saturation","photoFilter"].forEach(id=>{
+ $(id).addEventListener("input",()=>{
+  $("brightnessValue").textContent=$("brightness").value+"%";
+  $("contrastValue").textContent=$("contrast").value+"%";
+  $("saturationValue").textContent=$("saturation").value+"%";
+  const img=$("photoPreview").querySelector("img");
+  if(img)img.style.filter=photoFilterCSS();
+ });
 });
-$("downloadProject").addEventListener("click",()=>{
- const blob=new Blob([JSON.stringify(projectData(),null,2)],{type:"application/json"});
- const url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="dan-ai-project.json";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
-});
-refreshProjects();renderPhotos();
-window.addEventListener("beforeunload",()=>{
- releasePhotoURLs();if(videoURL)URL.revokeObjectURL(videoURL);
- if(musicURL)URL.revokeObjectURL(musicURL);
- if("speechSynthesis"in window)speechSynthesis.cancel();
+
+$("photoReference").addEventListener("change",async e=>{
+ const file=e.target.files[0];
+ if(!file)return;
+ if(!file.type.startsWith("image/")){
+  setStatus("photoStatus","Please select an image file.","error");
+  e.target.value="";
+  return;
+ }
+ if(file.size>15*1024*1024){
+  setStatus("photoStatus","Image must be 15 MB or smaller.","error");
+  e.target.value="";
+  return;
+ }
+ try{
+  showPhoto(await fileToDataURL(file));
+  setStatus("photoStatus","Photo loaded. You can now adjust it or connect an AI image service.","ok");
+ }catch(err){
+  setStatus("photoStatus",err.message,"error");
+ }
 });
 </script>
 </body>
