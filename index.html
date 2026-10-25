@@ -5,936 +5,645 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080b14">
-<meta name="description" content="DAN AI VIDEO STUDIO - Animate photos, generate AI movement, speech and downloadable videos.">
+<meta name="description" content="DAN AI VIDEO STUDIO - Create AI animated videos from up to five photos, with speech, lip sync, music, text and editing tools.">
 <title>DAN AI VIDEO STUDIO</title>
-
 <style>
-:root{
- --bg:#080b14;--panel:#121a2a;--panel2:#09111f;
- --green:#43f5b2;--muted:#9aabc2;--line:#2b3a51;--red:#ff7185;
-}
+:root{--bg:#080b14;--panel:#121a2a;--panel2:#09111f;--green:#43f5b2;--muted:#9aabc2;--line:#2b3a51;--red:#ff7185}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.55;cursor:not-allowed}
+button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}
 header{padding:25px 15px;text-align:center;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#15243a,#080b14)}
-.logo{font-size:clamp(24px,6vw,36px);font-weight:900;color:var(--green);letter-spacing:2px}
+.logo{font-size:clamp(24px,6vw,38px);font-weight:900;color:var(--green);letter-spacing:2px}
 header p{color:var(--muted);font-size:14px}
 .tag,.pill{display:inline-block;background:#20352f;color:var(--green);padding:7px 12px;border-radius:20px;font-size:11px}
-main{width:min(100% - 24px,760px);margin:22px auto}
+main{width:min(100% - 24px,820px);margin:22px auto}
 .card{background:var(--panel);border:1px solid var(--line);padding:18px;border-radius:18px;margin-bottom:16px}
-h2{font-size:18px;margin:0 0 14px}
-h3{font-size:15px;margin:18px 0 8px}
+h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:18px 0 8px}
 label{display:block;font-weight:bold;margin:16px 0 8px}
 input,select,textarea{width:100%;padding:13px;background:var(--panel2);color:#fff;border:1px solid var(--line);border-radius:10px}
-input[type=file]{padding:11px}
-textarea{min-height:100px;resize:vertical}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--green);outline-offset:1px}
-button{border:0;border-radius:10px;padding:14px;font-weight:bold}
-.primary{background:var(--green);color:#06130e;width:100%;margin-top:15px}
+input[type=file]{padding:11px}textarea{min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--green)}
+button{border:0;border-radius:10px;padding:13px;font-weight:bold}
+.primary{background:var(--green);color:#06130e;width:100%;margin-top:12px}
 .secondary{background:#26354b;color:#fff;width:100%;margin-top:10px}
 .tertiary{background:#20352f;color:var(--green);width:100%;margin-top:10px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .preview{display:block;width:100%;max-height:440px;object-fit:contain;border-radius:12px;margin-top:14px;background:#060a12}
-.hidden{display:none!important}
-.small{font-size:13px;color:var(--muted);line-height:1.7}
-.status{padding:13px;background:var(--panel2);border-radius:10px;color:var(--green);white-space:pre-wrap;line-height:1.7;overflow-wrap:anywhere;font-size:13px}
-.status.error{color:var(--red)}
-.status.info{color:#8fc7ff}
+.hidden{display:none!important}.small{font-size:13px;color:var(--muted);line-height:1.7}
+.status{padding:13px;background:var(--panel2);border-radius:10px;color:var(--green);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-size:13px}
+.status.error{color:var(--red)}.status.info{color:#8fc7ff}
 .progress{width:100%;height:8px;background:#26354b;border-radius:10px;overflow:hidden;margin-top:12px}
-.progress div{height:100%;width:0%;background:var(--green);transition:width .15s}
-hr{border:0;border-top:1px solid var(--line);margin:18px 0}
-a{color:var(--green)}
+.progress div{height:100%;width:0;background:var(--green);transition:width .15s}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}a{color:var(--green)}
 .note{padding:12px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:12px;line-height:1.7}
 footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
-.dropzone{border:2px dashed #40516b;border-radius:14px;padding:16px;text-align:center;transition:.2s}
+.dropzone{border:2px dashed #40516b;border-radius:14px;padding:16px;text-align:center}
 .dropzone.drag{border-color:var(--green);background:#142b28}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.actions button{flex:1;min-width:130px}
-.actions a{flex:1;text-decoration:none}
-.actions a button{margin-top:0}
+.actions>*{flex:1;min-width:120px}.actions a{text-decoration:none}.actions a button{margin:0}
 .check-row{display:flex;gap:10px;align-items:flex-start;margin:12px 0;color:var(--muted);font-size:13px;line-height:1.6}
 .check-row input{width:auto;margin-top:3px;accent-color:var(--green)}
-.preview-audio{width:100%;margin-top:12px}
-@media(max-width:480px){
- main{width:calc(100% - 16px);margin:12px auto}
- .card{padding:14px}.grid{gap:8px}
-}
+.photo-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.photo-item{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px;min-width:0}
+.photo-item img{width:100%;height:145px;object-fit:contain;background:#050812;border-radius:8px}
+.photo-item p{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+.photo-controls{display:flex;gap:5px}.photo-controls button{flex:1;padding:9px;font-size:12px;background:#26354b;color:#fff}
+.landing{min-height:calc(100vh - 150px);display:flex;align-items:center;justify-content:center}
+.hero{text-align:center;padding:25px 14px}
+.robot{width:min(210px,55vw);margin:0 auto 15px;display:block}
+.hero h1{font-size:clamp(30px,8vw,55px);margin:8px 0;color:#fff}
+.hero h1 span{color:var(--green)}
+.hero p{color:var(--muted);line-height:1.8;max-width:560px;margin:12px auto}
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;text-align:left;margin-top:24px}
+.feature{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:13px;font-size:13px;color:var(--muted)}
+.feature b{display:block;color:var(--green);margin-bottom:5px}
+.studio-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.studio-nav button{flex:1;background:#26354b;color:#fff}
+.editor-preview{position:relative;background:#050812;border-radius:12px;overflow:hidden}
+.editor-preview video{margin:0;max-height:520px}
+@media(min-width:600px){.photo-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:480px){main{width:calc(100% - 16px);margin:12px auto}.card{padding:14px}.grid{gap:8px}.photo-item img{height:115px}}
 </style>
 </head>
-
 <body>
 <header>
- <div class="logo">DAN AI VIDEO</div>
- <p>Create animated videos from your photos</p>
- <span class="tag">AI VIDEO STUDIO</span>
+ <div class="logo">DAN AI VIDEO STUDIO</div>
+ <p>Create your own videos with AI</p>
+ <span class="tag">PHOTO • VIDEO • AI</span>
 </header>
 
 <main>
-<section class="card">
- <h2>1. Upload your photo</h2>
-
- <div id="dropzone" class="dropzone">
-  <p>Choose a photo or drop it here</p>
-  <label for="photo">Select image</label>
-  <input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
-  <p class="small">JPG, PNG or WebP · Maximum 15 MB</p>
- </div>
-
- <img id="imagePreview" class="preview hidden" alt="Selected photo">
- <p id="imageInfo" class="small">No image selected.</p>
-
- <label for="prompt">2. Describe your video</label>
- <textarea id="prompt" maxlength="1500" placeholder="Example: Make the person smile, walk forward, dance naturally, and say hello in English."></textarea>
- <p class="small"><span id="promptCount">0</span>/1500 characters</p>
-
- <label for="style">Movement style</label>
- <select id="style">
-  <option value="natural">Natural camera movement</option>
-  <option value="cinematic">Cinematic zoom and pan</option>
-  <option value="pan-left">Pan left</option>
-  <option value="pan-right">Pan right</option>
-  <option value="zoom-in">Zoom in</option>
-  <option value="zoom-out">Zoom out</option>
-  <option value="walking">Walking — AI service required</option>
-  <option value="smiling">Smiling — AI service required</option>
-  <option value="dancing">Dancing — AI service required</option>
-  <option value="talking">Talking — AI service required</option>
-  <option value="custom">Custom camera movement</option>
- </select>
-
- <div class="grid">
-  <div>
-   <label for="quality">Video quality</label>
-   <select id="quality">
-    <option value="480p">480p — faster</option>
-    <option value="720p" selected>720p — recommended</option>
-    <option value="1080p">1080p — high quality</option>
-   </select>
-  </div>
-  <div>
-   <label for="duration">Duration</label>
-   <select id="duration">
-    <option value="5">5 seconds</option>
-    <option value="10">10 seconds</option>
-   </select>
+<section id="landing" class="card landing">
+ <div class="hero">
+  <svg class="robot" viewBox="0 0 220 220" role="img" aria-label="DAN AI robot">
+   <defs><linearGradient id="rg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#43f5b2"/><stop offset="1" stop-color="#238aff"/></linearGradient></defs>
+   <circle cx="110" cy="110" r="99" fill="#111f32" stroke="#2b3a51" stroke-width="3"/>
+   <path d="M110 22V43" stroke="#43f5b2" stroke-width="7" stroke-linecap="round"/>
+   <circle cx="110" cy="17" r="10" fill="#43f5b2"/>
+   <rect x="42" y="53" width="136" height="111" rx="30" fill="url(#rg)"/>
+   <rect x="53" y="65" width="114" height="83" rx="22" fill="#09111f"/>
+   <ellipse cx="82" cy="101" rx="12" ry="16" fill="#43f5b2"/>
+   <ellipse cx="138" cy="101" rx="12" ry="16" fill="#43f5b2"/>
+   <path d="M81 126Q110 145 139 126" fill="none" stroke="#43f5b2" stroke-width="6" stroke-linecap="round"/>
+   <path d="M42 92H28M178 92H192" stroke="#43f5b2" stroke-width="7" stroke-linecap="round"/>
+   <rect x="76" y="168" width="68" height="22" rx="11" fill="#26354b" stroke="#43f5b2" stroke-width="3"/>
+   <text x="110" y="183" text-anchor="middle" font-size="12" font-weight="bold" fill="#43f5b2">DAN AI</text>
+  </svg>
+  <span class="tag">WELCOME TO YOUR STUDIO</span>
+  <h1>DAN <span>AI VIDEO</span></h1>
+  <p>Turn your photos into creative video projects. Arrange photos, add text and music, choose the format, and connect an AI video service for real character animation.</p>
+  <button id="nextButton" class="primary">NEXT — OPEN STUDIO</button>
+  <div class="feature-grid">
+   <div class="feature"><b>PHOTO TO VIDEO</b>Use up to five photos</div>
+   <div class="feature"><b>AI ANIMATION</b>Connect your AI provider</div>
+   <div class="feature"><b>VOICE & LIP SYNC</b>Multiple language settings</div>
+   <div class="feature"><b>VIDEO EDITOR</b>Text, music and ordering</div>
   </div>
  </div>
-
- <label for="ratio">Aspect ratio</label>
- <select id="ratio">
-  <option value="9:16">9:16 — TikTok / Reels</option>
-  <option value="16:9">16:9 — YouTube</option>
-  <option value="1:1">1:1 — Square</option>
- </select>
-
- <hr>
- <h2>2. AI movement and speech</h2>
-
- <label for="speechText">What should the person say?</label>
- <textarea id="speechText" maxlength="1000" placeholder="Write the exact words the person should speak. Example: Hello everyone, welcome to my channel!"></textarea>
-
- <div class="grid">
-  <div>
-   <label for="speechLanguage">Speech language</label>
-   <select id="speechLanguage">
-    <option value="en-US">English</option>
-    <option value="am-ET">Amharic</option>
-    <option value="ar-SA">Arabic</option>
-    <option value="so-SO">Somali</option>
-    <option value="fr-FR">French</option>
-    <option value="sw-KE">Swahili</option>
-    <option value="om-ET">Afaan Oromoo</option>
-   </select>
-  </div>
-  <div>
-   <label for="voiceStyle">Voice style</label>
-   <select id="voiceStyle">
-    <option value="natural">Natural</option>
-    <option value="male">Male voice preference</option>
-    <option value="female">Female voice preference</option>
-   </select>
-  </div>
- </div>
-
- <label for="movement">Body movement</label>
- <select id="movement">
-  <option value="none">Camera movement only</option>
-  <option value="talk">Talking and lip sync</option>
-  <option value="walk">Walking</option>
-  <option value="dance">Dancing</option>
-  <option value="smile">Smile and facial expressions</option>
-  <option value="wave">Wave hand</option>
-  <option value="custom">Follow my written instructions</option>
- </select>
-
- <label for="aiPrompt">Additional AI instructions</label>
- <textarea id="aiPrompt" maxlength="1500" placeholder="Example: Make the person dance happily while speaking. Keep their face and clothes consistent."></textarea>
-
- <label class="check-row">
-  <input id="lipSync" type="checkbox" checked>
-  <span>Synchronize the person's mouth with the generated speech when supported by the AI service.</span>
- </label>
-
- <label class="check-row">
-  <input id="keepIdentity" type="checkbox" checked>
-  <span>Preserve the original person's appearance and clothing as closely as the AI service allows.</span>
- </label>
-
- <button id="speakPreview" class="secondary" type="button">PREVIEW SPEECH ON THIS DEVICE</button>
- <button id="stopSpeech" class="tertiary" type="button">STOP SPEECH PREVIEW</button>
-
- <p class="note">
-  Device speech preview only plays audio; it does not animate the uploaded person or add that speech to the exported video. Full speech, lip sync and body animation require a compatible AI video service.
- </p>
-
- <hr>
- <h2>3. AI service connection</h2>
- <label for="apiEndpoint">Your secure AI backend URL</label>
- <input id="apiEndpoint" type="url" placeholder="https://your-server.example/api/generate-video">
- <p class="small">Enter the URL of your own backend that accepts the image and video settings. Leave blank to use local camera animation.</p>
-
- <label class="check-row">
-  <input id="useAI" type="checkbox">
-  <span>Use the connected AI backend for talking, dancing, walking, facial expressions and speech.</span>
- </label>
-
- <p class="note">
-  Never put an API secret key in this HTML. The backend must authenticate requests, call your chosen AI provider, and return a video file or a JSON response containing a video URL. Provider-specific request formats may require backend adjustments.
- </p>
-
- <button id="generate" class="primary">GENERATE VIDEO</button>
- <button id="cancel" class="tertiary hidden">CANCEL GENERATION</button>
- <button id="clear" class="secondary">RESET PROJECT</button>
-
- <div id="progressBox" class="hidden">
-  <div class="progress"><div id="progressBar"></div></div>
-  <p id="progressText" class="small">Preparing video...</p>
- </div>
-
- <hr>
- <p id="status" class="status" role="status" aria-live="polite">Upload a photo to begin.</p>
 </section>
 
-<section class="card">
- <h2>4. Your video</h2>
- <video id="outputVideo" class="preview hidden" controls playsinline preload="metadata"></video>
-
- <div class="actions">
-  <a id="download" class="hidden" download="dan-ai-video.webm">
-   <button type="button" class="primary">DOWNLOAD VIDEO</button>
-  </a>
+<section id="studio" class="hidden">
+ <div class="studio-nav">
+  <button id="backButton">← HOME</button>
+  <button id="saveProjectTop">SAVE PROJECT</button>
+  <button id="loadProjectTop">LOAD PROJECT</button>
  </div>
 
- <p id="videoInfo" class="small">Your completed video will appear here.</p>
-</section>
+ <section class="card">
+  <h2>1. Photos</h2>
+  <div id="dropzone" class="dropzone">
+   <p>Select up to five photos for one video</p>
+   <label for="photos">Choose photos</label>
+   <input id="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+   <p class="small">JPG, PNG or WebP · Maximum 15 MB each · Maximum 5 photos</p>
+  </div>
+  <div id="photoList" class="photo-list"></div>
+  <p id="imageInfo" class="small">No photos selected.</p>
+  <button id="clearPhotos" class="secondary">REMOVE ALL PHOTOS</button>
+  <label for="prompt">Describe your video</label>
+  <textarea id="prompt" maxlength="1500" placeholder="Example: Show the person walking naturally, smiling, and speaking to the camera."></textarea>
+  <p class="small"><span id="promptCount">0</span>/1500 characters</p>
+  <button id="enhancePrompt" class="tertiary">ENHANCE PROMPT</button>
+  <label for="style">Camera movement</label>
+  <select id="style">
+   <option value="natural">Natural camera movement</option>
+   <option value="cinematic">Cinematic zoom and pan</option>
+   <option value="pan-left">Pan left</option>
+   <option value="pan-right">Pan right</option>
+   <option value="zoom-in">Zoom in</option>
+   <option value="zoom-out">Zoom out</option>
+   <option value="walking">Walking — AI service required</option>
+   <option value="smiling">Smiling — AI service required</option>
+   <option value="dancing">Dancing — AI service required</option>
+   <option value="talking">Talking — AI service required</option>
+   <option value="custom">Custom camera movement</option>
+  </select>
+  <label for="background">Background</label>
+  <select id="background">
+   <option value="original">Keep original background</option>
+   <option value="blur">Blur background — AI service required</option>
+   <option value="studio">Studio background — AI service required</option>
+   <option value="nature">Nature background — AI service required</option>
+   <option value="city">City background — AI service required</option>
+   <option value="custom">Custom background — AI service required</option>
+  </select>
+  <label for="backgroundPrompt">Background instructions</label>
+  <input id="backgroundPrompt" maxlength="500" placeholder="Describe the background you want">
+ </section>
 
-<section class="card">
- <h2>5. AI service status</h2>
- <span id="serviceBadge" class="pill">LOCAL MODE</span>
- <p id="serviceInfo" class="small">
-  Local mode creates a downloadable video with camera movement. Real body movement, speech generation and lip synchronization require a compatible connected AI service.
- </p>
- <p class="note">
-  This interface does not automatically provide an AI service, API credits, or a backend. Configure a real compatible service before enabling AI generation. Always test with a short clip first.
- </p>
+ <section class="card">
+  <h2>2. Video settings</h2>
+  <div class="grid">
+   <div>
+    <label for="quality">Quality</label>
+    <select id="quality">
+     <option value="480p">480p</option>
+     <option value="720p" selected>720p HD</option>
+     <option value="1080p">1080p Full HD</option>
+     <option value="4k">4K — AI service required</option>
+    </select>
+   </div>
+   <div>
+    <label for="duration">Duration</label>
+    <select id="duration">
+     <option value="5">5 seconds</option><option value="10">10 seconds</option>
+     <option value="15">15 seconds</option><option value="30">30 seconds</option>
+     <option value="45">45 seconds</option><option value="60">1 minute</option>
+     <option value="120">2 minutes</option><option value="180">3 minutes</option>
+     <option value="240">4 minutes</option><option value="300">5 minutes</option>
+     <option value="360">6 minutes</option><option value="420">7 minutes</option>
+     <option value="480">8 minutes</option><option value="540">9 minutes</option>
+     <option value="600">10 minutes</option><option value="660">11 minutes</option>
+     <option value="720">12 minutes</option>
+    </select>
+   </div>
+  </div>
+  <label for="ratio">Aspect ratio</label>
+  <select id="ratio">
+   <option value="9:16">9:16 — TikTok / Reels</option>
+   <option value="16:9">16:9 — YouTube</option>
+   <option value="1:1">1:1 — Square</option>
+  </select>
+  <label for="music">Music</label>
+  <select id="music">
+   <option value="none">No background music</option>
+   <option value="upbeat">Upbeat music — AI service required</option>
+   <option value="cinematic">Cinematic music — AI service required</option>
+   <option value="calm">Calm music — AI service required</option>
+   <option value="upload">Use my uploaded music</option>
+  </select>
+  <label for="musicFile">Upload music audio</label>
+  <input id="musicFile" type="file" accept="audio/*">
+  <p id="musicInfo" class="small">No music selected.</p>
+  <label for="overlayText">Text displayed on video</label>
+  <input id="overlayText" maxlength="180" placeholder="Add a title or caption">
+  <label for="textPosition">Text position</label>
+  <select id="textPosition">
+   <option value="bottom">Bottom</option><option value="top">Top</option>
+   <option value="center">Center</option>
+  </select>
+ </section>
+
+ <section class="card">
+  <h2>3. AI movement and speech</h2>
+  <label for="speechText">What should the person say?</label>
+  <textarea id="speechText" maxlength="2000" placeholder="Write the exact words to speak."></textarea>
+  <div class="grid">
+   <div>
+    <label for="speechLanguage">Speech language</label>
+    <select id="speechLanguage">
+     <option value="am-ET">Amharic</option><option value="en-US">English</option>
+     <option value="so-SO">Somali</option><option value="ar-SA">Arabic</option>
+     <option value="fr-FR">French</option><option value="sw-KE">Kiswahili</option>
+     <option value="om-ET">Afaan Oromoo</option>
+    </select>
+   </div>
+   <div>
+    <label for="voiceStyle">Voice</label>
+    <select id="voiceStyle">
+     <option value="natural">Natural voice</option>
+     <option value="male">Male voice</option>
+     <option value="female">Female voice</option>
+    </select>
+   </div>
+  </div>
+  <label for="movement">Body movement</label>
+  <select id="movement">
+   <option value="none">Camera movement only</option>
+   <option value="talk">Talking and lip sync</option>
+   <option value="walk">Walking</option><option value="dance">Dancing</option>
+   <option value="smile">Smile and facial expressions</option>
+   <option value="wave">Wave hand</option><option value="custom">Follow my instructions</option>
+  </select>
+  <label for="aiPrompt">Additional AI instructions</label>
+  <textarea id="aiPrompt" maxlength="1500" placeholder="Describe the movements, expression and scene."></textarea>
+  <label class="check-row"><input id="lipSync" type="checkbox" checked><span>Synchronize lips with generated speech when supported.</span></label>
+  <label class="check-row"><input id="keepIdentity" type="checkbox" checked><span>Preserve the person's face, appearance and clothing as closely as possible.</span></label>
+  <label class="check-row"><input id="subtitles" type="checkbox"><span>Add subtitles when supported by the AI service.</span></label>
+  <button id="speakPreview" class="secondary">PREVIEW SPEECH ON THIS DEVICE</button>
+  <button id="stopSpeech" class="tertiary">STOP SPEECH PREVIEW</button>
+  <p class="note">Speech preview plays audio on this device only. Real character movement, generated speech, lip sync, background changes and 4K output require a compatible AI service.</p>
+ </section>
+
+ <section class="card">
+  <h2>4. AI service connection</h2>
+  <label for="apiEndpoint">AI backend URL</label>
+  <input id="apiEndpoint" type="url" placeholder="https://your-server.example/api/generate-video">
+  <label class="check-row"><input id="useAI" type="checkbox"><span>Use the connected AI backend for real AI video generation.</span></label>
+  <p class="note">Keep provider API keys on your secure server, never inside this HTML. The backend should accept multiple photos and settings and return a video file or JSON containing video_url or video_base64.</p>
+  <button id="generate" class="primary">GENERATE VIDEO</button>
+  <button id="cancel" class="tertiary hidden">CANCEL GENERATION</button>
+  <button id="clear" class="secondary">RESET PROJECT</button>
+  <div id="progressBox" class="hidden"><div class="progress"><div id="progressBar"></div></div><p id="progressText" class="small">Preparing video...</p></div>
+  <p id="status" class="status" role="status" aria-live="polite">Add photos to begin.</p>
+ </section>
+
+ <section class="card">
+  <h2>5. Video preview and download</h2>
+  <div class="editor-preview"><video id="outputVideo" class="preview hidden" controls playsinline preload="metadata"></video></div>
+  <div class="actions">
+   <a id="download" class="hidden" download="dan-ai-video.webm"><button type="button" class="primary">DOWNLOAD VIDEO</button></a>
+   <button id="downloadProject" class="secondary">EXPORT PROJECT SETTINGS</button>
+  </div>
+  <p id="videoInfo" class="small">Your completed video will appear here.</p>
+ </section>
+
+ <section class="card">
+  <h2>6. Save and load projects</h2>
+  <label for="projectName">Project name</label>
+  <input id="projectName" maxlength="60" placeholder="My video project">
+  <button id="saveProject" class="primary">SAVE PROJECT ON THIS DEVICE</button>
+  <label for="projectList">Saved projects</label>
+  <select id="projectList"><option value="">Choose a saved project</option></select>
+  <button id="loadProject" class="secondary">LOAD SELECTED PROJECT</button>
+  <button id="deleteProject" class="tertiary">DELETE SELECTED PROJECT</button>
+  <p class="note">Saved projects keep settings and text on this device. Photos and generated videos are not embedded in saved project settings. Browser storage may be cleared by your device.</p>
+ </section>
+
+ <section class="card">
+  <h2>7. Service status</h2>
+  <span id="serviceBadge" class="pill">LOCAL MODE</span>
+  <p id="serviceInfo" class="small">Local mode creates simple camera-motion video from your photos. It does not generate real body movement or speech.</p>
+ </section>
 </section>
 </main>
-
 <footer>© DAN AI VIDEO STUDIO</footer>
 
 <script>
 "use strict";
+const $=id=>document.getElementById(id);
+const MAX_PHOTOS=5,MAX_IMAGE_SIZE=15*1024*1024;
+let photos=[],photoURLs=[],musicFile=null,musicURL=null,videoURL=null;
+let isGenerating=false,activeController=null,generationId=0;
 
-const $ = id => document.getElementById(id);
-
-const photo = $("photo");
-const imagePreview = $("imagePreview");
-const imageInfo = $("imageInfo");
-const promptInput = $("prompt");
-const generate = $("generate");
-const cancelButton = $("cancel");
-const clearButton = $("clear");
-const statusBox = $("status");
-const outputVideo = $("outputVideo");
-const download = $("download");
-const videoInfo = $("videoInfo");
-const progressBox = $("progressBox");
-const progressBar = $("progressBar");
-const progressText = $("progressText");
-const dropzone = $("dropzone");
-
-let selectedImage = null;
-let imageObjectURL = null;
-let videoObjectURL = null;
-let isGenerating = false;
-let activeController = null;
-let generationId = 0;
-
-function setStatus(message, type = "success") {
- statusBox.textContent = message;
- statusBox.className = "status";
- if (type === "error") statusBox.classList.add("error");
- if (type === "info") statusBox.classList.add("info");
+function setStatus(message,type="success"){
+ $("status").textContent=message;
+ $("status").className="status"+(type==="error"?" error":type==="info"?" info":"");
 }
-
-function setProgress(value, message) {
- progressBox.classList.remove("hidden");
- progressBar.style.width = Math.max(0, Math.min(100, value)) + "%";
- progressText.textContent = message;
+function setProgress(value,message){
+ $("progressBox").classList.remove("hidden");
+ $("progressBar").style.width=Math.max(0,Math.min(100,value))+"%";
+ $("progressText").textContent=message;
 }
-
-function hideProgress() {
- progressBox.classList.add("hidden");
- progressBar.style.width = "0%";
+function hideProgress(){$("progressBox").classList.add("hidden");$("progressBar").style.width="0%";}
+function setBusy(value){
+ isGenerating=value;$("generate").disabled=value;$("clear").disabled=value;
+ $("photos").disabled=value;$("generate").textContent=value?"GENERATING...":"GENERATE VIDEO";
+ $("cancel").classList.toggle("hidden",!value);
 }
-
-function setBusy(busy) {
- isGenerating = busy;
- generate.disabled = busy;
- clearButton.disabled = busy;
- photo.disabled = busy;
- cancelButton.classList.toggle("hidden", !busy);
- generate.textContent = busy ? "GENERATING..." : "GENERATE VIDEO";
+function releasePhotoURLs(){photoURLs.forEach(URL.revokeObjectURL);photoURLs=[];}
+function clearVideo(){
+ $("outputVideo").pause();$("outputVideo").removeAttribute("src");$("outputVideo").load();
+ $("outputVideo").classList.add("hidden");$("download").classList.add("hidden");
+ $("download").removeAttribute("href");
+ if(videoURL){URL.revokeObjectURL(videoURL);videoURL=null;}
 }
-
-function releaseImageURL() {
- if (imageObjectURL) {
-  URL.revokeObjectURL(imageObjectURL);
-  imageObjectURL = null;
- }
-}
-
-function clearVideo() {
- outputVideo.pause();
- outputVideo.removeAttribute("src");
- outputVideo.load();
- outputVideo.classList.add("hidden");
- download.classList.add("hidden");
- download.removeAttribute("href");
-
- if (videoObjectURL) {
-  URL.revokeObjectURL(videoObjectURL);
-  videoObjectURL = null;
- }
-}
-
-function loadSelectedFile(file) {
- if (isGenerating || !file) return;
-
- const allowed = ["image/jpeg", "image/png", "image/webp"];
-
- if (!allowed.includes(file.type)) {
-  photo.value = "";
-  setStatus("Choose a JPG, PNG or WebP image.", "error");
-  return;
- }
-
- if (file.size > 15 * 1024 * 1024) {
-  photo.value = "";
-  setStatus("Choose an image smaller than 15 MB.", "error");
-  return;
- }
-
- releaseImageURL();
- clearVideo();
-
- selectedImage = file;
- imageObjectURL = URL.createObjectURL(file);
- imagePreview.src = imageObjectURL;
- imagePreview.classList.remove("hidden");
-
- imageInfo.textContent =
-  file.name + " · " + (file.size / 1024 / 1024).toFixed(2) + " MB";
-
- videoInfo.textContent = "Ready to create a video.";
- setStatus("Photo loaded successfully. Describe the movement.");
-}
-
-photo.addEventListener("change", () => {
- const file = photo.files && photo.files[0];
- if (file) loadSelectedFile(file);
-});
-
-["dragenter", "dragover"].forEach(name => {
- dropzone.addEventListener(name, event => {
-  event.preventDefault();
-  event.stopPropagation();
-  if (!isGenerating) dropzone.classList.add("drag");
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderPhotos(){
+ const list=$("photoList");list.innerHTML="";
+ photos.forEach((file,index)=>{
+  const url=photoURLs[index];const item=document.createElement("div");
+  item.className="photo-item";
+  item.innerHTML=`<img src="${url}" alt="Photo ${index+1}"><p>${index+1}. ${escapeHTML(file.name)}</p><div class="photo-controls"><button type="button" data-move="-1" data-index="${index}">↑</button><button type="button" data-move="1" data-index="${index}">↓</button><button type="button" data-remove="${index}">Remove</button></div>`;
+  list.appendChild(item);
  });
+ $("imageInfo").textContent=photos.length?`${photos.length} photo(s) selected. Order is used in your video.`:"No photos selected.";
+ list.querySelectorAll("[data-move]").forEach(button=>button.addEventListener("click",()=>{
+  const i=Number(button.dataset.index),j=i+Number(button.dataset.move);
+  if(j<0||j>=photos.length)return;
+  [photos[i],photos[j]]=[photos[j],photos[i]];
+  [photoURLs[i],photoURLs[j]]=[photoURLs[j],photoURLs[i]];
+  renderPhotos();
+ }));
+ list.querySelectorAll("[data-remove]").forEach(button=>button.addEventListener("click",()=>{
+  const i=Number(button.dataset.remove);URL.revokeObjectURL(photoURLs[i]);
+  photos.splice(i,1);photoURLs.splice(i,1);renderPhotos();
+ }));
+}
+function addPhotos(files){
+ if(isGenerating)return;
+ const accepted=["image/jpeg","image/png","image/webp"];
+ for(const file of files){
+  if(photos.length>=MAX_PHOTOS){setStatus("Maximum five photos allowed.", "error");break;}
+  if(!accepted.includes(file.type)){setStatus("Use JPG, PNG or WebP photos only.","error");continue;}
+  if(file.size>MAX_IMAGE_SIZE){setStatus(file.name+" is larger than 15 MB.","error");continue;}
+  if(photos.some(p=>p.name===file.name&&p.size===file.size&&p.lastModified===file.lastModified))continue;
+  photos.push(file);photoURLs.push(URL.createObjectURL(file));
+ }
+ $("photos").value="";renderPhotos();clearVideo();
+ if(photos.length)setStatus("Photos ready. Add your instructions and generate a video.");
+}
+$("photos").addEventListener("change",e=>addPhotos([...e.target.files]));
+$("clearPhotos").addEventListener("click",()=>{
+ if(isGenerating)return;releasePhotoURLs();photos=[];renderPhotos();clearVideo();setStatus("All photos removed.");
 });
-
-["dragleave", "drop"].forEach(name => {
- dropzone.addEventListener(name, event => {
-  event.preventDefault();
-  event.stopPropagation();
-  dropzone.classList.remove("drag");
-
-  if (isGenerating || name !== "drop") return;
-
-  const file = event.dataTransfer.files && event.dataTransfer.files[0];
-  if (file) loadSelectedFile(file);
- });
+["dragenter","dragover"].forEach(name=>$("dropzone").addEventListener(name,e=>{
+ e.preventDefault();if(!isGenerating)$("dropzone").classList.add("drag");
+}));
+["dragleave","drop"].forEach(name=>$("dropzone").addEventListener(name,e=>{
+ e.preventDefault();$("dropzone").classList.remove("drag");
+ if(name==="drop")addPhotos([...e.dataTransfer.files].filter(f=>f.type.startsWith("image/")));
+}));
+$("prompt").addEventListener("input",()=>$("promptCount").textContent=$("prompt").value.length);
+$("enhancePrompt").addEventListener("click",()=>{
+ const p=$("prompt").value.trim();
+ if(!p){setStatus("Write a short description first.","error");return;}
+ const suffix=" Create a coherent, high-quality cinematic video with smooth motion, consistent lighting, natural expressions, stable composition, and smooth transitions between the selected photos. Avoid flicker, distortions, extra limbs, and sudden scene changes.";
+ $("prompt").value=(p+suffix).slice(0,1500);
+ $("promptCount").textContent=$("prompt").value.length;
+ setStatus("Prompt enhanced. Review it before generating.");
 });
-
-promptInput.addEventListener("input", () => {
- $("promptCount").textContent = promptInput.value.length;
+$("musicFile").addEventListener("change",e=>{
+ const file=e.target.files[0];if(musicURL)URL.revokeObjectURL(musicURL);
+ musicFile=file||null;musicURL=file?URL.createObjectURL(file):null;
+ $("musicInfo").textContent=file?file.name+" · "+(file.size/1024/1024).toFixed(2)+" MB":"No music selected.";
+ if(file)$("music").value="upload";
 });
-
-function getSettings() {
+function getSettings(){
  return {
-  prompt: promptInput.value.trim(),
-  style: $("style").value,
-  quality: $("quality").value,
-  duration: Number($("duration").value),
-  aspectRatio: $("ratio").value,
-  speechText: $("speechText").value.trim(),
-  speechLanguage: $("speechLanguage").value,
-  voiceStyle: $("voiceStyle").value,
-  movement: $("movement").value,
-  aiPrompt: $("aiPrompt").value.trim(),
-  lipSync: $("lipSync").checked,
-  keepIdentity: $("keepIdentity").checked
+  prompt:$("prompt").value.trim(),style:$("style").value,background:$("background").value,
+  backgroundPrompt:$("backgroundPrompt").value.trim(),quality:$("quality").value,
+  duration:Number($("duration").value),aspectRatio:$("ratio").value,music:$("music").value,
+  overlayText:$("overlayText").value.trim(),textPosition:$("textPosition").value,
+  speechText:$("speechText").value.trim(),speechLanguage:$("speechLanguage").value,
+  voiceStyle:$("voiceStyle").value,movement:$("movement").value,
+  aiPrompt:$("aiPrompt").value.trim(),lipSync:$("lipSync").checked,
+  keepIdentity:$("keepIdentity").checked,subtitles:$("subtitles").checked
  };
 }
-
-function loadImage(file, signal) {
- return new Promise((resolve, reject) => {
-  const url = URL.createObjectURL(file);
-  const img = new Image();
-  let finished = false;
-
-  function cleanup() {
-   URL.revokeObjectURL(url);
-   signal.removeEventListener("abort", onAbort);
-  }
-
-  function onAbort() {
-   if (finished) return;
-   finished = true;
-   cleanup();
-   reject(new Error("Generation cancelled."));
-  }
-
-  img.onload = () => {
-   if (finished) return;
-   finished = true;
-   cleanup();
-   resolve(img);
-  };
-
-  img.onerror = () => {
-   if (finished) return;
-   finished = true;
-   cleanup();
-   reject(new Error("Could not read this image. Try another photo."));
-  };
-
-  signal.addEventListener("abort", onAbort, { once: true });
-
-  if (signal.aborted) {
-   onAbort();
-   return;
-  }
-
-  img.src = url;
+function loadImage(file,signal){
+ return new Promise((resolve,reject)=>{
+  const url=URL.createObjectURL(file),img=new Image();let done=false;
+  const cleanup=()=>{URL.revokeObjectURL(url);signal.removeEventListener("abort",abort);};
+  const abort=()=>{if(done)return;done=true;cleanup();reject(new Error("Generation cancelled."));};
+  img.onload=()=>{if(done)return;done=true;cleanup();resolve(img);};
+  img.onerror=()=>{if(done)return;done=true;cleanup();reject(new Error("Could not read image "+file.name));};
+  signal.addEventListener("abort",abort,{once:true});if(signal.aborted){abort();return;}img.src=url;
  });
 }
-
-function getDimensions(ratio, quality) {
- const heights = {"480p":480, "720p":720, "1080p":1080};
- const height = heights[quality] || 720;
-
- if (ratio === "16:9") return {width:Math.round(height * 16 / 9),height};
- if (ratio === "1:1") return {width:height,height};
- return {width:Math.round(height * 9 / 16),height};
+function dimensions(ratio,quality){
+ const heights={"480p":480,"720p":720,"1080p":1080,"4k":2160};
+ const h=heights[quality]||720;
+ if(ratio==="16:9")return{width:Math.round(h*16/9),height:h};
+ if(ratio==="1:1")return{width:h,height:h};
+ return{width:Math.round(h*9/16),height:h};
 }
-
-function chooseMimeType() {
- if (!window.MediaRecorder) return "";
-
- const types = [
-  "video/webm;codecs=vp9",
-  "video/webm;codecs=vp8",
-  "video/webm"
- ];
-
- return types.find(type => MediaRecorder.isTypeSupported(type)) || "";
+function mimeType(){
+ if(!window.MediaRecorder)return "";
+ return ["video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"].find(t=>MediaRecorder.isTypeSupported(t))||"";
 }
-
-async function createLocalVideo(file, settings, signal) {
- if (!window.MediaRecorder) {
-  throw new Error("Video recording is not supported in this browser. Try the latest Chrome.");
- }
-
- if (!HTMLCanvasElement.prototype.captureStream) {
-  throw new Error("Canvas video recording is unavailable in this browser.");
- }
-
- const img = await loadImage(file, signal);
- if (signal.aborted) throw new Error("Generation cancelled.");
-
- const dimensions = getDimensions(settings.aspectRatio, settings.quality);
- const canvas = document.createElement("canvas");
- canvas.width = dimensions.width;
- canvas.height = dimensions.height;
-
- const ctx = canvas.getContext("2d", {alpha:false});
- if (!ctx) throw new Error("Could not initialize video rendering.");
-
- const stream = canvas.captureStream(24);
- const mimeType = chooseMimeType();
- let recorder;
-
- try {
-  recorder = new MediaRecorder(stream, mimeType ? {mimeType} : undefined);
- } catch (error) {
-  stream.getTracks().forEach(track => track.stop());
-  throw new Error("Video recording could not start on this device.");
- }
-
- return new Promise((resolve, reject) => {
-  let animationFrame = 0;
-  let startTime = 0;
-  let finished = false;
-  let cancelled = false;
-  const chunks = [];
-
-  function cleanup() {
-   cancelAnimationFrame(animationFrame);
-   stream.getTracks().forEach(track => track.stop());
-   signal.removeEventListener("abort", onAbort);
-  }
-
-  function onAbort() {
-   if (finished) return;
-
-   cancelled = true;
-   finished = true;
-   cleanup();
-
-   try {
-    if (recorder.state !== "inactive") recorder.stop();
-   } catch (error) {}
-
-   reject(new Error("Generation cancelled."));
-  }
-
-  signal.addEventListener("abort", onAbort, {once:true});
-
-  recorder.ondataavailable = event => {
-   if (event.data && event.data.size > 0) chunks.push(event.data);
-  };
-
-  recorder.onerror = () => {
-   if (finished) return;
-   finished = true;
-   cleanup();
-   reject(new Error("Video recording failed. Please try again."));
-  };
-
-  recorder.onstop = () => {
-   if (cancelled || finished) return;
-
-   finished = true;
-   cleanup();
-
-   if (!chunks.length) {
-    reject(new Error("No video data was created. Try again."));
-    return;
+async function createLocalVideo(files,settings,signal){
+ if(!window.MediaRecorder)throw new Error("Video recording is not supported. Use the latest Chrome.");
+ if(!HTMLCanvasElement.prototype.captureStream)throw new Error("Canvas recording is not available in this browser.");
+ if(settings.duration>60)throw new Error("Local mode supports videos up to 60 seconds. Use your AI backend for longer videos.");
+ const images=[];
+ for(const file of files){images.push(await loadImage(file,signal));if(signal.aborted)throw new Error("Generation cancelled.");}
+ const d=dimensions(settings.aspectRatio,settings.quality);
+ if(d.width*d.height>1920*1080)throw new Error("Local recording supports up to 1080p. Use an AI backend for 4K.");
+ const canvas=document.createElement("canvas");canvas.width=d.width;canvas.height=d.height;
+ const ctx=canvas.getContext("2d",{alpha:false});if(!ctx)throw new Error("Could not initialize video renderer.");
+ const stream=canvas.captureStream(24),mime=mimeType();let recorder;
+ try{recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);}
+ catch(e){stream.getTracks().forEach(t=>t.stop());throw new Error("Video recording could not start on this device.");}
+ return new Promise((resolve,reject)=>{
+  let frame=0,start=0,finished=false,cancelled=false;const chunks=[];
+  function cleanup(){cancelAnimationFrame(frame);stream.getTracks().forEach(t=>t.stop());signal.removeEventListener("abort",abort);}
+  function abort(){if(finished)return;cancelled=true;finished=true;cleanup();try{if(recorder.state!=="inactive")recorder.stop();}catch(e){}reject(new Error("Generation cancelled."));}
+  signal.addEventListener("abort",abort,{once:true});
+  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
+  recorder.onerror=()=>{if(finished)return;finished=true;cleanup();reject(new Error("Video recording failed."));};
+  recorder.onstop=()=>{if(cancelled)return;if(finished)return;finished=true;cleanup();if(!chunks.length){reject(new Error("No video data was created."));return;}resolve(new Blob(chunks,{type:recorder.mimeType||"video/webm"}));};
+  function draw(ts){
+   if(signal.aborted||finished)return;if(!start)start=ts;
+   const elapsed=(ts-start)/1000,progress=Math.min(elapsed/settings.duration,1);
+   const slide=progress*images.length,index=Math.min(images.length-1,Math.floor(slide));
+   const local=slide-index,img=images[index],ease=local*local*(3-2*local);
+   ctx.fillStyle="#050812";ctx.fillRect(0,0,canvas.width,canvas.height);
+   const fit=Math.max(canvas.width/img.width,canvas.height/img.height);
+   let zoom=1+0.08*ease,dx=0,dy=0;
+   if(settings.style==="zoom-in")zoom=1+.22*ease;
+   else if(settings.style==="zoom-out")zoom=1.22-.22*ease;
+   else if(settings.style==="pan-left")dx=canvas.width*.08*ease;
+   else if(settings.style==="pan-right")dx=-canvas.width*.08*ease;
+   else if(settings.style==="cinematic"){zoom=1+.16*ease;dx=Math.sin(local*Math.PI)*canvas.width*.025;dy=Math.cos(local*Math.PI)*canvas.height*.012;}
+   else{dx=Math.sin(local*Math.PI)*canvas.width*.02;dy=Math.sin(local*Math.PI)*canvas.height*.01;}
+   const w=img.width*fit*zoom,h=img.height*fit*zoom;
+   ctx.drawImage(img,(canvas.width-w)/2-dx,(canvas.height-h)/2-dy,w,h);
+   if(index<images.length-1&&local>.86){
+    const alpha=Math.min(1,(local-.86)/.14);ctx.globalAlpha=alpha;
+    const next=images[index+1],f=Math.max(canvas.width/next.width,canvas.height/next.height);
+    const nw=next.width*f,nh=next.height*f;
+    ctx.drawImage(next,(canvas.width-nw)/2,(canvas.height-nh)/2,nw,nh);ctx.globalAlpha=1;
    }
-
-   resolve(new Blob(chunks, {type:recorder.mimeType || "video/webm"}));
-  };
-
-  function drawFrame(timestamp) {
-   if (signal.aborted || finished) return;
-   if (!startTime) startTime = timestamp;
-
-   const elapsed = (timestamp - startTime) / 1000;
-   const progress = Math.min(elapsed / settings.duration, 1);
-   const eased = progress * progress * (3 - 2 * progress);
-
-   ctx.fillStyle = "#050812";
-   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-   const fit = Math.max(canvas.width / img.width, canvas.height / img.height);
-   let zoom = 1, driftX = 0, driftY = 0;
-
-   switch (settings.style) {
-    case "zoom-in":
-     zoom = 1 + 0.22 * eased;
-     break;
-    case "zoom-out":
-     zoom = 1.22 - 0.22 * eased;
-     break;
-    case "pan-left":
-     driftX = canvas.width * 0.08 * eased;
-     break;
-    case "pan-right":
-     driftX = -canvas.width * 0.08 * eased;
-     break;
-    case "cinematic":
-     zoom = 1 + 0.16 * eased;
-     driftX = Math.sin(progress * Math.PI) * canvas.width * 0.025;
-     driftY = Math.cos(progress * Math.PI) * canvas.height * 0.012;
-     break;
-    case "natural":
-    case "custom":
-     zoom = 1 + 0.08 * eased;
-     driftX = Math.sin(progress * Math.PI) * canvas.width * 0.025;
-     driftY = Math.sin(progress * Math.PI) * canvas.height * 0.01;
-     break;
-    default:
-     zoom = 1 + 0.08 * eased;
-     driftX = Math.sin(progress * Math.PI) * canvas.width * 0.02;
+   if(settings.overlayText){
+    const size=Math.max(18,Math.round(canvas.width*.045));ctx.font="bold "+size+"px Arial";
+    ctx.textAlign="center";ctx.textBaseline="middle";
+    const y=settings.textPosition==="top"?size*1.6:settings.textPosition==="center"?canvas.height/2:canvas.height-size*1.8;
+    const text=settings.overlayText.slice(0,100);
+    ctx.lineWidth=Math.max(3,size*.12);ctx.strokeStyle="#000";ctx.strokeText(text,canvas.width/2,y,canvas.width*.9);
+    ctx.fillStyle="#fff";ctx.fillText(text,canvas.width/2,y,canvas.width*.9);
    }
-
-   const drawWidth = img.width * fit * zoom;
-   const drawHeight = img.height * fit * zoom;
-   const x = (canvas.width - drawWidth) / 2 - driftX;
-   const y = (canvas.height - drawHeight) / 2 - driftY;
-
-   ctx.drawImage(img, x, y, drawWidth, drawHeight);
-
-   setProgress(Math.round(progress * 100),
-    "Rendering local camera animation: " + Math.round(progress * 100) + "%");
-
-   if (progress >= 1) {
-    if (recorder.state !== "inactive") recorder.stop();
-    return;
-   }
-
-   animationFrame = requestAnimationFrame(drawFrame);
+   setProgress(Math.round(progress*100),"Rendering local photo video: "+Math.round(progress*100)+"%");
+   if(progress>=1){if(recorder.state!=="inactive")recorder.stop();return;}
+   frame=requestAnimationFrame(draw);
   }
-
-  try {
-   recorder.start(250);
-   animationFrame = requestAnimationFrame(drawFrame);
-  } catch (error) {
-   if (!finished) {
-    finished = true;
-    cleanup();
-    reject(new Error("Could not start video recording."));
-   }
-  }
+  try{recorder.start(250);frame=requestAnimationFrame(draw);}
+  catch(e){if(!finished){finished=true;cleanup();reject(new Error("Could not start recording."));}}
  });
 }
-
-function showLocalVideo(blob) {
- clearVideo();
-
- videoObjectURL = URL.createObjectURL(blob);
- outputVideo.src = videoObjectURL;
- outputVideo.classList.remove("hidden");
-
- const extension = blob.type.includes("mp4") ? "mp4" : "webm";
- download.href = videoObjectURL;
- download.download = "dan-ai-video." + extension;
- download.classList.remove("hidden");
-
- videoInfo.textContent = "Video completed · " + extension.toUpperCase() +
-  " · " + (blob.size / 1024 / 1024).toFixed(2) + " MB.";
+function showVideo(blob){
+ clearVideo();videoURL=URL.createObjectURL(blob);$("outputVideo").src=videoURL;
+ $("outputVideo").classList.remove("hidden");
+ const ext=blob.type.includes("mp4")?"mp4":"webm";
+ $("download").href=videoURL;$("download").download="dan-ai-video."+ext;$("download").classList.remove("hidden");
+ $("videoInfo").textContent="Video ready · "+ext.toUpperCase()+" · "+(blob.size/1024/1024).toFixed(2)+" MB";
 }
-
-function getEndpoint() {
- const value = $("apiEndpoint").value.trim();
- if (!value) throw new Error("Enter your AI backend URL first.");
- let url;
-
- try {
-  url = new URL(value);
- } catch (error) {
-  throw new Error("The backend URL is invalid.");
- }
-
- if (!["https:", "http:"].includes(url.protocol)) {
-  throw new Error("Use a valid HTTP or HTTPS backend URL.");
- }
-
- if (location.protocol === "https:" && url.protocol !== "https:") {
-  throw new Error("An HTTPS page requires an HTTPS backend URL.");
- }
-
- return url.href;
+function getEndpoint(){
+ const raw=$("apiEndpoint").value.trim();if(!raw)throw new Error("Enter your AI backend URL first.");
+ let u;try{u=new URL(raw);}catch(e){throw new Error("The backend URL is invalid.");}
+ if(!["https:","http:"].includes(u.protocol))throw new Error("Use an HTTP or HTTPS URL.");
+ if(location.protocol==="https:"&&u.protocol!=="https:")throw new Error("An HTTPS page requires an HTTPS backend.");
+ return u.href;
 }
-
-async function createAIVideo(file, settings, signal) {
- const endpoint = getEndpoint();
- const form = new FormData();
-
- form.append("photo", file, file.name);
- form.append("settings", JSON.stringify(settings));
-
- setProgress(5, "Uploading photo and AI instructions...");
-
- const response = await fetch(endpoint, {
-  method:"POST",
-  body:form,
-  signal,
-  credentials:"omit"
- });
-
- if (!response.ok) {
-  let message = "AI backend returned HTTP " + response.status + ".";
-
-  try {
-   const errorData = await response.json();
-   if (errorData.error) message = String(errorData.error);
-   else if (errorData.message) message = String(errorData.message);
-  } catch (error) {}
-
-  throw new Error(message);
+async function createAIVideo(files,settings,signal){
+ const form=new FormData();files.forEach((f,i)=>form.append("photos",f,f.name));
+ form.append("photo",files[0],files[0].name);form.append("settings",JSON.stringify(settings));
+ if(musicFile&&settings.music==="upload")form.append("music",musicFile,musicFile.name);
+ setProgress(5,"Uploading photos and settings to your AI service...");
+ const response=await fetch(getEndpoint(),{method:"POST",body:form,signal,credentials:"omit"});
+ if(!response.ok){
+  let msg="AI backend returned HTTP "+response.status+".";
+  try{const d=await response.json();msg=String(d.error||d.message||msg);}catch(e){}
+  throw new Error(msg);
  }
-
- const contentType = response.headers.get("content-type") || "";
-
- if (contentType.startsWith("video/") ||
-     contentType === "application/octet-stream") {
-  setProgress(95, "Receiving generated video...");
-  const blob = await response.blob();
-
-  if (!blob.size) throw new Error("The AI service returned an empty video.");
-  return blob;
+ const type=(response.headers.get("content-type")||"").toLowerCase();
+ if(type.startsWith("video/")||type==="application/octet-stream"){
+  const blob=await response.blob();if(!blob.size)throw new Error("AI service returned an empty video.");return blob;
  }
-
- let data;
-
- try {
-  data = await response.json();
- } catch (error) {
-  throw new Error("Unexpected backend response. Return a video file or JSON with video_url.");
+ let data;try{data=await response.json();}catch(e){throw new Error("Unexpected response. Return a video or JSON containing video_url.");}
+ if(data.error)throw new Error(String(data.error));
+ if(data.video_url){
+  const r=await fetch(data.video_url,{signal});if(!r.ok)throw new Error("Could not download the generated video.");
+  const b=await r.blob();if(!b.size)throw new Error("Returned video is empty.");return b;
  }
-
- if (data.error) throw new Error(String(data.error));
-
- if (data.video_url) {
-  const videoResponse = await fetch(data.video_url, {signal});
-
-  if (!videoResponse.ok) {
-   throw new Error("Could not download the generated video from the returned URL.");
-  }
-
-  const blob = await videoResponse.blob();
-  if (!blob.size) throw new Error("The returned video is empty.");
-  return blob;
+ if(data.video_base64){
+  const binary=atob(data.video_base64),bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+  return new Blob([bytes],{type:data.mime_type||"video/mp4"});
  }
-
- if (data.video_base64) {
-  const binary = atob(data.video_base64);
-  const bytes = new Uint8Array(binary.length);
-
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-
-  return new Blob([bytes], {type:data.mime_type || "video/mp4"});
- }
-
- if (data.job_id) {
-  throw new Error(
-   "The AI backend returned a job ID. This interface needs the provider's job-status endpoint to retrieve completed videos."
-  );
- }
-
- throw new Error("The backend response did not contain video_url or video_base64.");
+ if(data.job_id)throw new Error("Backend returned a job ID. Add the provider's job-status polling endpoint to retrieve the completed video.");
+ throw new Error("Backend response needs video_url or video_base64.");
 }
-
-function showSpeechPreview() {
- const text = $("speechText").value.trim();
-
- if (!text) {
-  setStatus("Write the words you want to hear first.", "error");
-  $("speechText").focus();
-  return;
+function speechPreview(){
+ const text=$("speechText").value.trim();if(!text){setStatus("Enter the speech text first.","error");return;}
+ if(!("speechSynthesis"in window)){setStatus("Speech preview is not supported by this browser.","error");return;}
+ speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang=$("speechLanguage").value;utterance.rate=1;utterance.pitch=1;
+ const pref=$("voiceStyle").value,lang=utterance.lang.split("-")[0];
+ const voices=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().startsWith(lang.toLowerCase()));
+ if(voices.length){
+  let v=voices[0];
+  if(pref==="female")v=voices.find(x=>/female|woman/i.test(x.name))||v;
+  if(pref==="male")v=voices.find(x=>/male|man/i.test(x.name))||v;
+  utterance.voice=v;
  }
-
- if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
-  setStatus("Speech preview is not supported by this browser.", "error");
-  return;
- }
-
- window.speechSynthesis.cancel();
-
- const utterance = new SpeechSynthesisUtterance(text);
- utterance.lang = $("speechLanguage").value;
- utterance.rate = 1;
- utterance.pitch = 1;
-
- const preferred = $("voiceStyle").value;
- const voices = window.speechSynthesis.getVoices();
-
- const languagePrefix = utterance.lang.split("-")[0];
- const matching = voices.filter(voice =>
-  voice.lang.toLowerCase().startsWith(languagePrefix.toLowerCase())
- );
-
- if (matching.length) {
-  let voice = matching[0];
-
-  if (preferred === "female") {
-   voice = matching.find(v => /female|woman/i.test(v.name)) || voice;
-  } else if (preferred === "male") {
-   voice = matching.find(v => /male|man/i.test(v.name)) || voice;
-  }
-
-  utterance.voice = voice;
- }
-
- utterance.onstart = () => setStatus("Playing device speech preview. This audio is not yet part of your video.", "info");
- utterance.onend = () => setStatus("Speech preview finished.");
- utterance.onerror = () => setStatus("Speech preview failed. Check your device's speech support.", "error");
-
- window.speechSynthesis.speak(utterance);
+ utterance.onstart=()=>setStatus("Playing device speech preview. It is not added to the video.","info");
+ utterance.onend=()=>setStatus("Speech preview finished.");
+ utterance.onerror=()=>setStatus("Speech preview failed; check your device voices.","error");
+ speechSynthesis.speak(utterance);
 }
-
-$("speakPreview").addEventListener("click", showSpeechPreview);
-
-$("stopSpeech").addEventListener("click", () => {
- if ("speechSynthesis" in window) window.speechSynthesis.cancel();
- setStatus("Speech preview stopped.");
+$("speakPreview").addEventListener("click",speechPreview);
+$("stopSpeech").addEventListener("click",()=>{if("speechSynthesis"in window)speechSynthesis.cancel();setStatus("Speech preview stopped.");});
+$("useAI").addEventListener("change",()=>{
+ const enabled=$("useAI").checked;
+ $("serviceBadge").textContent=enabled?"AI MODE SELECTED":"LOCAL MODE";
+ $("serviceInfo").textContent=enabled?"A working backend and compatible AI provider are required.":"Local mode creates camera movement and transitions; it does not generate real body movement or speech.";
+ if(enabled){$("style").value="talking";$("movement").value="talk";}
 });
-
-$("useAI").addEventListener("change", () => {
- const enabled = $("useAI").checked;
-
- $("serviceBadge").textContent = enabled ? "AI MODE SELECTED" : "LOCAL MODE";
- $("serviceInfo").textContent = enabled
-  ? "AI mode selected. A working backend URL and compatible AI service are required before generation."
-  : "Local mode creates camera movement over your photo. It does not create real body movement or speech.";
-
- if (enabled) {
-  $("style").value = "talking";
-  $("movement").value = "talk";
+$("generate").addEventListener("click",async()=>{
+ if(isGenerating)return;
+ if(!photos.length){setStatus("Please upload at least one photo.","error");return;}
+ const settings=getSettings(),useAI=$("useAI").checked;
+ if(!settings.prompt&&!settings.aiPrompt&&!settings.speechText&&!settings.overlayText){setStatus("Describe your video or add text/speech first.","error");return;}
+ if(settings.music==="upload"&&!musicFile){setStatus("Choose an audio file or select No background music.","error");return;}
+ if(!useAI&&(settings.duration>60||settings.quality==="4k")){setStatus("Local mode supports up to 60 seconds and 1080p. Use a connected AI backend for longer videos or 4K.","error");return;}
+ if(!useAI&&(["walking","smiling","dancing","talking"].includes(settings.style)||settings.background!=="original"||["talk","walk","dance","smile","wave","custom"].includes(settings.movement)||settings.speechText||settings.music!=="none"||settings.lipSync||settings.subtitles)){
+  setStatus("Your selected speech, body movement, background, music or subtitles need AI mode. Connect a compatible backend and enable Use the connected AI backend. Local mode can animate photos and overlay text only.","error");return;
  }
-});
-
-generate.addEventListener("click", async () => {
- if (isGenerating) return;
-
- if (!selectedImage) {
-  setStatus("Please upload a photo first.", "error");
-  photo.focus();
-  return;
- }
-
- const settings = getSettings();
- const useAI = $("useAI").checked;
- const aiStyles = ["walking","smiling","dancing","talking"];
-
- if (!settings.prompt && !settings.aiPrompt && !settings.speechText) {
-  setStatus("Describe the video or enter the words the person should say.", "error");
-  promptInput.focus();
-  return;
- }
-
- if (!useAI && (aiStyles.includes(settings.style) ||
-     ["talk","walk","dance","smile","wave","custom"].includes(settings.movement) ||
-     settings.speechText)) {
-  setStatus(
-   "Your requested speech or body movement needs AI mode. Connect a compatible backend URL and enable Use the connected AI backend. Local mode only creates camera movement.",
-   "error"
-  );
-  return;
- }
-
- if (useAI) {
-  try {
-   getEndpoint();
-  } catch (error) {
-   setStatus(error.message, "error");
-   $("apiEndpoint").focus();
-   return;
-  }
- }
-
- const thisGeneration = ++generationId;
- activeController = new AbortController();
- const signal = activeController.signal;
-
- setBusy(true);
- clearVideo();
- setProgress(0, "Starting video creation...");
- setStatus(useAI ? "Sending your photo to the configured AI backend..." : "Creating your photo animation...", "info");
-
- try {
-  const blob = useAI
-   ? await createAIVideo(selectedImage, settings, signal)
-   : await createLocalVideo(selectedImage, settings, signal);
-
-  if (signal.aborted || thisGeneration !== generationId) return;
-
-  showLocalVideo(blob);
-  setProgress(100, "Video completed.");
-  setStatus(useAI
-   ? "AI backend returned a video successfully. Check playback and audio before downloading."
-   : "Local camera animation created successfully.");
- } catch (error) {
-  if (error.name === "AbortError") {
-   setStatus("Generation cancelled.", "error");
-  } else {
-   setStatus(error.message || "Something went wrong.", "error");
-  }
-
-  videoInfo.textContent = "Video creation did not complete.";
- } finally {
-  if (thisGeneration === generationId) {
-   activeController = null;
-   setBusy(false);
-  }
+ if(useAI){try{getEndpoint();}catch(e){setStatus(e.message,"error");$("apiEndpoint").focus();return;}}
+ const id=++generationId;activeController=new AbortController();const signal=activeController.signal;
+ setBusy(true);clearVideo();setProgress(0,"Starting video generation...");
+ setStatus(useAI?"Sending photos to the configured AI service...":"Creating a local photo animation...","info");
+ try{
+  const blob=useAI?await createAIVideo(photos,settings,signal):await createLocalVideo(photos,settings,signal);
+  if(signal.aborted||id!==generationId)return;
+  showVideo(blob);setProgress(100,"Video completed.");
+  setStatus(useAI?"AI service returned a video. Preview it and download when ready.":"Local photo video created successfully.");
+ }catch(e){
+  setStatus(e.name==="AbortError"?"Generation cancelled.":e.message||"Video generation failed.","error");
+  $("videoInfo").textContent="Video creation did not complete.";
+ }finally{
+  if(id===generationId){activeController=null;setBusy(false);}
  }
 });
+$("cancel").addEventListener("click",()=>{if(activeController)activeController.abort();});
+function resetProject(){
+ if(isGenerating){if(activeController)activeController.abort();return;}
+ if("speechSynthesis"in window)speechSynthesis.cancel();
+ releasePhotoURLs();photos=[];renderPhotos();clearVideo();
+ $("prompt").value="";$("promptCount").textContent="0";$("style").value="natural";
+ $("background").value="original";$("backgroundPrompt").value="";
+ $("quality").value="720p";$("duration").value="5";$("ratio").value="9:16";
+ $("music").value="none";$("musicFile").value="";musicFile=null;
+ if(musicURL){URL.revokeObjectURL(musicURL);musicURL=null;}
+ $("musicInfo").textContent="No music selected.";
+ $("overlayText").value="";$("textPosition").value="bottom";
+ $("speechText").value="";$("speechLanguage").value="am-ET";$("voiceStyle").value="natural";
+ $("movement").value="none";$("aiPrompt").value="";$("lipSync").checked=true;
+ $("keepIdentity").checked=true;$("subtitles").checked=false;$("useAI").checked=false;
+ $("serviceBadge").textContent="LOCAL MODE";
+ $("serviceInfo").textContent="Local mode creates simple camera-motion video. It does not generate real body movement or speech.";
+ hideProgress();$("imageInfo").textContent="No photos selected.";
+ $("videoInfo").textContent="Your completed video will appear here.";setStatus("Project reset. Add photos to begin.");
+}
+$("clear").addEventListener("click",resetProject);
+$("nextButton").addEventListener("click",()=>{$("landing").classList.add("hidden");$("studio").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});});
+$("backButton").addEventListener("click",()=>{$("studio").classList.add("hidden");$("landing").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});});
 
-cancelButton.addEventListener("click", () => {
- if (activeController) activeController.abort();
+const PROJECTS_KEY="danAiVideoStudioProjectsV2";
+function readProjects(){try{return JSON.parse(localStorage.getItem(PROJECTS_KEY)||"{}");}catch(e){return {};}}
+function refreshProjects(){
+ const select=$("projectList"),old=select.value,projects=readProjects();
+ select.innerHTML='<option value="">Choose a saved project</option>';
+ Object.keys(projects).sort().forEach(name=>{const op=document.createElement("option");op.value=name;op.textContent=name;select.appendChild(op);});
+ if(projects[old])select.value=old;
+}
+function projectData(){
+ return {version:2,name:$("projectName").value.trim()||"My DAN project",savedAt:new Date().toISOString(),
+ settings:getSettings(),apiEndpoint:$("apiEndpoint").value.trim(),useAI:$("useAI").checked};
+}
+function saveProject(){
+ const data=projectData(),projects=readProjects();projects[data.name]=data;
+ try{localStorage.setItem(PROJECTS_KEY,JSON.stringify(projects));refreshProjects();$("projectList").value=data.name;setStatus("Project settings saved on this device.");}
+ catch(e){setStatus("Could not save. Browser storage may be full.","error");}
+}
+function applyProject(data){
+ if(!data||!data.settings)return;
+ const s=data.settings;
+ const fields={prompt:"prompt",style:"style",background:"background",backgroundPrompt:"backgroundPrompt",
+ quality:"quality",duration:"duration",aspectRatio:"ratio",music:"music",overlayText:"overlayText",
+ textPosition:"textPosition",speechText:"speechText",speechLanguage:"speechLanguage",
+ voiceStyle:"voiceStyle",movement:"movement",aiPrompt:"aiPrompt"};
+ Object.entries(fields).forEach(([key,id])=>{if(s[key]!==undefined)$(id).value=s[key];});
+ ["lipSync","keepIdentity","subtitles"].forEach(key=>{if(s[key]!==undefined)$(key).checked=!!s[key];});
+ $("promptCount").textContent=$("prompt").value.length;
+ $("apiEndpoint").value=data.apiEndpoint||"";$("useAI").checked=!!data.useAI;
+ $("serviceBadge").textContent=data.useAI?"AI MODE SELECTED":"LOCAL MODE";
+ $("projectName").value=data.name||"";setStatus("Project settings loaded. Re-select photos and music files if needed.");
+}
+$("saveProject").addEventListener("click",saveProject);
+$("saveProjectTop").addEventListener("click",saveProject);
+$("loadProject").addEventListener("click",()=>{
+ const data=readProjects()[$("projectList").value];
+ if(!data){setStatus("Choose a saved project first.","error");return;}applyProject(data);
 });
-
-clearButton.addEventListener("click", () => {
- if (isGenerating) {
-  if (activeController) activeController.abort();
-  return;
- }
-
- if ("speechSynthesis" in window) window.speechSynthesis.cancel();
-
- photo.value = "";
- promptInput.value = "";
- $("promptCount").textContent = "0";
- $("style").value = "natural";
- $("quality").value = "720p";
- $("duration").value = "5";
- $("ratio").value = "9:16";
- $("speechText").value = "";
- $("speechLanguage").value = "en-US";
- $("voiceStyle").value = "natural";
- $("movement").value = "none";
- $("aiPrompt").value = "";
- $("lipSync").checked = true;
- $("keepIdentity").checked = true;
- $("useAI").checked = false;
-
- selectedImage = null;
- imagePreview.removeAttribute("src");
- imagePreview.classList.add("hidden");
-
- releaseImageURL();
- clearVideo();
- hideProgress();
-
- $("serviceBadge").textContent = "LOCAL MODE";
- $("serviceInfo").textContent =
-  "Local mode creates camera movement over your photo. It does not create real body movement or speech.";
-
- imageInfo.textContent = "No image selected.";
- videoInfo.textContent = "Your completed video will appear here.";
- setStatus("Upload a photo to begin.");
+$("loadProjectTop").addEventListener("click",()=>$("loadProject").click());
+$("deleteProject").addEventListener("click",()=>{
+ const name=$("projectList").value;if(!name){setStatus("Choose a project to delete.","error");return;}
+ const projects=readProjects();delete projects[name];
+ try{localStorage.setItem(PROJECTS_KEY,JSON.stringify(projects));refreshProjects();setStatus("Saved project deleted.");}
+ catch(e){setStatus("Could not update project storage.","error");}
 });
-
-window.addEventListener("beforeunload", () => {
- releaseImageURL();
-
- if (videoObjectURL) URL.revokeObjectURL(videoObjectURL);
-
- if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+$("downloadProject").addEventListener("click",()=>{
+ const blob=new Blob([JSON.stringify(projectData(),null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="dan-ai-project.json";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+refreshProjects();renderPhotos();
+window.addEventListener("beforeunload",()=>{
+ releasePhotoURLs();if(videoURL)URL.revokeObjectURL(videoURL);
+ if(musicURL)URL.revokeObjectURL(musicURL);
+ if("speechSynthesis"in window)speechSynthesis.cancel();
 });
 </script>
 </body>
