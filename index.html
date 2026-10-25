@@ -1,116 +1,65 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080b14">
-<meta name="description" content="DAN AI VIDEO STUDIO - Animate photos and create downloadable video previews.">
+<meta name="description" content="DAN AI VIDEO STUDIO - Animate photos, generate AI movement, speech and downloadable videos.">
 <title>DAN AI VIDEO STUDIO</title>
 
 <style>
 :root{
- --bg:#080b14;
- --panel:#121a2a;
- --panel2:#09111f;
- --green:#43f5b2;
- --muted:#9aabc2;
- --line:#2b3a51;
- --red:#ff7185;
+ --bg:#080b14;--panel:#121a2a;--panel2:#09111f;
+ --green:#43f5b2;--muted:#9aabc2;--line:#2b3a51;--red:#ff7185;
 }
 *{box-sizing:border-box}
-body{
- margin:0;background:var(--bg);color:#fff;
- font-family:Arial,sans-serif;
-}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 button:disabled{opacity:.55;cursor:not-allowed}
-header{
- padding:25px 15px;text-align:center;
- border-bottom:1px solid var(--line);
- background:linear-gradient(180deg,#15243a,#080b14);
-}
-.logo{
- font-size:clamp(24px,6vw,36px);
- font-weight:900;color:var(--green);
- letter-spacing:2px;
-}
+header{padding:25px 15px;text-align:center;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#15243a,#080b14)}
+.logo{font-size:clamp(24px,6vw,36px);font-weight:900;color:var(--green);letter-spacing:2px}
 header p{color:var(--muted);font-size:14px}
-.tag,.pill{
- display:inline-block;background:#20352f;color:var(--green);
- padding:7px 12px;border-radius:20px;font-size:11px;
-}
+.tag,.pill{display:inline-block;background:#20352f;color:var(--green);padding:7px 12px;border-radius:20px;font-size:11px}
 main{width:min(100% - 24px,760px);margin:22px auto}
-.card{
- background:var(--panel);border:1px solid var(--line);
- padding:18px;border-radius:18px;margin-bottom:16px;
-}
+.card{background:var(--panel);border:1px solid var(--line);padding:18px;border-radius:18px;margin-bottom:16px}
 h2{font-size:18px;margin:0 0 14px}
+h3{font-size:15px;margin:18px 0 8px}
 label{display:block;font-weight:bold;margin:16px 0 8px}
-input,select,textarea{
- width:100%;padding:13px;background:var(--panel2);
- color:#fff;border:1px solid var(--line);border-radius:10px;
-}
+input,select,textarea{width:100%;padding:13px;background:var(--panel2);color:#fff;border:1px solid var(--line);border-radius:10px}
 input[type=file]{padding:11px}
 textarea{min-height:100px;resize:vertical}
-input:focus,select:focus,textarea:focus{
- outline:2px solid var(--green);outline-offset:1px;
-}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--green);outline-offset:1px}
 button{border:0;border-radius:10px;padding:14px;font-weight:bold}
-.primary{
- background:var(--green);color:#06130e;width:100%;margin-top:15px;
-}
-.secondary{
- background:#26354b;color:#fff;width:100%;margin-top:10px;
-}
-.tertiary{
- background:#20352f;color:var(--green);width:100%;margin-top:10px;
-}
+.primary{background:var(--green);color:#06130e;width:100%;margin-top:15px}
+.secondary{background:#26354b;color:#fff;width:100%;margin-top:10px}
+.tertiary{background:#20352f;color:var(--green);width:100%;margin-top:10px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.preview{
- display:block;width:100%;max-height:440px;
- object-fit:contain;border-radius:12px;margin-top:14px;
- background:#060a12;
-}
+.preview{display:block;width:100%;max-height:440px;object-fit:contain;border-radius:12px;margin-top:14px;background:#060a12}
 .hidden{display:none!important}
 .small{font-size:13px;color:var(--muted);line-height:1.7}
-.status{
- padding:13px;background:var(--panel2);border-radius:10px;
- color:var(--green);white-space:pre-wrap;line-height:1.7;
- overflow-wrap:anywhere;font-size:13px;
-}
+.status{padding:13px;background:var(--panel2);border-radius:10px;color:var(--green);white-space:pre-wrap;line-height:1.7;overflow-wrap:anywhere;font-size:13px}
 .status.error{color:var(--red)}
 .status.info{color:#8fc7ff}
-.progress{
- width:100%;height:8px;background:#26354b;
- border-radius:10px;overflow:hidden;margin-top:12px;
-}
-.progress div{
- height:100%;width:0%;background:var(--green);
- transition:width .15s;
-}
+.progress{width:100%;height:8px;background:#26354b;border-radius:10px;overflow:hidden;margin-top:12px}
+.progress div{height:100%;width:0%;background:var(--green);transition:width .15s}
 hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 a{color:var(--green)}
-.note{
- padding:12px;border:1px solid var(--line);
- border-radius:10px;color:var(--muted);
- font-size:12px;line-height:1.7;
-}
+.note{padding:12px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:12px;line-height:1.7}
 footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
-.dropzone{
- border:2px dashed #40516b;border-radius:14px;
- padding:16px;text-align:center;transition:.2s;
-}
+.dropzone{border:2px dashed #40516b;border-radius:14px;padding:16px;text-align:center;transition:.2s}
 .dropzone.drag{border-color:var(--green);background:#142b28}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 .actions button{flex:1;min-width:130px}
 .actions a{flex:1;text-decoration:none}
 .actions a button{margin-top:0}
-.settings-row{display:flex;gap:10px;align-items:center}
+.check-row{display:flex;gap:10px;align-items:flex-start;margin:12px 0;color:var(--muted);font-size:13px;line-height:1.6}
+.check-row input{width:auto;margin-top:3px;accent-color:var(--green)}
+.preview-audio{width:100%;margin-top:12px}
 @media(max-width:480px){
  main{width:calc(100% - 16px);margin:12px auto}
- .card{padding:14px}
- .grid{gap:8px}
+ .card{padding:14px}.grid{gap:8px}
 }
 </style>
 </head>
@@ -137,8 +86,7 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
  <p id="imageInfo" class="small">No image selected.</p>
 
  <label for="prompt">2. Describe your video</label>
- <textarea id="prompt" maxlength="1500"
- placeholder="Example: Slowly zoom in, cinematic lighting, gentle camera movement."></textarea>
+ <textarea id="prompt" maxlength="1500" placeholder="Example: Make the person smile, walk forward, dance naturally, and say hello in English."></textarea>
  <p class="small"><span id="promptCount">0</span>/1500 characters</p>
 
  <label for="style">Movement style</label>
@@ -149,10 +97,10 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
   <option value="pan-right">Pan right</option>
   <option value="zoom-in">Zoom in</option>
   <option value="zoom-out">Zoom out</option>
-  <option value="walking">Walking — requires AI API</option>
-  <option value="smiling">Smiling — requires AI API</option>
-  <option value="dancing">Dancing — requires AI API</option>
-  <option value="talking">Talking — requires AI API</option>
+  <option value="walking">Walking — AI service required</option>
+  <option value="smiling">Smiling — AI service required</option>
+  <option value="dancing">Dancing — AI service required</option>
+  <option value="talking">Talking — AI service required</option>
   <option value="custom">Custom camera movement</option>
  </select>
 
@@ -181,6 +129,81 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
   <option value="1:1">1:1 — Square</option>
  </select>
 
+ <hr>
+ <h2>2. AI movement and speech</h2>
+
+ <label for="speechText">What should the person say?</label>
+ <textarea id="speechText" maxlength="1000" placeholder="Write the exact words the person should speak. Example: Hello everyone, welcome to my channel!"></textarea>
+
+ <div class="grid">
+  <div>
+   <label for="speechLanguage">Speech language</label>
+   <select id="speechLanguage">
+    <option value="en-US">English</option>
+    <option value="am-ET">Amharic</option>
+    <option value="ar-SA">Arabic</option>
+    <option value="so-SO">Somali</option>
+    <option value="fr-FR">French</option>
+    <option value="sw-KE">Swahili</option>
+    <option value="om-ET">Afaan Oromoo</option>
+   </select>
+  </div>
+  <div>
+   <label for="voiceStyle">Voice style</label>
+   <select id="voiceStyle">
+    <option value="natural">Natural</option>
+    <option value="male">Male voice preference</option>
+    <option value="female">Female voice preference</option>
+   </select>
+  </div>
+ </div>
+
+ <label for="movement">Body movement</label>
+ <select id="movement">
+  <option value="none">Camera movement only</option>
+  <option value="talk">Talking and lip sync</option>
+  <option value="walk">Walking</option>
+  <option value="dance">Dancing</option>
+  <option value="smile">Smile and facial expressions</option>
+  <option value="wave">Wave hand</option>
+  <option value="custom">Follow my written instructions</option>
+ </select>
+
+ <label for="aiPrompt">Additional AI instructions</label>
+ <textarea id="aiPrompt" maxlength="1500" placeholder="Example: Make the person dance happily while speaking. Keep their face and clothes consistent."></textarea>
+
+ <label class="check-row">
+  <input id="lipSync" type="checkbox" checked>
+  <span>Synchronize the person's mouth with the generated speech when supported by the AI service.</span>
+ </label>
+
+ <label class="check-row">
+  <input id="keepIdentity" type="checkbox" checked>
+  <span>Preserve the original person's appearance and clothing as closely as the AI service allows.</span>
+ </label>
+
+ <button id="speakPreview" class="secondary" type="button">PREVIEW SPEECH ON THIS DEVICE</button>
+ <button id="stopSpeech" class="tertiary" type="button">STOP SPEECH PREVIEW</button>
+
+ <p class="note">
+  Device speech preview only plays audio; it does not animate the uploaded person or add that speech to the exported video. Full speech, lip sync and body animation require a compatible AI video service.
+ </p>
+
+ <hr>
+ <h2>3. AI service connection</h2>
+ <label for="apiEndpoint">Your secure AI backend URL</label>
+ <input id="apiEndpoint" type="url" placeholder="https://your-server.example/api/generate-video">
+ <p class="small">Enter the URL of your own backend that accepts the image and video settings. Leave blank to use local camera animation.</p>
+
+ <label class="check-row">
+  <input id="useAI" type="checkbox">
+  <span>Use the connected AI backend for talking, dancing, walking, facial expressions and speech.</span>
+ </label>
+
+ <p class="note">
+  Never put an API secret key in this HTML. The backend must authenticate requests, call your chosen AI provider, and return a video file or a JSON response containing a video URL. Provider-specific request formats may require backend adjustments.
+ </p>
+
  <button id="generate" class="primary">GENERATE VIDEO</button>
  <button id="cancel" class="tertiary hidden">CANCEL GENERATION</button>
  <button id="clear" class="secondary">RESET PROJECT</button>
@@ -191,15 +214,12 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
  </div>
 
  <hr>
- <p id="status" class="status" role="status" aria-live="polite">
- Upload a photo to begin.
- </p>
+ <p id="status" class="status" role="status" aria-live="polite">Upload a photo to begin.</p>
 </section>
 
 <section class="card">
- <h2>3. Your video</h2>
- <video id="outputVideo" class="preview hidden"
- controls playsinline preload="metadata"></video>
+ <h2>4. Your video</h2>
+ <video id="outputVideo" class="preview hidden" controls playsinline preload="metadata"></video>
 
  <div class="actions">
   <a id="download" class="hidden" download="dan-ai-video.webm">
@@ -211,16 +231,13 @@ footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
 </section>
 
 <section class="card">
- <h2>4. AI service connection</h2>
- <span class="pill">LOCAL MODE</span>
- <p class="small">
- This version creates a downloadable video with camera movement over your photo.
- The prompt is saved in the project settings but cannot create new facial expressions,
- body movements or speech without a connected AI service.
+ <h2>5. AI service status</h2>
+ <span id="serviceBadge" class="pill">LOCAL MODE</span>
+ <p id="serviceInfo" class="small">
+  Local mode creates a downloadable video with camera movement. Real body movement, speech generation and lip synchronization require a compatible connected AI service.
  </p>
  <p class="note">
- To enable real walking, dancing, talking or facial animation, connect a video-generation
- API through a secure backend. Do not place private API keys in this HTML file.
+  This interface does not automatically provide an AI service, API credits, or a backend. Configure a real compatible service before enabling AI generation. Always test with a short clip first.
  </p>
 </section>
 </main>
@@ -264,8 +281,7 @@ function setStatus(message, type = "success") {
 
 function setProgress(value, message) {
  progressBox.classList.remove("hidden");
- progressBar.style.width =
-  Math.max(0, Math.min(100, value)) + "%";
+ progressBar.style.width = Math.max(0, Math.min(100, value)) + "%";
  progressText.textContent = message;
 }
 
@@ -305,9 +321,7 @@ function clearVideo() {
 }
 
 function loadSelectedFile(file) {
- if (isGenerating) return;
-
- if (!file) return;
+ if (isGenerating || !file) return;
 
  const allowed = ["image/jpeg", "image/png", "image/webp"];
 
@@ -359,9 +373,7 @@ photo.addEventListener("change", () => {
 
   if (isGenerating || name !== "drop") return;
 
-  const file = event.dataTransfer.files &&
-   event.dataTransfer.files[0];
-
+  const file = event.dataTransfer.files && event.dataTransfer.files[0];
   if (file) loadSelectedFile(file);
  });
 });
@@ -376,7 +388,14 @@ function getSettings() {
   style: $("style").value,
   quality: $("quality").value,
   duration: Number($("duration").value),
-  aspectRatio: $("ratio").value
+  aspectRatio: $("ratio").value,
+  speechText: $("speechText").value.trim(),
+  speechLanguage: $("speechLanguage").value,
+  voiceStyle: $("voiceStyle").value,
+  movement: $("movement").value,
+  aiPrompt: $("aiPrompt").value.trim(),
+  lipSync: $("lipSync").checked,
+  keepIdentity: $("keepIdentity").checked
  };
 }
 
@@ -413,30 +432,23 @@ function loadImage(file, signal) {
   };
 
   signal.addEventListener("abort", onAbort, { once: true });
+
   if (signal.aborted) {
    onAbort();
    return;
   }
+
   img.src = url;
  });
 }
 
 function getDimensions(ratio, quality) {
- const heights = {
-  "480p": 480,
-  "720p": 720,
-  "1080p": 1080
- };
-
+ const heights = {"480p":480, "720p":720, "1080p":1080};
  const height = heights[quality] || 720;
 
- if (ratio === "16:9") {
-  return { width: Math.round(height * 16 / 9), height };
- }
- if (ratio === "1:1") {
-  return { width: height, height };
- }
- return { width: Math.round(height * 9 / 16), height };
+ if (ratio === "16:9") return {width:Math.round(height * 16 / 9),height};
+ if (ratio === "1:1") return {width:height,height};
+ return {width:Math.round(height * 9 / 16),height};
 }
 
 function chooseMimeType() {
@@ -448,9 +460,7 @@ function chooseMimeType() {
   "video/webm"
  ];
 
- return types.find(type =>
-  MediaRecorder.isTypeSupported(type)
- ) || "";
+ return types.find(type => MediaRecorder.isTypeSupported(type)) || "";
 }
 
 async function createLocalVideo(file, settings, signal) {
@@ -465,31 +475,20 @@ async function createLocalVideo(file, settings, signal) {
  const img = await loadImage(file, signal);
  if (signal.aborted) throw new Error("Generation cancelled.");
 
- const dimensions = getDimensions(
-  settings.aspectRatio,
-  settings.quality
- );
-
+ const dimensions = getDimensions(settings.aspectRatio, settings.quality);
  const canvas = document.createElement("canvas");
  canvas.width = dimensions.width;
  canvas.height = dimensions.height;
 
- const ctx = canvas.getContext("2d", {
-  alpha: false
- });
-
+ const ctx = canvas.getContext("2d", {alpha:false});
  if (!ctx) throw new Error("Could not initialize video rendering.");
 
  const stream = canvas.captureStream(24);
  const mimeType = chooseMimeType();
-
  let recorder;
 
  try {
-  recorder = new MediaRecorder(
-   stream,
-   mimeType ? { mimeType } : undefined
-  );
+  recorder = new MediaRecorder(stream, mimeType ? {mimeType} : undefined);
  } catch (error) {
   stream.getTracks().forEach(track => track.stop());
   throw new Error("Video recording could not start on this device.");
@@ -522,12 +521,10 @@ async function createLocalVideo(file, settings, signal) {
    reject(new Error("Generation cancelled."));
   }
 
-  signal.addEventListener("abort", onAbort, { once: true });
+  signal.addEventListener("abort", onAbort, {once:true});
 
   recorder.ondataavailable = event => {
-   if (event.data && event.data.size > 0) {
-    chunks.push(event.data);
-   }
+   if (event.data && event.data.size > 0) chunks.push(event.data);
   };
 
   recorder.onerror = () => {
@@ -548,81 +545,61 @@ async function createLocalVideo(file, settings, signal) {
     return;
    }
 
-   resolve(new Blob(chunks, {
-    type: recorder.mimeType || "video/webm"
-   }));
+   resolve(new Blob(chunks, {type:recorder.mimeType || "video/webm"}));
   };
 
   function drawFrame(timestamp) {
    if (signal.aborted || finished) return;
-
    if (!startTime) startTime = timestamp;
 
    const elapsed = (timestamp - startTime) / 1000;
    const progress = Math.min(elapsed / settings.duration, 1);
+   const eased = progress * progress * (3 - 2 * progress);
 
    ctx.fillStyle = "#050812";
    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-   const fit = Math.max(
-    canvas.width / img.width,
-    canvas.height / img.height
-   );
-
-   let zoom = 1;
-   let driftX = 0;
-   let driftY = 0;
-
-   const eased = progress * progress * (3 - 2 * progress);
+   const fit = Math.max(canvas.width / img.width, canvas.height / img.height);
+   let zoom = 1, driftX = 0, driftY = 0;
 
    switch (settings.style) {
     case "zoom-in":
      zoom = 1 + 0.22 * eased;
      break;
-
     case "zoom-out":
      zoom = 1.22 - 0.22 * eased;
      break;
-
     case "pan-left":
      driftX = canvas.width * 0.08 * eased;
      break;
-
     case "pan-right":
      driftX = -canvas.width * 0.08 * eased;
      break;
-
     case "cinematic":
      zoom = 1 + 0.16 * eased;
      driftX = Math.sin(progress * Math.PI) * canvas.width * 0.025;
      driftY = Math.cos(progress * Math.PI) * canvas.height * 0.012;
      break;
-
     case "natural":
     case "custom":
      zoom = 1 + 0.08 * eased;
      driftX = Math.sin(progress * Math.PI) * canvas.width * 0.025;
      driftY = Math.sin(progress * Math.PI) * canvas.height * 0.01;
      break;
-
     default:
-     // These styles need a real AI video service.
      zoom = 1 + 0.08 * eased;
      driftX = Math.sin(progress * Math.PI) * canvas.width * 0.02;
    }
 
    const drawWidth = img.width * fit * zoom;
    const drawHeight = img.height * fit * zoom;
-
    const x = (canvas.width - drawWidth) / 2 - driftX;
    const y = (canvas.height - drawHeight) / 2 - driftY;
 
    ctx.drawImage(img, x, y, drawWidth, drawHeight);
 
-   setProgress(
-    Math.round(progress * 100),
-    "Rendering video: " + Math.round(progress * 100) + "%"
-   );
+   setProgress(Math.round(progress * 100),
+    "Rendering local camera animation: " + Math.round(progress * 100) + "%");
 
    if (progress >= 1) {
     if (recorder.state !== "inactive") recorder.stop();
@@ -653,15 +630,183 @@ function showLocalVideo(blob) {
  outputVideo.classList.remove("hidden");
 
  const extension = blob.type.includes("mp4") ? "mp4" : "webm";
-
  download.href = videoObjectURL;
  download.download = "dan-ai-video." + extension;
  download.classList.remove("hidden");
 
- videoInfo.textContent =
-  "Video completed · " + extension.toUpperCase() +
+ videoInfo.textContent = "Video completed · " + extension.toUpperCase() +
   " · " + (blob.size / 1024 / 1024).toFixed(2) + " MB.";
 }
+
+function getEndpoint() {
+ const value = $("apiEndpoint").value.trim();
+ if (!value) throw new Error("Enter your AI backend URL first.");
+ let url;
+
+ try {
+  url = new URL(value);
+ } catch (error) {
+  throw new Error("The backend URL is invalid.");
+ }
+
+ if (!["https:", "http:"].includes(url.protocol)) {
+  throw new Error("Use a valid HTTP or HTTPS backend URL.");
+ }
+
+ if (location.protocol === "https:" && url.protocol !== "https:") {
+  throw new Error("An HTTPS page requires an HTTPS backend URL.");
+ }
+
+ return url.href;
+}
+
+async function createAIVideo(file, settings, signal) {
+ const endpoint = getEndpoint();
+ const form = new FormData();
+
+ form.append("photo", file, file.name);
+ form.append("settings", JSON.stringify(settings));
+
+ setProgress(5, "Uploading photo and AI instructions...");
+
+ const response = await fetch(endpoint, {
+  method:"POST",
+  body:form,
+  signal,
+  credentials:"omit"
+ });
+
+ if (!response.ok) {
+  let message = "AI backend returned HTTP " + response.status + ".";
+
+  try {
+   const errorData = await response.json();
+   if (errorData.error) message = String(errorData.error);
+   else if (errorData.message) message = String(errorData.message);
+  } catch (error) {}
+
+  throw new Error(message);
+ }
+
+ const contentType = response.headers.get("content-type") || "";
+
+ if (contentType.startsWith("video/") ||
+     contentType === "application/octet-stream") {
+  setProgress(95, "Receiving generated video...");
+  const blob = await response.blob();
+
+  if (!blob.size) throw new Error("The AI service returned an empty video.");
+  return blob;
+ }
+
+ let data;
+
+ try {
+  data = await response.json();
+ } catch (error) {
+  throw new Error("Unexpected backend response. Return a video file or JSON with video_url.");
+ }
+
+ if (data.error) throw new Error(String(data.error));
+
+ if (data.video_url) {
+  const videoResponse = await fetch(data.video_url, {signal});
+
+  if (!videoResponse.ok) {
+   throw new Error("Could not download the generated video from the returned URL.");
+  }
+
+  const blob = await videoResponse.blob();
+  if (!blob.size) throw new Error("The returned video is empty.");
+  return blob;
+ }
+
+ if (data.video_base64) {
+  const binary = atob(data.video_base64);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+
+  return new Blob([bytes], {type:data.mime_type || "video/mp4"});
+ }
+
+ if (data.job_id) {
+  throw new Error(
+   "The AI backend returned a job ID. This interface needs the provider's job-status endpoint to retrieve completed videos."
+  );
+ }
+
+ throw new Error("The backend response did not contain video_url or video_base64.");
+}
+
+function showSpeechPreview() {
+ const text = $("speechText").value.trim();
+
+ if (!text) {
+  setStatus("Write the words you want to hear first.", "error");
+  $("speechText").focus();
+  return;
+ }
+
+ if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+  setStatus("Speech preview is not supported by this browser.", "error");
+  return;
+ }
+
+ window.speechSynthesis.cancel();
+
+ const utterance = new SpeechSynthesisUtterance(text);
+ utterance.lang = $("speechLanguage").value;
+ utterance.rate = 1;
+ utterance.pitch = 1;
+
+ const preferred = $("voiceStyle").value;
+ const voices = window.speechSynthesis.getVoices();
+
+ const languagePrefix = utterance.lang.split("-")[0];
+ const matching = voices.filter(voice =>
+  voice.lang.toLowerCase().startsWith(languagePrefix.toLowerCase())
+ );
+
+ if (matching.length) {
+  let voice = matching[0];
+
+  if (preferred === "female") {
+   voice = matching.find(v => /female|woman/i.test(v.name)) || voice;
+  } else if (preferred === "male") {
+   voice = matching.find(v => /male|man/i.test(v.name)) || voice;
+  }
+
+  utterance.voice = voice;
+ }
+
+ utterance.onstart = () => setStatus("Playing device speech preview. This audio is not yet part of your video.", "info");
+ utterance.onend = () => setStatus("Speech preview finished.");
+ utterance.onerror = () => setStatus("Speech preview failed. Check your device's speech support.", "error");
+
+ window.speechSynthesis.speak(utterance);
+}
+
+$("speakPreview").addEventListener("click", showSpeechPreview);
+
+$("stopSpeech").addEventListener("click", () => {
+ if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+ setStatus("Speech preview stopped.");
+});
+
+$("useAI").addEventListener("change", () => {
+ const enabled = $("useAI").checked;
+
+ $("serviceBadge").textContent = enabled ? "AI MODE SELECTED" : "LOCAL MODE";
+ $("serviceInfo").textContent = enabled
+  ? "AI mode selected. A working backend URL and compatible AI service are required before generation."
+  : "Local mode creates camera movement over your photo. It does not create real body movement or speech.";
+
+ if (enabled) {
+  $("style").value = "talking";
+  $("movement").value = "talk";
+ }
+});
 
 generate.addEventListener("click", async () => {
  if (isGenerating) return;
@@ -673,21 +818,33 @@ generate.addEventListener("click", async () => {
  }
 
  const settings = getSettings();
+ const useAI = $("useAI").checked;
+ const aiStyles = ["walking","smiling","dancing","talking"];
 
- if (!settings.prompt) {
-  setStatus("Please describe the video you want.", "error");
+ if (!settings.prompt && !settings.aiPrompt && !settings.speechText) {
+  setStatus("Describe the video or enter the words the person should say.", "error");
   promptInput.focus();
   return;
  }
 
- const aiStyles = ["walking", "smiling", "dancing", "talking"];
-
- if (aiStyles.includes(settings.style)) {
+ if (!useAI && (aiStyles.includes(settings.style) ||
+     ["talk","walk","dance","smile","wave","custom"].includes(settings.movement) ||
+     settings.speechText)) {
   setStatus(
-   "This movement requires a connected AI video API. Choose a camera movement to create a local video.",
+   "Your requested speech or body movement needs AI mode. Connect a compatible backend URL and enable Use the connected AI backend. Local mode only creates camera movement.",
    "error"
   );
   return;
+ }
+
+ if (useAI) {
+  try {
+   getEndpoint();
+  } catch (error) {
+   setStatus(error.message, "error");
+   $("apiEndpoint").focus();
+   return;
+  }
  }
 
  const thisGeneration = ++generationId;
@@ -697,25 +854,27 @@ generate.addEventListener("click", async () => {
  setBusy(true);
  clearVideo();
  setProgress(0, "Starting video creation...");
- setStatus("Creating your photo animation...", "info");
+ setStatus(useAI ? "Sending your photo to the configured AI backend..." : "Creating your photo animation...", "info");
 
  try {
-  const blob = await createLocalVideo(
-   selectedImage,
-   settings,
-   signal
-  );
+  const blob = useAI
+   ? await createAIVideo(selectedImage, settings, signal)
+   : await createLocalVideo(selectedImage, settings, signal);
 
   if (signal.aborted || thisGeneration !== generationId) return;
 
   showLocalVideo(blob);
   setProgress(100, "Video completed.");
-  setStatus("Video created successfully.");
+  setStatus(useAI
+   ? "AI backend returned a video successfully. Check playback and audio before downloading."
+   : "Local camera animation created successfully.");
  } catch (error) {
-  setStatus(
-   error.message || "Something went wrong.",
-   "error"
-  );
+  if (error.name === "AbortError") {
+   setStatus("Generation cancelled.", "error");
+  } else {
+   setStatus(error.message || "Something went wrong.", "error");
+  }
+
   videoInfo.textContent = "Video creation did not complete.";
  } finally {
   if (thisGeneration === generationId) {
@@ -735,6 +894,8 @@ clearButton.addEventListener("click", () => {
   return;
  }
 
+ if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+
  photo.value = "";
  promptInput.value = "";
  $("promptCount").textContent = "0";
@@ -742,6 +903,14 @@ clearButton.addEventListener("click", () => {
  $("quality").value = "720p";
  $("duration").value = "5";
  $("ratio").value = "9:16";
+ $("speechText").value = "";
+ $("speechLanguage").value = "en-US";
+ $("voiceStyle").value = "natural";
+ $("movement").value = "none";
+ $("aiPrompt").value = "";
+ $("lipSync").checked = true;
+ $("keepIdentity").checked = true;
+ $("useAI").checked = false;
 
  selectedImage = null;
  imagePreview.removeAttribute("src");
@@ -751,6 +920,10 @@ clearButton.addEventListener("click", () => {
  clearVideo();
  hideProgress();
 
+ $("serviceBadge").textContent = "LOCAL MODE";
+ $("serviceInfo").textContent =
+  "Local mode creates camera movement over your photo. It does not create real body movement or speech.";
+
  imageInfo.textContent = "No image selected.";
  videoInfo.textContent = "Your completed video will appear here.";
  setStatus("Upload a photo to begin.");
@@ -759,9 +932,9 @@ clearButton.addEventListener("click", () => {
 window.addEventListener("beforeunload", () => {
  releaseImageURL();
 
- if (videoObjectURL) {
-  URL.revokeObjectURL(videoObjectURL);
- }
+ if (videoObjectURL) URL.revokeObjectURL(videoObjectURL);
+
+ if ("speechSynthesis" in window) window.speechSynthesis.cancel();
 });
 </script>
 </body>
