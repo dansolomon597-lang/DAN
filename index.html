@@ -1,1 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080b14">
+<meta name="description" content="DAN AI VIDEO STUDIO - Animate photos and create downloadable video previews.">
+<title>DAN AI VIDEO STUDIO</title>
 
+<style>
+:root{
+ --bg:#080b14;
+ --panel:#121a2a;
+ --panel2:#09111f;
+ --green:#43f5b2;
+ --muted:#9aabc2;
+ --line:#2b3a51;
+ --red:#ff7185;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:#fff;
+ font-family:Arial,sans-serif;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+header{
+ padding:25px 15px;text-align:center;
+ border-bottom:1px solid var(--line);
+ background:linear-gradient(180deg,#15243a,#080b14);
+}
+.logo{
+ font-size:clamp(24px,6vw,36px);
+ font-weight:900;color:var(--green);
+ letter-spacing:2px;
+}
+header p{color:var(--muted);font-size:14px}
+.tag,.pill{
+ display:inline-block;background:#20352f;color:var(--green);
+ padding:7px 12px;border-radius:20px;font-size:11px;
+}
+main{width:min(100% - 24px,760px);margin:22px auto}
+.card{
+ background:var(--panel);border:1px solid var(--line);
+ padding:18px;border-radius:18px;margin-bottom:16px;
+}
+h2{font-size:18px;margin:0 0 14px}
+label{display:block;font-weight:bold;margin:16px 0 8px}
+input,select,textarea{
+ width:100%;padding:13px;background:var(--panel2);
+ color:#fff;border:1px solid var(--line);border-radius:10px;
+}
+input[type=file]{padding:11px}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{
+ outline:2px solid var(--green);outline-offset:1px;
+}
+button{border:0;border-radius:10px;padding:14px;font-weight:bold}
+.primary{
+ background:var(--green);color:#06130e;width:100%;margin-top:15px;
+}
+.secondary{
+ background:#26354b;color:#fff;width:100%;margin-top:10px;
+}
+.tertiary{
+ background:#20352f;color:var(--green);width:100%;margin-top:10px;
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.preview{
+ display:block;width:100%;max-height:440px;
+ object-fit:contain;border-radius:12px;margin-top:14px;
+ background:#060a12;
+}
+.hidden{display:none!important}
+.small{font-size:13px;color:var(--muted);line-height:1.7}
+.status{
+ padding:13px;background:var(--panel2);border-radius:10px;
+ color:var(--green);white-space:pre-wrap;line-height:1.7;
+ overflow-wrap:anywhere;font-size:13px;
+}
+.status.error{color:var(--red)}
+.status.info{color:#8fc7ff}
+.progress{
+ width:100%;height:8px;background:#26354b;
+ border-radius:10px;overflow:hidden;margin-top:12px;
+}
+.progress div{
+ height:100%;width:0%;background:var(--green);
+ transition:width .15s;
+}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+a{color:var(--green)}
+.note{
+ padding:12px;border:1px solid var(--line);
+ border-radius:10px;color:var(--muted);
+ font-size:12px;line-height:1.7;
+}
+footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
+.dropzone{
+ border:2px dashed #40516b;border-radius:14px;
+ padding:16px;text-align:center;transition:.2s;
+}
+.dropzone.drag{border-color:var(--green);background:#142b28}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.actions button{flex:1;min-width:130px}
+.actions a{flex:1;text-decoration:none}
+.actions a button{margin-top:0}
+.settings-row{display:flex;gap:10px;align-items:center}
+@media(max-width:480px){
+ main{width:calc(100% - 16px);margin:12px auto}
+ .card{padding:14px}
+ .grid{gap:8px}
+}
+</style>
+</head>
+
+<body>
+<header>
+ <div class="logo">DAN AI VIDEO</div>
+ <p>Create animated videos from your photos</p>
+ <span class="tag">AI VIDEO STUDIO</span>
+</header>
+
+<main>
+<section class="card">
+ <h2>1. Upload your photo</h2>
+
+ <div id="dropzone" class="dropzone">
+  <p>Choose a photo or drop it here</p>
+  <label for="photo">Select image</label>
+  <input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
+  <p class="small">JPG, PNG or WebP · Maximum 15 MB</p>
+ </div>
+
+ <img id="imagePreview" class="preview hidden" alt="Selected photo">
+ <p id="imageInfo" class="small">No image selected.</p>
+
+ <label for="prompt">2. Describe your video</label>
+ <textarea id="prompt" maxlength="1500"
+ placeholder="Example: Slowly zoom in, cinematic lighting, gentle camera movement."></textarea>
+ <p class="small"><span id="promptCount">0</span>/1500 characters</p>
+
+ <label for="style">Movement style</label>
+ <select id="style">
+  <option value="natural">Natural camera movement</option>
+  <option value="cinematic">Cinematic zoom and pan</option>
+  <option value="pan-left">Pan left</option>
+  <option value="pan-right">Pan right</option>
+  <option value="zoom-in">Zoom in</option>
+  <option value="zoom-out">Zoom out</option>
+  <option value="walking">Walking — requires AI API</option>
+  <option value="smiling">Smiling — requires AI API</option>
+  <option value="dancing">Dancing — requires AI API</option>
+  <option value="talking">Talking — requires AI API</option>
+  <option value="custom">Custom camera movement</option>
+ </select>
+
+ <div class="grid">
+  <div>
+   <label for="quality">Video quality</label>
+   <select id="quality">
+    <option value="480p">480p — faster</option>
+    <option value="720p" selected>720p — recommended</option>
+    <option value="1080p">1080p — high quality</option>
+   </select>
+  </div>
+  <div>
+   <label for="duration">Duration</label>
+   <select id="duration">
+    <option value="5">5 seconds</option>
+    <option value="10">10 seconds</option>
+   </select>
+  </div>
+ </div>
+
+ <label for="ratio">Aspect ratio</label>
+ <select id="ratio">
+  <option value="9:16">9:16 — TikTok / Reels</option>
+  <option value="16:9">16:9 — YouTube</option>
+  <option value="1:1">1:1 — Square</option>
+ </select>
+
+ <button id="generate" class="primary">GENERATE VIDEO</button>
+ <button id="cancel" class="tertiary hidden">CANCEL GENERATION</button>
+ <button id="clear" class="secondary">RESET PROJECT</button>
+
+ <div id="progressBox" class="hidden">
+  <div class="progress"><div id="progressBar"></div></div>
+  <p id="progressText" class="small">Preparing video...</p>
+ </div>
+
+ <hr>
+ <p id="status" class="status" role="status" aria-live="polite">
+ Upload a photo to begin.
+ </p>
+</section>
+
+<section class="card">
+ <h2>3. Your video</h2>
+ <video id="outputVideo" class="preview hidden"
+ controls playsinline preload="metadata"></video>
+
+ <div class="actions">
+  <a id="download" class="hidden" download="dan-ai-video.webm">
+   <button type="button" class="primary">DOWNLOAD VIDEO</button>
+  </a>
+ </div>
+
+ <p id="videoInfo" class="small">Your completed video will appear here.</p>
+</section>
+
+<section class="card">
+ <h2>4. AI service connection</h2>
+ <span class="pill">LOCAL MODE</span>
+ <p class="small">
+ This version creates a downloadable video with camera movement over your photo.
+ The prompt is saved in the project settings but cannot create new facial expressions,
+ body movements or speech without a connected AI service.
+ </p>
+ <p class="note">
+ To enable real walking, dancing, talking or facial animation, connect a video-generation
+ API through a secure backend. Do not place private API keys in this HTML file.
+ </p>
+</section>
+</main>
+
+<footer>© DAN AI VIDEO STUDIO</footer>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const photo = $("photo");
+const imagePreview = $("imagePreview");
+const imageInfo = $("imageInfo");
+const promptInput = $("prompt");
+const generate = $("generate");
+const cancelButton = $("cancel");
+const clearButton = $("clear");
+const statusBox = $("status");
+const outputVideo = $("outputVideo");
+const download = $("download");
+const videoInfo = $("videoInfo");
+const progressBox = $("progressBox");
+const progressBar = $("progressBar");
+const progressText = $("progressText");
+const dropzone = $("dropzone");
+
+let selectedImage = null;
+let imageObjectURL = null;
+let videoObjectURL = null;
+let isGenerating = false;
+let activeController = null;
+let generationId = 0;
+
+function setStatus(message, type = "success") {
+ statusBox.textContent = message;
+ statusBox.className = "status";
+ if (type === "error") statusBox.classList.add("error");
+ if (type === "info") statusBox.classList.add("info");
+}
+
+function setProgress(value, message) {
+ progressBox.classList.remove("hidden");
+ progressBar.style.width =
+  Math.max(0, Math.min(100, value)) + "%";
+ progressText.textContent = message;
+}
+
+function hideProgress() {
+ progressBox.classList.add("hidden");
+ progressBar.style.width = "0%";
+}
+
+function setBusy(busy) {
+ isGenerating = busy;
+ generate.disabled = busy;
+ clearButton.disabled = busy;
+ photo.disabled = busy;
+ cancelButton.classList.toggle("hidden", !busy);
+ generate.textContent = busy ? "GENERATING..." : "GENERATE VIDEO";
+}
+
+function releaseImageURL() {
+ if (imageObjectURL) {
+  URL.revokeObjectURL(imageObjectURL);
+  imageObjectURL = null;
+ }
+}
+
+function clearVideo() {
+ outputVideo.pause();
+ outputVideo.removeAttribute("src");
+ outputVideo.load();
+ outputVideo.classList.add("hidden");
+ download.classList.add("hidden");
+ download.removeAttribute("href");
+
+ if (videoObjectURL) {
+  URL.revokeObjectURL(videoObjectURL);
+  videoObjectURL = null;
+ }
+}
+
+function loadSelectedFile(file) {
+ if (isGenerating) return;
+
+ if (!file) return;
+
+ const allowed = ["image/jpeg", "image/png", "image/webp"];
+
+ if (!allowed.includes(file.type)) {
+  photo.value = "";
+  setStatus("Choose a JPG, PNG or WebP image.", "error");
+  return;
+ }
+
+ if (file.size > 15 * 1024 * 1024) {
+  photo.value = "";
+  setStatus("Choose an image smaller than 15 MB.", "error");
+  return;
+ }
+
+ releaseImageURL();
+ clearVideo();
+
+ selectedImage = file;
+ imageObjectURL = URL.createObjectURL(file);
+ imagePreview.src = imageObjectURL;
+ imagePreview.classList.remove("hidden");
+
+ imageInfo.textContent =
+  file.name + " · " + (file.size / 1024 / 1024).toFixed(2) + " MB";
+
+ videoInfo.textContent = "Ready to create a video.";
+ setStatus("Photo loaded successfully. Describe the movement.");
+}
+
+photo.addEventListener("change", () => {
+ const file = photo.files && photo.files[0];
+ if (file) loadSelectedFile(file);
+});
+
+["dragenter", "dragover"].forEach(name => {
+ dropzone.addEventListener(name, event => {
+  event.preventDefault();
+  event.stopPropagation();
+  if (!isGenerating) dropzone.classList.add("drag");
+ });
+});
+
+["dragleave", "drop"].forEach(name => {
+ dropzone.addEventListener(name, event => {
+  event.preventDefault();
+  event.stopPropagation();
+  dropzone.classList.remove("drag");
+
+  if (isGenerating || name !== "drop") return;
+
+  const file = event.dataTransfer.files &&
+   event.dataTransfer.files[0];
+
+  if (file) loadSelectedFile(file);
+ });
+});
+
+promptInput.addEventListener("input", () => {
+ $("promptCount").textContent = promptInput.value.length;
+});
+
+function getSettings() {
+ return {
+  prompt: promptInput.value.trim(),
+  style: $("style").value,
+  quality: $("quality").value,
+  duration: Number($("duration").value),
+  aspectRatio: $("ratio").value
+ };
+}
+
+function loadImage(file, signal) {
+ return new Promise((resolve, reject) => {
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  let finished = false;
+
+  function cleanup() {
+   URL.revokeObjectURL(url);
+   signal.removeEventListener("abort", onAbort);
+  }
+
+  function onAbort() {
+   if (finished) return;
+   finished = true;
+   cleanup();
+   reject(new Error("Generation cancelled."));
+  }
+
+  img.onload = () => {
+   if (finished) return;
+   finished = true;
+   cleanup();
+   resolve(img);
+  };
+
+  img.onerror = () => {
+   if (finished) return;
+   finished = true;
+   cleanup();
+   reject(new Error("Could not read this image. Try another photo."));
+  };
+
+  signal.addEventListener("abort", onAbort, { once: true });
+  if (signal.aborted) {
+   onAbort();
+   return;
+  }
+  img.src = url;
+ });
+}
+
+function getDimensions(ratio, quality) {
+ const heights = {
+  "480p": 480,
+  "720p": 720,
+  "1080p": 1080
+ };
+
+ const height = heights[quality] || 720;
+
+ if (ratio === "16:9") {
+  return { width: Math.round(height * 16 / 9), height };
+ }
+ if (ratio === "1:1") {
+  return { width: height, height };
+ }
+ return { width: Math.round(height * 9 / 16), height };
+}
+
+function chooseMimeType() {
+ if (!window.MediaRecorder) return "";
+
+ const types = [
+  "video/webm;codecs=vp9",
+  "video/webm;codecs=vp8",
+  "video/webm"
+ ];
+
+ return types.find(type =>
+  MediaRecorder.isTypeSupported(type)
+ ) || "";
+}
+
+async function createLocalVideo(file, settings, signal) {
+ if (!window.MediaRecorder) {
+  throw new Error("Video recording is not supported in this browser. Try the latest Chrome.");
+ }
+
+ if (!HTMLCanvasElement.prototype.captureStream) {
+  throw new Error("Canvas video recording is unavailable in this browser.");
+ }
+
+ const img = await loadImage(file, signal);
+ if (signal.aborted) throw new Error("Generation cancelled.");
+
+ const dimensions = getDimensions(
+  settings.aspectRatio,
+  settings.quality
+ );
+
+ const canvas = document.createElement("canvas");
+ canvas.width = dimensions.width;
+ canvas.height = dimensions.height;
+
+ const ctx = canvas.getContext("2d", {
+  alpha: false
+ });
+
+ if (!ctx) throw new Error("Could not initialize video rendering.");
+
+ const stream = canvas.captureStream(24);
+ const mimeType = chooseMimeType();
+
+ let recorder;
+
+ try {
+  recorder = new MediaRecorder(
+   stream,
+   mimeType ? { mimeType } : undefined
+  );
+ } catch (error) {
+  stream.getTracks().forEach(track => track.stop());
+  throw new Error("Video recording could not start on this device.");
+ }
+
+ return new Promise((resolve, reject) => {
+  let animationFrame = 0;
+  let startTime = 0;
+  let finished = false;
+  let cancelled = false;
+  const chunks = [];
+
+  function cleanup() {
+   cancelAnimationFrame(animationFrame);
+   stream.getTracks().forEach(track => track.stop());
+   signal.removeEventListener("abort", onAbort);
+  }
+
+  function onAbort() {
+   if (finished) return;
+
+   cancelled = true;
+   finished = true;
+   cleanup();
+
+   try {
+    if (recorder.state !== "inactive") recorder.stop();
+   } catch (error) {}
+
+   reject(new Error("Generation cancelled."));
+  }
+
+  signal.addEventListener("abort", onAbort, { once: true });
+
+  recorder.ondataavailable = event => {
+   if (event.data && event.data.size > 0) {
+    chunks.push(event.data);
+   }
+  };
+
+  recorder.onerror = () => {
+   if (finished) return;
+   finished = true;
+   cleanup();
+   reject(new Error("Video recording failed. Please try again."));
+  };
+
+  recorder.onstop = () => {
+   if (cancelled || finished) return;
+
+   finished = true;
+   cleanup();
+
+   if (!chunks.length) {
+    reject(new Error("No video data was created. Try again."));
+    return;
+   }
+
+   resolve(new Blob(chunks, {
+    type: recorder.mimeType || "video/webm"
+   }));
+  };
+
+  function drawFrame(timestamp) {
+   if (signal.aborted || finished) return;
+
+   if (!startTime) startTime = timestamp;
+
+   const elapsed = (timestamp - startTime) / 1000;
+   const progress = Math.min(elapsed / settings.duration, 1);
+
+   ctx.fillStyle = "#050812";
+   ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+   const fit = Math.max(
+    canvas.width / img.width,
+    canvas.height / img.height
+   );
+
+   let zoom = 1;
+   let driftX = 0;
+   let driftY = 0;
+
+   const eased = progress * progress * (3 - 2 * progress);
+
+   switch (settings.style) {
+    case "zoom-in":
+     zoom = 1 + 0.22 * eased;
+     break;
+
+    case "zoom-out":
+     zoom = 1.22 - 0.22 * eased;
+     break;
+
+    case "pan-left":
+     driftX = canvas.width * 0.08 * eased;
+     break;
+
+    case "pan-right":
+     driftX = -canvas.width * 0.08 * eased;
+     break;
+
+    case "cinematic":
+     zoom = 1 + 0.16 * eased;
+     driftX = Math.sin(progress * Math.PI) * canvas.width * 0.025;
+     driftY = Math.cos(progress * Math.PI) * canvas.height * 0.012;
+     break;
+
+    case "natural":
+    case "custom":
+     zoom = 1 + 0.08 * eased;
+     driftX = Math.sin(progress * Math.PI) * canvas.width * 0.025;
+     driftY = Math.sin(progress * Math.PI) * canvas.height * 0.01;
+     break;
+
+    default:
+     // These styles need a real AI video service.
+     zoom = 1 + 0.08 * eased;
+     driftX = Math.sin(progress * Math.PI) * canvas.width * 0.02;
+   }
+
+   const drawWidth = img.width * fit * zoom;
+   const drawHeight = img.height * fit * zoom;
+
+   const x = (canvas.width - drawWidth) / 2 - driftX;
+   const y = (canvas.height - drawHeight) / 2 - driftY;
+
+   ctx.drawImage(img, x, y, drawWidth, drawHeight);
+
+   setProgress(
+    Math.round(progress * 100),
+    "Rendering video: " + Math.round(progress * 100) + "%"
+   );
+
+   if (progress >= 1) {
+    if (recorder.state !== "inactive") recorder.stop();
+    return;
+   }
+
+   animationFrame = requestAnimationFrame(drawFrame);
+  }
+
+  try {
+   recorder.start(250);
+   animationFrame = requestAnimationFrame(drawFrame);
+  } catch (error) {
+   if (!finished) {
+    finished = true;
+    cleanup();
+    reject(new Error("Could not start video recording."));
+   }
+  }
+ });
+}
+
+function showLocalVideo(blob) {
+ clearVideo();
+
+ videoObjectURL = URL.createObjectURL(blob);
+ outputVideo.src = videoObjectURL;
+ outputVideo.classList.remove("hidden");
+
+ const extension = blob.type.includes("mp4") ? "mp4" : "webm";
+
+ download.href = videoObjectURL;
+ download.download = "dan-ai-video." + extension;
+ download.classList.remove("hidden");
+
+ videoInfo.textContent =
+  "Video completed · " + extension.toUpperCase() +
+  " · " + (blob.size / 1024 / 1024).toFixed(2) + " MB.";
+}
+
+generate.addEventListener("click", async () => {
+ if (isGenerating) return;
+
+ if (!selectedImage) {
+  setStatus("Please upload a photo first.", "error");
+  photo.focus();
+  return;
+ }
+
+ const settings = getSettings();
+
+ if (!settings.prompt) {
+  setStatus("Please describe the video you want.", "error");
+  promptInput.focus();
+  return;
+ }
+
+ const aiStyles = ["walking", "smiling", "dancing", "talking"];
+
+ if (aiStyles.includes(settings.style)) {
+  setStatus(
+   "This movement requires a connected AI video API. Choose a camera movement to create a local video.",
+   "error"
+  );
+  return;
+ }
+
+ const thisGeneration = ++generationId;
+ activeController = new AbortController();
+ const signal = activeController.signal;
+
+ setBusy(true);
+ clearVideo();
+ setProgress(0, "Starting video creation...");
+ setStatus("Creating your photo animation...", "info");
+
+ try {
+  const blob = await createLocalVideo(
+   selectedImage,
+   settings,
+   signal
+  );
+
+  if (signal.aborted || thisGeneration !== generationId) return;
+
+  showLocalVideo(blob);
+  setProgress(100, "Video completed.");
+  setStatus("Video created successfully.");
+ } catch (error) {
+  setStatus(
+   error.message || "Something went wrong.",
+   "error"
+  );
+  videoInfo.textContent = "Video creation did not complete.";
+ } finally {
+  if (thisGeneration === generationId) {
+   activeController = null;
+   setBusy(false);
+  }
+ }
+});
+
+cancelButton.addEventListener("click", () => {
+ if (activeController) activeController.abort();
+});
+
+clearButton.addEventListener("click", () => {
+ if (isGenerating) {
+  if (activeController) activeController.abort();
+  return;
+ }
+
+ photo.value = "";
+ promptInput.value = "";
+ $("promptCount").textContent = "0";
+ $("style").value = "natural";
+ $("quality").value = "720p";
+ $("duration").value = "5";
+ $("ratio").value = "9:16";
+
+ selectedImage = null;
+ imagePreview.removeAttribute("src");
+ imagePreview.classList.add("hidden");
+
+ releaseImageURL();
+ clearVideo();
+ hideProgress();
+
+ imageInfo.textContent = "No image selected.";
+ videoInfo.textContent = "Your completed video will appear here.";
+ setStatus("Upload a photo to begin.");
+});
+
+window.addEventListener("beforeunload", () => {
+ releaseImageURL();
+
+ if (videoObjectURL) {
+  URL.revokeObjectURL(videoObjectURL);
+ }
+});
+</script>
+</body>
+</html>
