@@ -3,163 +3,404 @@
 <html lang="am">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090713">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b14">
+<meta name="description" content="DAN AI VIDEO STUDIO - Animate a character using a reference video.">
 <title>DAN AI VIDEO STUDIO</title>
 <style>
-:root{--bg:#090713;--panel:#171326;--pink:#ff3e9d;--purple:#984cff;--text:#fff;--muted:#b6adc9}
+:root{--bg:#080b14;--panel:#121a2a;--pink:#ff3c9e;--purple:#8b5cf6;--text:#f7f7ff;--muted:#aab2c5}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{text-align:center;padding:25px 12px;background:linear-gradient(135deg,#211039,#090713)}
-h1{font-size:25px;margin:5px;color:#ff5eae}
-header p{color:var(--muted)}
-main{max-width:650px;margin:20px auto;padding:15px}
-.card{background:var(--panel);border:1px solid #352747;border-radius:18px;padding:18px;margin-bottom:16px}
-label{display:block;margin:14px 0 8px;font-weight:bold}
-input,select,button{width:100%;padding:13px;border-radius:10px;border:1px solid #443450;background:#0e0a19;color:white}
-button{background:linear-gradient(100deg,var(--pink),var(--purple));border:0;font-weight:bold;font-size:16px;margin-top:18px;cursor:pointer}
-button:disabled{opacity:.5}
-.small{font-size:13px;color:var(--muted);line-height:1.6}
-#status{margin-top:16px;white-space:pre-wrap;overflow-wrap:anywhere}
-video{width:100%;border-radius:12px;margin-top:15px}
-a{color:#ff77bd;display:inline-block;margin-top:15px}
+body{margin:0;background:radial-gradient(circle at top,#20113a,var(--bg) 55%);color:var(--text);font-family:Arial,sans-serif}
+header{padding:22px 16px;text-align:center;border-bottom:1px solid #ffffff15}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--pink)}
+header p{color:var(--muted);font-size:14px}
+main{width:min(760px,94%);margin:25px auto 50px}
+.card{background:#121a2aeF;border:1px solid #ffffff17;border-radius:20px;padding:20px;margin-bottom:17px;box-shadow:0 10px 35px #0004}
+h2{font-size:19px;margin:0 0 10px}
+p{line-height:1.55}
+.hint{font-size:13px;color:var(--muted)}
+.upload{display:block;border:1px dashed #a78bfa;border-radius:14px;padding:17px;margin-top:14px;background:#ffffff05}
+label{display:block;font-weight:bold;margin-bottom:9px}
+input[type=file],select{width:100%;padding:12px;border-radius:10px;background:#0b1020;color:white;border:1px solid #ffffff25}
+.preview{width:100%;max-height:340px;object-fit:contain;border-radius:12px;margin-top:12px;display:none;background:#05070d}
+button{width:100%;padding:15px;border:0;border-radius:12px;background:linear-gradient(100deg,var(--pink),var(--purple));color:white;font-weight:bold;font-size:16px;cursor:pointer;margin-top:14px}
+button:disabled{opacity:.55;cursor:wait}
+.status{padding:13px;border-radius:10px;background:#080d19;color:#d6c8ff;overflow-wrap:anywhere}
+video{width:100%;margin-top:14px;border-radius:12px;background:#000}
+a.download{display:block;text-align:center;padding:14px;background:#172b29;color:#7fffd4;border-radius:10px;margin-top:12px;text-decoration:none;font-weight:bold}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
 </style>
 </head>
 <body>
 <header>
-<h1>🎬 DAN AI VIDEO STUDIO</h1>
-<p>Photo Motion Transfer with AI</p>
+  <div class="logo">DAN <span>AI</span> VIDEO STUDIO</div>
+  <p>Photo • Motion • Dance • Character Animation</p>
 </header>
+
 <main>
-<div class="card">
-<h2>📸 የሰው ፎቶ</h2>
-<label for="photo">ፎቶ ምረጥ</label>
-<input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
-<p class="small">የምትጠቀምበት ሰው ፊት በግልጽ የሚታይበትን ፎቶ ምረጥ።</p>
-<img id="photoPreview" alt="Photo preview" hidden style="width:100%;margin-top:12px;border-radius:12px">
-</div>
+  <section class="card">
+    <h2>የሰውዬውን ፎቶ አስገባ</h2>
+    <p class="hint">የፊቱ ገጽታ በግልጽ የሚታይበትን ፎቶ ምረጥ።</p>
+    <label class="upload">
+      የፎቶ ፋይል
+      <input id="photo" type="file" accept="image/jpeg,image/png,image/webp" required>
+    </label>
+    <img id="photoPreview" class="preview" alt="የተመረጠ ፎቶ">
+  </section>
 
-<div class="card">
-<h2>🎥 የእንቅስቃሴ ቪዲዮ</h2>
-<label for="video">የዳንስ ወይም ሌላ ቪዲዮ ምረጥ</label>
-<input id="video" type="file" accept="video/*">
-<p class="small">Runway Act-Two ከ3 እስከ 30 ሰከንድ የሚሆን የሰው እንቅስቃሴ ቪዲዮ ይፈልጋል።</p>
-<video id="videoPreview" controls playsinline hidden></video>
-<label for="ratio">የቪዲዮ መጠን</label>
-<select id="ratio">
-<option value="1280:720">ሰፊ 16:9</option>
-<option value="720:1280">ቁመት 9:16</option>
-<option value="960:960">ካሬ 1:1</option>
-</select>
-<button id="generate">✨ AI ቪዲዮ ፍጠር</button>
-<div id="status" role="status"></div>
-<div id="result"></div>
-</div>
+  <section class="card">
+    <h2>የእንቅስቃሴ ቪዲዮ አስገባ</h2>
+    <p class="hint">ዳንስ፣ የእጅ እንቅስቃሴ ወይም ሌላ የሰው እንቅስቃሴ ያለበት ከ3–30 ሰከንድ ቪዲዮ ምረጥ።</p>
+    <label class="upload">
+      የቪዲዮ ፋይል
+      <input id="motionVideo" type="file" accept="video/mp4,video/quicktime,video/webm" required>
+    </label>
+    <video id="inputPreview" class="preview" controls playsinline></video>
+  </section>
 
-<p class="small">የAI ሂደቱ Runway API እና የተለየ Backend ይፈልጋል። የቪዲዮው ውጤት ከመጀመሪያው ቪዲዮ ሙሉ በሙሉ ጋር እኩል እንደሚሆን ዋስትና የለም።</p>
+  <section class="card">
+    <h2>የቪዲዮ መጠን</h2>
+    <select id="ratio">
+      <option value="720:1280">ለስልክ — ቁመት</option>
+      <option value="1280:720">ለYouTube — አግድም</option>
+      <option value="960:960">ካሬ</option>
+      <option value="832:1104">ቁመት 2</option>
+      <option value="1104:832">አግድም 2</option>
+      <option value="1584:672">ሰፊ ስክሪን</option>
+    </select>
+    <button id="generate">✨ AI ቪዲዮ ፍጠር</button>
+    <p id="status" class="status" role="status">ፎቶና ቪዲዮ አስገብተህ ጀምር።</p>
+  </section>
+
+  <section class="card" id="resultCard" hidden>
+    <h2>የተፈጠረው ቪዲዮ</h2>
+    <video id="resultVideo" controls playsinline></video>
+    <a id="download" class="download" href="#" target="_blank" rel="noopener">⬇ ቪዲዮውን ክፈትና አውርድ</a>
+    <p class="hint">የAI ውጤቱ በሰውዬው ፎቶ እና በማጣቀሻ ቪዲዮው ላይ ይመሰረታል። ሁሉንም የጀርባ ሰዎች እንደተቀየሩ ወይም እንደተጠበቁ ማረጋገጥ አይቻልም።</p>
+  </section>
 </main>
+<footer>DAN AI VIDEO STUDIO © 2026</footer>
+
 <script>
-const API_URL = "https://YOUR-BACKEND-URL/api/motion-transfer";
+/* እዚህ የbackend URL በራስህ አስገባ */
+const API_URL = "https://YOUR-BACKEND-URL";
+
 const photo = document.getElementById("photo");
-const video = document.getElementById("video");
+const motionVideo = document.getElementById("motionVideo");
+const photoPreview = document.getElementById("photoPreview");
+const inputPreview = document.getElementById("inputPreview");
 const statusBox = document.getElementById("status");
-const generate = document.getElementById("generate");
-const result = document.getElementById("result");
+const generateButton = document.getElementById("generate");
 
 photo.addEventListener("change", () => {
-  const f = photo.files[0];
-  const preview = document.getElementById("photoPreview");
-  if (!f) return;
-  preview.src = URL.createObjectURL(f);
-  preview.hidden = false;
+  const file = photo.files[0];
+  if (!file) return;
+  photoPreview.src = URL.createObjectURL(file);
+  photoPreview.style.display = "block";
 });
 
-video.addEventListener("change", () => {
-  const f = video.files[0];
-  const preview = document.getElementById("videoPreview");
-  if (!f) return;
-  preview.src = URL.createObjectURL(f);
-  preview.hidden = false;
+motionVideo.addEventListener("change", () => {
+  const file = motionVideo.files[0];
+  if (!file) return;
+  inputPreview.src = URL.createObjectURL(file);
+  inputPreview.style.display = "block";
 });
 
-generate.addEventListener("click", async () => {
-  const p = photo.files[0];
-  const v = video.files[0];
+generateButton.addEventListener("click", async () => {
+  const image = photo.files[0];
+  const video = motionVideo.files[0];
 
-  if (!p || !v) {
-    alert("እባክህ ፎቶና ቪዲዮ ሁለቱንም ምረጥ።");
+  if (!image || !video) {
+    statusBox.textContent = "እባክህ ፎቶና ቪዲዮ ሁለቱንም አስገባ።";
     return;
   }
 
-  if (p.size > 20 * 1024 * 1024 || v.size > 200 * 1024 * 1024) {
-    alert("ፎቶው ከ20MB ወይም ቪዲዮው ከ200MB መብለጥ የለበትም።");
+  if (API_URL.includes("YOUR-BACKEND-URL")) {
+    statusBox.textContent = "Backend URL አልተዘጋጀም። የሚሰራ backend URL አስገባ።";
     return;
   }
 
-  const form = new FormData();
-  form.append("photo", p);
-  form.append("video", v);
-  form.append("ratio", document.getElementById("ratio").value);
+  if (image.size > 20 * 1024 * 1024 || video.size > 200 * 1024 * 1024) {
+    statusBox.textContent = "ፎቶው ከ20MB ወይም ቪዲዮው ከ200MB በላይ ነው።";
+    return;
+  }
 
-  generate.disabled = true;
-  statusBox.textContent = "⏳ AI ቪዲዮውን እየሠራ ነው። ትንሽ ጠብቅ...";
-  result.replaceChildren();
+  generateButton.disabled = true;
+  statusBox.textContent = "ፋይሎች እየተላኩ ነው፤ AI ማመንጨት ጊዜ ሊወስድ ይችላል።";
 
   try {
-    const response = await fetch(API_URL, {
+    const form = new FormData();
+    form.append("photo", image);
+    form.append("video", video);
+    form.append("ratio", document.getElementById("ratio").value);
+
+    const response = await fetch(API_URL.replace(/\/$/, "") + "/api/motion-transfer", {
       method: "POST",
       body: form
     });
+
     const data = await response.json();
 
-    if (!response.ok) throw new Error(data.error || "AI ሥራው አልተሳካም።");
-    if (!data.videoUrl) throw new Error("የቪዲዮ ማገናኛ አልተመለሰም።");
+    if (!response.ok) {
+      throw new Error(data.error || "AI ቪዲዮ ማመንጨት አልተሳካም።");
+    }
 
-    statusBox.textContent = "✅ ቪዲዮው ተዘጋጅቷል።";
-    const player = document.createElement("video");
-    player.src = data.videoUrl;
-    player.controls = true;
-    player.playsInline = true;
+    if (!data.videoUrl) {
+      throw new Error("የቪዲዮ ውጤት አልተመለሰም።");
+    }
 
-    const link = document.createElement("a");
-    link.href = data.videoUrl;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.textContent = "⬇️ ቪዲዮውን ክፈትና አውርድ";
-
-    result.append(player, link);
-  } catch (err) {
-    statusBox.textContent = "❌ " + err.message +
-      "\nBackend URL እና API key መኖራቸውን አረጋግጥ።";
+    document.getElementById("resultCard").hidden = false;
+    document.getElementById("resultVideo").src = data.videoUrl;
+    document.getElementById("download").href = data.videoUrl;
+    statusBox.textContent = "ተሳክቷል! የተፈጠረው ቪዲዮ ከታች ይታያል።";
+  } catch (error) {
+    statusBox.textContent = "ስህተት፦ " + error.message;
   } finally {
-    generate.disabled = false;
+    generateButton.disabled = false;
   }
 });
 </script>
 </body>
 </html>
 
+/*
+DAN AI VIDEO STUDIO
+Install dependencies:
+npm install express multer @runwayml/sdk
+
+Set environment variable:
+RUNWAYML_API_SECRET=your_api_key
+
+Start:
+node server.js
+
+IMPORTANT:
+This is a Node.js server application, not a GitHub Pages HTML file.
+*/
+
 import express from "express";
 import multer from "multer";
-import cors from "cors";
 import RunwayML, { toFile } from "@runwayml/sdk";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
+if (!process.env.RUNWAYML_API_SECRET) {
+  console.error("Set RUNWAYML_API_SECRET in your hosting environment.");
+  process.exit(1);
+}
+
+const runway = new RunwayML({
+  apiKey: process.env.RUNWAYML_API_SECRET
+});
+
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 200 * 1024 * 1024 }
+  limits: {
+    fileSize: 100 * 1024 * 1024,
+    files: 2
+  }
+});
+
+const html = String.raw`<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b14">
+<title>DAN AI VIDEO STUDIO</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b14;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 12px;background:#121a2a;border-bottom:1px solid #35244c}
+.logo{font-size:26px;font-weight:900}.logo span{color:#ff3c9e}
+header p,.hint{color:#b7b4ca;font-size:13px}
+main{width:min(720px,94%);margin:22px auto}
+.card{background:#121a2a;border:1px solid #ffffff20;border-radius:18px;padding:18px;margin-bottom:16px}
+h2{font-size:18px;margin-top:0}
+input[type=file],select{width:100%;padding:12px;background:#080d19;color:white;border:1px solid #49395e;border-radius:10px}
+label{display:block;margin:15px 0 8px;font-weight:bold}
+button,.download{display:block;width:100%;padding:14px;border:0;border-radius:12px;background:linear-gradient(100deg,#ff3c9e,#8b5cf6);color:white;text-align:center;font-size:15px;font-weight:bold;margin-top:14px;cursor:pointer;text-decoration:none}
+button:disabled{opacity:.6}
+.preview,video{width:100%;max-height:360px;object-fit:contain;background:#050505;border-radius:12px;margin-top:12px}
+.status{padding:13px;background:#080d19;border-radius:10px;line-height:1.5;overflow-wrap:anywhere}
+footer{text-align:center;color:#aaa;padding:20px;font-size:12px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">DAN <span>AI</span> VIDEO STUDIO</div>
+<p>Photo • Motion • Dance • AI Video</p>
+</header>
+<main>
+<section class="card">
+<h2>📸 የሰውዬውን ፎቶ አስገባ</h2>
+<p class="hint">ፊቱ ግልጽ የሚታይበትን ፎቶ ምረጥ።</p>
+<input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
+<img id="photoPreview" class="preview" hidden alt="Photo preview">
+</section>
+
+<section class="card">
+<h2>🎬 የእንቅስቃሴ ቪዲዮ አስገባ</h2>
+<p class="hint">ከ3 እስከ 30 ሰከንድ ያለውን የዳንስ ወይም የሌላ እንቅስቃሴ ቪዲዮ ምረጥ።</p>
+<input id="video" type="file" accept="video/mp4,video/quicktime,video/webm">
+<video id="videoPreview" class="preview" controls playsinline hidden></video>
+</section>
+
+<section class="card">
+<h2>⚙️ የቪዲዮ ምርጫ</h2>
+<label for="ratio">የቪዲዮ መጠን</label>
+<select id="ratio">
+<option value="720:1280">ለስልክ — ቁመት</option>
+<option value="1280:720">YouTube — አግድም</option>
+<option value="960:960">ካሬ</option>
+<option value="1104:832">4:3</option>
+<option value="832:1104">3:4</option>
+<option value="1584:672">ሰፊ ስክሪን</option>
+</select>
+<button id="create">✨ AI ቪዲዮ ፍጠር</button>
+<p id="status" class="status">ፎቶና ቪዲዮ አስገብተህ ጀምር።</p>
+</section>
+
+<section class="card" id="result" hidden>
+<h2>✅ የተፈጠረው ቪዲዮ</h2>
+<video id="output" controls playsinline></video>
+<a id="download" class="download" target="_blank" rel="noopener">⬇ ቪዲዮውን ክፈትና አውርድ</a>
+<p class="hint">የውጤቱ አድራሻ ጊዜያዊ ሊሆን ይችላል።</p>
+</section>
+</main>
+<footer>DAN AI VIDEO STUDIO © 2026</footer>
+
+<script>
+const photo=document.getElementById("photo");
+const video=document.getElementById("video");
+const photoPreview=document.getElementById("photoPreview");
+const videoPreview=document.getElementById("videoPreview");
+const statusBox=document.getElementById("status");
+const create=document.getElementById("create");
+
+photo.addEventListener("change",()=>{
+  if(!photo.files[0])return;
+  photoPreview.src=URL.createObjectURL(photo.files[0]);
+  photoPreview.hidden=false;
+});
+
+video.addEventListener("change",()=>{
+  if(!video.files[0])return;
+  videoPreview.src=URL.createObjectURL(video.files[0]);
+  videoPreview.hidden=false;
+});
+
+create.addEventListener("click",async()=>{
+  if(!photo.files[0]||!video.files[0]){
+    statusBox.textContent="እባክህ ፎቶና ቪዲዮ ሁለቱንም አስገባ።";
+    return;
+  }
+
+  create.disabled=true;
+  statusBox.textContent="ፋይሎቹ እየተላኩ ነው። እባክህ ጠብቅ።";
+
+  try{
+    const form=new FormData();
+    form.append("photo",photo.files[0]);
+    form.append("video",video.files[0]);
+    form.append("ratio",document.getElementById("ratio").value);
+
+    const response=await fetch("/api/motion-transfer",{
+      method:"POST",
+      body:form
+    });
+
+    const data=await response.json();
+    if(!response.ok)throw new Error(data.error||"AI ቪዲዮ መፍጠር አልተሳካም።");
+    if(!data.videoUrl)throw new Error("የቪዲዮ ውጤት አልተገኘም።");
+
+    const output=document.getElementById("output");
+    output.src=data.videoUrl;
+    document.getElementById("download").href=data.videoUrl;
+    document.getElementById("result").hidden=false;
+    statusBox.textContent="ቪዲዮው ተዘጋጅቷል። ከታች ክፈተው።";
+  }catch(error){
+    statusBox.textContent="ስህተት፦ "+error.message;
+  }finally{
+    create.disabled=false;
+  }
+});
+</script>
+</body>
+</html>`;
+
+      const output = result.output;
+
+      const videoUrl = Array.isArray(output)
+        ? output.find(item => typeof item === "string")
+        : typeof output === "string"
+          ? output
+          : null;
+
+      if (!videoUrl) {
+        console.error("Unexpected AI response:", result);
+        return res.status(502).json({
+          error: "AI ውጤት አልተገኘም። እባክህ እንደገና ሞክር።"
+        });
+      }
+
+      return res.json({ videoUrl });
+    } catch (error) {
+      console.error("Video generation error:", error);
+      return res.status(500).json({
+        error: error?.message || "የAI ሂደቱ አልተሳካም።"
+      });
+    }
+  }
+);
+
+app.listen(PORT, () => {
+  console.log("DAN AI VIDEO STUDIO running on port " + PORT);
+});
+
+import express from "express";
+import cors from "cors";
+import multer from "multer";
+import RunwayML, { toFile } from "@runwayml/sdk";
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+if (!process.env.RUNWAYML_API_SECRET) {
+  console.error("RUNWAYML_API_SECRET environment variable is required.");
+  process.exit(1);
+}
+
+const runway = new RunwayML({
+  apiKey: process.env.RUNWAYML_API_SECRET
 });
 
 app.use(cors({
   origin: process.env.FRONTEND_ORIGIN || "*"
 }));
 
-const runway = new RunwayML({
-  apiKey: process.env.RUNWAYML_API_SECRET
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 200 * 1024 * 1024,
+    files: 2
+  }
 });
 
+const allowedRatios = [
+  "1280:720",
+  "720:1280",
+  "960:960",
+  "1104:832",
+  "832:1104",
+  "1584:672"
+];
+
 app.get("/", (req, res) => {
-  res.send("DAN AI VIDEO STUDIO API is running.");
+  res.json({ service: "DAN AI VIDEO STUDIO", status: "online" });
 });
 
 app.post(
@@ -170,99 +411,7 @@ app.post(
   ]),
   async (req, res) => {
     try {
-      if (!process.env.RUNWAYML_API_SECRET) {
-        return res.status(500).json({
-          error: "Runway API key አልተዋቀረም።"
-        });
-      }
-
       const photo = req.files?.photo?.[0];
       const video = req.files?.video?.[0];
-      const ratio = req.body.ratio || "1280:720";
-
-      const allowedRatios = [
-        "1280:720", "720:1280", "960:960"
-      ];
 
       if (!photo || !video) {
-        return res.status(400).json({
-          error: "ፎቶና ቪዲዮ ሁለቱንም አስገባ።"
-        });
-      }
-
-      if (!photo.mimetype.startsWith("image/") ||
-          !video.mimetype.startsWith("video/")) {
-        return res.status(400).json({
-          error: "ትክክለኛ የፎቶና የቪዲዮ ፋይል አስገባ።"
-        });
-      }
-
-      if (!allowedRatios.includes(ratio)) {
-        return res.status(400).json({
-          error: "የቪዲዮ መጠኑ ትክክል አይደለም።"
-        });
-      }
-
-      const photoUpload = await runway.uploads.createEphemeral(
-        await toFile(photo.buffer, photo.originalname)
-      );
-
-      const videoUpload = await runway.uploads.createEphemeral(
-        await toFile(video.buffer, video.originalname)
-      );
-
-      const task = await runway.characterPerformance.create({
-        model: "act_two",
-        character: {
-          type: "image",
-          uri: photoUpload.uri
-        },
-        reference: {
-          type: "video",
-          uri: videoUpload.uri
-        },
-        bodyControl: true,
-        expressionIntensity: 3,
-        ratio
-      });
-
-      const output = await task.waitForTaskOutput();
-      const videoUrl = output.output?.[0];
-
-      if (!videoUrl) {
-        throw new Error("Runway did not return a video URL.");
-      }
-
-      res.json({
-        success: true,
-        videoUrl
-      });
-
-    } catch (error) {
-      console.error("Runway error:", error);
-
-      res.status(500).json({
-        error: "AI ቪዲዮውን ማዘጋጀት አልተሳካም። API key፣ credits እና የፋይል መስፈርቶችን አረጋግጥ።"
-      });
-    }
-  }
-);
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log("DAN AI VIDEO STUDIO backend started.");
-});
-
-{
-  "name": "dan-ai-video-studio",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "@runwayml/sdk": "latest",
-    "cors": "latest",
-    "express": "latest",
-    "multer": "latest"
-  }
-}
