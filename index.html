@@ -3,611 +3,163 @@
 <html lang="am">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#071126">
-<meta name="description" content="DAN AI VIDEO STUDIO - AI photo animation, motion transfer, video creation and editing.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090713">
 <title>DAN AI VIDEO STUDIO</title>
 <style>
-:root{--bg:#050b19;--panel:#101d35;--border:#263b60;--text:#f5f7ff;--muted:#a9bad5;--blue:#09bfff;--purple:#8a42ff;--pink:#fa3da8;--green:#37e5ac}
+:root{--bg:#090713;--panel:#151225;--pink:#ff3e9d;--purple:#a855f7;--text:#fff;--muted:#aaa5bd}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at top,#142d64,#050b19 60%);color:var(--text);font:14px Arial,sans-serif}
-button,input,select,textarea{font:inherit}
-button{border:0;border-radius:11px;padding:12px;background:#203455;color:white;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.5;cursor:wait}
-.primary{background:linear-gradient(100deg,var(--blue),var(--purple),var(--pink))}
-header{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:15px 4%;background:#071126f5;border-bottom:1px solid var(--border)}
-.logo{font-size:20px;font-weight:900}.logo b{color:var(--blue)}
-header .actions{display:flex;gap:8px;flex-wrap:wrap}
-main{max-width:1400px;margin:auto;padding:18px}
-.hero{text-align:center;padding:24px 0}
-.hero h1{font-size:clamp(28px,5vw,52px);background:linear-gradient(90deg,#fff,#44caff,#c08aff,#ff68c4);color:transparent;background-clip:text}
-.hero p{color:var(--muted);line-height:1.8}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
-.feature,.card,.sidebar{background:#0c172b;border:1px solid var(--border);border-radius:15px;padding:15px;min-width:0}
-.feature{text-align:center;background:linear-gradient(145deg,#192c50,#10192d)}
-.feature strong{display:block;margin:8px}
-.workspace{display:grid;grid-template-columns:185px minmax(0,1fr);gap:14px}
-.sidebar button{width:100%;text-align:left;margin:4px 0;background:transparent;color:var(--muted)}
-.sidebar button.active{background:linear-gradient(100deg,#0757c5,#5938d9);color:white}
-.section{display:none}.section.active{display:block}
-.layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-h2{font-size:20px;margin:0 0 10px}h3{font-size:15px;margin:18px 0 8px}
-.muted,.status,.help{color:var(--muted);font-size:12px;line-height:1.8}
-label{display:block;margin:13px 0 7px;font-weight:bold;font-size:12px}
-input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:#071126;color:white;outline:none}
-textarea{min-height:90px;resize:vertical}
-input:focus,textarea:focus,select:focus{border-color:var(--blue)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btnwide{width:100%;margin-top:10px}
-.preview{min-height:230px;border:1px dashed #36517e;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#071126}
-.preview img,.preview video{max-width:100%;max-height:460px;object-fit:contain}
-.placeholder{text-align:center;padding:22px;color:var(--muted);line-height:2}
-.placeholder b{display:block;font-size:42px;color:var(--blue)}
-.tabs,.toolrow{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
-.tabs button,.toolrow button{flex:1;min-width:100px}
-.tabs button.active{background:linear-gradient(100deg,#087cdb,#773cff)}
-.status{overflow-wrap:anywhere;margin-top:10px}.ok{color:var(--green)}.error{color:#ff7da7}
-.progress{height:6px;background:#24334d;border-radius:9px;overflow:hidden;margin-top:12px}
-.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink))}
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.gallery article{min-width:0;background:#101e35;border:1px solid var(--border);padding:7px;border-radius:10px}
-.gallery img,.gallery video{width:100%;aspect-ratio:1;object-fit:contain;border-radius:7px;background:#071126}
-.gallery button{width:100%;padding:8px;margin-top:5px;font-size:11px}
-.notice{padding:12px;border:1px solid #36517e;border-radius:10px;background:#101e35;color:var(--muted);line-height:1.8;margin:12px 0}
-.hidden{display:none!important}
-hr{border:0;border-top:1px solid var(--border);margin:18px 0}
-footer{text-align:center;padding:25px;color:var(--muted);line-height:2}
-@media(max-width:850px){.workspace{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:repeat(2,1fr);gap:4px}.sidebar button{text-align:center;font-size:11px}.layout{grid-template-columns:1fr}}
-@media(max-width:450px){main{padding:10px}.features{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}.card{padding:12px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+body{margin:0;background:radial-gradient(ellipse at top,#24103b,var(--bg) 65%);color:var(--text);font-family:Arial,sans-serif}
+header{padding:20px 16px;border-bottom:1px solid #302442;position:sticky;top:0;background:#0c0915ee;backdrop-filter:blur(12px);z-index:5}
+.brand{font-size:22px;font-weight:900;letter-spacing:.5px}.brand span{color:var(--pink)}
+header p{color:var(--muted);font-size:12px;margin:7px 0 0}
+main{max-width:850px;margin:auto;padding:20px 14px 45px}
+.hero{text-align:center;padding:25px 5px 20px}
+.pill{display:inline-block;padding:7px 12px;border:1px solid #69305c;border-radius:30px;color:#ff8bc5;font-size:12px}
+h1{font-size:32px;line-height:1.25;margin:16px 0 10px}
+h1 span{background:linear-gradient(90deg,#ff55ac,#b77aff);background-clip:text;color:transparent}
+.hero p{color:var(--muted);line-height:1.7;font-size:14px}
+.card{background:linear-gradient(145deg,#191428,#100e1c);border:1px solid #342644;border-radius:20px;padding:18px;margin:16px 0;box-shadow:0 10px 30px #0002}
+.step{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.num{background:#40204d;color:#ff8bc5;width:35px;height:35px;border-radius:11px;display:grid;place-items:center;font-weight:bold}
+h2{font-size:17px;margin:0 0 5px}
+.sub{font-size:12px;color:var(--muted);line-height:1.6}
+.uploads{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.upload{min-height:125px;border:1px dashed #725079;border-radius:14px;background:#100d1b;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative;cursor:pointer;padding:8px}
+.upload .symbol{font-size:27px;margin-bottom:7px}
+.upload strong{font-size:12px}.upload small{font-size:10px;color:var(--muted);margin-top:5px}
+.upload img{width:100%;height:125px;object-fit:cover;border-radius:10px}
+.upload input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.preview{width:100%;max-height:300px;object-fit:contain;background:#090713;border-radius:14px;display:none;margin-top:12px}
+textarea,select{width:100%;background:#0d0a17;border:1px solid #44324e;border-radius:12px;padding:13px;color:white;font-size:14px;margin-top:9px}
+button{border:0;border-radius:13px;padding:14px;font-weight:800;font-size:14px;cursor:pointer}
+.primary{width:100%;background:linear-gradient(100deg,var(--pink),var(--purple));color:white;margin-top:14px}
+.secondary{background:#251a35;color:white;border:1px solid #4b355d}
+button:disabled{opacity:.45;cursor:not-allowed}
+.video-box{border:1px dashed #725079;border-radius:14px;padding:15px;text-align:center;background:#100d1b}
+video{width:100%;max-height:330px;border-radius:12px;margin-top:12px;background:#05040a;display:none}
+.status{font-size:12px;color:#ff91c7;line-height:1.7;margin-top:12px}
+.notice{font-size:12px;line-height:1.7;color:#bdb6cd;background:#100d1b;padding:12px;border-radius:12px;margin-top:14px}
+footer{text-align:center;color:#817990;font-size:11px;padding:15px}
+@media(min-width:600px){.uploads{grid-template-columns:repeat(3,minmax(0,1fr))}h1{font-size:43px}.card{padding:22px}}
 </style>
 </head>
 <body>
 <header>
- <div class="logo">▶ DAN <b>AI</b> VIDEO STUDIO</div>
- <div class="actions">
-  <button onclick="$('projectFile').click()">Open Project</button>
-  <button class="primary" onclick="saveProject()">Save Project</button>
-  <input id="projectFile" type="file" accept=".json" class="hidden">
- </div>
+  <div class="brand">DAN <span>AI</span> VIDEO STUDIO</div>
+  <p>PHOTO MOTION STUDIO · CREATE YOUR VIDEO</p>
 </header>
 
 <main>
 <section class="hero">
- <div>✦ CREATE · ANIMATE · TRANSFER MOTION · EXPORT ✦</div>
- <h1>DAN AI VIDEO STUDIO</h1>
- <p>ፎቶ አስገባ፣ የእንቅስቃሴ ቪዲዮ ምረጥ፣ AI እንቅስቃሴን ወደ ፎቶህ እንዲያስተላልፍ አድርግ።</p>
+  <span class="pill">✦ PHOTO TO MOTION</span>
+  <h1>ፎቶህን ወደ <span>ቪዲዮ</span> ቀይር</h1>
+  <p>እስከ 5 ፎቶዎችን ጫን፣ የሚቀሳቀስ ሰው ያለበትን ቪዲዮ ምረጥ፣ የእንቅስቃሴውን ስራ አዘጋጅ።</p>
 </section>
 
-<div class="features">
- <div class="feature"><span>📸</span><strong>Photo to Video</strong>ፎቶን ወደ ቪዲዮ</div>
- <div class="feature"><span>🕺</span><strong>AI Motion Transfer</strong>የሰው እንቅስቃሴ ማስተላለፍ</div>
- <div class="feature"><span>🎙️</span><strong>Voice & Music</strong>ድምፅና ሙዚቃ</div>
-</div>
-
-<div class="workspace">
-<aside class="sidebar">
- <button class="active" data-page="create">🎬 Create Video</button>
- <button data-page="motion">🕺 Motion Transfer</button>
- <button data-page="photos">🖼 Photo Editor</button>
- <button data-page="voice">🎙 Voice & Music</button>
- <button data-page="history">📁 My Creations</button>
- <button data-page="settings">⚙ AI Settings</button>
-</aside>
-
-<div>
-<section id="create" class="section active">
- <div class="layout">
-  <div class="card">
-   <h2>Create Video</h2>
-   <p class="muted">ከፎቶ slideshow ወይም ከተገናኘ AI service ቪዲዮ ፍጠር።</p>
-   <label for="prompt">Video prompt</label>
-   <textarea id="prompt" maxlength="2000" placeholder="Describe your video..."></textarea>
-   <label for="images">Upload photos (maximum 5)</label>
-   <input id="images" type="file" accept="image/*" multiple>
-   <div id="uploadStatus" class="status">ፎቶ አልተመረጠም።</div>
-   <div class="row">
-    <div><label for="style">Video style</label>
-     <select id="style"><option>Cinematic</option><option>Realistic</option><option>Anime</option><option>Fashion</option><option>Travel</option><option>Nature</option><option>Music Video</option></select>
-    </div>
-    <div><label for="ratio">Aspect ratio</label>
-     <select id="ratio"><option value="16:9">16:9 Landscape</option><option value="9:16">9:16 Vertical</option><option value="1:1">1:1 Square</option><option value="4:5">4:5 Portrait</option></select>
-    </div>
-   </div>
-   <div class="row">
-    <div><label for="duration">Duration</label>
-     <select id="duration"><option value="5">5 seconds</option><option value="8" selected>8 seconds</option><option value="10">10 seconds</option><option value="15">15 seconds</option></select>
-    </div>
-    <div><label for="quality">Resolution</label>
-     <select id="quality"><option value="720">720p HD</option><option value="1080">1080p Full HD</option></select>
-    </div>
-   </div>
-   <label for="movement">Camera movement</label>
-   <select id="movement"><option value="zoom">Slow Zoom</option><option value="pan">Pan</option><option value="drift">Cinematic Drift</option><option value="none">No Movement</option></select>
-   <label for="caption">Text on video (optional)</label>
-   <input id="caption" maxlength="150" placeholder="Video title">
-   <button class="primary btnwide" id="createBtn" onclick="createVideo()">▶ CREATE VIDEO</button>
-   <div id="videoStatus" class="status"></div>
-   <div class="progress"><div id="progressFill"></div></div>
-  </div>
-  <div class="card">
-   <h2>Video Preview</h2>
-   <div id="videoPreview" class="preview"><div class="placeholder"><b>▶</b>ቪዲዮህ እዚህ ይታያል።</div></div>
-   <button class="primary btnwide" onclick="downloadVideo()">⬇ Download Video</button>
-   <button class="btnwide" onclick="clearVideo()">Clear Video</button>
-   <p class="help">AI ከሌለ በአካባቢ የሚፈጠረው slideshow ብቻ ነው።</p>
-  </div>
- </div>
+<section class="card">
+  <div class="step"><div class="num">01</div><div><h2>ፎቶዎችህን ጫን</h2><div class="sub">እስከ 5 ፎቶዎች · JPG, PNG, WEBP</div></div></div>
+  <div class="uploads" id="photoGrid"></div>
+  <div class="sub" id="photoCount" style="margin-top:12px">0 / 5 ፎቶዎች ተመርጠዋል</div>
 </section>
 
-<section id="motion" class="section">
- <div class="layout">
-  <div class="card">
-   <h2>🕺 AI Motion Transfer</h2>
-   <p class="muted">የመጀመሪያው ፎቶ ሰው የምሳሌውን ቪዲዮ እንቅስቃሴ እንዲያደርግ ለማድረግ።</p>
-
-   <div class="notice">1. የምትንቀሳቀሰውን ሰው ፎቶ አስገባ።<br>2. እንቅስቃሴውን የሚያሳይ ምሳሌ ቪዲዮ አስገባ።<br>3. Generate ተጫን።</div>
-
-   <label for="sourcePhoto">① የመጀመሪያው ፎቶ (Source Photo)</label>
-   <input id="sourcePhoto" type="file" accept="image/*">
-   <div id="sourceStatus" class="status">ፎቶ አልተመረጠም።</div>
-   <div id="sourcePreview" class="preview"><div class="placeholder"><b>📸</b>የሰው ፎቶ አስገባ</div></div>
-
-   <label for="drivingVideo">② የእንቅስቃሴ ምሳሌ ቪዲዮ (Motion Video)</label>
-   <input id="drivingVideo" type="file" accept="video/*">
-   <div id="motionVideoStatus" class="status">ቪዲዮ አልተመረጠም።</div>
-   <div id="motionPreview" class="preview"><div class="placeholder"><b>🎬</b>የእንቅስቃሴ ቪዲዮ አስገባ</div></div>
-
-   <label for="motionPrompt">AI instructions (optional)</label>
-   <textarea id="motionPrompt" maxlength="1500" placeholder="Transfer the body movement from the reference video to the person in the source photo. Preserve the source person's identity and appearance."></textarea>
-
-   <label for="motionDuration">Output duration</label>
-   <select id="motionDuration"><option value="5">5 seconds</option><option value="8" selected>8 seconds</option><option value="10">10 seconds</option><option value="15">15 seconds</option></select>
-
-   <button class="primary btnwide" id="motionBtn" onclick="createMotionTransfer()">✨ GENERATE MOTION VIDEO</button>
-   <button class="btnwide" onclick="cancelMotion()">Cancel Request</button>
-   <div id="motionStatus" class="status"></div>
-   <div class="progress"><div id="motionProgress" style="height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink))"></div></div>
-  </div>
-
-  <div class="card">
-   <h2>AI Result Preview</h2>
-   <p class="muted">የመጨረሻው ቪዲዮ ከAI service ሲመጣ እዚህ ይታያል።</p>
-   <div id="motionResult" class="preview"><div class="placeholder"><b>🪄</b>AI ውጤትህ እዚህ ይታያል።</div></div>
-   <button class="primary btnwide" onclick="downloadMotionResult()">⬇ Download Motion Video</button>
-   <div class="notice">ማስታወሻ፦ ይህ ባህሪ እውነተኛ የሰው እንቅስቃሴ ማስተላለፍ እንዲያደርግ ከታች በAI Settings የምታዘጋጀው backend endpoint ያስፈልገዋል።</div>
-  </div>
- </div>
+<section class="card">
+  <div class="step"><div class="num">02</div><div><h2>የእንቅስቃሴ ቪዲዮ ምረጥ</h2><div class="sub">ሰው ሲራመድ፣ ሲጨፍር ወይም ሲንቀሳቀስ ያለበትን ቪዲዮ ጫን።</div></div></div>
+  <label class="video-box">
+    <div style="font-size:30px">🎬</div>
+    <strong>ቪዲዮ ምረጥ</strong>
+    <div class="sub" style="margin-top:7px">MP4, MOV, WEBM</div>
+    <input id="motionFile" type="file" accept="video/*" style="margin-top:12px;max-width:100%">
+  </label>
+  <video id="motionPreview" controls playsinline></video>
 </section>
 
-<section id="photos" class="section">
- <div class="layout">
-  <div class="card">
-   <h2>Photo Editor</h2>
-   <label for="photo">Choose photo</label><input id="photo" type="file" accept="image/*">
-   <label for="brightness">Brightness <span id="bv">100%</span></label><input id="brightness" type="range" min="30" max="180" value="100">
-   <label for="contrast">Contrast <span id="cv">100%</span></label><input id="contrast" type="range" min="30" max="180" value="100">
-   <label for="saturation">Saturation <span id="sv">100%</span></label><input id="saturation" type="range" min="0" max="200" value="100">
-   <label for="filter">Color filter</label>
-   <select id="filter"><option value="none">Original</option><option value="grayscale(100%)">Black & White</option><option value="sepia(75%)">Vintage</option><option value="saturate(160%)">Vivid</option><option value="hue-rotate(35deg)">Color Shift</option></select>
-   <button class="primary btnwide" onclick="downloadPhoto()">Download Edited Photo</button>
-   <button class="btnwide" onclick="resetPhoto()">Reset Adjustments</button>
-   <div id="photoStatus" class="status"></div>
-  </div>
-  <div class="card"><h2>Photo Preview</h2><div id="photoPreview" class="preview"><div class="placeholder"><b>▧</b>ፎቶ ምረጥ።</div></div></div>
- </div>
+<section class="card">
+  <div class="step"><div class="num">03</div><div><h2>የቪዲዮ ቅንብር</h2><div class="sub">የሚፈልጉትን አይነት ምረጥ።</div></div></div>
+  <label class="sub" for="motionType">የእንቅስቃሴ አይነት</label>
+  <select id="motionType">
+    <option value="follow">የመጀመሪያውን ሰው እንቅስቃሴ ተከተል</option>
+    <option value="dance">ዳንስ</option>
+    <option value="walk">መራመድ</option>
+    <option value="talk">ንግግር / የፊት እንቅስቃሴ</option>
+  </select>
+  <label class="sub" for="quality" style="display:block;margin-top:14px">የቪዲዮ ጥራት</label>
+  <select id="quality">
+    <option value="720">HD · 720p</option>
+    <option value="1080">Full HD · 1080p</option>
+  </select>
+  <button class="primary" id="createBtn">✦ እንቅስቃሴውን ፍጠር</button>
+  <div class="status" id="status" aria-live="polite"></div>
+  <div class="notice">ማስታወሻ፦ ይህ የድረ-ገጹ የመምረጫና ቅድመ-እይታ ክፍል ነው። ፎቶውን የቪዲዮውን እንቅስቃሴ እንዲከተል ለማድረግ የmotion-transfer AI backend/API መገናኘት ያስፈልጋል። ይህ ኮድ ብቻውን እውነተኛ የሰው እንቅስቃሴ አያመነጭም።</div>
 </section>
 
-<section id="voice" class="section">
- <div class="card">
-  <h2>Voice & Music Studio</h2>
-  <label for="voiceText">Text to speak</label><textarea id="voiceText" placeholder="እዚህ ጽሑፍ ጻፍ..."></textarea>
-  <label for="voiceSelect">Voice</label><select id="voiceSelect"><option value="">Default browser voice</option></select>
-  <div class="toolrow"><button class="primary" onclick="speakText()">▶ Play Voice</button><button onclick="stopVoice()">■ Stop</button></div>
-  <label for="musicOnly">Play music file</label><input id="musicOnly" type="file" accept="audio/*">
-  <audio id="audioPlayer" controls style="width:100%;margin-top:10px"></audio>
- </div>
-</section>
-
-<section id="history" class="section">
- <div class="card"><h2>My Creations</h2><div id="historyGrid" class="gallery"><p class="muted">ገና ሥራ አልተፈጠረም።</p></div><button class="btnwide" onclick="clearHistory()">Clear History</button></div>
-</section>
-
-<section id="settings" class="section">
- <div class="card">
-  <h2>AI Service Settings</h2>
-  <p class="muted">እውነተኛ AI motion transfer ለማድረግ በserver ላይ የሚሰራ backend endpoint አስፈላጊ ነው።</p>
-  <label for="videoAPI">Video generation API endpoint</label>
-  <input id="videoAPI" type="url" placeholder="https://your-server.com/generate-video">
-  <label for="motionAPI">Motion transfer API endpoint</label>
-  <input id="motionAPI" type="url" placeholder="https://your-server.com/motion-transfer">
-  <button class="primary btnwide" onclick="saveSettings()">Save Settings</button>
-  <div id="settingsStatus" class="status"></div>
-  <hr>
-  <p class="help">API secret key በHTML ውስጥ አታስቀምጥ። በbackend ላይ አስቀምጠው። የendpoint ስም ብቻ መጨመር AI አያሰራም፤ server ቪዲዮዎቹን ተቀብሎ AI model ማስኬድና ውጤት መመለስ አለበት።</p>
- </div>
-</section>
-</div>
-</div>
+<footer>© DAN AI VIDEO STUDIO · Use photos and videos you have permission to edit.</footer>
 </main>
-<footer>DAN AI VIDEO STUDIO · Photo Editing · Motion Transfer · Video Creation</footer>
 
 <script>
-"use strict";
-const $=id=>document.getElementById(id);
-let videoUrl=null,motionResultUrl=null,photoUrl=null;
-let sourcePhotoData=null,drivingVideoData=null;
-let historyItems=[];
-let motionController=null;
-let motionRequestId=0;
+const grid=document.getElementById('photoGrid');
+const count=document.getElementById('photoCount');
+const status=document.getElementById('status');
+const createBtn=document.getElementById('createBtn');
+const motionFile=document.getElementById('motionFile');
+const motionPreview=document.getElementById('motionPreview');
+let selectedPhotos=[];
+let motionURL='';
 
-document.querySelectorAll("[data-page]").forEach(btn=>{
- btn.addEventListener("click",()=>{
-  document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b===btn));
-  document.querySelectorAll(".section").forEach(s=>s.classList.toggle("active",s.id===btn.dataset.page));
-  window.scrollTo({top:0,behavior:"smooth"});
- });
-});
-
-function status(id,msg,type=""){
- $(id).textContent=msg;
- $(id).className="status "+type;
-}
-function dataURL(file){
- return new Promise((resolve,reject)=>{
-  const r=new FileReader();
-  r.onload=()=>resolve(r.result);
-  r.onerror=()=>reject(Error("Could not read file."));
-  r.readAsDataURL(file);
- });
-}
-function loadImg(src){
- return new Promise((resolve,reject)=>{
-  const im=new Image();
-  im.onload=()=>resolve(im);
-  im.onerror=()=>reject(Error("Image failed to load."));
-  im.src=src;
- });
-}
-function downloadURL(url,name){
- const a=document.createElement("a");
- a.href=url;a.download=name;
- document.body.appendChild(a);a.click();a.remove();
-}
-function progress(n){$("progressFill").style.width=Math.max(0,Math.min(100,n))+"%";}
-
-$("sourcePhoto").addEventListener("change",async()=>{
- const f=$("sourcePhoto").files[0];
- sourcePhotoData=null;
- if(!f)return;
- if(!f.type.startsWith("image/"))return status("sourceStatus","የፎቶ ፋይል ምረጥ።","error");
- if(f.size>15*1024*1024)return status("sourceStatus","ፎቶው ከ15 MB በታች መሆን አለበት።","error");
- try{
-  sourcePhotoData=await dataURL(f);
-  const img=document.createElement("img");
-  img.src=sourcePhotoData;img.alt="Source photo";
-  $("sourcePreview").replaceChildren(img);
-  status("sourceStatus","ፎቶው ተጭኗል።","ok");
- }catch(e){status("sourceStatus",e.message,"error");}
-});
-
-$("drivingVideo").addEventListener("change",async()=>{
- const f=$("drivingVideo").files[0];
- drivingVideoData=null;
- if(!f)return;
- if(!f.type.startsWith("video/"))return status("motionVideoStatus","የቪዲዮ ፋይል ምረጥ።","error");
- if(f.size>80*1024*1024)return status("motionVideoStatus","ቪዲዮው ከ80 MB በታች መሆን አለበት።","error");
- try{
-  status("motionVideoStatus","ቪዲዮው እየተዘጋጀ ነው...");
-  drivingVideoData=await dataURL(f);
-  const v=document.createElement("video");
-  v.src=URL.createObjectURL(f);v.controls=true;v.playsInline=true;
-  $("motionPreview").replaceChildren(v);
-  status("motionVideoStatus","ምሳሌው ቪዲዮ ተጭኗል።","ok");
- }catch(e){status("motionVideoStatus",e.message,"error");}
-});
-
-async function createMotionTransfer(){
- const endpoint=$("motionAPI").value.trim();
- if(!endpoint){
-  status("motionStatus","መጀመሪያ AI Settings ውስጥ የሚሰራ Motion Transfer backend endpoint አስገባ። HTML ብቻውን የሰው እንቅስቃሴን ወደ ፎቶ ማስተላለፍ አይችልም።","error");
-  document.querySelector('[data-page="settings"]').click();
-  return;
- }
- if(!sourcePhotoData||!drivingVideoData){
-  return status("motionStatus","ሁለቱንም ፎቶና የእንቅስቃሴ ቪዲዮ አስገባ።","error");
- }
- try{new URL(endpoint)}catch(e){return status("motionStatus","ትክክለኛ backend URL አስገባ።","error");}
-
- const btn=$("motionBtn");
- btn.disabled=true;
- motionController=new AbortController();
- const requestId=++motionRequestId;
- $("motionProgress").style.width="10%";
- status("motionStatus","ፎቶና ቪዲዮ ወደ AI backend እየተላኩ ነው...");
- try{
-  const response=await fetch(endpoint,{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   signal:motionController.signal,
-   body:JSON.stringify({
-    task:"motion_transfer",
-    source_image:sourcePhotoData,
-    driving_video:drivingVideoData,
-    prompt:$("motionPrompt").value.trim()||"Transfer the motion from the driving video to the person in the source image. Preserve the source person's identity, face, clothing and appearance as much as possible.",
-    duration:Number($("motionDuration").value),
-    output_format:"mp4"
-   })
+for(let i=0;i<5;i++){
+  const label=document.createElement('label');
+  label.className='upload';
+  label.innerHTML=`
+    <div class="symbol">＋</div>
+    <strong>ፎቶ ${i+1}</strong>
+    <small>እዚህ ጫን</small>
+    <input type="file" accept="image/jpeg,image/png,image/webp" aria-label="ፎቶ ${i+1} ምረጥ">
+  `;
+  const input=label.querySelector('input');
+  input.addEventListener('change',()=>{
+    const file=input.files[0];
+    if(!file)return;
+    if(!file.type.startsWith('image/')){
+      status.textContent='እባክህ የምስል ፋይል ምረጥ።';return;
+    }
+    if(file.size>12*1024*1024){
+      status.textContent='ፎቶው ከ12MB በታች መሆን አለበት።';input.value='';return;
+    }
+    const old=selectedPhotos[i];
+    if(old)URL.revokeObjectURL(old.url);
+    const url=URL.createObjectURL(file);
+    selectedPhotos[i]={file,url};
+    label.querySelector('.symbol').remove();
+    label.querySelector('strong').textContent=file.name;
+    label.querySelector('small').textContent='ፎቶ ተጭኗል ✓';
+    let img=label.querySelector('img');
+    if(!img){img=document.createElement('img');label.prepend(img);}
+    img.src=url;
+    count.textContent=selectedPhotos.filter(Boolean).length+' / 5 ፎቶዎች ተመርጠዋል';
+    status.textContent='';
   });
-  if(!response.ok)throw Error("Backend HTTP "+response.status);
-  $("motionProgress").style.width="75%";
-
-  const contentType=response.headers.get("content-type")||"";
-  let result;
-  if(contentType.includes("video/")){
-   result=URL.createObjectURL(await response.blob());
-  }else{
-   const data=await response.json();
-   result=data.video_url||data.output_url||data.url;
-   if(data.video_base64)result="data:"+(data.mime_type||"video/mp4")+";base64,"+data.video_base64;
-   if(!result)throw Error("Backend የቪዲዮ ውጤት አልመለሰም።");
-  }
-  if(requestId!==motionRequestId)return;
-  if(motionResultUrl&&motionResultUrl.startsWith("blob:"))URL.revokeObjectURL(motionResultUrl);
-  motionResultUrl=result;
-  const v=document.createElement("video");
-  v.src=result;v.controls=true;v.playsInline=true;
-  $("motionResult").replaceChildren(v);
-  addHistory("video",result,"AI Motion Transfer");
-  $("motionProgress").style.width="100%";
-  status("motionStatus","AI ውጤት ተመልሷል። ቪዲዮውን ተመልከትና አውርድ።","ok");
- }catch(e){
-  if(e.name==="AbortError")status("motionStatus","ጥያቄው ተሰርዟል።","error");
-  else status("motionStatus","Motion Transfer አልተሳካም፦ "+e.message+"። Backend እንደሚጠበቀው የrequest format መቀበሉንና CORS መፍቀዱን አረጋግጥ።","error");
- }finally{
-  if(requestId===motionRequestId)btn.disabled=false;
-  motionController=null;
- }
+  grid.appendChild(label);
 }
 
-function cancelMotion(){
- motionRequestId++;
- if(motionController)motionController.abort();
- $("motionBtn").disabled=false;
- $("motionProgress").style.width="0%";
- status("motionStatus","የአሁኑ ጥያቄ እንዲቆም ተጠይቋል።");
-}
-function downloadMotionResult(){
- if(!motionResultUrl)return status("motionStatus","መጀመሪያ AI ቪዲዮ ፍጠር።","error");
- downloadURL(motionResultUrl,"dan-ai-motion-transfer.mp4");
-}
-
-$("images").addEventListener("change",()=>{
- const files=[...$("images").files];
- if(files.length>5)status("uploadStatus","እስከ 5 ፎቶዎች ብቻ ምረጥ።","error");
- else status("uploadStatus",files.length+" photo(s) selected.",files.length?"ok":"");
+motionFile.addEventListener('change',()=>{
+  const file=motionFile.files[0];
+  if(!file)return;
+  if(motionURL)URL.revokeObjectURL(motionURL);
+  motionURL=URL.createObjectURL(file);
+  motionPreview.src=motionURL;
+  motionPreview.style.display='block';
+  status.textContent='ቪዲዮው ተመርጧል። አሁን የmotion-transfer backend ማገናኘት ያስፈልጋል።';
 });
 
-async function createVideo(){
- const endpoint=$("videoAPI").value.trim();
- const files=[...$("images").files].slice(0,5);
- if(endpoint){await createAIVideo(endpoint,files);return;}
- if(!files.length)return status("videoStatus","ለslideshow ቢያንስ አንድ ፎቶ አስገባ።","error");
- if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){
-  return status("videoStatus","Browser የቪዲዮ መቅዳትን አይደግፍም። Chrome አዘምን።","error");
- }
- const btn=$("createBtn");btn.disabled=true;
- let cancelled=false;
- try{
-  status("videoStatus","Slideshow እየተፈጠረ ነው...");
-  const imgs=await Promise.all(files.map(async f=>{
-   if(!f.type.startsWith("image/"))throw Error("Image files only.");
-   return loadImg(await dataURL(f));
-  }));
-  const [rw,rh]=$("ratio").value.split(":").map(Number);
-  const resolution=Number($("quality").value);
-  const canvas=document.createElement("canvas");
-  canvas.width=resolution;canvas.height=Math.round(resolution*rh/rw);
-  const ctx=canvas.getContext("2d");
-  const stream=canvas.captureStream(24);
-  let mime="video/webm;codecs=vp9";
-  if(!MediaRecorder.isTypeSupported(mime))mime="video/webm";
-  const chunks=[];
-  const rec=new MediaRecorder(stream,{mimeType:mime});
-  rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
-  const done=new Promise((resolve,reject)=>{
-   rec.onstop=()=>resolve(new Blob(chunks,{type:mime}));
-   rec.onerror=()=>reject(Error("Recording failed."));
-  });
-  const duration=Number($("duration").value),frames=duration*24;
-  rec.start(200);
-  for(let f=0;f<frames;f++){
-   const t=f/frames,index=Math.min(imgs.length-1,Math.floor(t*imgs.length));
-   const local=(t*imgs.length)%1,img=imgs[index];
-   const move=$("movement").value;
-   const scale=Math.max(canvas.width/img.width,canvas.height/img.height)*(move==="zoom"?1+local*.12:move==="drift"?1+Math.sin(local*Math.PI)*.06:1);
-   const w=img.width*scale,h=img.height*scale;
-   let x=(canvas.width-w)/2,y=(canvas.height-h)/2;
-   if(move==="pan")x-=(w-canvas.width)*local;
-   if(move==="drift")x+=(w-canvas.width)*Math.sin(local*Math.PI)*.15;
-   ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);
-   ctx.drawImage(img,x,y,w,h);
-   const caption=$("caption").value.trim();
-   if(caption){
-    const size=Math.max(18,canvas.width*.035);
-    ctx.font="bold "+size+"px Arial";ctx.textAlign="center";ctx.lineWidth=4;
-    ctx.strokeStyle="#000";ctx.fillStyle="#fff";
-    ctx.strokeText(caption,canvas.width/2,canvas.height*.88,canvas.width*.86);
-    ctx.fillText(caption,canvas.width/2,canvas.height*.88,canvas.width*.86);
-   }
-   progress(100*f/frames);
-   await new Promise(r=>setTimeout(r,1000/24));
+createBtn.addEventListener('click',()=>{
+  const photos=selectedPhotos.filter(Boolean);
+  if(!photos.length){
+    status.textContent='መጀመሪያ ቢያንስ አንድ ፎቶ ጫን።';return;
   }
-  if(rec.state!=="inactive")rec.stop();
-  stream.getTracks().forEach(t=>t.stop());
-  const blob=await done;
-  if(videoUrl&&videoUrl.startsWith("blob:"))URL.revokeObjectURL(videoUrl);
-  videoUrl=URL.createObjectURL(blob);
-  const v=document.createElement("video");v.src=videoUrl;v.controls=true;v.playsInline=true;
-  $("videoPreview").replaceChildren(v);
-  addHistory("video",videoUrl,"DAN slideshow");
-  progress(100);
-  status("videoStatus","Slideshow ተፈጥሯል። ይህ እውነተኛ AI motion transfer አይደለም።","ok");
- }catch(e){status("videoStatus","Video failed: "+e.message,"error");}
- finally{btn.disabled=false;}
-}
-
-async function createAIVideo(endpoint,files){
- try{new URL(endpoint)}catch(e){return status("videoStatus","Enter a valid API URL.","error");}
- const btn=$("createBtn");btn.disabled=true;
- try{
-  const images=await Promise.all(files.map(async f=>{
-   if(f.size>15*1024*1024)throw Error("Each photo must be under 15 MB.");
-   return dataURL(f);
-  }));
-  const response=await fetch(endpoint,{
-   method:"POST",headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({
-    prompt:$("prompt").value.trim(),images,
-    style:$("style").value,aspectRatio:$("ratio").value,
-    duration:Number($("duration").value),quality:Number($("quality").value),
-    cameraMovement:$("movement").value,overlayText:$("caption").value
-   })
-  });
-  if(!response.ok)throw Error("AI service HTTP "+response.status);
-  let url;
-  if((response.headers.get("content-type")||"").includes("video/")){
-   url=URL.createObjectURL(await response.blob());
-  }else{
-   const d=await response.json();
-   url=d.video_url||d.url;
-   if(d.video_base64)url="data:"+(d.mime_type||"video/mp4")+";base64,"+d.video_base64;
-   if(!url)throw Error("API did not return a video URL.");
+  if(!motionFile.files[0]){
+    status.textContent='የእንቅስቃሴ ቪዲዮ መጀመሪያ ምረጥ።';return;
   }
-  if(videoUrl&&videoUrl.startsWith("blob:"))URL.revokeObjectURL(videoUrl);
-  videoUrl=url;
-  const v=document.createElement("video");v.src=url;v.controls=true;v.playsInline=true;
-  $("videoPreview").replaceChildren(v);
-  addHistory("video",url,"DAN AI video");
-  progress(100);status("videoStatus","AI service returned a video.","ok");
- }catch(e){status("videoStatus","AI video failed: "+e.message,"error");}
- finally{btn.disabled=false;}
-}
-
-function downloadVideo(){
- if(!videoUrl)return status("videoStatus","Create a video first.","error");
- downloadURL(videoUrl,"dan-ai-video.webm");
-}
-function clearVideo(){
- if(videoUrl&&videoUrl.startsWith("blob:"))URL.revokeObjectURL(videoUrl);
- videoUrl=null;
- $("videoPreview").innerHTML='<div class="placeholder"><b>▶</b>ቪዲዮህ እዚህ ይታያል።</div>';
- progress(0);status("videoStatus","Video preview cleared.");
-}
-
-$("photo").addEventListener("change",async()=>{
- const f=$("photo").files[0];if(!f)return;
- if(!f.type.startsWith("image/"))return status("photoStatus","Choose an image file.","error");
- try{
-  photoUrl=await dataURL(f);
-  const img=document.createElement("img");img.src=photoUrl;img.alt="Photo preview";
-  $("photoPreview").replaceChildren(img);applyPhotoFilter();
-  status("photoStatus","Photo loaded.","ok");
- }catch(e){status("photoStatus",e.message,"error");}
-});
-function applyPhotoFilter(){
- const img=$("photoPreview").querySelector("img");if(!img)return;
- img.style.filter=`brightness(${$("brightness").value}%) contrast(${$("contrast").value}%) saturate(${$("saturation").value}%) ${$("filter").value}`;
- $("bv").textContent=$("brightness").value+"%";
- $("cv").textContent=$("contrast").value+"%";
- $("sv").textContent=$("saturation").value+"%";
-}
-["brightness","contrast","saturation","filter"].forEach(id=>$(id).addEventListener("input",applyPhotoFilter));
-function resetPhoto(){
- $("brightness").value=100;$("contrast").value=100;$("saturation").value=100;$("filter").value="none";applyPhotoFilter();
-}
-async function downloadPhoto(){
- const img=$("photoPreview").querySelector("img");
- if(!img)return status("photoStatus","Upload a photo first.","error");
- try{
-  const im=await loadImg(img.src),c=document.createElement("canvas");
-  c.width=im.naturalWidth;c.height=im.naturalHeight;
-  c.getContext("2d").filter=getComputedStyle(img).filter;
-  c.getContext("2d").drawImage(im,0,0);
-  c.toBlob(blob=>{
-   if(!blob)return status("photoStatus","Could not export photo.","error");
-   const u=URL.createObjectURL(blob);downloadURL(u,"dan-ai-edited-photo.png");
-   setTimeout(()=>URL.revokeObjectURL(u),3000);
-   status("photoStatus","Photo downloaded.","ok");
-  },"image/png");
- }catch(e){status("photoStatus","Download failed.","error");}
-}
-function speakText(){
- if(!("speechSynthesis" in window))return alert("Text-to-speech is not supported.");
- const text=$("voiceText").value.trim();if(!text)return alert("Enter text first.");
- speechSynthesis.cancel();
- const u=new SpeechSynthesisUtterance(text);
- const voice=speechSynthesis.getVoices().find(v=>v.name===$("voiceSelect").value);
- if(voice)u.voice=voice;
- speechSynthesis.speak(u);
-}
-function stopVoice(){if("speechSynthesis" in window)speechSynthesis.cancel();}
-function loadVoices(){
- if(!("speechSynthesis" in window))return;
- const select=$("voiceSelect");
- select.replaceChildren(new Option("Default browser voice",""));
- speechSynthesis.getVoices().forEach(v=>select.add(new Option(v.name+" ("+v.lang+")",v.name)));
-}
-if("speechSynthesis" in window){loadVoices();speechSynthesis.onvoiceschanged=loadVoices;}
-$("musicOnly").addEventListener("change",()=>{
- const f=$("musicOnly").files[0];if(!f)return;
- $("audioPlayer").src=URL.createObjectURL(f);
-});
-
-function addHistory(type,url,name){
- historyItems.unshift({type,url,name});
- historyItems=historyItems.slice(0,18);
- renderHistory();
-}
-function renderHistory(){
- const grid=$("historyGrid");grid.replaceChildren();
- if(!historyItems.length){const p=document.createElement("p");p.className="muted";p.textContent="ገና ሥራ አልተፈጠረም።";grid.append(p);return;}
- historyItems.forEach(item=>{
-  const a=document.createElement("article");
-  const media=document.createElement(item.type==="video"?"video":"img");
-  media.src=item.url;
-  if(item.type==="video"){media.controls=true;media.playsInline=true;}else media.alt=item.name;
-  const title=document.createElement("p");title.className="muted";title.textContent=item.name;
-  const b=document.createElement("button");b.textContent="Download";
-  b.onclick=()=>downloadURL(item.url,item.type==="video"?"dan-ai-video.webm":"dan-ai-photo.png");
-  a.append(media,title,b);grid.append(a);
- });
-}
-function clearHistory(){historyItems=[];renderHistory();}
-
-function saveSettings(){
- localStorage.setItem("danVideoAPI",$("videoAPI").value);
- localStorage.setItem("danMotionAPI",$("motionAPI").value);
- status("settingsStatus","Settings saved in this browser.","ok");
-}
-$("videoAPI").value=localStorage.getItem("danVideoAPI")||"";
-$("motionAPI").value=localStorage.getItem("danMotionAPI")||"";
-
-function saveProject(){
- const fields=["prompt","style","ratio","duration","quality","movement","caption","videoAPI","motionAPI"];
- const d={app:"DAN AI VIDEO STUDIO",version:4};
- fields.forEach(id=>d[id]=$(id).value);
- const blob=new Blob([JSON.stringify(d,null,2)],{type:"application/json"});
- const u=URL.createObjectURL(blob);downloadURL(u,"dan-ai-studio-project.json");
- setTimeout(()=>URL.revokeObjectURL(u),3000);
-}
-$("projectFile").addEventListener("change",async e=>{
- const f=e.target.files[0];if(!f)return;
- try{
-  const d=JSON.parse(await f.text());
-  ["prompt","style","ratio","duration","quality","movement","caption","videoAPI","motionAPI"].forEach(id=>{if(d[id]!==undefined)$(id).value=d[id];});
-  saveSettings();status("settingsStatus","Project settings loaded.","ok");
- }catch(err){status("settingsStatus","Invalid project file.","error");}
- e.target.value="";
+  status.textContent='ፎቶዎችና ቪዲዮው ተዘጋጅተዋል። እውነተኛውን የሰው እንቅስቃሴ ለማመንጨት backend/API መገናኘት ያስፈልጋል፤ ገና አልተፈጠረም።';
 });
 </script>
 </body>
