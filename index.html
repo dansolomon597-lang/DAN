@@ -1,186 +1,293 @@
 
 <!DOCTYPE html>
-<html lang="am">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080b14">
-<meta name="description" content="DAN AI VIDEO STUDIO - Photo animation and character motion transfer.">
-<title>DAN AI VIDEO STUDIO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070a10">
+<meta name="description" content="DAN SMC GOLD EA — Gold market charts, technical analysis and Smart Money Concepts trading dashboard.">
+<title>DAN SMC GOLD EA | Gold Trading Dashboard</title>
 <style>
-:root{--bg:#080b14;--panel:#121a2a;--pink:#ff3c9e;--purple:#8b5cf6;--text:#f7f7ff;--muted:#aab2c5}
+:root{--bg:#070a10;--panel:#101722;--panel2:#151e2b;--gold:#f5c542;--green:#20d69a;--red:#ff5b6e;--muted:#9ca9bb;--line:#283343}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at top,#20113a,var(--bg) 55%);color:var(--text);font-family:Arial,sans-serif}
-header{text-align:center;padding:23px 14px;border-bottom:1px solid #ffffff20}
-.logo{font-size:25px;font-weight:900;letter-spacing:1px}
-.logo span{color:var(--pink)}
-header p,.hint{color:var(--muted);font-size:13px;line-height:1.6}
-main{width:min(760px,94%);margin:24px auto 45px}
-.card{background:#121a2a;border:1px solid #ffffff20;border-radius:18px;padding:19px;margin-bottom:17px;box-shadow:0 10px 35px #0003}
-h2{font-size:18px;margin:0 0 10px}
-label{display:block;font-weight:bold;margin:13px 0 8px}
-input[type=file],select{width:100%;padding:12px;border-radius:10px;background:#080d19;color:white;border:1px solid #ffffff30}
-.preview{display:none;width:100%;max-height:340px;object-fit:contain;border-radius:12px;margin-top:12px;background:#05070d}
-button,.download{display:block;width:100%;padding:15px;border:0;border-radius:12px;background:linear-gradient(100deg,var(--pink),var(--purple));color:white;font-weight:bold;font-size:15px;cursor:pointer;margin-top:14px;text-align:center;text-decoration:none}
-button:disabled{opacity:.55;cursor:wait}
-.status{padding:13px;border-radius:10px;background:#080d19;color:#e1d7ff;overflow-wrap:anywhere;line-height:1.6}
-video{width:100%;max-height:400px;margin-top:12px;border-radius:12px;background:#000}
-.download{background:#172b29;color:#7fffd4}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
-[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:#f5f7fb;font:14px/1.6 Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+header{background:#090d15;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+nav{max-width:1450px;margin:auto;padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:900}
+.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#ffdf67,#bb8510);color:#101010;display:grid;place-items:center;font-size:22px}
+.brand span{color:var(--gold)}
+.navlinks{display:flex;align-items:center;gap:20px;color:var(--muted)}
+.navlinks a:hover{color:var(--gold)}
+.pill{border:1px solid #365545;color:var(--green);padding:5px 10px;border-radius:20px;font-size:11px}
+main{max-width:1450px;margin:auto;padding:24px 20px 55px}
+.eyebrow{font-size:11px;letter-spacing:2px;color:var(--gold);font-weight:bold}
+h1{font-size:clamp(27px,4vw,43px);line-height:1.15;margin:8px 0}
+h2{font-size:19px;margin:0}
+p{color:var(--muted)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
+.top p{margin:7px 0}
+.btn{border:1px solid var(--gold);background:var(--gold);color:#111;font-weight:bold;padding:10px 15px;border-radius:9px;cursor:pointer}
+.btn.outline{background:transparent;color:var(--gold)}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px;min-width:0}
+.metric-label{font-size:12px;color:var(--muted)}
+.metric-value{font-size:23px;font-weight:bold;margin:5px 0}
+.metric-note{font-size:11px;color:var(--muted)}
+.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}
+.layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(290px,.85fr);gap:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:16px}
+.panel-head{padding:15px 17px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+.panel-head p{margin:3px 0 0;font-size:12px}
+.chart-frame{height:490px;width:100%}
+.chart-frame iframe{width:100%;height:100%;border:0}
+.ta-frame{height:390px;width:100%}
+.ta-frame iframe{width:100%;height:100%;border:0}
+.widget{width:100%;padding:8px}
+.widget .tradingview-widget-container{width:100%}
+.widget iframe{max-width:100%}
+.note{padding:12px 16px;color:var(--muted);font-size:11px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:5px 9px;border:1px solid var(--line);border-radius:7px;color:#c6cfdb;font-size:11px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.row small{display:block;color:var(--muted)}
+.row strong{font-size:13px}
+.signal{padding:17px}
+.signal p{font-size:12px}
+.signal-status{padding:12px;background:#111e1b;border:1px solid #245341;border-radius:9px;color:var(--green);font-weight:bold;margin:12px 0}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+input,select{width:100%;background:#0b111b;color:white;border:1px solid var(--line);padding:11px;border-radius:8px}
+.field{margin-bottom:11px}
+.result{background:#0b111b;border:1px solid var(--line);border-radius:9px;padding:12px;margin-top:12px}
+.result div{display:flex;justify-content:space-between;gap:10px;padding:5px 0}
+.result span{color:var(--muted)}
+.disclaimer{border:1px solid #53451f;background:#17140b;border-radius:10px;padding:13px 15px;color:#d5c89f;font-size:12px;margin-top:12px}
+.section-title{margin:26px 0 13px}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.feature{padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.feature .icon{font-size:24px;color:var(--gold)}
+.feature h3{font-size:14px;margin:8px 0}
+.feature p{font-size:12px;margin-bottom:0}
+footer{text-align:center;border-top:1px solid var(--line);padding:26px 16px;color:var(--muted);font-size:12px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}.chart-frame{height:420px}.navlinks{gap:10px}}
+@media(max-width:520px){nav{flex-wrap:wrap}.navlinks{width:100%;justify-content:space-between;font-size:12px}.top{align-items:flex-start;flex-direction:column}.metrics{gap:8px}.card{padding:12px}.metric-value{font-size:19px}.chart-frame{height:390px}.features{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr}.panel-head{align-items:flex-start}.ta-frame{height:370px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">DAN <span>AI</span> VIDEO STUDIO</div>
-  <p>PHOTO • MOTION • DANCE • CHARACTER ANIMATION</p>
+<nav>
+<a class="brand" href="#home"><div class="logo">♛</div><div>DAN <span>SMC GOLD EA</span></div></a>
+<div class="navlinks">
+<a href="#home">Dashboard</a>
+<a href="#chart">Live Chart</a>
+<a href="#analysis">Analysis</a>
+<a href="#strategy">SMC Strategy</a>
+</div>
+<div class="pill">● MARKET WIDGET</div>
+</nav>
 </header>
 
-<main>
-  <section class="card">
-    <h2>📸 የሰውዬውን ፎቶ አስገባ</h2>
-    <p class="hint">ግልጽ የሆነ የፊት ፎቶ ምረጥ። ፎቶው የምትጠቀምበት ፍቃድ ያለህ መሆን አለበት።</p>
-    <label for="photo">የፎቶ ፋይል</label>
-    <input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
-    <img id="photoPreview" class="preview" alt="የፎቶ ቅድመ እይታ">
-  </section>
+<main id="home">
+<div class="top">
+<div>
+<div class="eyebrow">SMART MONEY CONCEPTS · TRADING TERMINAL</div>
+<h1>Gold Market <span class="gold">Intelligence</span></h1>
+<p>Analyze XAUUSD market structure, monitor technical signals and plan trades.</p>
+</div>
+<a class="btn outline" href="#chart">Open Live Chart ↗</a>
+</div>
 
-  <section class="card">
-    <h2>🎬 የእንቅስቃሴ ቪዲዮ አስገባ</h2>
-    <p class="hint">የዳንስ ወይም ሌላ የሰው እንቅስቃሴ ያለበትን ከ3–30 ሰከንድ ቪዲዮ ምረጥ። ለዚህ ስሪት የፋይል መጠኑ ከ5MB መብለጥ የለበትም።</p>
-    <label for="motionVideo">የእንቅስቃሴ ቪዲዮ</label>
-    <input id="motionVideo" type="file" accept="video/mp4,video/webm,video/quicktime">
-    <video id="inputPreview" class="preview" controls playsinline></video>
-  </section>
+<div class="metrics">
+<div class="card">
+<div class="metric-label">TRADING SYMBOL</div>
+<div class="metric-value gold">XAUUSD</div>
+<div class="metric-note">Gold / US Dollar</div>
+</div>
+<div class="card">
+<div class="metric-label">PLATFORM</div>
+<div class="metric-value">MT5</div>
+<div class="metric-note">MetaTrader 5 EA</div>
+</div>
+<div class="card">
+<div class="metric-label">STRATEGY</div>
+<div class="metric-value">SMC</div>
+<div class="metric-note">Structure · Liquidity · FVG</div>
+</div>
+<div class="card">
+<div class="metric-label">CHART TIMEFRAME</div>
+<div class="metric-value">15m</div>
+<div class="metric-note">Change timeframe in chart</div>
+</div>
+</div>
 
-  <section class="card">
-    <h2>⚙️ የቪዲዮ ምርጫ</h2>
-    <label for="ratio">የቪዲዮ መጠን</label>
-    <select id="ratio">
-      <option value="720:1280">ለስልክ — ቁመት</option>
-      <option value="1280:720">YouTube — አግድም</option>
-      <option value="960:960">ካሬ</option>
-      <option value="832:1104">ቁመት 2</option>
-      <option value="1104:832">አግድም 2</option>
-      <option value="1584:672">ሰፊ ስክሪን</option>
-    </select>
-    <p class="hint">ማስታወሻ፦ በዚህ ስሪት የመጠን ምርጫው በይነገጹ ውስጥ ይታያል፤ የAct-Two API የውጤት መጠንን በዚህ ምርጫ መቆጣጠር ግን አልተዋቀረም።</p>
-    <button id="generate">✨ AI ቪዲዮ ፍጠር</button>
-    <p id="status" class="status" role="status" aria-live="polite">ፎቶና ቪዲዮ አስገብተህ ጀምር።</p>
-  </section>
+<div class="layout">
+<div>
+<section class="panel" id="chart">
+<div class="panel-head">
+<div><h2>Gold Live Chart</h2><p>TradingView market chart · XAUUSD</p></div>
+<span class="pill">LIVE WIDGET</span>
+</div>
+<div class="chart-frame">
+<div class="tradingview-widget-container" style="height:100%;width:100%">
+<div id="tv-chart" style="height:100%;width:100%"></div>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+if(window.TradingView){
+new TradingView.widget({
+autosize:true,
+symbol:"OANDA:XAUUSD",
+interval:"15",
+timezone:"Etc/UTC",
+theme:"dark",
+style:"1",
+locale:"en",
+enable_publishing:false,
+allow_symbol_change:true,
+hide_side_toolbar:false,
+withdateranges:true,
+details:true,
+hotlist:false,
+calendar:false,
+support_host:"https://www.tradingview.com",
+container_id:"tv-chart"
+});
+}
+</script>
+</div>
+</div>
+<div class="note">Prices and chart availability depend on the selected TradingView data provider and its market-data permissions.</div>
+</section>
 
-  <section class="card" id="resultCard" hidden>
-    <h2>✅ የተፈጠረው ቪዲዮ</h2>
-    <video id="resultVideo" controls playsinline></video>
-    <a id="download" class="download" href="#">⬇ ቪዲዮውን አውርድ</a>
-    <p class="hint">የውጤቱ አገናኝ ጊዜያዊ ሊሆን ይችላል። የRunway የውጤት አገናኞች ቋሚ ማከማቻ አይደሉም።</p>
-  </section>
+<section class="panel" id="analysis">
+<div class="panel-head">
+<div><h2>Technical Analysis</h2><p>TradingView technical rating for XAUUSD</p></div>
+<span class="chip">15 MIN</span>
+</div>
+<div class="widget">
+<div class="tradingview-widget-container">
+<div class="tradingview-widget-container__widget"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+{
+"interval":"15m",
+"width":"100%",
+"height":"350",
+"isTransparent":true,
+"symbol":"OANDA:XAUUSD",
+"showIntervalTabs":true,
+"displayMode":"single",
+"locale":"en",
+"colorTheme":"dark"
+}
+</script>
+</div>
+</div>
+<div class="note">The rating is generated by TradingView indicators. It is not an SMC-specific signal or a guarantee of price direction.</div>
+</section>
+</div>
+
+<aside>
+<section class="panel">
+<div class="panel-head"><div><h2>SMC Analysis Desk</h2><p>Trade-planning checklist</p></div></div>
+<div class="signal">
+<div class="chips">
+<span class="chip">Market Structure</span>
+<span class="chip">Liquidity</span>
+<span class="chip">FVG</span>
+</div>
+<div class="signal-status">WAITING FOR YOUR ANALYSIS</div>
+<p>This panel does not yet have a live SMC calculation engine. Confirm the conditions below on the chart before considering a trade.</p>
+<div class="row"><div><strong>1. Liquidity Sweep</strong><small>Did price take a prior high or low?</small></div><span class="gold">Check</span></div>
+<div class="row"><div><strong>2. BOS / CHoCH</strong><small>Is there a confirmed structure break?</small></div><span class="gold">Check</span></div>
+<div class="row"><div><strong>3. FVG / Entry</strong><small>Is a valid entry zone present?</small></div><span class="gold">Check</span></div>
+<div class="row"><div><strong>4. Risk / Stop Loss</strong><small>Is the trade risk acceptable?</small></div><span class="gold">Check</span></div>
+</div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><div><h2>Trade Risk Planner</h2><p>Calculate a proposed trade plan</p></div></div>
+<div class="signal">
+<div class="field">
+<label for="direction">Trade direction</label>
+<select id="direction"><option value="BUY">BUY / LONG</option><option value="SELL">SELL / SHORT</option></select>
+</div>
+<div class="formgrid">
+<div class="field"><label for="entry">Entry price</label><input id="entry" type="number" step="any" placeholder="e.g. 4000"></div>
+<div class="field"><label for="stop">Stop Loss price</label><input id="stop" type="number" step="any" placeholder="e.g. 3990"></div>
+<div class="field"><label for="target">Take Profit price</label><input id="target" type="number" step="any" placeholder="e.g. 4020"></div>
+<div class="field"><label for="risk">Risk / reward ratio</label><select id="risk"><option value="1">1 : 1</option><option value="2" selected>1 : 2</option><option value="3">1 : 3</option></select></div>
+</div>
+<button class="btn" style="width:100%" onclick="calculatePlan()">Calculate Plan</button>
+<div id="plan" class="result" aria-live="polite">
+<div><span>Risk distance</span><strong>—</strong></div>
+<div><span>Reward distance</span><strong>—</strong></div>
+<div><span>Validation</span><strong>Not calculated</strong></div>
+</div>
+<p class="notice">Price distances are not account-currency P/L. Lot sizing requires the broker's contract size, tick value, account equity and symbol specifications.</p>
+</div>
+</section>
+</aside>
+</div>
+
+<div class="section-title" id="strategy">
+<div class="eyebrow">SMART MONEY CONCEPTS</div>
+<h2>Our SMC Workflow</h2>
+</div>
+<div class="features">
+<div class="feature"><div class="icon">⌁</div><h3>Liquidity Sweep</h3><p>Review whether price has swept a previous swing high or low.</p></div>
+<div class="feature"><div class="icon">↗</div><h3>BOS / CHoCH</h3><p>Look for confirmed breaks or shifts in market structure.</p></div>
+<div class="feature"><div class="icon">◇</div><h3>Fair Value Gap</h3><p>Mark imbalance zones and evaluate possible retracements.</p></div>
+<div class="feature"><div class="icon">⛨</div><h3>Risk Management</h3><p>Define invalidation, stop loss and acceptable account risk before entry.</p></div>
+</div>
+
+<div class="disclaimer">
+<strong>Risk warning:</strong> This website is a market-analysis and educational interface. TradingView technical ratings do not confirm an SMC trade. This page does not currently execute trades, connect to your MT5 account, or calculate live SMC entry signals. Gold and leveraged trading can cause substantial losses.
+</div>
 </main>
 
-<footer>DAN AI VIDEO STUDIO © 2026</footer>
+<footer>
+<strong class="gold">DAN SMC GOLD EA</strong>
+<p>Gold market analysis · Smart Money Concepts · MetaTrader 5</p>
+© <span id="year"></span> DAN SMC GOLD EA
+</footer>
 
 <script>
-const API_URL = "https://YOUR-BACKEND-URL";
+document.getElementById("year").textContent = new Date().getFullYear();
 
-const photo = document.getElementById("photo");
-const motionVideo = document.getElementById("motionVideo");
-const photoPreview = document.getElementById("photoPreview");
-const inputPreview = document.getElementById("inputPreview");
-const statusBox = document.getElementById("status");
-const generateButton = document.getElementById("generate");
-const resultCard = document.getElementById("resultCard");
-const resultVideo = document.getElementById("resultVideo");
-const downloadLink = document.getElementById("download");
+function calculatePlan(){
+ const direction=document.getElementById("direction").value;
+ const entry=Number(document.getElementById("entry").value);
+ const stop=Number(document.getElementById("stop").value);
+ const target=Number(document.getElementById("target").value);
+ const ratio=Number(document.getElementById("risk").value);
+ const box=document.getElementById("plan");
 
-let photoURL = "";
-let inputVideoURL = "";
-let outputURL = "";
+ if(!entry || !stop || !target || entry<=0 || stop<=0 || target<=0){
+   box.innerHTML='<div><span>Validation</span><strong class="red">Enter all valid prices</strong></div>';
+   return;
+ }
 
-photo.addEventListener("change", () => {
-  const file = photo.files[0];
-  if (!file) return;
+ const risk=direction==="BUY" ? entry-stop : stop-entry;
+ const reward=direction==="BUY" ? target-entry : entry-target;
 
-  if (photoURL) URL.revokeObjectURL(photoURL);
-  photoURL = URL.createObjectURL(file);
-  photoPreview.src = photoURL;
-  photoPreview.style.display = "block";
-});
+ if(risk<=0 || reward<=0){
+   box.innerHTML='<div><span>Validation</span><strong class="red">Prices do not match direction</strong></div><p>For BUY: SL below entry and TP above entry. For SELL: SL above entry and TP below entry.</p>';
+   return;
+ }
 
-motionVideo.addEventListener("change", () => {
-  const file = motionVideo.files[0];
-  if (!file) return;
-
-  if (inputVideoURL) URL.revokeObjectURL(inputVideoURL);
-  inputVideoURL = URL.createObjectURL(file);
-  inputPreview.src = inputVideoURL;
-  inputPreview.style.display = "block";
-});
-
-generateButton.addEventListener("click", async () => {
-  const image = photo.files[0];
-  const video = motionVideo.files[0];
-
-  if (!image || !video) {
-    statusBox.textContent = "እባክህ ፎቶና ቪዲዮ ሁለቱንም አስገባ።";
-    return;
-  }
-
-  if (!image.type.startsWith("image/") ||
-      !["video/mp4","video/webm","video/quicktime"].includes(video.type)) {
-    statusBox.textContent = "የፋይሉ አይነት አይደገፍም።";
-    return;
-  }
-
-  if (image.size > 5 * 1024 * 1024 ||
-      video.size > 5 * 1024 * 1024) {
-    statusBox.textContent = "ለዚህ ስሪት ፎቶውና ቪዲዮው እያንዳንዳቸው ከ5MB መብለጥ የለባቸውም።";
-    return;
-  }
-
-  if (API_URL.includes("YOUR-BACKEND-URL")) {
-    statusBox.textContent = "Backend URL አልተዘጋጀም። የሚሰራውን backend አድራሻ በኮዱ ውስጥ አስገባ።";
-    return;
-  }
-
-  generateButton.disabled = true;
-  resultCard.hidden = true;
-  statusBox.textContent = "ፋይሎቹ እየተላኩ ነው። AI ሂደቱ ጊዜ ሊወስድ ይችላል።";
-
-  try {
-    const form = new FormData();
-    form.append("photo", image);
-    form.append("video", video);
-    form.append("ratio", document.getElementById("ratio").value);
-
-    const response = await fetch(
-      API_URL.replace(/\/$/, "") + "/api/motion-transfer",
-      { method: "POST", body: form }
-    );
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-      throw new Error(data.error || "AI ቪዲዮ ማመንጨት አልተሳካም።");
-    }
-
-    if (!data.videoUrl) {
-      throw new Error("የቪዲዮ ውጤት አልተመለሰም።");
-    }
-
-    outputURL = data.videoUrl;
-    resultVideo.src = outputURL;
-    downloadLink.href = outputURL;
-    downloadLink.target = "_blank";
-    downloadLink.rel = "noopener";
-    resultCard.hidden = false;
-    statusBox.textContent = "የAI ውጤት ተመልሷል። ቪዲዮውን ከታች ክፈት።";
-
-  } catch (error) {
-    statusBox.textContent = "ስህተት፦ " + error.message;
-  } finally {
-    generateButton.disabled = false;
-  }
-});
+ const actual=reward/risk;
+ const valid=actual>=ratio;
+ box.innerHTML=
+ '<div><span>Direction</span><strong class="'+(direction==="BUY"?"green":"red")+'">'+direction+'</strong></div>'+
+ '<div><span>Risk distance</span><strong>'+risk.toFixed(2)+'</strong></div>'+
+ '<div><span>Reward distance</span><strong>'+reward.toFixed(2)+'</strong></div>'+
+ '<div><span>Actual R:R</span><strong>1 : '+actual.toFixed(2)+'</strong></div>'+
+ '<div><span>Selected minimum</span><strong>1 : '+ratio+'</strong></div>'+
+ '<div><span>Plan check</span><strong class="'+(valid?"green":"red")+'">'+(valid?"R:R target met":"R:R target not met")+'</strong></div>'+
+ '<p>This is a price-distance calculation, not a live trade recommendation.</p>';
+}
 </script>
 </body>
 </html>
