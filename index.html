@@ -1,293 +1,325 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="am">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070a10">
-<meta name="description" content="DAN SMC GOLD EA — Gold market charts, technical analysis and Smart Money Concepts trading dashboard.">
-<title>DAN SMC GOLD EA | Gold Trading Dashboard</title>
+<meta name="description" content="DAN SMC GOLD EA - Gold market analysis dashboard">
+<title>DAN SMC GOLD EA</title>
 <style>
-:root{--bg:#070a10;--panel:#101722;--panel2:#151e2b;--gold:#f5c542;--green:#20d69a;--red:#ff5b6e;--muted:#9ca9bb;--line:#283343}
+:root{--bg:#070a10;--panel:#101722;--gold:#f5c542;--green:#20d69a;--red:#ff5b6e;--muted:#9ca9bb;--line:#283343;--blue:#55aaff}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#f5f7fb;font:14px/1.6 Arial,sans-serif}
-a{color:inherit;text-decoration:none}
-button,input,select{font:inherit}
-header{background:#090d15;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
-nav{max-width:1450px;margin:auto;padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:900}
-.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#ffdf67,#bb8510);color:#101010;display:grid;place-items:center;font-size:22px}
-.brand span{color:var(--gold)}
-.navlinks{display:flex;align-items:center;gap:20px;color:var(--muted)}
-.navlinks a:hover{color:var(--gold)}
-.pill{border:1px solid #365545;color:var(--green);padding:5px 10px;border-radius:20px;font-size:11px}
-main{max-width:1450px;margin:auto;padding:24px 20px 55px}
+body{margin:0;background:var(--bg);color:#f5f7fb;font:15px Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.hidden{display:none!important}
+header{background:#090d15;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav{max-width:1200px;margin:auto;padding:12px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:15px}
+.brand-logo,.logo{background:linear-gradient(135deg,#ffdf67,#bb8510);color:#111;display:grid;place-items:center;font-weight:1000}
+.brand-logo{width:40px;height:40px;border-radius:12px;font-size:22px}
+.gold{color:var(--gold)}
+.pill{border:1px solid #365545;color:var(--green);padding:6px 9px;border-radius:20px;font-size:10px}
+main{max-width:1200px;margin:auto;padding:18px 14px 40px}
+.hero{margin-bottom:18px}
 .eyebrow{font-size:11px;letter-spacing:2px;color:var(--gold);font-weight:bold}
-h1{font-size:clamp(27px,4vw,43px);line-height:1.15;margin:8px 0}
-h2{font-size:19px;margin:0}
-p{color:var(--muted)}
-.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
-.top p{margin:7px 0}
-.btn{border:1px solid var(--gold);background:var(--gold);color:#111;font-weight:bold;padding:10px 15px;border-radius:9px;cursor:pointer}
+h1{font-size:clamp(25px,5vw,36px);margin:9px 0}
+h2{font-size:20px;margin:0}
+h3{font-size:16px;margin:0}
+.muted,.small{color:var(--muted);line-height:1.7}
+.small{font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:15px}
+.panel-head{padding:15px;border-bottom:1px solid var(--line)}
+.panel-head p{margin:6px 0 0;font-size:12px;color:var(--muted)}
+.pad{padding:15px}
+.btn{border:1px solid var(--gold);background:var(--gold);color:#111;font-weight:bold;padding:12px 15px;border-radius:9px;width:100%;margin-top:10px}
 .btn.outline{background:transparent;color:var(--gold)}
-.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px;min-width:0}
-.metric-label{font-size:12px;color:var(--muted)}
-.metric-value{font-size:23px;font-weight:bold;margin:5px 0}
-.metric-note{font-size:11px;color:var(--muted)}
-.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}
-.layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(290px,.85fr);gap:16px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:16px}
-.panel-head{padding:15px 17px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
-.panel-head p{margin:3px 0 0;font-size:12px}
-.chart-frame{height:490px;width:100%}
-.chart-frame iframe{width:100%;height:100%;border:0}
-.ta-frame{height:390px;width:100%}
-.ta-frame iframe{width:100%;height:100%;border:0}
-.widget{width:100%;padding:8px}
-.widget .tradingview-widget-container{width:100%}
-.widget iframe{max-width:100%}
-.note{padding:12px 16px;color:var(--muted);font-size:11px}
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{padding:5px 9px;border:1px solid var(--line);border-radius:7px;color:#c6cfdb;font-size:11px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.row:last-child{border:0}
-.row small{display:block;color:var(--muted)}
-.row strong{font-size:13px}
-.signal{padding:17px}
-.signal p{font-size:12px}
-.signal-status{padding:12px;background:#111e1b;border:1px solid #245341;border-radius:9px;color:var(--green);font-weight:bold;margin:12px 0}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
-input,select{width:100%;background:#0b111b;color:white;border:1px solid var(--line);padding:11px;border-radius:8px}
-.field{margin-bottom:11px}
-.result{background:#0b111b;border:1px solid var(--line);border-radius:9px;padding:12px;margin-top:12px}
-.result div{display:flex;justify-content:space-between;gap:10px;padding:5px 0}
-.result span{color:var(--muted)}
-.disclaimer{border:1px solid #53451f;background:#17140b;border-radius:10px;padding:13px 15px;color:#d5c89f;font-size:12px;margin-top:12px}
-.section-title{margin:26px 0 13px}
-.features{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
-.feature{padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
-.feature .icon{font-size:24px;color:var(--gold)}
-.feature h3{font-size:14px;margin:8px 0}
-.feature p{font-size:12px;margin-bottom:0}
-footer{text-align:center;border-top:1px solid var(--line);padding:26px 16px;color:var(--muted);font-size:12px}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}.chart-frame{height:420px}.navlinks{gap:10px}}
-@media(max-width:520px){nav{flex-wrap:wrap}.navlinks{width:100%;justify-content:space-between;font-size:12px}.top{align-items:flex-start;flex-direction:column}.metrics{gap:8px}.card{padding:12px}.metric-value{font-size:19px}.chart-frame{height:390px}.features{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr}.panel-head{align-items:flex-start}.ta-frame{height:370px}}
+.btn.danger{border-color:var(--red);color:var(--red);background:transparent}
+.grid{display:grid;grid-template-columns:1fr;gap:15px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:15px}
+.stat{background:#0b111b;border:1px solid var(--line);border-radius:12px;padding:14px}
+.stat strong{display:block;font-size:20px;margin-top:8px;overflow-wrap:anywhere}
+label.field{display:block;color:var(--muted);font-size:12px;margin:12px 0 6px}
+input,select{width:100%;padding:12px;background:#080d15;color:white;border:1px solid #344154;border-radius:9px}
+.upload{display:block;padding:20px;border:1px dashed #5b6370;border-radius:12px;text-align:center;background:#0b111b;color:var(--muted);cursor:pointer}
+.upload strong{display:block;color:var(--gold);font-size:16px;margin-bottom:6px}
+.preview{width:100%;max-height:350px;object-fit:contain;border-radius:10px;margin-top:12px;background:#080c13}
+.signal{background:#0b111b;border:1px solid var(--line);border-radius:12px;text-align:center;padding:22px 10px}
+.signal-word{font-size:32px;font-weight:1000;letter-spacing:1px}
+.wait{color:var(--gold)}.buy{color:var(--green)}.sell{color:var(--red)}
+.levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px}
+.level{padding:12px;background:#0b111b;border:1px solid var(--line);border-radius:9px}
+.level span{display:block;font-size:11px;color:var(--muted);margin-bottom:7px}
+.level strong{overflow-wrap:anywhere}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:7px;padding:6px 9px;margin:4px 3px 0 0;font-size:12px}
+.good{color:var(--green);border-color:#23634e}
+.bad{color:var(--red);border-color:#713441}
+.neutral{color:var(--gold);border-color:#685624}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{text-align:left;padding:11px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--gold)}
+.disclaimer{font-size:12px;line-height:1.7;color:#d5c89f;background:#17140b;border:1px solid #53451f;border-radius:10px;padding:13px;margin-top:14px}
+footer{text-align:center;padding:22px 12px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+@media(min-width:800px){main{padding-top:28px}.grid{grid-template-columns:1.1fr .9fr}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.levels{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 <body>
+
 <header>
 <nav>
-<a class="brand" href="#home"><div class="logo">♛</div><div>DAN <span>SMC GOLD EA</span></div></a>
-<div class="navlinks">
-<a href="#home">Dashboard</a>
-<a href="#chart">Live Chart</a>
-<a href="#analysis">Analysis</a>
-<a href="#strategy">SMC Strategy</a>
-</div>
-<div class="pill">● MARKET WIDGET</div>
+<div class="brand"><div class="brand-logo">D</div><div>DAN <span class="gold">SMC GOLD EA</span></div></div>
+<span class="pill">● ANALYSIS DESK</span>
 </nav>
 </header>
 
-<main id="home">
-<div class="top">
-<div>
-<div class="eyebrow">SMART MONEY CONCEPTS · TRADING TERMINAL</div>
-<h1>Gold Market <span class="gold">Intelligence</span></h1>
-<p>Analyze XAUUSD market structure, monitor technical signals and plan trades.</p>
-</div>
-<a class="btn outline" href="#chart">Open Live Chart ↗</a>
-</div>
-
-<div class="metrics">
-<div class="card">
-<div class="metric-label">TRADING SYMBOL</div>
-<div class="metric-value gold">XAUUSD</div>
-<div class="metric-note">Gold / US Dollar</div>
-</div>
-<div class="card">
-<div class="metric-label">PLATFORM</div>
-<div class="metric-value">MT5</div>
-<div class="metric-note">MetaTrader 5 EA</div>
-</div>
-<div class="card">
-<div class="metric-label">STRATEGY</div>
-<div class="metric-value">SMC</div>
-<div class="metric-note">Structure · Liquidity · FVG</div>
-</div>
-<div class="card">
-<div class="metric-label">CHART TIMEFRAME</div>
-<div class="metric-value">15m</div>
-<div class="metric-note">Change timeframe in chart</div>
-</div>
-</div>
-
-<div class="layout">
-<div>
-<section class="panel" id="chart">
-<div class="panel-head">
-<div><h2>Gold Live Chart</h2><p>TradingView market chart · XAUUSD</p></div>
-<span class="pill">LIVE WIDGET</span>
-</div>
-<div class="chart-frame">
-<div class="tradingview-widget-container" style="height:100%;width:100%">
-<div id="tv-chart" style="height:100%;width:100%"></div>
-<script src="https://s3.tradingview.com/tv.js"></script>
-<script>
-if(window.TradingView){
-new TradingView.widget({
-autosize:true,
-symbol:"OANDA:XAUUSD",
-interval:"15",
-timezone:"Etc/UTC",
-theme:"dark",
-style:"1",
-locale:"en",
-enable_publishing:false,
-allow_symbol_change:true,
-hide_side_toolbar:false,
-withdateranges:true,
-details:true,
-hotlist:false,
-calendar:false,
-support_host:"https://www.tradingview.com",
-container_id:"tv-chart"
-});
-}
-</script>
-</div>
-</div>
-<div class="note">Prices and chart availability depend on the selected TradingView data provider and its market-data permissions.</div>
-</section>
-
-<section class="panel" id="analysis">
-<div class="panel-head">
-<div><h2>Technical Analysis</h2><p>TradingView technical rating for XAUUSD</p></div>
-<span class="chip">15 MIN</span>
-</div>
-<div class="widget">
-<div class="tradingview-widget-container">
-<div class="tradingview-widget-container__widget"></div>
-<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-{
-"interval":"15m",
-"width":"100%",
-"height":"350",
-"isTransparent":true,
-"symbol":"OANDA:XAUUSD",
-"showIntervalTabs":true,
-"displayMode":"single",
-"locale":"en",
-"colorTheme":"dark"
-}
-</script>
-</div>
-</div>
-<div class="note">The rating is generated by TradingView indicators. It is not an SMC-specific signal or a guarantee of price direction.</div>
-</section>
-</div>
-
-<aside>
-<section class="panel">
-<div class="panel-head"><div><h2>SMC Analysis Desk</h2><p>Trade-planning checklist</p></div></div>
-<div class="signal">
-<div class="chips">
-<span class="chip">Market Structure</span>
-<span class="chip">Liquidity</span>
-<span class="chip">FVG</span>
-</div>
-<div class="signal-status">WAITING FOR YOUR ANALYSIS</div>
-<p>This panel does not yet have a live SMC calculation engine. Confirm the conditions below on the chart before considering a trade.</p>
-<div class="row"><div><strong>1. Liquidity Sweep</strong><small>Did price take a prior high or low?</small></div><span class="gold">Check</span></div>
-<div class="row"><div><strong>2. BOS / CHoCH</strong><small>Is there a confirmed structure break?</small></div><span class="gold">Check</span></div>
-<div class="row"><div><strong>3. FVG / Entry</strong><small>Is a valid entry zone present?</small></div><span class="gold">Check</span></div>
-<div class="row"><div><strong>4. Risk / Stop Loss</strong><small>Is the trade risk acceptable?</small></div><span class="gold">Check</span></div>
-</div>
-</section>
-
-<section class="panel">
-<div class="panel-head"><div><h2>Trade Risk Planner</h2><p>Calculate a proposed trade plan</p></div></div>
-<div class="signal">
-<div class="field">
-<label for="direction">Trade direction</label>
-<select id="direction"><option value="BUY">BUY / LONG</option><option value="SELL">SELL / SHORT</option></select>
-</div>
-<div class="formgrid">
-<div class="field"><label for="entry">Entry price</label><input id="entry" type="number" step="any" placeholder="e.g. 4000"></div>
-<div class="field"><label for="stop">Stop Loss price</label><input id="stop" type="number" step="any" placeholder="e.g. 3990"></div>
-<div class="field"><label for="target">Take Profit price</label><input id="target" type="number" step="any" placeholder="e.g. 4020"></div>
-<div class="field"><label for="risk">Risk / reward ratio</label><select id="risk"><option value="1">1 : 1</option><option value="2" selected>1 : 2</option><option value="3">1 : 3</option></select></div>
-</div>
-<button class="btn" style="width:100%" onclick="calculatePlan()">Calculate Plan</button>
-<div id="plan" class="result" aria-live="polite">
-<div><span>Risk distance</span><strong>—</strong></div>
-<div><span>Reward distance</span><strong>—</strong></div>
-<div><span>Validation</span><strong>Not calculated</strong></div>
-</div>
-<p class="notice">Price distances are not account-currency P/L. Lot sizing requires the broker's contract size, tick value, account equity and symbol specifications.</p>
-</div>
-</section>
-</aside>
-</div>
-
-<div class="section-title" id="strategy">
+<main>
+<section class="hero">
 <div class="eyebrow">SMART MONEY CONCEPTS</div>
-<h2>Our SMC Workflow</h2>
-</div>
-<div class="features">
-<div class="feature"><div class="icon">⌁</div><h3>Liquidity Sweep</h3><p>Review whether price has swept a previous swing high or low.</p></div>
-<div class="feature"><div class="icon">↗</div><h3>BOS / CHoCH</h3><p>Look for confirmed breaks or shifts in market structure.</p></div>
-<div class="feature"><div class="icon">◇</div><h3>Fair Value Gap</h3><p>Mark imbalance zones and evaluate possible retracements.</p></div>
-<div class="feature"><div class="icon">⛨</div><h3>Risk Management</h3><p>Define invalidation, stop loss and acceptable account risk before entry.</p></div>
+<h1>Gold Market <span class="gold">Analyzer</span></h1>
+<p class="muted">የXAUUSD ቻርትህን ጫን። የቻርቱን የዋጋ መረጃ አስገብተህ መሠረታዊ የSMC ምርመራ አድርግ።</p>
+</section>
+
+<div class="stats">
+<div class="stat"><span class="small">SYMBOL</span><strong>XAUUSD</strong></div>
+<div class="stat"><span class="small">TIMEFRAME</span><strong id="tfDisplay">M15</strong></div>
+<div class="stat"><span class="small">LAST SIGNAL</span><strong id="lastSignal">WAIT</strong></div>
+<div class="stat"><span class="small">ANALYSES</span><strong id="analysisCount">0</strong></div>
 </div>
 
-<div class="disclaimer">
-<strong>Risk warning:</strong> This website is a market-analysis and educational interface. TradingView technical ratings do not confirm an SMC trade. This page does not currently execute trades, connect to your MT5 account, or calculate live SMC entry signals. Gold and leveraged trading can cause substantial losses.
+<div class="grid">
+<section class="panel">
+<div class="panel-head"><h3>📸 የቻርት ፎቶ</h3><p>MT5 / TradingView screenshot</p></div>
+<div class="pad">
+<label class="upload" for="chartImage"><strong>+ ፎቶ ምረጥ</strong>የcandlestick chart ፎቶ እዚህ ጫን</label>
+<input id="chartImage" type="file" accept="image/*" hidden>
+<img id="preview" class="preview hidden" alt="Chart preview">
+<label class="field" for="timeframe">Timeframe</label>
+<select id="timeframe">
+<option>M1</option><option>M5</option><option selected>M15</option><option>M30</option><option>H1</option><option>H4</option><option>D1</option>
+</select>
+<p class="small">የፎቶ ማሳያ ብቻ በራሱ የገበያ ዋጋን አያነብም። ከታች የቻርቱን የዋጋ ዳታ በእጅ ማስገባት ትችላለህ።</p>
 </div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><h3>📊 የዋጋ መረጃ</h3><p>የቻርት እሴቶችን በእጅ አስገባ</p></div>
+<div class="pad">
+<label class="field" for="price">Current / Entry Price</label>
+<input id="price" type="number" step="0.01" placeholder="ለምሳሌ 2750.50">
+<label class="field" for="swingLow">Recent Swing Low</label>
+<input id="swingLow" type="number" step="0.01" placeholder="የቅርብ ዝቅተኛ ዋጋ">
+<label class="field" for="swingHigh">Recent Swing High</label>
+<input id="swingHigh" type="number" step="0.01" placeholder="የቅርብ ከፍተኛ ዋጋ">
+<label class="field" for="trend">Observed Market Structure</label>
+<select id="trend">
+<option value="unknown">አልተረጋገጠም</option>
+<option value="bullish">Higher High / Higher Low</option>
+<option value="bearish">Lower High / Lower Low</option>
+<option value="range">Range / Consolidation</option>
+</select>
+<label class="field" for="liquidity">Liquidity observation</label>
+<select id="liquidity">
+<option value="unknown">አልተረጋገጠም</option>
+<option value="sellside">Sell-side liquidity sweep ታይቷል</option>
+<option value="buyside">Buy-side liquidity sweep ታይቷል</option>
+<option value="none">Sweep አልታየም</option>
+</select>
+<button class="btn" id="analyzeBtn">ANALYZE SMC</button>
+<button class="btn outline" id="resetBtn">RESET</button>
+<p id="inputMessage" class="small">የዋጋ እሴቶቹን አስገባ። ውጤቱ በእነዚህ እሴቶችና በመረጥከው መዋቅር ላይ ይመሠረታል።</p>
+</div>
+</section>
+</div>
+
+<div class="grid" style="margin-top:15px">
+<section class="panel">
+<div class="panel-head"><h3>🎯 የትንተና ውጤት</h3><p>Signal and risk levels</p></div>
+<div class="pad">
+<div class="signal">
+<div class="small">MARKET SIGNAL</div>
+<div class="signal-word wait" id="signalWord">WAIT</div>
+<p class="small" id="signalInfo">የዋጋ መረጃ አስገብተህ ANALYZE SMC ተጫን።</p>
+</div>
+<div class="levels">
+<div class="level"><span>ENTRY</span><strong id="entry">—</strong></div>
+<div class="level"><span>STOP LOSS</span><strong id="sl">—</strong></div>
+<div class="level"><span>TAKE PROFIT 1</span><strong id="tp1">—</strong></div>
+<div class="level"><span>TAKE PROFIT 2</span><strong id="tp2">—</strong></div>
+<div class="level"><span>TAKE PROFIT 3</span><strong id="tp3">—</strong></div>
+<div class="level"><span>RISK / REWARD</span><strong id="rr">—</strong></div>
+</div>
+<h3 style="margin-top:18px">SMC Checklist</h3>
+<div id="smcTags"><span class="tag neutral">BOS: not verified</span><span class="tag neutral">CHoCH: not verified</span><span class="tag neutral">FVG: not verified</span><span class="tag neutral">Order Block: not verified</span></div>
+<p id="reason" class="small">የትንተና ውጤት እዚህ ይታያል።</p>
+</div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><h3>🗂️ የትንተና ታሪክ</h3><p>በዚህ መሣሪያ ውስጥ የተፈጠሩ ውጤቶች</p></div>
+<div class="pad">
+<div class="tablewrap">
+<table>
+<thead><tr><th>Time</th><th>TF</th><th>Signal</th><th>Entry</th></tr></thead>
+<tbody id="historyBody"><tr><td colspan="4">ገና ትንተና አልተደረገም።</td></tr></tbody>
+</table>
+</div>
+<button class="btn outline" id="clearHistory">CLEAR HISTORY</button>
+<p class="small">ታሪኩ በዚህ browser ውስጥ ብቻ ይቀመጣል።</p>
+</div>
+</section>
+</div>
+
+<div class="disclaimer"><strong>የአደጋ ማስጠንቀቂያ፦</strong> ይህ መሣሪያ በእጅ በገባ የዋጋ መረጃ ላይ ቀላል ስሌት ያደርጋል። ፎቶዎችን በAI አያነብም፣ ቀጥታ የMT5 ዳታ አያገኝም፣ ግብይትም አይከፍትም። የትንተና ውጤቱ የገበያ እውነታ ወይም የትርፍ ዋስትና አይደለም። በእውነተኛ ገንዘብ ከመጠቀምህ በፊት demo ላይ ፈትን።</div>
 </main>
 
-<footer>
-<strong class="gold">DAN SMC GOLD EA</strong>
-<p>Gold market analysis · Smart Money Concepts · MetaTrader 5</p>
-© <span id="year"></span> DAN SMC GOLD EA
-</footer>
+<footer><strong class="gold">DAN SMC GOLD EA</strong><br>Gold Market Analysis · <span id="year"></span></footer>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
+"use strict";
+const $=id=>document.getElementById(id);
+$("year").textContent=new Date().getFullYear();
 
-function calculatePlan(){
- const direction=document.getElementById("direction").value;
- const entry=Number(document.getElementById("entry").value);
- const stop=Number(document.getElementById("stop").value);
- const target=Number(document.getElementById("target").value);
- const ratio=Number(document.getElementById("risk").value);
- const box=document.getElementById("plan");
+let selectedImageURL=null;
+let history=[];
+try{history=JSON.parse(localStorage.getItem("danSMCHistory")||"[]");if(!Array.isArray(history))history=[];}catch(e){history=[];}
 
- if(!entry || !stop || !target || entry<=0 || stop<=0 || target<=0){
-   box.innerHTML='<div><span>Validation</span><strong class="red">Enter all valid prices</strong></div>';
-   return;
- }
+$("chartImage").addEventListener("change",function(){
+ const file=this.files&&this.files[0];
+ if(!file)return;
+ if(!file.type.startsWith("image/")){alert("እባክህ የፎቶ ፋይል ምረጥ።");this.value="";return;}
+ if(file.size>12*1024*1024){alert("ፎቶው ከ12MB በታች ይሁን።");this.value="";return;}
+ if(selectedImageURL)URL.revokeObjectURL(selectedImageURL);
+ selectedImageURL=URL.createObjectURL(file);
+ $("preview").src=selectedImageURL;
+ $("preview").classList.remove("hidden");
+ $("inputMessage").textContent="ፎቶው ተጭኗል። ፎቶው በራሱ አልተተነተነም።";
+});
 
- const risk=direction==="BUY" ? entry-stop : stop-entry;
- const reward=direction==="BUY" ? target-entry : entry-target;
+$("timeframe").addEventListener("change",()=>$("tfDisplay").textContent=$("timeframe").value);
 
- if(risk<=0 || reward<=0){
-   box.innerHTML='<div><span>Validation</span><strong class="red">Prices do not match direction</strong></div><p>For BUY: SL below entry and TP above entry. For SELL: SL above entry and TP below entry.</p>';
-   return;
- }
-
- const actual=reward/risk;
- const valid=actual>=ratio;
- box.innerHTML=
- '<div><span>Direction</span><strong class="'+(direction==="BUY"?"green":"red")+'">'+direction+'</strong></div>'+
- '<div><span>Risk distance</span><strong>'+risk.toFixed(2)+'</strong></div>'+
- '<div><span>Reward distance</span><strong>'+reward.toFixed(2)+'</strong></div>'+
- '<div><span>Actual R:R</span><strong>1 : '+actual.toFixed(2)+'</strong></div>'+
- '<div><span>Selected minimum</span><strong>1 : '+ratio+'</strong></div>'+
- '<div><span>Plan check</span><strong class="'+(valid?"green":"red")+'">'+(valid?"R:R target met":"R:R target not met")+'</strong></div>'+
- '<p>This is a price-distance calculation, not a live trade recommendation.</p>';
+function num(id){return Number($(id).value);}
+function fmt(n){return Number.isFinite(n)?n.toFixed(2):"—";}
+function setSignal(signal,info){
+ $("signalWord").textContent=signal;
+ $("signalWord").className="signal-word "+(signal==="BUY"?"buy":signal==="SELL"?"sell":"wait");
+ $("lastSignal").textContent=signal;
+ $("lastSignal").style.color=signal==="BUY"?"var(--green)":signal==="SELL"?"var(--red)":"var(--gold)";
+ $("signalInfo").textContent=info;
 }
+function renderTags(items){
+ $("smcTags").replaceChildren();
+ items.forEach(item=>{
+  const span=document.createElement("span");
+  span.className="tag "+item[1];
+  span.textContent=item[0];
+  $("smcTags").appendChild(span);
+ });
+}
+function renderHistory(){
+ $("analysisCount").textContent=history.length;
+ const body=$("historyBody");
+ body.replaceChildren();
+ if(!history.length){
+  const tr=document.createElement("tr"),td=document.createElement("td");
+  td.colSpan=4;td.textContent="ገና ትንተና አልተደረገም።";
+  tr.appendChild(td);body.appendChild(tr);return;
+ }
+ history.slice(0,20).forEach(item=>{
+  const tr=document.createElement("tr");
+  [item.time,item.tf,item.signal,item.entry].forEach((value,i)=>{
+   const td=document.createElement("td");td.textContent=value;
+   if(i===2)td.style.color=value==="BUY"?"var(--green)":value==="SELL"?"var(--red)":"var(--gold)";
+   tr.appendChild(td);
+  });
+  body.appendChild(tr);
+ });
+}
+function saveHistory(item){
+ history.unshift(item);history=history.slice(0,50);
+ try{localStorage.setItem("danSMCHistory",JSON.stringify(history));}catch(e){}
+ renderHistory();
+}
+function clearLevels(){
+ ["entry","sl","tp1","tp2","tp3","rr"].forEach(id=>$(id).textContent="—");
+}
+function analyze(){
+ const price=num("price"),low=num("swingLow"),high=num("swingHigh");
+ const trend=$("trend").value,liq=$("liquidity").value,tf=$("timeframe").value;
+ if(!Number.isFinite(price)||!Number.isFinite(low)||!Number.isFinite(high)||price<=0||low<=0||high<=0||low>=high||price<low||price>high){
+  alert("ትክክለኛ የዋጋ መረጃ አስገባ። ዋጋው በSwing Low እና Swing High መካከል መሆን አለበት።");
+  return;
+ }
+ let score=0;
+ if(trend==="bullish")score+=2;
+ if(trend==="bearish")score-=2;
+ if(liq==="sellside")score+=1;
+ if(liq==="buyside")score-=1;
+
+ let signal="WAIT";
+ if(score>=3)signal="BUY";
+ else if(score<=-3)signal="SELL";
+
+ const range=high-low;
+ const buffer=Math.max(range*.08,price*.0005);
+ let sl=null,tp1=null,tp2=null,tp3=null,rr="—";
+ if(signal==="BUY"){
+  sl=Math.min(low,price-buffer);
+  const risk=price-sl;
+  tp1=price+risk;tp2=price+risk*2;tp3=price+risk*3;
+  rr="1:1 / 1:2 / 1:3";
+ }else if(signal==="SELL"){
+  sl=Math.max(high,price+buffer);
+  const risk=sl-price;
+  tp1=price-risk;tp2=price-risk*2;tp3=price-risk*3;
+  rr="1:1 / 1:2 / 1:3";
+ }
+
+ $("entry").textContent=fmt(price);
+ $("sl").textContent=sl===null?"—":fmt(sl);
+ $("tp1").textContent=tp1===null?"—":fmt(tp1);
+ $("tp2").textContent=tp2===null?"—":fmt(tp2);
+ $("tp3").textContent=tp3===null?"—":fmt(tp3);
+ $("rr").textContent=rr;
+
+ const tags=[
+  ["Structure: "+(trend==="unknown"?"unverified":trend),"neutral"],
+  ["Liquidity: "+(liq==="unknown"?"unverified":liq),"neutral"],
+  ["BOS: needs candle data","neutral"],
+  ["CHoCH: needs candle data","neutral"],
+  ["FVG: not verified","neutral"],
+  ["Order Block: not verified","neutral"]
+ ];
+ renderTags(tags);
+ const reason=signal==="BUY"?
+  "የተመረጠው bullish structure እና sell-side sweep በአንድ አቅጣጫ ስለሚደጋገፉ የBUY ሁኔታ ተፈጥሯል።":
+  signal==="SELL"?
+  "የተመረጠው bearish structure እና buy-side sweep በአንድ አቅጣጫ ስለሚደጋገፉ የSELL ሁኔታ ተፈጥሯል።":
+  "የገባው መረጃ ጠንካራ አንድ አቅጣጫ አያሳይም። WAIT ተመርጧል።";
+ setSignal(signal,reason+" ይህ ቀላል የሁኔታ ስሌት ነው፤ የተረጋገጠ የAI ወይም የቀጥታ ገበያ ምልክት አይደለም።");
+ $("inputMessage").textContent="ትንተናው ተጠናቋል። የቻርት እሴቶቹን በትክክል እንዳስገባህ አረጋግጥ።";
+ saveHistory({time:new Date().toLocaleString(),tf,signal,entry:fmt(price)});
+}
+$("analyzeBtn").addEventListener("click",analyze);
+$("clearHistory").addEventListener("click",()=>{
+ if(!confirm("ሁሉንም የትንተና ታሪክ ማጥፋት ትፈልጋለህ?"))return;
+ history=[];
+ try{localStorage.removeItem("danSMCHistory");}catch(e){}
+ renderHistory();
+});
+$("resetBtn").addEventListener("click",()=>{
+ ["price","swingLow","swingHigh"].forEach(id=>$(id).value="");
+ $("trend").value="unknown";$("liquidity").value="unknown";
+ $("chartImage").value="";
+ if(selectedImageURL)URL.revokeObjectURL(selectedImageURL);
+ selectedImageURL=null;
+ $("preview").removeAttribute("src");$("preview").classList.add("hidden");
+ clearLevels();
+ setSignal("WAIT","የዋጋ መረጃ አስገብተህ ANALYZE SMC ተጫን።");
+ $("inputMessage").textContent="መረጃው ተሰርዟል።";
+ renderTags([["BOS: not verified","neutral"],["CHoCH: not verified","neutral"],["FVG: not verified","neutral"],["Order Block: not verified","neutral"]]);
+});
+renderHistory();
 </script>
 </body>
 </html>
