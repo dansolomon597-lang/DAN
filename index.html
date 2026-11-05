@@ -5,120 +5,213 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080b12">
-<title>DAN AUTO TRADING</title>
+<title>DAN AUTO TRADING PRO</title>
 <style>
+:root{
+ --bg:#080b12;--panel:#111827;--panel2:#172235;
+ --gold:#f4bd50;--gold2:#ffdc91;--muted:#93a0b5;
+ --green:#20d69a;--red:#ff5c6c;--border:#29364b;
+}
 *{box-sizing:border-box}
-:root{--gold:#f4bd50;--panel:#111827;--muted:#93a0b5;--green:#20d69a;--red:#ff5c6c}
-body{margin:0;background:#080b12;color:#f5f7fb;font-family:Arial,sans-serif}
-header{padding:16px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #263044;background:#0b101b;position:sticky;top:0;z-index:5}
-.logo{font-size:19px;font-weight:900;color:var(--gold)}
-button{border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.4}
-.gold{background:var(--gold);color:#111}
-.darkbtn{background:#263044;color:white}
+body{margin:0;background:var(--bg);color:#f5f7fb;font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{border:0;border-radius:10px;padding:12px 15px;font-weight:800;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+header{
+ position:sticky;top:0;z-index:10;background:#0b101b;
+ border-bottom:1px solid var(--border);padding:14px 5%;
+ display:flex;justify-content:space-between;align-items:center;gap:10px
+}
+.logo{color:var(--gold);font-size:19px;font-weight:900;letter-spacing:.8px}
+.logo span{color:white}
+.wrap{max-width:1200px;margin:auto;padding:22px 18px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.between{justify-content:space-between}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.card{
+ background:linear-gradient(145deg,#151f30,#101725);
+ border:1px solid var(--border);border-radius:16px;
+ padding:17px;margin-bottom:15px;min-width:0;
+ box-shadow:0 8px 25px #0002
+}
+h1{font-size:25px;margin:0 0 7px}
+h2{font-size:16px;margin:0 0 15px}
+.small{font-size:12px;color:var(--muted);line-height:1.6}
+.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.7px}
+.value{font-size:23px;font-weight:900;margin-top:9px;overflow-wrap:anywhere}
+.goldText{color:var(--gold)}
+.greenText{color:var(--green)}
+.redText{color:var(--red)}
+.tag{
+ display:inline-flex;align-items:center;gap:6px;
+ background:#282315;border:1px solid #69542c;color:var(--gold2);
+ padding:6px 10px;border-radius:30px;font-size:10px;font-weight:900
+}
+.dot{height:7px;width:7px;border-radius:50%;background:var(--green);display:inline-block}
+input,select{
+ width:100%;min-width:0;background:#080e18;color:white;
+ border:1px solid #344159;border-radius:9px;padding:12px;outline:none
+}
+input:focus,select:focus{border-color:var(--gold)}
+.field{flex:1;min-width:115px}
+.field label{display:block;margin-bottom:7px;font-size:11px;color:var(--muted)}
+.gold{background:linear-gradient(135deg,#ffdc91,#d79b35);color:#15100a}
 .green{background:var(--green);color:#06130f}
 .red{background:var(--red);color:white}
-.wrap{max-width:1150px;margin:auto;padding:20px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.card{background:var(--panel);border:1px solid #263044;border-radius:14px;padding:17px;margin-bottom:14px}
-.small{font-size:12px;color:var(--muted)}
-.value{font-size:23px;font-weight:800;margin-top:9px;overflow-wrap:anywhere}
-h2{font-size:17px;margin:0 0 15px}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-input,select{background:#080e18;border:1px solid #344159;color:white;padding:12px;border-radius:8px;width:100%;min-width:0}
-.field{flex:1;min-width:110px}
-.actions{display:flex;gap:9px;margin-top:12px}
+.darkbtn{background:#26344a;color:white;border:1px solid #3b4b63}
+.actions{display:flex;gap:9px;margin-top:13px}
 .actions button{flex:1}
-.tag{background:#263044;padding:5px 9px;border-radius:20px;font-size:11px}
-.status{color:var(--green);font-size:12px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:11px 8px;border-bottom:1px solid #263044;white-space:nowrap}
-th{color:var(--muted)}
-#loginPage{max-width:390px;margin:70px auto;padding:22px}
+.notice{
+ background:#202b3d;border:1px solid #34435a;
+ border-radius:10px;padding:12px;color:#c5d0e0;
+ font-size:12px;line-height:1.6;margin:12px 0
+}
+.status{font-size:12px;color:var(--green)}
+hr{border:0;border-top:1px solid var(--border);margin:16px 0}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:11px 8px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+th{color:var(--muted);font-size:10px}
+.tableWrap{overflow-x:auto}
+#loginPage{max-width:400px;margin:65px auto;padding:22px}
 #app{display:none}
-#chart{width:100%;height:220px;display:block}
-.notice{padding:11px;border-radius:9px;background:#202b3d;color:#c5d0e0;font-size:12px;line-height:1.6;margin:10px 0}
-.positive{color:var(--green)}
-.negative{color:var(--red)}
-footer{text-align:center;color:var(--muted);padding:25px;font-size:12px}
-@media(max-width:700px){
-.grid{grid-template-columns:repeat(2,1fr)}
-header{padding:13px}
-.logo{font-size:15px}
-.wrap{padding:12px}
-.value{font-size:19px}
-table{font-size:11px}
-th,td{padding:9px 5px}
-.card{padding:13px}
+#chart{height:250px;width:100%;display:block}
+.chartFrame{width:100%;height:420px;border:0;border-radius:10px;background:#080b12}
+#successPage{
+ display:none;position:fixed;inset:0;z-index:30;
+ background:#080b12ed;align-items:center;justify-content:center;padding:18px
+}
+.successCard{
+ max-width:420px;width:100%;background:#111827;
+ border:1px solid #345344;border-radius:20px;
+ padding:30px;text-align:center
+}
+.check{
+ width:76px;height:76px;margin:0 auto 17px;border-radius:50%;
+ background:#123b30;color:var(--green);display:grid;
+ place-items:center;font-size:42px
+}
+.amountBig{font-size:32px;color:var(--green);font-weight:900;margin:17px}
+#successPage button{width:100%;margin-top:15px}
+#toast{
+ position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+ background:#26344a;color:white;padding:12px 18px;
+ border-radius:10px;z-index:40;display:none;
+ max-width:90%;font-size:13px
+}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
+@media(max-width:750px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .grid2{grid-template-columns:1fr}
+ header{padding:12px}
+ .logo{font-size:15px}
+ .wrap{padding:13px}
+ .value{font-size:19px}
+ .card{padding:13px}
+ h1{font-size:21px}
+ .chartFrame{height:360px}
+}
+@media(max-width:390px){
+ .grid{gap:8px}
+ .value{font-size:17px}
+ .card{padding:11px}
 }
 </style>
 </head>
 <body>
 
 <header>
- <div class="logo">⚡ DAN AUTO TRADING</div>
+ <div class="logo">⚡ DAN <span>AUTO TRADING</span></div>
  <div class="row">
   <span class="tag">DEMO ACCOUNT</span>
-  <button class="darkbtn" id="logoutBtn" onclick="logout()" style="display:none">Logout</button>
+  <button class="darkbtn" id="logoutBtn" onclick="logout()" style="display:none">LOGOUT</button>
  </div>
 </header>
 
+<!-- LOGIN -->
 <section id="loginPage" class="card">
- <h2 style="color:var(--gold)">Welcome to DAN</h2>
- <p class="small">Login or create a demo account</p>
- <div style="margin:15px 0">
-  <label class="small">Email</label>
-  <input id="email" type="email" placeholder="Enter email">
+ <div style="text-align:center;margin-bottom:22px">
+  <div style="font-size:40px">⚡</div>
+  <h1 class="goldText">DAN AUTO TRADING</h1>
+  <p class="small">Professional Demo Trading Dashboard</p>
  </div>
- <div style="margin:15px 0">
-  <label class="small">Password</label>
+ <h2>Welcome Back</h2>
+ <div class="field" style="margin-bottom:14px">
+  <label>Email Address</label>
+  <input id="email" type="email" placeholder="Enter your email">
+ </div>
+ <div class="field" style="margin-bottom:15px">
+  <label>Password</label>
   <input id="password" type="password" placeholder="Enter password">
  </div>
- <button class="gold" style="width:100%" onclick="login()">LOGIN / SIGN UP</button>
+ <button class="gold" style="width:100%" onclick="login()">LOGIN / CREATE ACCOUNT</button>
  <p id="loginMsg" class="small"></p>
- <div class="notice">Demo-only login. This version stores demo accounts on this device. Do not use a real password.</div>
+ <div class="notice">Demo account only. Account data is stored on this device. Do not use a real password.</div>
 </section>
 
+<!-- DASHBOARD -->
 <main id="app">
 <div class="wrap">
 
- <div class="row" style="justify-content:space-between;margin-bottom:15px">
+ <div class="row between" style="margin-bottom:17px">
   <div>
-   <h2 style="margin-bottom:5px">Trading Dashboard</h2>
-   <span class="status">● DEMO SYSTEM ACTIVE</span>
+   <h1>DAN Trading Dashboard</h1>
+   <div class="status"><span class="dot"></span> SYSTEM READY</div>
   </div>
-  <button class="darkbtn" onclick="resetAccount()">Reset Account</button>
+  <button class="darkbtn" onclick="resetAccount()">RESET DEMO</button>
  </div>
 
+ <!-- ACCOUNT SUMMARY -->
  <div class="grid">
-  <div class="card"><div class="small">BALANCE</div><div class="value" id="balance">$0.00</div></div>
-  <div class="card"><div class="small">EQUITY</div><div class="value" id="equity">$0.00</div></div>
-  <div class="card"><div class="small">FREE MARGIN</div><div class="value" id="freeMargin">$0.00</div></div>
-  <div class="card"><div class="small">FLOATING P/L</div><div class="value" id="totalPL">$0.00</div></div>
+  <div class="card">
+   <div class="label">ACCOUNT BALANCE</div>
+   <div class="value goldText" id="balance">$0.00</div>
+  </div>
+  <div class="card">
+   <div class="label">EQUITY</div>
+   <div class="value" id="equity">$0.00</div>
+  </div>
+  <div class="card">
+   <div class="label">FREE MARGIN</div>
+   <div class="value" id="freeMargin">$0.00</div>
+  </div>
+  <div class="card">
+   <div class="label">FLOATING PROFIT / LOSS</div>
+   <div class="value" id="totalPL">$0.00</div>
+  </div>
  </div>
 
- <!-- ACCOUNT MANAGEMENT -->
+ <!-- ACCOUNT -->
  <div class="card">
-  <h2>💰 Account Management</h2>
+  <div class="row between">
+   <h2>💰 Account Management</h2>
+   <span class="tag">DEMO FUNDS</span>
+  </div>
   <div class="grid">
-   <div><div class="small">USED MARGIN</div><div class="value" id="usedMargin">$0</div></div>
-   <div><div class="small">MARGIN LEVEL</div><div class="value" id="marginLevel">0%</div></div>
+   <div><div class="label">USED MARGIN</div><div class="value" id="usedMargin">$0.00</div></div>
+   <div><div class="label">MARGIN LEVEL</div><div class="value" id="marginLevel">N/A</div></div>
   </div>
 
-  <div class="notice">Demo money only. Deposit and withdrawal change your simulated account balance.</div>
+  <div class="notice">
+   Demo deposits and withdrawals update your demo balance. They do not transfer real money.
+  </div>
 
+  <hr>
+  <h2>Deposit Funds</h2>
   <div class="row">
    <div class="field">
-    <label class="small">Deposit Amount ($)</label>
-    <input id="depositAmount" type="number" min="1" step="0.01" placeholder="Example: 500">
+    <label>Deposit Amount (USD)</label>
+    <input id="depositAmount" type="number" min="0.01" step="0.01" placeholder="Enter any amount">
    </div>
-   <button class="green" onclick="deposit()">+ DEPOSIT</button>
+   <button class="green" onclick="deposit()">＋ DEPOSIT</button>
   </div>
 
-  <div class="row" style="margin-top:12px">
+  <hr>
+  <h2>Withdraw Funds</h2>
+  <div class="row">
    <div class="field">
-    <label class="small">Withdraw Amount ($)</label>
-    <input id="withdrawAmount" type="number" min="1" step="0.01" placeholder="Example: 100">
+    <label>Withdrawal Amount (USD)</label>
+    <input id="withdrawAmount" type="number" min="0.01" step="0.01" placeholder="Enter amount">
    </div>
    <button class="red" onclick="withdraw()">WITHDRAW</button>
   </div>
@@ -126,116 +219,182 @@ th,td{padding:9px 5px}
 
  <!-- MARKET -->
  <div class="card">
-  <div class="row" style="justify-content:space-between">
-   <h2>Market Watch</h2>
-   <span class="tag">SIMULATED MARKET</span>
+  <div class="row between">
+   <h2>📈 Market Watch</h2>
+   <span class="tag"><span class="dot"></span> MARKET DATA</span>
   </div>
+
+  <div class="grid">
+   <div>
+    <div class="label">EURUSD</div>
+    <div class="value" id="eurPrice">Loading...</div>
+    <div class="small" id="eurStatus">Waiting for feed</div>
+   </div>
+   <div>
+    <div class="label">XAUUSD GOLD</div>
+    <div class="value goldText" id="xauPrice">Loading...</div>
+    <div class="small" id="xauStatus">Waiting for feed</div>
+   </div>
+   <div>
+    <div class="label">BTCUSD</div>
+    <div class="value" id="btcPrice">Loading...</div>
+    <div class="small" id="btcStatus">Waiting for feed</div>
+   </div>
+   <div>
+    <div class="label">DATA SOURCE</div>
+    <div class="value" style="font-size:14px">External APIs</div>
+    <div class="small" id="feedUpdated">Connecting...</div>
+   </div>
+  </div>
+
+  <div class="notice">
+   Prices are fetched from external market-data providers. Gold updates approximately every 30 seconds; EURUSD reference rate updates daily. If a feed fails, the last quote is retained and marked stale.
+  </div>
+
   <div class="row">
    <div class="field">
-    <label class="small">Symbol</label>
-    <select id="symbol" onchange="render()">
+    <label>Chart Symbol</label>
+    <select id="chartSymbol" onchange="changeChart()">
+     <option value="OANDA:XAUUSD">XAUUSD GOLD</option>
+     <option value="FX:EURUSD">EURUSD</option>
+     <option value="BITSTAMP:BTCUSD">BTCUSD</option>
+    </select>
+   </div>
+   <div class="field">
+    <label>Timeframe</label>
+    <select id="chartInterval" onchange="changeChart()">
+     <option value="1">1 Minute</option>
+     <option value="5">5 Minutes</option>
+     <option value="15" selected>15 Minutes</option>
+     <option value="30">30 Minutes</option>
+     <option value="60">1 Hour</option>
+     <option value="240">4 Hours</option>
+     <option value="D">1 Day</option>
+    </select>
+   </div>
+  </div>
+  <iframe id="tvChart" class="chartFrame"
+   title="TradingView Market Chart"
+   src="https://www.tradingview.com/widgetembed/?symbol=OANDA%3AXAUUSD&interval=15&theme=dark&style=1&locale=en&hidesidetoolbar=0&allow_symbol_change=1&saveimage=0&calendar=0"
+   allowfullscreen></iframe>
+ </div>
+
+ <!-- MANUAL TRADING -->
+ <div class="card">
+  <div class="row between">
+   <h2>⚡ Manual Demo Trading</h2>
+   <span class="tag">DEMO EXECUTION</span>
+  </div>
+  <div class="grid2">
+   <div class="field">
+    <label>Trading Symbol</label>
+    <select id="symbol">
+     <option value="EURUSD">EURUSD</option>
+     <option value="XAUUSD">XAUUSD GOLD</option>
+     <option value="BTCUSD">BTCUSD</option>
+    </select>
+   </div>
+   <div class="field">
+    <label>Lot Size</label>
+    <input id="lot" type="number" value="0.01" min="0.01" max="100" step="0.01">
+   </div>
+   <div class="field">
+    <label>Stop Loss Price</label>
+    <input id="sl" type="number" step="any" placeholder="Optional">
+   </div>
+   <div class="field">
+    <label>Take Profit Price</label>
+    <input id="tp" type="number" step="any" placeholder="Optional">
+   </div>
+  </div>
+  <div class="notice" id="tradeQuote">Current quote: waiting for market data...</div>
+  <div class="actions">
+   <button class="green" onclick="openTrade('BUY')">BUY</button>
+   <button class="red" onclick="openTrade('SELL')">SELL</button>
+  </div>
+  <p class="small" id="tradeMessage">Choose symbol, lot size, SL and TP, then open a demo trade.</p>
+ </div>
+
+ <!-- SMC -->
+ <div class="card">
+  <div class="row between">
+   <h2>🧠 SMC Market Analysis</h2>
+   <span class="tag">BASIC DEMO ANALYSIS</span>
+  </div>
+  <div class="grid">
+   <div><div class="label">MARKET BIAS</div><div class="value" id="smcBias">WAIT</div></div>
+   <div><div class="label">STRUCTURE</div><div class="value" id="smcStructure">Scanning</div></div>
+   <div><div class="label">MOMENTUM</div><div class="value" id="smcMomentum">Scanning</div></div>
+   <div><div class="label">SIGNAL</div><div class="value" id="smcSignal">WAIT</div></div>
+  </div>
+  <div class="notice" id="smcText">
+   Analysis will appear when enough real market prices have been collected.
+  </div>
+ </div>
+
+ <!-- AUTO BOT -->
+ <div class="card">
+  <div class="row between">
+   <h2>🤖 DAN Auto Trading Bot</h2>
+   <span class="tag">DEMO BOT</span>
+  </div>
+  <p class="small">
+   The bot checks moving-average momentum and opens demo trades with automatic stop loss and take profit. It is not an AI or guaranteed-profit system.
+  </p>
+  <div class="grid2">
+   <div class="field">
+    <label>Risk per Trade (%)</label>
+    <input id="risk" type="number" value="1" min="0.1" max="5" step="0.1">
+   </div>
+   <div class="field">
+    <label>Bot Symbol</label>
+    <select id="botSymbol">
      <option value="EURUSD">EURUSD</option>
      <option value="XAUUSD">XAUUSD</option>
      <option value="BTCUSD">BTCUSD</option>
     </select>
    </div>
-   <div class="field">
-    <label class="small">Current Price</label>
-    <div class="value" id="price">$0.00</div>
-   </div>
-   <div class="field">
-    <label class="small">Market Status</label>
-    <div class="value positive" style="font-size:15px">DEMO</div>
-   </div>
-  </div>
-  <canvas id="chart"></canvas>
- </div>
-
- <!-- MANUAL TRADING -->
- <div class="card">
-  <h2>Manual Trading</h2>
-  <div class="row">
-   <div class="field">
-    <label class="small">Lot Size</label>
-    <input id="lot" type="number" value="0.01" min="0.01" max="100" step="0.01">
-   </div>
-   <div class="field">
-    <label class="small">Stop Loss</label>
-    <input id="sl" type="number" placeholder="Optional">
-   </div>
-   <div class="field">
-    <label class="small">Take Profit</label>
-    <input id="tp" type="number" placeholder="Optional">
-   </div>
   </div>
   <div class="actions">
-   <button class="green" onclick="openTrade('BUY')">BUY</button>
-   <button class="red" onclick="openTrade('SELL')">SELL</button>
+   <button class="gold" id="startBotBtn" onclick="startBot()">▶ START BOT</button>
+   <button class="darkbtn" onclick="stopBot()">■ STOP BOT</button>
   </div>
-  <p class="small" id="tradeMessage">Select a symbol and open a demo trade.</p>
+  <p class="small" id="botStatus">Bot stopped.</p>
  </div>
 
- <!-- AUTO BOT -->
+ <!-- POSITIONS -->
  <div class="card">
-  <div class="row" style="justify-content:space-between">
-   <h2>⚡ Auto Trading Bot</h2>
-   <span class="tag">DEMO STRATEGY</span>
-  </div>
-  <p class="small">Moving average demo strategy with automatic SL, TP and risk-based lot sizing.</p>
-  <div class="row">
-   <div class="field">
-    <label class="small">Risk per trade (%)</label>
-    <input id="risk" type="number" value="1" min="0.1" max="5" step="0.1">
-   </div>
-   <div class="field">
-    <label class="small">Bot Symbol</label>
-    <select id="botSymbol">
-     <option>EURUSD</option>
-     <option>XAUUSD</option>
-     <option>BTCUSD</option>
-    </select>
-   </div>
-  </div>
-  <div class="actions">
-   <button class="gold" onclick="startBot()">START BOT</button>
-   <button class="darkbtn" onclick="stopBot()">STOP BOT</button>
-  </div>
-  <p id="botStatus" class="small">Bot stopped.</p>
- </div>
-
- <!-- OPEN POSITIONS -->
- <div class="card">
-  <h2>Open Positions</h2>
-  <div style="overflow-x:auto">
+  <h2>📂 Open Positions</h2>
+  <div class="tableWrap">
    <table>
     <thead>
-     <tr><th>Symbol</th><th>Type</th><th>Lot</th><th>Entry</th><th>Current</th><th>P/L</th><th>Action</th></tr>
+     <tr><th>SYMBOL</th><th>TYPE</th><th>LOT</th><th>ENTRY</th><th>CURRENT</th><th>SL</th><th>TP</th><th>P/L</th><th>ACTION</th></tr>
     </thead>
-    <tbody id="positions"><tr><td colspan="7">No open trades</td></tr></tbody>
+    <tbody id="positions"><tr><td colspan="9">No open trades</td></tr></tbody>
    </table>
   </div>
  </div>
 
  <!-- HISTORY -->
  <div class="card">
-  <h2>Trading History</h2>
-  <div style="overflow-x:auto">
+  <h2>📜 Trading History</h2>
+  <div class="tableWrap">
    <table>
     <thead>
-     <tr><th>Symbol</th><th>Type</th><th>Entry</th><th>Exit</th><th>Result</th><th>Reason</th></tr>
+     <tr><th>SYMBOL</th><th>TYPE</th><th>ENTRY</th><th>EXIT</th><th>RESULT</th><th>REASON</th><th>DATE</th></tr>
     </thead>
-    <tbody id="history"><tr><td colspan="6">No history yet</td></tr></tbody>
+    <tbody id="history"><tr><td colspan="7">No history yet</td></tr></tbody>
    </table>
   </div>
  </div>
 
- <!-- DEPOSIT HISTORY -->
+ <!-- CASH HISTORY -->
  <div class="card">
-  <h2>Deposit / Withdrawal History</h2>
-  <div style="overflow-x:auto">
+  <h2>💳 Deposit / Withdrawal History</h2>
+  <div class="tableWrap">
    <table>
     <thead>
-     <tr><th>Type</th><th>Amount</th><th>Date</th><th>Balance After</th></tr>
+     <tr><th>TYPE</th><th>AMOUNT</th><th>DATE</th><th>BALANCE AFTER</th></tr>
     </thead>
     <tbody id="cashHistory"><tr><td colspan="4">No transactions</td></tr></tbody>
    </table>
@@ -243,72 +402,97 @@ th,td{padding:9px 5px}
  </div>
 
  <footer>
-  DAN AUTO TRADING · DEMO SIMULATOR<br>
-  Simulated prices only · No real brokerage connection · Not financial advice
+  DAN AUTO TRADING PRO · DEMO SIMULATOR<br>
+  Market data from external providers · Demo orders only · No real broker connection
  </footer>
 </div>
 </main>
 
+<!-- DEPOSIT COMPLETED -->
+<div id="successPage">
+ <div class="successCard">
+  <div class="check">✓</div>
+  <h1 class="greenText">COMPLETED</h1>
+  <p class="small">Your demo deposit was completed successfully.</p>
+  <div class="amountBig" id="completedAmount">$0.00</div>
+  <p class="small">Updated demo account balance</p>
+  <div class="value" id="completedBalance">$0.00</div>
+  <button class="gold" onclick="finishDeposit()">FINISH</button>
+ </div>
+</div>
+
+<div id="toast"></div>
+
 <script>
 const $=id=>document.getElementById(id);
-
-const USERS='dan_auto_users_v2';
-const SESSION='dan_auto_session_v2';
+const USERS_KEY='dan_auto_users_v3';
+const SESSION_KEY='dan_auto_session_v3';
+const LEVERAGE=100;
 
 let accountEmail=null;
 let botTimer=null;
 let priceTimer=null;
+let lastToastTimer=null;
+let marketBusy=false;
 
 const defaults=()=>({
  balance:0,
  positions:[],
  history:[],
  cashHistory:[],
- prices:{EURUSD:1.08,XAUUSD:2650,BTCUSD:65000},
+ prices:{EURUSD:null,XAUUSD:null,BTCUSD:null},
+ priceTimes:{EURUSD:0,XAUUSD:0,BTCUSD:0},
  candles:{EURUSD:[],XAUUSD:[],BTCUSD:[]}
 });
 
 let data=defaults();
 
-function accountKey(){
- return 'dan_auto_account_'+accountEmail;
-}
+function key(){return 'dan_auto_account_'+accountEmail}
 
 function loadAccount(){
  try{
-  const saved=JSON.parse(localStorage.getItem(accountKey())||'null');
-  data={...defaults(),...(saved||{})};
- }catch(e){
-  data=defaults();
- }
+  const old=JSON.parse(localStorage.getItem(key())||'null');
+  data={...defaults(),...(old||{})};
+ }catch(e){data=defaults()}
 
  for(const s of Object.keys(data.prices)){
   if(!Array.isArray(data.candles[s]))data.candles[s]=[];
-  if(!data.candles[s].length){
-   data.candles[s]=Array.from({length:20},()=>data.prices[s]);
-  }
  }
 }
 
 function save(){
- if(accountEmail){
-  localStorage.setItem(accountKey(),JSON.stringify(data));
- }
+ if(!accountEmail)return;
+ try{localStorage.setItem(key(),JSON.stringify(data))}
+ catch(e){toast('Storage is full. Some history may not be saved.')}
 }
 
 function money(n){
- return '$'+Number(n||0).toFixed(2);
+ return '$'+Number(n||0).toLocaleString('en-US',{
+  minimumFractionDigits:2,maximumFractionDigits:2
+ });
 }
 
 function fmt(s,n){
+ if(!Number.isFinite(Number(n)))return '—';
  return s==='EURUSD'?Number(n).toFixed(5):Number(n).toFixed(2);
 }
 
-function currentPrice(s){
- return data.prices[s];
+function toast(message){
+ const el=$('toast');
+ el.textContent=message;
+ el.style.display='block';
+ clearTimeout(lastToastTimer);
+ lastToastTimer=setTimeout(()=>el.style.display='none',3000);
 }
 
-// Contract sizes for demo calculations
+function currentPrice(s){
+ return Number(data.prices[s]);
+}
+
+function hasPrice(s){
+ return Number.isFinite(currentPrice(s))&&currentPrice(s)>0;
+}
+
 function contract(s){
  if(s==='EURUSD')return 100000;
  if(s==='XAUUSD')return 100;
@@ -316,14 +500,13 @@ function contract(s){
  return 1;
 }
 
-// Demo leverage: 1:100
 function positionMargin(p){
- return p.entry*contract(p.symbol)*p.lot/100;
+ return p.entry*contract(p.symbol)*p.lot/LEVERAGE;
 }
 
 function pnl(p){
- const diff=(currentPrice(p.symbol)-p.entry)*
- (p.type==='BUY'?1:-1);
+ if(!hasPrice(p.symbol))return 0;
+ const diff=(currentPrice(p.symbol)-p.entry)*(p.type==='BUY'?1:-1);
  return diff*contract(p.symbol)*p.lot;
 }
 
@@ -335,423 +518,428 @@ function usedMargin(){
  return data.positions.reduce((sum,p)=>sum+positionMargin(p),0);
 }
 
-function equity(){
- return data.balance+totalPL();
-}
-
-function freeMargin(){
- return equity()-usedMargin();
-}
+function equity(){return data.balance+totalPL()}
+function freeMargin(){return equity()-usedMargin()}
 
 function render(){
  if(!accountEmail)return;
 
- const s=$('symbol').value;
- const price=currentPrice(s);
- const pl=totalPL();
- const margin=usedMargin();
- const eq=equity();
- const free=eq-margin;
+ const pl=totalPL(),eq=equity(),margin=usedMargin(),free=freeMargin();
 
- $('price').textContent=fmt(s,price);
  $('balance').textContent=money(data.balance);
  $('equity').textContent=money(eq);
  $('freeMargin').textContent=money(free);
  $('usedMargin').textContent=money(margin);
  $('totalPL').textContent=money(pl);
+ $('marginLevel').textContent=margin>0?(eq/margin*100).toFixed(1)+'%':'N/A';
 
  $('totalPL').style.color=pl>=0?'var(--green)':'var(--red)';
  $('equity').style.color=eq>=data.balance?'var(--green)':'var(--red)';
  $('freeMargin').style.color=free>=0?'var(--green)':'var(--red)';
 
- $('marginLevel').textContent=margin>0?
- ((eq/margin)*100).toFixed(1)+'%':'N/A';
+ for(const s of ['EURUSD','XAUUSD','BTCUSD']){
+  const id=s==='EURUSD'?'eur':s==='XAUUSD'?'xau':'btc';
+  $(id+'Price').textContent=hasPrice(s)?fmt(s,currentPrice(s)):'Unavailable';
+  const age=Date.now()-(data.priceTimes[s]||0);
+  const fresh=hasPrice(s)&&age<(s==='EURUSD'?86400000:120000);
+  $(id+'Status').textContent=!hasPrice(s)?'No quote':
+   fresh?'● Price feed available':'⚠ Last quote may be stale';
+  $(id+'Status').style.color=fresh?'var(--green)':'var(--red)';
+ }
 
- // OPEN POSITIONS
+ $('feedUpdated').textContent='Last checked: '+new Date().toLocaleTimeString();
+ $('tradeQuote').textContent=hasPrice($('symbol').value)?
+  'Current '+$('symbol').value+' quote: '+fmt($('symbol').value,currentPrice($('symbol').value)):
+  'No market quote available for this symbol. Trading is disabled until a price arrives.';
+
  $('positions').innerHTML=data.positions.length?
  data.positions.map(p=>{
   const v=pnl(p);
   return `<tr>
    <td>${p.symbol}</td>
-   <td style="color:${p.type==='BUY'?'var(--green)':'var(--red)'}">${p.type}</td>
+   <td class="${p.type==='BUY'?'greenText':'redText'}">${p.type}</td>
    <td>${p.lot}</td>
    <td>${fmt(p.symbol,p.entry)}</td>
    <td>${fmt(p.symbol,currentPrice(p.symbol))}</td>
-   <td style="color:${v>=0?'var(--green)':'var(--red)'}">${money(v)}</td>
-   <td><button class="darkbtn" onclick="closeTrade('${p.id}')">Close</button></td>
+   <td>${p.sl===null?'—':fmt(p.symbol,p.sl)}</td>
+   <td>${p.tp===null?'—':fmt(p.symbol,p.tp)}</td>
+   <td class="${v>=0?'greenText':'redText'}">${money(v)}</td>
+   <td><button class="darkbtn" onclick="closeTrade('${p.id}')">CLOSE</button></td>
   </tr>`;
- }).join(''):
- '<tr><td colspan="7">No open trades</td></tr>';
+ }).join(''):'<tr><td colspan="9">No open trades</td></tr>';
 
- // TRADING HISTORY
  $('history').innerHTML=data.history.length?
- data.history.slice().reverse().slice(0,50).map(h=>`
+ data.history.slice().reverse().slice(0,100).map(h=>`
  <tr>
-  <td>${h.symbol}</td>
-  <td>${h.type}</td>
-  <td>${fmt(h.symbol,h.entry)}</td>
-  <td>${fmt(h.symbol,h.exit)}</td>
-  <td style="color:${h.result>=0?'var(--green)':'var(--red)'}">${money(h.result)}</td>
-  <td>${h.reason}</td>
+  <td>${h.symbol}</td><td>${h.type}</td>
+  <td>${fmt(h.symbol,h.entry)}</td><td>${fmt(h.symbol,h.exit)}</td>
+  <td class="${h.result>=0?'greenText':'redText'}">${money(h.result)}</td>
+  <td>${h.reason}</td><td>${new Date(h.time).toLocaleString()}</td>
  </tr>`).join(''):
- '<tr><td colspan="6">No history yet</td></tr>';
+ '<tr><td colspan="7">No history yet</td></tr>';
 
- // CASH HISTORY
  $('cashHistory').innerHTML=data.cashHistory.length?
- data.cashHistory.slice().reverse().slice(0,50).map(h=>`
+ data.cashHistory.slice().reverse().slice(0,100).map(h=>`
  <tr>
-  <td style="color:${h.type==='DEPOSIT'?'var(--green)':'var(--red)'}">${h.type}</td>
+  <td class="${h.type==='DEPOSIT'?'greenText':'redText'}">${h.type}</td>
   <td>${money(h.amount)}</td>
   <td>${new Date(h.time).toLocaleString()}</td>
   <td>${money(h.balance)}</td>
  </tr>`).join(''):
  '<tr><td colspan="4">No transactions</td></tr>';
 
- drawChart(s);
+ updateSMC();
 }
 
-// CUSTOM DEPOSIT
 function deposit(){
  const amount=Number($('depositAmount').value);
+ const cents=Math.round(amount*100);
 
- if(!Number.isFinite(amount)||amount<=0||amount>100000000){
-  alert('Enter a valid deposit amount.');
+ if(!Number.isFinite(amount)||amount<=0||!Number.isSafeInteger(cents)){
+  toast('Enter a valid positive amount.');
   return;
  }
 
- data.balance+=amount;
-
+ data.balance=Math.round((data.balance+amount)*100)/100;
  data.cashHistory.push({
-  type:'DEPOSIT',
-  amount,
-  balance:data.balance,
-  time:Date.now()
+  type:'DEPOSIT',amount,balance:data.balance,time:Date.now()
  });
 
  $('depositAmount').value='';
  save();
  render();
 
- alert('Demo deposit successful: '+money(amount));
+ $('completedAmount').textContent=money(amount);
+ $('completedBalance').textContent=money(data.balance);
+ $('successPage').style.display='flex';
 }
 
-// CUSTOM WITHDRAW
+function finishDeposit(){
+ $('successPage').style.display='none';
+ $('app').style.display='block';
+ window.scrollTo({top:0,behavior:'smooth'});
+ render();
+}
+
 function withdraw(){
  const amount=Number($('withdrawAmount').value);
+ const cents=Math.round(amount*100);
 
- if(!Number.isFinite(amount)||amount<=0){
-  alert('Enter a valid withdrawal amount.');
+ if(!Number.isFinite(amount)||amount<=0||!Number.isSafeInteger(cents)){
+  toast('Enter a valid withdrawal amount.');
   return;
  }
 
- // Do not allow withdrawal of funds needed for margin.
- const available=Math.min(data.balance,Math.max(0,freeMargin()));
-
+ const available=Math.max(0,Math.min(data.balance,freeMargin()));
  if(amount>available){
-  alert('Insufficient available funds. Available: '+money(available));
+  toast('Insufficient available funds: '+money(available));
   return;
  }
 
- data.balance-=amount;
-
+ data.balance=Math.round((data.balance-amount)*100)/100;
  data.cashHistory.push({
-  type:'WITHDRAW',
-  amount,
-  balance:data.balance,
-  time:Date.now()
+  type:'WITHDRAW',amount,balance:data.balance,time:Date.now()
  });
 
  $('withdrawAmount').value='';
  save();
  render();
-
- alert('Demo withdrawal successful: '+money(amount));
+ toast('Demo withdrawal completed.');
 }
 
-// OPEN TRADE
 function openTrade(type,options={}){
  const s=options.symbol||$('symbol').value;
  const lot=Number(options.lot??$('lot').value);
 
+ if(!hasPrice(s)){
+  toast('Market price unavailable. Try again when the feed is available.');
+  return false;
+ }
+
  if(!Number.isFinite(lot)||lot<0.01||lot>100){
-  alert('Lot size must be between 0.01 and 100.');
+  toast('Lot size must be between 0.01 and 100.');
   return false;
  }
 
  const entry=currentPrice(s);
- const sl=options.sl??(Number($('sl').value)||null);
- const tp=options.tp??(Number($('tp').value)||null);
+ const sl=options.sl!==undefined?options.sl:(Number($('sl').value)||null);
+ const tp=options.tp!==undefined?options.tp:(Number($('tp').value)||null);
 
- if(sl!==null&&((type==='BUY'&&sl>=entry)||(type==='SELL'&&sl<=entry))){
-  alert('Stop Loss is on the wrong side of entry.');
+ if(sl!==null&&(!Number.isFinite(Number(sl))||
+  (type==='BUY'&&Number(sl)>=entry)||(type==='SELL'&&Number(sl)<=entry))){
+  toast('Stop Loss must be on the correct side of entry.');
   return false;
  }
 
- if(tp!==null&&((type==='BUY'&&tp<=entry)||(type==='SELL'&&tp>=entry))){
-  alert('Take Profit is on the wrong side of entry.');
+ if(tp!==null&&(!Number.isFinite(Number(tp))||
+  (type==='BUY'&&Number(tp)<=entry)||(type==='SELL'&&Number(tp)>=entry))){
+  toast('Take Profit must be on the correct side of entry.');
   return false;
  }
 
  const p={
   id:Date.now().toString()+Math.random().toString(16).slice(2),
-  symbol:s,
-  type,
-  lot,
-  entry,
-  sl,
-  tp
+  symbol:s,type,lot,entry,
+  sl:sl===null?null:Number(sl),
+  tp:tp===null?null:Number(tp)
  };
 
  const required=positionMargin(p);
-
  if(required>freeMargin()){
-  alert('Not enough free margin. Required: '+money(required)+
-  ' | Available: '+money(freeMargin()));
+  toast('Not enough free margin. Required: '+money(required));
   return false;
  }
 
  data.positions.push(p);
-
  save();
  render();
-
- $('tradeMessage').textContent=
- type+' '+s+' opened successfully in demo mode.';
-
+ $('tradeMessage').textContent=type+' '+s+' opened at '+fmt(s,entry)+' in demo mode.';
+ toast('Demo '+type+' trade opened.');
  return true;
 }
 
-// CLOSE TRADE
 function closeTrade(id,reason='MANUAL'){
  const i=data.positions.findIndex(p=>p.id===id);
  if(i<0)return;
 
  const p=data.positions[i];
+ if(!hasPrice(p.symbol)){
+  toast('Cannot close: current market quote is unavailable.');
+  return;
+ }
+
  const exit=currentPrice(p.symbol);
  const result=pnl(p);
-
  data.positions.splice(i,1);
-
- // Realized profit/loss changes account balance
- data.balance+=result;
+ data.balance=Math.round((data.balance+result)*100)/100;
 
  data.history.push({
-  symbol:p.symbol,
-  type:p.type,
-  entry:p.entry,
-  exit,
-  result,
-  reason,
-  time:Date.now()
+  symbol:p.symbol,type:p.type,entry:p.entry,exit,result,
+  reason,time:Date.now()
  });
 
  save();
  render();
+ toast('Position closed. Result: '+money(result));
 }
 
-// PRICE SIMULATION
-function updatePrices(){
- if(!accountEmail)return;
-
- for(const s of Object.keys(data.prices)){
-  const old=data.prices[s];
-
-  const volatility=
-   s==='EURUSD'?0.00025:
-   s==='XAUUSD'?1.7:55;
-
-  const next=Math.max(
-   0.0001,
-   old+(Math.random()-.5)*volatility
-  );
-
-  data.prices[s]=next;
-  data.candles[s].push(next);
-
-  if(data.candles[s].length>80){
-   data.candles[s].shift();
-  }
- }
-
- // Check SL and TP
+function checkStops(){
  const positions=data.positions.slice();
-
  for(const p of positions){
+  if(!hasPrice(p.symbol))continue;
   const price=currentPrice(p.symbol);
 
   if(p.type==='BUY'&&p.sl!==null&&price<=p.sl){
    closeTrade(p.id,'STOP LOSS');
-  }
-  else if(p.type==='BUY'&&p.tp!==null&&price>=p.tp){
+  }else if(p.type==='BUY'&&p.tp!==null&&price>=p.tp){
    closeTrade(p.id,'TAKE PROFIT');
-  }
-  else if(p.type==='SELL'&&p.sl!==null&&price>=p.sl){
+  }else if(p.type==='SELL'&&p.sl!==null&&price>=p.sl){
    closeTrade(p.id,'STOP LOSS');
-  }
-  else if(p.type==='SELL'&&p.tp!==null&&price<=p.tp){
+  }else if(p.type==='SELL'&&p.tp!==null&&price<=p.tp){
    closeTrade(p.id,'TAKE PROFIT');
   }
  }
 
- // Basic demo margin protection
  if(data.positions.length&&equity()<=usedMargin()*.5){
-  data.positions.slice().forEach(p=>{
-   closeTrade(p.id,'MARGIN STOP OUT');
-  });
+  data.positions.slice().forEach(p=>closeTrade(p.id,'MARGIN STOP OUT'));
+ }
+}
+
+// REAL MARKET DATA
+async function getJSON(url){
+ const response=await fetch(url,{cache:'no-store'});
+ if(!response.ok)throw new Error('Market API error '+response.status);
+ return response.json();
+}
+
+async function fetchBTC(){
+ const j=await getJSON('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+ const p=Number(j.price);
+ if(!Number.isFinite(p)||p<=0)throw new Error('Invalid BTC price');
+ setPrice('BTCUSD',p);
+}
+
+async function fetchGold(){
+ const j=await getJSON('https://api.gold-api.com/price/XAU');
+ const p=Number(j.price);
+ if(!Number.isFinite(p)||p<=0)throw new Error('Invalid Gold price');
+ setPrice('XAUUSD',p);
+}
+
+async function fetchEURUSD(){
+ const j=await getJSON('https://open.er-api.com/v6/latest/USD');
+ const eur=Number(j.rates&&j.rates.EUR);
+ if(!Number.isFinite(eur)||eur<=0)throw new Error('Invalid EUR rate');
+ setPrice('EURUSD',1/eur);
+}
+
+function setPrice(s,p){
+ const old=data.prices[s];
+ data.prices[s]=p;
+ data.priceTimes[s]=Date.now();
+
+ if(!Array.isArray(data.candles[s]))data.candles[s]=[];
+ if(old!==null&&Number.isFinite(old)&&old!==p){
+  data.candles[s].push(p);
+ }else if(!data.candles[s].length){
+  data.candles[s].push(p);
  }
 
+ if(data.candles[s].length>100)data.candles[s].shift();
+}
+
+async function refreshMarket(){
+ if(marketBusy||!accountEmail)return;
+ marketBusy=true;
+
+ const jobs=[
+  ['BTCUSD',fetchBTC],
+  ['XAUUSD',fetchGold],
+  ['EURUSD',fetchEURUSD]
+ ];
+
+ await Promise.all(jobs.map(async([name,fn])=>{
+  try{await fn()}
+  catch(e){console.warn(name+' feed:',e.message)}
+ }));
+
+ marketBusy=false;
  save();
+ checkStops();
  render();
 }
 
-// CHART
-function drawChart(s){
- const c=$('chart');
- if(!c)return;
-
- const ctx=c.getContext('2d');
- const dpr=window.devicePixelRatio||1;
- const w=c.clientWidth;
- const h=c.clientHeight;
-
- c.width=w*dpr;
- c.height=h*dpr;
-
- ctx.setTransform(dpr,0,0,dpr,0,0);
- ctx.clearRect(0,0,w,h);
-
- const arr=data.candles[s];
- if(!arr||arr.length<2)return;
-
- const min=Math.min(...arr);
- const max=Math.max(...arr);
- const range=max-min||1;
-
- ctx.strokeStyle='#263044';
- ctx.lineWidth=1;
-
- for(let i=1;i<4;i++){
-  const y=h*i/4;
-  ctx.beginPath();
-  ctx.moveTo(0,y);
-  ctx.lineTo(w,y);
-  ctx.stroke();
- }
-
- ctx.strokeStyle='#f4bd50';
- ctx.lineWidth=2;
- ctx.beginPath();
-
- arr.forEach((v,i)=>{
-  const x=i*w/(arr.length-1);
-  const y=h-((v-min)/range)*(h-20)-10;
-  if(i)ctx.lineTo(x,y);
-  else ctx.moveTo(x,y);
- });
-
- ctx.stroke();
-}
-
-// SIMPLE MOVING AVERAGE SIGNAL
 function trendSignal(s){
- const a=data.candles[s];
-
- if(a.length<12)return 'WAIT';
+ const a=data.candles[s]||[];
+ if(a.length<8)return 'WAIT';
 
  const short=a.slice(-4).reduce((x,y)=>x+y,0)/4;
- const long=a.slice(-12).reduce((x,y)=>x+y,0)/12;
+ const long=a.slice(-8).reduce((x,y)=>x+y,0)/8;
 
  if(short>long)return 'BUY';
  if(short<long)return 'SELL';
  return 'WAIT';
 }
 
+function updateSMC(){
+ const s=$('symbol').value;
+ const a=data.candles[s]||[];
+
+ if(a.length<8){
+  $('smcBias').textContent='WAIT';
+  $('smcStructure').textContent='Collecting';
+  $('smcMomentum').textContent='Unknown';
+  $('smcSignal').textContent='WAIT';
+  $('smcText').textContent='Waiting for enough market-price samples. This is a basic demo analysis, not full institutional SMC detection.';
+  return;
+ }
+
+ const recent=a.slice(-8);
+ const first=recent[0],last=recent[recent.length-1];
+ const high=Math.max(...recent),low=Math.min(...recent);
+ const signal=trendSignal(s);
+ const bias=last>first?'BULLISH':last<first?'BEARISH':'RANGE';
+
+ $('smcBias').textContent=bias;
+ $('smcBias').style.color=bias==='BULLISH'?'var(--green)':bias==='BEARISH'?'var(--red)':'var(--gold)';
+ $('smcStructure').textContent=last>high*.999?'Near High':last<low*1.001?'Near Low':'Range';
+ $('smcMomentum').textContent=signal==='BUY'?'Bullish':signal==='SELL'?'Bearish':'Neutral';
+ $('smcSignal').textContent=signal;
+ $('smcSignal').style.color=signal==='BUY'?'var(--green)':signal==='SELL'?'var(--red)':'var(--gold)';
+ $('smcText').textContent='Basic momentum bias: '+bias+'. Recent sampled range: '+fmt(s,low)+' to '+fmt(s,high)+'. This does not independently confirm BOS, CHoCH, FVG, order blocks or liquidity sweeps.';
+}
+
 // AUTO BOT
 function startBot(){
  if(botTimer)return;
 
- if(!accountEmail)return;
-
  const risk=Number($('risk').value);
-
  if(!Number.isFinite(risk)||risk<0.1||risk>5){
-  alert('Risk must be between 0.1% and 5%.');
+  toast('Risk must be between 0.1% and 5%.');
   return;
  }
 
- $('botStatus').textContent='Bot running in demo mode.';
+ botTimer=setInterval(botCheck,5000);
+ $('botStatus').textContent='Bot running in demo mode. Checking market prices...';
+ $('startBotBtn').disabled=true;
+ botCheck();
+}
 
- botTimer=setInterval(()=>{
-  const s=$('botSymbol').value;
-  const signal=trendSignal(s);
+function botCheck(){
+ const s=$('botSymbol').value;
+ if(!hasPrice(s)){
+  $('botStatus').textContent='Waiting for '+s+' market data.';
+  return;
+ }
 
-  // One open position per symbol
-  if(signal==='WAIT')return;
-  if(data.positions.some(p=>p.symbol===s))return;
+ const signal=trendSignal(s);
+ if(signal==='WAIT'){
+  $('botStatus').textContent='Bot active. No clear momentum signal.';
+  return;
+ }
 
-  const riskPercent=Math.min(5,Math.max(.1,Number($('risk').value)||1));
-  const price=currentPrice(s);
+ if(data.positions.some(p=>p.symbol===s)){
+  $('botStatus').textContent='Bot active. A '+s+' position is already open.';
+  return;
+ }
 
-  const volatility=s==='EURUSD'?0.00025:
-   s==='XAUUSD'?1.7:55;
+ const risk=Number($('risk').value);
+ if(!Number.isFinite(risk)||risk<0.1||risk>5)return;
 
-  const stopDistance=volatility*8;
-  const riskMoney=data.balance*riskPercent/100;
+ const price=currentPrice(s);
+ const recent=data.candles[s]||[];
+ if(recent.length<8)return;
 
-  if(riskMoney<=0)return;
+ const high=Math.max(...recent.slice(-8));
+ const low=Math.min(...recent.slice(-8));
+ const distance=Math.max((high-low)*.6,price*(s==='EURUSD'?.0003:s==='XAUUSD'?.0005:.001));
 
-  let lot=riskMoney/(stopDistance*contract(s));
+ const riskMoney=data.balance*risk/100;
+ if(riskMoney<=0){
+  $('botStatus').textContent='Add demo funds before starting bot.';
+  return;
+ }
 
-  lot=Math.floor(lot*100)/100;
-  lot=Math.min(100,lot);
+ let lot=riskMoney/(distance*contract(s));
+ lot=Math.floor(lot*100)/100;
+ lot=Math.min(100,lot);
+ if(lot<0.01){
+  $('botStatus').textContent='Risk amount is too small for minimum lot size.';
+  return;
+ }
 
-  if(lot<0.01)return;
+ const sl=signal==='BUY'?price-distance:price+distance;
+ const tp=signal==='BUY'?price+distance*2:price-distance*2;
 
-  const sl=signal==='BUY'?
-   price-stopDistance:
-   price+stopDistance;
-
-  const tp=signal==='BUY'?
-   price+stopDistance*2:
-   price-stopDistance*2;
-
-  const success=openTrade(signal,{
-   symbol:s,
-   lot,
-   sl,
-   tp
-  });
-
-  if(success){
-   $('botStatus').textContent=
-   'Bot opened '+signal+' '+s+' | Lot: '+lot;
-  }
-
- },5000);
+ const ok=openTrade(signal,{symbol:s,lot,sl,tp});
+ if(ok)$('botStatus').textContent='Bot opened '+signal+' '+s+' with '+lot+' lot. SL and TP set.';
 }
 
 function stopBot(){
- if(botTimer){
-  clearInterval(botTimer);
-  botTimer=null;
- }
+ if(botTimer){clearInterval(botTimer);botTimer=null}
+ $('startBotBtn').disabled=false;
  $('botStatus').textContent='Bot stopped.';
 }
 
-// RESET ACCOUNT
+// TRADINGVIEW CHART
+function changeChart(){
+ const symbol=$('chartSymbol').value;
+ const interval=$('chartInterval').value;
+ const params=new URLSearchParams({
+  symbol,interval,theme:'dark',style:'1',locale:'en',
+  hidesidetoolbar:'0',allow_symbol_change:'1',saveimage:'0',calendar:'0'
+ });
+ $('tvChart').src='https://www.tradingview.com/widgetembed/?'+params.toString();
+}
+
+// RESET
 function resetAccount(){
- if(!confirm('Reset account? All demo money and trade history will be deleted.'))return;
-
+ if(!confirm('Reset all demo balance, open positions and history?'))return;
  stopBot();
-
  data=defaults();
-
- for(const s of Object.keys(data.prices)){
-  data.candles[s]=Array.from({length:20},()=>data.prices[s]);
- }
-
  save();
  render();
+ toast('Demo account reset.');
 }
 
 // LOGIN
@@ -763,17 +951,13 @@ function login(){
   $('loginMsg').textContent='Enter email and password.';
   return;
  }
-
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
   $('loginMsg').textContent='Enter a valid email address.';
   return;
  }
 
  let users={};
-
- try{
-  users=JSON.parse(localStorage.getItem(USERS)||'{}');
- }catch(e){}
+ try{users=JSON.parse(localStorage.getItem(USERS_KEY)||'{}')}catch(e){}
 
  if(users[email]&&users[email]!==password){
   $('loginMsg').textContent='Incorrect password.';
@@ -782,12 +966,11 @@ function login(){
 
  if(!users[email]){
   users[email]=password;
-  localStorage.setItem(USERS,JSON.stringify(users));
+  localStorage.setItem(USERS_KEY,JSON.stringify(users));
  }
 
  accountEmail=email;
- localStorage.setItem(SESSION,email);
-
+ localStorage.setItem(SESSION_KEY,email);
  loadAccount();
  showApp();
 }
@@ -798,41 +981,46 @@ function showApp(){
  $('logoutBtn').style.display='block';
 
  render();
+ refreshMarket();
 
- if(!priceTimer){
-  priceTimer=setInterval(updatePrices,2000);
- }
+ if(priceTimer)clearInterval(priceTimer);
+ priceTimer=setInterval(refreshMarket,30000);
 }
 
 function logout(){
  stopBot();
-
- if(priceTimer){
-  clearInterval(priceTimer);
-  priceTimer=null;
- }
-
- localStorage.removeItem(SESSION);
+ if(priceTimer){clearInterval(priceTimer);priceTimer=null}
+ localStorage.removeItem(SESSION_KEY);
  accountEmail=null;
-
  $('app').style.display='none';
  $('loginPage').style.display='block';
  $('logoutBtn').style.display='none';
  $('password').value='';
 }
 
-// START
-const savedSession=localStorage.getItem(SESSION);
+$('symbol').addEventListener('change',()=>{
+ render();
+});
 
-if(savedSession){
- accountEmail=savedSession;
- loadAccount();
- showApp();
-}
+$('botSymbol').addEventListener('change',()=>{
+ $('botStatus').textContent='Bot symbol changed to '+$('botSymbol').value+'.';
+});
+
+window.addEventListener('online',()=>{
+ if(accountEmail)refreshMarket();
+});
 
 window.addEventListener('resize',()=>{
  if(accountEmail)render();
 });
+
+// RESTORE SESSION
+const saved=localStorage.getItem(SESSION_KEY);
+if(saved){
+ accountEmail=saved;
+ loadAccount();
+ showApp();
+}
 </script>
 </body>
 </html>
