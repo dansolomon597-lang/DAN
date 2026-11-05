@@ -1,1 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
+<title>DAN AUTO TRADING</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b12;color:#f5f7fb;font-family:Arial,sans-serif}
+:root{--gold:#f4bd50;--panel:#111827;--muted:#93a0b5;--green:#20d69a;--red:#ff5c6c}
+header{padding:18px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #263044;background:#0b101b;position:sticky;top:0;z-index:5}
+.logo{font-size:20px;font-weight:900;color:var(--gold)}
+button{border:0;border-radius:9px;padding:12px 16px;font-weight:bold;cursor:pointer}
+.gold{background:var(--gold);color:#111}
+.darkbtn{background:#263044;color:white}
+.green{background:var(--green);color:#06130f}
+.red{background:var(--red);color:white}
+.wrap{max-width:1150px;margin:auto;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid #263044;border-radius:14px;padding:17px;margin-bottom:14px}
+.small{font-size:12px;color:var(--muted)}
+.value{font-size:24px;font-weight:800;margin-top:9px}
+h2{font-size:17px;margin:0 0 15px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input,select{background:#080e18;border:1px solid #344159;color:white;padding:12px;border-radius:8px;width:100%;min-width:0}
+.field{flex:1;min-width:110px}
+.actions{display:flex;gap:9px;margin-top:12px}
+.actions button{flex:1}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:12px 8px;border-bottom:1px solid #263044}
+th{color:var(--muted)}
+#loginPage{max-width:390px;margin:70px auto;padding:22px}
+#app{display:none}
+#chart{width:100%;height:220px;display:block}
+.status{color:var(--green);font-size:12px}
+.tag{background:#263044;padding:5px 9px;border-radius:20px;font-size:11px}
+footer{text-align:center;color:var(--muted);padding:25px;font-size:12px}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}header{padding:14px}.logo{font-size:16px}.wrap{padding:12px}.value{font-size:20px}table{font-size:11px}th,td{padding:9px 5px}}
+</style>
+</head>
+<body>
 
+<header>
+ <div class="logo">⚡ DAN AUTO TRADING</div>
+ <div class="row">
+  <span class="tag">DEMO ACCOUNT</span>
+  <button class="darkbtn" id="logoutBtn" onclick="logout()" style="display:none">Logout</button>
+ </div>
+</header>
+
+<section id="loginPage" class="card">
+ <h2 style="color:var(--gold)">Welcome to DAN</h2>
+ <p class="small">Login or create a demo account</p>
+ <div style="margin:15px 0">
+  <label class="small">Email</label>
+  <input id="email" type="email" placeholder="Enter email">
+ </div>
+ <div style="margin:15px 0">
+  <label class="small">Password</label>
+  <input id="password" type="password" placeholder="Enter password">
+ </div>
+ <button class="gold" style="width:100%" onclick="login()">LOGIN / SIGN UP</button>
+ <p id="loginMsg" class="small"></p>
+ <p class="small">Demo-only local login. Do not use a real password.</p>
+</section>
+
+<main id="app">
+<div class="wrap">
+ <div class="row" style="justify-content:space-between;margin-bottom:15px">
+  <div>
+   <h2 style="margin-bottom:5px">Trading Dashboard</h2>
+   <span class="status">● DEMO SYSTEM ACTIVE</span>
+  </div>
+  <button class="darkbtn" onclick="resetAccount()">Reset Demo</button>
+ </div>
+
+ <div class="grid">
+  <div class="card"><div class="small">DEMO BALANCE</div><div class="value" id="balance">$10,000.00</div></div>
+  <div class="card"><div class="small">EQUITY</div><div class="value" id="equity">$10,000.00</div></div>
+  <div class="card"><div class="small">OPEN TRADES</div><div class="value" id="openCount">0</div></div>
+  <div class="card"><div class="small">TOTAL P/L</div><div class="value" id="totalPL">$0.00</div></div>
+ </div>
+
+ <div class="card">
+  <div class="row" style="justify-content:space-between">
+   <h2>Market Watch</h2>
+   <span class="tag">SIMULATED PRICES</span>
+  </div>
+  <div class="row">
+   <div class="field">
+    <label class="small">Symbol</label>
+    <select id="symbol" onchange="render()">
+     <option value="EURUSD">EURUSD</option>
+     <option value="XAUUSD">XAUUSD</option>
+     <option value="BTCUSD">BTCUSD</option>
+    </select>
+   </div>
+   <div class="field">
+    <label class="small">Current Price</label>
+    <div class="value" id="price">$1.08000</div>
+   </div>
+   <div class="field">
+    <label class="small">Market Status</label>
+    <div class="value" style="font-size:16px;color:var(--green)">DEMO</div>
+   </div>
+  </div>
+  <canvas id="chart"></canvas>
+ </div>
+
+ <div class="card">
+  <h2>Manual Trading</h2>
+  <div class="row">
+   <div class="field"><label class="small">Lot Size</label><input id="lot" type="number" value="0.01" min="0.01" step="0.01"></div>
+   <div class="field"><label class="small">Stop Loss (price)</label><input id="sl" type="number" placeholder="Optional"></div>
+   <div class="field"><label class="small">Take Profit (price)</label><input id="tp" type="number" placeholder="Optional"></div>
+  </div>
+  <div class="actions">
+   <button class="green" onclick="openTrade('BUY')">BUY</button>
+   <button class="red" onclick="openTrade('SELL')">SELL</button>
+  </div>
+ </div>
+
+ <div class="card">
+  <div class="row" style="justify-content:space-between">
+   <h2>Auto Bot</h2>
+   <span class="tag">DEMO STRATEGY</span>
+  </div>
+  <p class="small">The demo bot uses a simple moving-average signal on simulated prices. It is not a verified profitable strategy.</p>
+  <div class="row">
+   <div class="field"><label class="small">Risk per trade (%)</label><input id="risk" type="number" value="1" min="0.1" max="5" step="0.1"></div>
+   <div class="field"><label class="small">Bot Symbol</label><select id="botSymbol"><option>EURUSD</option><option>XAUUSD</option><option>BTCUSD</option></select></div>
+  </div>
+  <div class="actions">
+   <button class="gold" onclick="startBot()">START BOT</button>
+   <button class="darkbtn" onclick="stopBot()">STOP BOT</button>
+  </div>
+  <p id="botStatus" class="small">Bot stopped.</p>
+ </div>
+
+ <div class="card">
+  <h2>Open Positions</h2>
+  <div style="overflow-x:auto">
+   <table><thead><tr><th>Symbol</th><th>Type</th><th>Lot</th><th>Entry</th><th>Current</th><th>P/L</th><th>Action</th></tr></thead>
+   <tbody id="positions"><tr><td colspan="7">No open trades</td></tr></tbody></table>
+  </div>
+ </div>
+
+ <div class="card">
+  <h2>Trade History</h2>
+  <div style="overflow-x:auto">
+   <table><thead><tr><th>Symbol</th><th>Type</th><th>Entry</th><th>Exit</th><th>Result</th></tr></thead>
+   <tbody id="history"><tr><td colspan="5">No history yet</td></tr></tbody></table>
+  </div>
+ </div>
+ <footer>DAN AUTO TRADING · DEMO SIMULATOR · NOT FINANCIAL ADVICE</footer>
+</div>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const STORE='dan_auto_demo_v1';
+let data={balance:10000,positions:[],history:[],prices:{EURUSD:1.08,XAUUSD:2650,BTCUSD:65000},candles:{EURUSD:[],XAUUSD:[],BTCUSD:[]}};
+let botTimer=null;
+
+function load(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(STORE));
+  if(saved)data={...data,...saved};
+ }catch(e){}
+ for(const s of Object.keys(data.prices)){
+  if(!Array.isArray(data.candles[s]))data.candles[s]=[];
+  if(!data.candles[s].length)data.candles[s]=Array.from({length:20},()=>data.prices[s]);
+ }
+}
+function save(){localStorage.setItem(STORE,JSON.stringify(data))}
+function money(n){return '$'+Number(n).toFixed(2)}
+function fmt(s,n){return s==='EURUSD'?Number(n).toFixed(5):Number(n).toFixed(2)}
+function currentPrice(s){return data.prices[s]}
+function pnl(p){
+ const diff=(currentPrice(p.symbol)-p.entry)*(p.type==='BUY'?1:-1);
+ const multiplier=p.symbol==='EURUSD'?100000:p.symbol==='XAUUSD'?100:1;
+ return diff*p.lot*multiplier;
+}
+function totalPL(){return data.positions.reduce((sum,p)=>sum+pnl(p),0)}
+function render(){
+ const s=$('symbol').value,price=currentPrice(s),pl=totalPL();
+ $('price').textContent=fmt(s,price);
+ $('balance').textContent=money(data.balance);
+ $('equity').textContent=money(data.balance+pl);
+ $('openCount').textContent=data.positions.length;
+ $('totalPL').textContent=money(pl);
+ $('totalPL').style.color=pl>=0?'var(--green)':'var(--red)';
+ $('positions').innerHTML=data.positions.length?data.positions.map(p=>{
+  const v=pnl(p);
+  return `<tr><td>${p.symbol}</td><td>${p.type}</td><td>${p.lot}</td><td>${fmt(p.symbol,p.entry)}</td><td>${fmt(p.symbol,currentPrice(p.symbol))}</td><td style="color:${v>=0?'var(--green)':'var(--red)'}">${money(v)}</td><td><button class="darkbtn" onclick="closeTrade('${p.id}')">Close</button></td></tr>`;
+ }).join(''):'<tr><td colspan="7">No open trades</td></tr>';
+ $('history').innerHTML=data.history.length?data.history.slice().reverse().slice(0,30).map(h=>`<tr><td>${h.symbol}</td><td>${h.type}</td><td>${fmt(h.symbol,h.entry)}</td><td>${fmt(h.symbol,h.exit)}</td><td style="color:${h.result>=0?'var(--green)':'var(--red)'}">${money(h.result)}</td></tr>`).join(''):'<tr><td colspan="5">No history yet</td></tr>';
+ drawChart(s);
+}
+function openTrade(type,options={}){
+ const s=options.symbol||$('symbol').value;
+ const lot=Number(options.lot??$('lot').value);
+ if(!Number.isFinite(lot)||lot<=0||lot>100){alert('Enter a lot size between 0.01 and 100');return false}
+ const entry=currentPrice(s);
+ const sl=Number(options.sl??$('sl').value)||null;
+ const tp=Number(options.tp??$('tp').value)||null;
+ if(sl!==null&&((type==='BUY'&&sl>=entry)||(type==='SELL'&&sl<=entry))){alert('Stop Loss is on the wrong side of entry');return false}
+ if(tp!==null&&((type==='BUY'&&tp<=entry)||(type==='SELL'&&tp>=entry))){alert('Take Profit is on the wrong side of entry');return false}
+ const id=Date.now().toString()+Math.random().toString(16).slice(2);
+ data.positions.push({id,symbol:s,type,lot,entry,sl,tp});
+ save();render();return true;
+}
+function closeTrade(id,reason='MANUAL'){
+ const i=data.positions.findIndex(p=>p.id===id);if(i<0)return;
+ const p=data.positions.splice(i,1)[0],exit=currentPrice(p.symbol),result=pnl({...p});
+ data.balance+=result;
+ data.history.push({symbol:p.symbol,type:p.type,entry:p.entry,exit,result,reason,time:Date.now()});
+ save();render();
+}
+function updatePrices(){
+ for(const s of Object.keys(data.prices)){
+  const old=data.prices[s];
+  const volatility=s==='EURUSD'?0.00025:s==='XAUUSD'?1.7:55;
+  const next=Math.max(0.0001,old+(Math.random()-.5)*volatility);
+  data.prices[s]=next;
+  data.candles[s].push(next);
+  if(data.candles[s].length>80)data.candles[s].shift();
+ }
+ const positions=data.positions.slice();
+ for(const p of positions){
+  const price=currentPrice(p.symbol);
+  if(p.type==='BUY'&&p.sl!==null&&price<=p.sl)closeTrade(p.id,'STOP LOSS');
+  else if(p.type==='BUY'&&p.tp!==null&&price>=p.tp)closeTrade(p.id,'TAKE PROFIT');
+  else if(p.type==='SELL'&&p.sl!==null&&price>=p.sl)closeTrade(p.id,'STOP LOSS');
+  else if(p.type==='SELL'&&p.tp!==null&&price<=p.tp)closeTrade(p.id,'TAKE PROFIT');
+ }
+ save();render();
+}
+function drawChart(s){
+ const c=$('chart'),ctx=c.getContext('2d'),dpr=window.devicePixelRatio||1;
+ const w=c.clientWidth,h=c.clientHeight;
+ c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);
+ ctx.clearRect(0,0,w,h);
+ const arr=data.candles[s];if(arr.length<2)return;
+ const min=Math.min(...arr),max=Math.max(...arr),range=max-min||1;
+ ctx.strokeStyle='#263044';ctx.lineWidth=1;
+ for(let i=1;i<4;i++){const y=h*i/4;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+ ctx.strokeStyle='#f4bd50';ctx.lineWidth=2;ctx.beginPath();
+ arr.forEach((v,i)=>{const x=i*w/(arr.length-1),y=h-((v-min)/range)*(h-20)-10;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+ ctx.stroke();
+}
+function trendSignal(s){
+ const a=data.candles[s];if(a.length<12)return 'WAIT';
+ const short=a.slice(-4).reduce((x,y)=>x+y,0)/4;
+ const long=a.slice(-12).reduce((x,y)=>x+y,0)/12;
+ return short>long?'BUY':short<long?'SELL':'WAIT';
+}
+function startBot(){
+ if(botTimer)return;
+ $('botStatus').textContent='Bot running in demo mode.';
+ botTimer=setInterval(()=>{
+  const s=$('botSymbol').value,signal=trendSignal(s);
+  if(signal!=='WAIT'&&!data.positions.some(p=>p.symbol===s)){
+   const risk=Math.min(5,Math.max(.1,Number($('risk').value)||1));
+   const lot=Math.max(.01,Math.floor((data.balance*risk/100)/100)*.01);
+   openTrade(signal,{symbol:s,lot});
+  }
+ },5000);
+}
+function stopBot(){clearInterval(botTimer);botTimer=null;$('botStatus').textContent='Bot stopped.'}
+function resetAccount(){
+ if(!confirm('Reset demo balance and all trades?'))return;
+ stopBot();data.balance=10000;data.positions=[];data.history=[];save();render();
+}
+function login(){
+ const email=$('email').value.trim().toLowerCase(),password=$('password').value;
+ if(!email||!password){$('loginMsg').textContent='Enter email and password.';return}
+ let users={};try{users=JSON.parse(localStorage.getItem('dan_demo_users')||'{}')}catch(e){}
+ if(users[email]&&users[email]!==password){$('loginMsg').textContent='Incorrect password.';return}
+ if(!users[email]){users[email]=password;localStorage.setItem('dan_demo_users',JSON.stringify(users))}
+ localStorage.setItem('dan_demo_session',email);
+ showApp();
+}
+function showApp(){
+ $('loginPage').style.display='none';$('app').style.display='block';$('logoutBtn').style.display='block';render();
+}
+function logout(){stopBot();localStorage.removeItem('dan_demo_session');$('app').style.display='none';$('loginPage').style.display='block';$('logoutBtn').style.display='none'}
+load();
+if(localStorage.getItem('dan_demo_session'))showApp();
+setInterval(updatePrices,2000);
+window.addEventListener('resize',render);
+</script>
+</body>
+</html>
