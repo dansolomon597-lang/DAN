@@ -1,1 +1,795 @@
 
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width,initial-scale=1">  
+<meta name="theme-color" content="#080b12">  
+<title>DAN AUTO TRADING</title>  
+<style>  
+*{box-sizing:border-box}  
+:root{--gold:#f4bd50;--panel:#111827;--muted:#93a0b5;--green:#20d69a;--red:#ff5c6c}  
+body{margin:0;background:#080b12;color:#f5f7fb;font-family:Arial,sans-serif}  
+header{padding:16px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #263044;background:#0b101b;position:sticky;top:0;z-index:5}  
+.logo{font-size:19px;font-weight:900;color:var(--gold)}  
+button{border:0;border-radius:9px;padding:12px 15px;font-weight:bold;cursor:pointer}  
+button:disabled{opacity:.4}  
+.gold{background:var(--gold);color:#111}  
+.darkbtn{background:#263044;color:white}  
+.green{background:var(--green);color:#06130f}  
+.red{background:var(--red);color:white}  
+.wrap{max-width:1150px;margin:auto;padding:20px}  
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}  
+.card{background:var(--panel);border:1px solid #263044;border-radius:14px;padding:17px;margin-bottom:14px}  
+.small{font-size:12px;color:var(--muted)}  
+.value{font-size:23px;font-weight:800;margin-top:9px;overflow-wrap:anywhere}  
+h2{font-size:17px;margin:0 0 15px}  
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}  
+input,select{background:#080e18;border:1px solid #344159;color:white;padding:12px;border-radius:8px;width:100%;min-width:0}  
+.field{flex:1;min-width:110px}  
+.actions{display:flex;gap:9px;margin-top:12px}  
+.actions button{flex:1}  
+.tag{background:#263044;padding:5px 9px;border-radius:20px;font-size:11px}  
+.status{color:var(--green);font-size:12px}  
+table{width:100%;border-collapse:collapse;font-size:13px}  
+th,td{text-align:left;padding:11px 8px;border-bottom:1px solid #263044;white-space:nowrap}  
+th{color:var(--muted)}  
+#loginPage{max-width:390px;margin:70px auto;padding:22px}  
+#app{display:none}  
+#chart{width:100%;height:220px;display:block}  
+.notice{padding:11px;border-radius:9px;background:#202b3d;color:#c5d0e0;font-size:12px;line-height:1.6;margin:10px 0}  
+.positive{color:var(--green)}  
+.negative{color:var(--red)}  
+footer{text-align:center;color:var(--muted);padding:25px;font-size:12px}  
+@media(max-width:700px){  
+.grid{grid-template-columns:repeat(2,1fr)}  
+header{padding:13px}  
+.logo{font-size:15px}  
+.wrap{padding:12px}  
+.value{font-size:19px}  
+table{font-size:11px}  
+th,td{padding:9px 5px}  
+.card{padding:13px}  
+}  
+</style>  
+</head>  
+<body>  <header>  
+ <div class="logo">⚡ DAN AUTO TRADING</div>  
+ <div class="row">  
+  <span class="tag">DEMO ACCOUNT</span>  
+  <button class="darkbtn" id="logoutBtn" onclick="logout()" style="display:none">Logout</button>  
+ </div>  
+</header>  <section id="loginPage" class="card">  
+ <h2 style="color:var(--gold)">Welcome to DAN</h2>  
+ <p class="small">Login or create a demo account</p>  
+ <div style="margin:15px 0">  
+  <label class="small">Email</label>  
+  <input id="email" type="email" placeholder="Enter email">  
+ </div>  
+ <div style="margin:15px 0">  
+  <label class="small">Password</label>  
+  <input id="password" type="password" placeholder="Enter password">  
+ </div>  
+ <button class="gold" style="width:100%" onclick="login()">LOGIN / SIGN UP</button>  
+ <p id="loginMsg" class="small"></p>  
+ <div class="notice">Demo-only login. This version stores demo accounts on this device. Do not use a real password.</div>  
+</section>  <main id="app">  
+<div class="wrap">   <div class="row" style="justify-content:space-between;margin-bottom:15px">  
+  <div>  
+   <h2 style="margin-bottom:5px">Trading Dashboard</h2>  
+   <span class="status">● DEMO SYSTEM ACTIVE</span>  
+  </div>  
+  <button class="darkbtn" onclick="resetAccount()">Reset Account</button>  
+ </div>   <div class="grid">  
+  <div class="card"><div class="small">BALANCE</div><div class="value" id="balance">$0.00</div></div>  
+  <div class="card"><div class="small">EQUITY</div><div class="value" id="equity">$0.00</div></div>  
+  <div class="card"><div class="small">FREE MARGIN</div><div class="value" id="freeMargin">$0.00</div></div>  
+  <div class="card"><div class="small">FLOATING P/L</div><div class="value" id="totalPL">$0.00</div></div>  
+ </div>   <!-- ACCOUNT MANAGEMENT -->   <div class="card">  
+  <h2>💰 Account Management</h2>  
+  <div class="grid">  
+   <div><div class="small">USED MARGIN</div><div class="value" id="usedMargin">$0</div></div>  
+   <div><div class="small">MARGIN LEVEL</div><div class="value" id="marginLevel">0%</div></div>  
+  </div>    <div class="notice">Demo money only. Deposit and withdrawal change your simulated account balance.</div>    <div class="row">  
+   <div class="field">  
+    <label class="small">Deposit Amount ($)</label>  
+    <input id="depositAmount" type="number" min="1" step="0.01" placeholder="Example: 500">  
+   </div>  
+   <button class="green" onclick="deposit()">+ DEPOSIT</button>  
+  </div>    <div class="row" style="margin-top:12px">  
+   <div class="field">  
+    <label class="small">Withdraw Amount ($)</label>  
+    <input id="withdrawAmount" type="number" min="1" step="0.01" placeholder="Example: 100">  
+   </div>  
+   <button class="red" onclick="withdraw()">WITHDRAW</button>  
+  </div>  
+ </div>   <!-- MARKET -->   <div class="card">  
+  <div class="row" style="justify-content:space-between">  
+   <h2>Market Watch</h2>  
+   <span class="tag">SIMULATED MARKET</span>  
+  </div>  
+  <div class="row">  
+   <div class="field">  
+    <label class="small">Symbol</label>  
+    <select id="symbol" onchange="render()">  
+     <option value="EURUSD">EURUSD</option>  
+     <option value="XAUUSD">XAUUSD</option>  
+     <option value="BTCUSD">BTCUSD</option>  
+    </select>  
+   </div>  
+   <div class="field">  
+    <label class="small">Current Price</label>  
+    <div class="value" id="price">$0.00</div>  
+   </div>  
+   <div class="field">  
+    <label class="small">Market Status</label>  
+    <div class="value positive" style="font-size:15px">DEMO</div>  
+   </div>  
+  </div>  
+  <canvas id="chart"></canvas>  
+ </div>   <!-- MANUAL TRADING -->   <div class="card">  
+  <h2>Manual Trading</h2>  
+  <div class="row">  
+   <div class="field">  
+    <label class="small">Lot Size</label>  
+    <input id="lot" type="number" value="0.01" min="0.01" max="100" step="0.01">  
+   </div>  
+   <div class="field">  
+    <label class="small">Stop Loss</label>  
+    <input id="sl" type="number" placeholder="Optional">  
+   </div>  
+   <div class="field">  
+    <label class="small">Take Profit</label>  
+    <input id="tp" type="number" placeholder="Optional">  
+   </div>  
+  </div>  
+  <div class="actions">  
+   <button class="green" onclick="openTrade('BUY')">BUY</button>  
+   <button class="red" onclick="openTrade('SELL')">SELL</button>  
+  </div>  
+  <p class="small" id="tradeMessage">Select a symbol and open a demo trade.</p>  
+ </div>   <!-- AUTO BOT -->   <div class="card">  
+  <div class="row" style="justify-content:space-between">  
+   <h2>⚡ Auto Trading Bot</h2>  
+   <span class="tag">DEMO STRATEGY</span>  
+  </div>  
+  <p class="small">Moving average demo strategy with automatic SL, TP and risk-based lot sizing.</p>  
+  <div class="row">  
+   <div class="field">  
+    <label class="small">Risk per trade (%)</label>  
+    <input id="risk" type="number" value="1" min="0.1" max="5" step="0.1">  
+   </div>  
+   <div class="field">  
+    <label class="small">Bot Symbol</label>  
+    <select id="botSymbol">  
+     <option>EURUSD</option>  
+     <option>XAUUSD</option>  
+     <option>BTCUSD</option>  
+    </select>  
+   </div>  
+  </div>  
+  <div class="actions">  
+   <button class="gold" onclick="startBot()">START BOT</button>  
+   <button class="darkbtn" onclick="stopBot()">STOP BOT</button>  
+  </div>  
+  <p id="botStatus" class="small">Bot stopped.</p>  
+ </div>   <!-- OPEN POSITIONS -->   <div class="card">  
+  <h2>Open Positions</h2>  
+  <div style="overflow-x:auto">  
+   <table>  
+    <thead>  
+     <tr><th>Symbol</th><th>Type</th><th>Lot</th><th>Entry</th><th>Current</th><th>P/L</th><th>Action</th></tr>  
+    </thead>  
+    <tbody id="positions"><tr><td colspan="7">No open trades</td></tr></tbody>  
+   </table>  
+  </div>  
+ </div>   <!-- HISTORY -->   <div class="card">  
+  <h2>Trading History</h2>  
+  <div style="overflow-x:auto">  
+   <table>  
+    <thead>  
+     <tr><th>Symbol</th><th>Type</th><th>Entry</th><th>Exit</th><th>Result</th><th>Reason</th></tr>  
+    </thead>  
+    <tbody id="history"><tr><td colspan="6">No history yet</td></tr></tbody>  
+   </table>  
+  </div>  
+ </div>   <!-- DEPOSIT HISTORY -->   <div class="card">  
+  <h2>Deposit / Withdrawal History</h2>  
+  <div style="overflow-x:auto">  
+   <table>  
+    <thead>  
+     <tr><th>Type</th><th>Amount</th><th>Date</th><th>Balance After</th></tr>  
+    </thead>  
+    <tbody id="cashHistory"><tr><td colspan="4">No transactions</td></tr></tbody>  
+   </table>  
+  </div>  
+ </div>   <footer>  
+  DAN AUTO TRADING · DEMO SIMULATOR<br>  
+  Simulated prices only · No real brokerage connection · Not financial advice  
+ </footer>  
+</div>  
+</main>  <script>  
+const $=id=>document.getElementById(id);  
+  
+const USERS='dan_auto_users_v2';  
+const SESSION='dan_auto_session_v2';  
+  
+let accountEmail=null;  
+let botTimer=null;  
+let priceTimer=null;  
+  
+const defaults=()=>({  
+ balance:0,  
+ positions:[],  
+ history:[],  
+ cashHistory:[],  
+ prices:{EURUSD:1.08,XAUUSD:2650,BTCUSD:65000},  
+ candles:{EURUSD:[],XAUUSD:[],BTCUSD:[]}  
+});  
+  
+let data=defaults();  
+  
+function accountKey(){  
+ return 'dan_auto_account_'+accountEmail;  
+}  
+  
+function loadAccount(){  
+ try{  
+  const saved=JSON.parse(localStorage.getItem(accountKey())||'null');  
+  data={...defaults(),...(saved||{})};  
+ }catch(e){  
+  data=defaults();  
+ }  
+  
+ for(const s of Object.keys(data.prices)){  
+  if(!Array.isArray(data.candles[s]))data.candles[s]=[];  
+  if(!data.candles[s].length){  
+   data.candles[s]=Array.from({length:20},()=>data.prices[s]);  
+  }  
+ }  
+}  
+  
+function save(){  
+ if(accountEmail){  
+  localStorage.setItem(accountKey(),JSON.stringify(data));  
+ }  
+}  
+  
+function money(n){  
+ return '$'+Number(n||0).toFixed(2);  
+}  
+  
+function fmt(s,n){  
+ return s==='EURUSD'?Number(n).toFixed(5):Number(n).toFixed(2);  
+}  
+  
+function currentPrice(s){  
+ return data.prices[s];  
+}  
+  
+// Contract sizes for demo calculations  
+function contract(s){  
+ if(s==='EURUSD')return 100000;  
+ if(s==='XAUUSD')return 100;  
+ if(s==='BTCUSD')return 1;  
+ return 1;  
+}  
+  
+// Demo leverage: 1:100  
+function positionMargin(p){  
+ return p.entry*contract(p.symbol)*p.lot/100;  
+}  
+  
+function pnl(p){  
+ const diff=(currentPrice(p.symbol)-p.entry)*  
+ (p.type==='BUY'?1:-1);  
+ return diff*contract(p.symbol)*p.lot;  
+}  
+  
+function totalPL(){  
+ return data.positions.reduce((sum,p)=>sum+pnl(p),0);  
+}  
+  
+function usedMargin(){  
+ return data.positions.reduce((sum,p)=>sum+positionMargin(p),0);  
+}  
+  
+function equity(){  
+ return data.balance+totalPL();  
+}  
+  
+function freeMargin(){  
+ return equity()-usedMargin();  
+}  
+  
+function render(){  
+ if(!accountEmail)return;  
+  
+ const s=$('symbol').value;  
+ const price=currentPrice(s);  
+ const pl=totalPL();  
+ const margin=usedMargin();  
+ const eq=equity();  
+ const free=eq-margin;  
+  
+ $('price').textContent=fmt(s,price);  
+ $('balance').textContent=money(data.balance);  
+ $('equity').textContent=money(eq);  
+ $('freeMargin').textContent=money(free);  
+ $('usedMargin').textContent=money(margin);  
+ $('totalPL').textContent=money(pl);  
+  
+ $('totalPL').style.color=pl>=0?'var(--green)':'var(--red)';  
+ $('equity').style.color=eq>=data.balance?'var(--green)':'var(--red)';  
+ $('freeMargin').style.color=free>=0?'var(--green)':'var(--red)';  
+  
+ $('marginLevel').textContent=margin>0?  
+ ((eq/margin)*100).toFixed(1)+'%':'N/A';  
+  
+ // OPEN POSITIONS  
+ $('positions').innerHTML=data.positions.length?  
+ data.positions.map(p=>{  
+  const v=pnl(p);  
+  return `<tr>  
+   <td>${p.symbol}</td>  
+   <td style="color:${p.type==='BUY'?'var(--green)':'var(--red)'}">${p.type}</td>  
+   <td>${p.lot}</td>  
+   <td>${fmt(p.symbol,p.entry)}</td>  
+   <td>${fmt(p.symbol,currentPrice(p.symbol))}</td>  
+   <td style="color:${v>=0?'var(--green)':'var(--red)'}">${money(v)}</td>  
+   <td><button class="darkbtn" onclick="closeTrade('${p.id}')">Close</button></td>  
+  </tr>`;  
+ }).join(''):  
+ '<tr><td colspan="7">No open trades</td></tr>';  
+  
+ // TRADING HISTORY  
+ $('history').innerHTML=data.history.length?  
+ data.history.slice().reverse().slice(0,50).map(h=>`  
+ <tr>  
+  <td>${h.symbol}</td>  
+  <td>${h.type}</td>  
+  <td>${fmt(h.symbol,h.entry)}</td>  
+  <td>${fmt(h.symbol,h.exit)}</td>  
+  <td style="color:${h.result>=0?'var(--green)':'var(--red)'}">${money(h.result)}</td>  
+  <td>${h.reason}</td>  
+ </tr>`).join(''):  
+ '<tr><td colspan="6">No history yet</td></tr>';  
+  
+ // CASH HISTORY  
+ $('cashHistory').innerHTML=data.cashHistory.length?  
+ data.cashHistory.slice().reverse().slice(0,50).map(h=>`  
+ <tr>  
+  <td style="color:${h.type==='DEPOSIT'?'var(--green)':'var(--red)'}">${h.type}</td>  
+  <td>${money(h.amount)}</td>  
+  <td>${new Date(h.time).toLocaleString()}</td>  
+  <td>${money(h.balance)}</td>  
+ </tr>`).join(''):  
+ '<tr><td colspan="4">No transactions</td></tr>';  
+  
+ drawChart(s);  
+}  
+  
+// CUSTOM DEPOSIT  
+function deposit(){  
+ const amount=Number($('depositAmount').value);  
+  
+ if(!Number.isFinite(amount)||amount<=0||amount>100000000){  
+  alert('Enter a valid deposit amount.');  
+  return;  
+ }  
+  
+ data.balance+=amount;  
+  
+ data.cashHistory.push({  
+  type:'DEPOSIT',  
+  amount,  
+  balance:data.balance,  
+  time:Date.now()  
+ });  
+  
+ $('depositAmount').value='';  
+ save();  
+ render();  
+  
+ alert('Demo deposit successful: '+money(amount));  
+}  
+  
+// CUSTOM WITHDRAW  
+function withdraw(){  
+ const amount=Number($('withdrawAmount').value);  
+  
+ if(!Number.isFinite(amount)||amount<=0){  
+  alert('Enter a valid withdrawal amount.');  
+  return;  
+ }  
+  
+ // Do not allow withdrawal of funds needed for margin.  
+ const available=Math.min(data.balance,Math.max(0,freeMargin()));  
+  
+ if(amount>available){  
+  alert('Insufficient available funds. Available: '+money(available));  
+  return;  
+ }  
+  
+ data.balance-=amount;  
+  
+ data.cashHistory.push({  
+  type:'WITHDRAW',  
+  amount,  
+  balance:data.balance,  
+  time:Date.now()  
+ });  
+  
+ $('withdrawAmount').value='';  
+ save();  
+ render();  
+  
+ alert('Demo withdrawal successful: '+money(amount));  
+}  
+  
+// OPEN TRADE  
+function openTrade(type,options={}){  
+ const s=options.symbol||$('symbol').value;  
+ const lot=Number(options.lot??$('lot').value);  
+  
+ if(!Number.isFinite(lot)||lot<0.01||lot>100){  
+  alert('Lot size must be between 0.01 and 100.');  
+  return false;  
+ }  
+  
+ const entry=currentPrice(s);  
+ const sl=options.sl??(Number($('sl').value)||null);  
+ const tp=options.tp??(Number($('tp').value)||null);  
+  
+ if(sl!==null&&((type==='BUY'&&sl>=entry)||(type==='SELL'&&sl<=entry))){  
+  alert('Stop Loss is on the wrong side of entry.');  
+  return false;  
+ }  
+  
+ if(tp!==null&&((type==='BUY'&&tp<=entry)||(type==='SELL'&&tp>=entry))){  
+  alert('Take Profit is on the wrong side of entry.');  
+  return false;  
+ }  
+  
+ const p={  
+  id:Date.now().toString()+Math.random().toString(16).slice(2),  
+  symbol:s,  
+  type,  
+  lot,  
+  entry,  
+  sl,  
+  tp  
+ };  
+  
+ const required=positionMargin(p);  
+  
+ if(required>freeMargin()){  
+  alert('Not enough free margin. Required: '+money(required)+  
+  ' | Available: '+money(freeMargin()));  
+  return false;  
+ }  
+  
+ data.positions.push(p);  
+  
+ save();  
+ render();  
+  
+ $('tradeMessage').textContent=  
+ type+' '+s+' opened successfully in demo mode.';  
+  
+ return true;  
+}  
+  
+// CLOSE TRADE  
+function closeTrade(id,reason='MANUAL'){  
+ const i=data.positions.findIndex(p=>p.id===id);  
+ if(i<0)return;  
+  
+ const p=data.positions[i];  
+ const exit=currentPrice(p.symbol);  
+ const result=pnl(p);  
+  
+ data.positions.splice(i,1);  
+  
+ // Realized profit/loss changes account balance  
+ data.balance+=result;  
+  
+ data.history.push({  
+  symbol:p.symbol,  
+  type:p.type,  
+  entry:p.entry,  
+  exit,  
+  result,  
+  reason,  
+  time:Date.now()  
+ });  
+  
+ save();  
+ render();  
+}  
+  
+// PRICE SIMULATION  
+function updatePrices(){  
+ if(!accountEmail)return;  
+  
+ for(const s of Object.keys(data.prices)){  
+  const old=data.prices[s];  
+  
+  const volatility=  
+   s==='EURUSD'?0.00025:  
+   s==='XAUUSD'?1.7:55;  
+  
+  const next=Math.max(  
+   0.0001,  
+   old+(Math.random()-.5)*volatility  
+  );  
+  
+  data.prices[s]=next;  
+  data.candles[s].push(next);  
+  
+  if(data.candles[s].length>80){  
+   data.candles[s].shift();  
+  }  
+ }  
+  
+ // Check SL and TP  
+ const positions=data.positions.slice();  
+  
+ for(const p of positions){  
+  const price=currentPrice(p.symbol);  
+  
+  if(p.type==='BUY'&&p.sl!==null&&price<=p.sl){  
+   closeTrade(p.id,'STOP LOSS');  
+  }  
+  else if(p.type==='BUY'&&p.tp!==null&&price>=p.tp){  
+   closeTrade(p.id,'TAKE PROFIT');  
+  }  
+  else if(p.type==='SELL'&&p.sl!==null&&price>=p.sl){  
+   closeTrade(p.id,'STOP LOSS');  
+  }  
+  else if(p.type==='SELL'&&p.tp!==null&&price<=p.tp){  
+   closeTrade(p.id,'TAKE PROFIT');  
+  }  
+ }  
+  
+ // Basic demo margin protection  
+ if(data.positions.length&&equity()<=usedMargin()*.5){  
+  data.positions.slice().forEach(p=>{  
+   closeTrade(p.id,'MARGIN STOP OUT');  
+  });  
+ }  
+  
+ save();  
+ render();  
+}  
+  
+// CHART  
+function drawChart(s){  
+ const c=$('chart');  
+ if(!c)return;  
+  
+ const ctx=c.getContext('2d');  
+ const dpr=window.devicePixelRatio||1;  
+ const w=c.clientWidth;  
+ const h=c.clientHeight;  
+  
+ c.width=w*dpr;  
+ c.height=h*dpr;  
+  
+ ctx.setTransform(dpr,0,0,dpr,0,0);  
+ ctx.clearRect(0,0,w,h);  
+  
+ const arr=data.candles[s];  
+ if(!arr||arr.length<2)return;  
+  
+ const min=Math.min(...arr);  
+ const max=Math.max(...arr);  
+ const range=max-min||1;  
+  
+ ctx.strokeStyle='#263044';  
+ ctx.lineWidth=1;  
+  
+ for(let i=1;i<4;i++){  
+  const y=h*i/4;  
+  ctx.beginPath();  
+  ctx.moveTo(0,y);  
+  ctx.lineTo(w,y);  
+  ctx.stroke();  
+ }  
+  
+ ctx.strokeStyle='#f4bd50';  
+ ctx.lineWidth=2;  
+ ctx.beginPath();  
+  
+ arr.forEach((v,i)=>{  
+  const x=i*w/(arr.length-1);  
+  const y=h-((v-min)/range)*(h-20)-10;  
+  if(i)ctx.lineTo(x,y);  
+  else ctx.moveTo(x,y);  
+ });  
+  
+ ctx.stroke();  
+}  
+  
+// SIMPLE MOVING AVERAGE SIGNAL  
+function trendSignal(s){  
+ const a=data.candles[s];  
+  
+ if(a.length<12)return 'WAIT';  
+  
+ const short=a.slice(-4).reduce((x,y)=>x+y,0)/4;  
+ const long=a.slice(-12).reduce((x,y)=>x+y,0)/12;  
+  
+ if(short>long)return 'BUY';  
+ if(short<long)return 'SELL';  
+ return 'WAIT';  
+}  
+  
+// AUTO BOT  
+function startBot(){  
+ if(botTimer)return;  
+  
+ if(!accountEmail)return;  
+  
+ const risk=Number($('risk').value);  
+  
+ if(!Number.isFinite(risk)||risk<0.1||risk>5){  
+  alert('Risk must be between 0.1% and 5%.');  
+  return;  
+ }  
+  
+ $('botStatus').textContent='Bot running in demo mode.';  
+  
+ botTimer=setInterval(()=>{  
+  const s=$('botSymbol').value;  
+  const signal=trendSignal(s);  
+  
+  // One open position per symbol  
+  if(signal==='WAIT')return;  
+  if(data.positions.some(p=>p.symbol===s))return;  
+  
+  const riskPercent=Math.min(5,Math.max(.1,Number($('risk').value)||1));  
+  const price=currentPrice(s);  
+  
+  const volatility=s==='EURUSD'?0.00025:  
+   s==='XAUUSD'?1.7:55;  
+  
+  const stopDistance=volatility*8;  
+  const riskMoney=data.balance*riskPercent/100;  
+  
+  if(riskMoney<=0)return;  
+  
+  let lot=riskMoney/(stopDistance*contract(s));  
+  
+  lot=Math.floor(lot*100)/100;  
+  lot=Math.min(100,lot);  
+  
+  if(lot<0.01)return;  
+  
+  const sl=signal==='BUY'?  
+   price-stopDistance:  
+   price+stopDistance;  
+  
+  const tp=signal==='BUY'?  
+   price+stopDistance*2:  
+   price-stopDistance*2;  
+  
+  const success=openTrade(signal,{  
+   symbol:s,  
+   lot,  
+   sl,  
+   tp  
+  });  
+  
+  if(success){  
+   $('botStatus').textContent=  
+   'Bot opened '+signal+' '+s+' | Lot: '+lot;  
+  }  
+  
+ },5000);  
+}  
+  
+function stopBot(){  
+ if(botTimer){  
+  clearInterval(botTimer);  
+  botTimer=null;  
+ }  
+ $('botStatus').textContent='Bot stopped.';  
+}  
+  
+// RESET ACCOUNT  
+function resetAccount(){  
+ if(!confirm('Reset account? All demo money and trade history will be deleted.'))return;  
+  
+ stopBot();  
+  
+ data=defaults();  
+  
+ for(const s of Object.keys(data.prices)){  
+  data.candles[s]=Array.from({length:20},()=>data.prices[s]);  
+ }  
+  
+ save();  
+ render();  
+}  
+  
+// LOGIN  
+function login(){  
+ const email=$('email').value.trim().toLowerCase();  
+ const password=$('password').value;  
+  
+ if(!email||!password){  
+  $('loginMsg').textContent='Enter email and password.';  
+  return;  
+ }  
+  
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){  
+  $('loginMsg').textContent='Enter a valid email address.';  
+  return;  
+ }  
+  
+ let users={};  
+  
+ try{  
+  users=JSON.parse(localStorage.getItem(USERS)||'{}');  
+ }catch(e){}  
+  
+ if(users[email]&&users[email]!==password){  
+  $('loginMsg').textContent='Incorrect password.';  
+  return;  
+ }  
+  
+ if(!users[email]){  
+  users[email]=password;  
+  localStorage.setItem(USERS,JSON.stringify(users));  
+ }  
+  
+ accountEmail=email;  
+ localStorage.setItem(SESSION,email);  
+  
+ loadAccount();  
+ showApp();  
+}  
+  
+function showApp(){  
+ $('loginPage').style.display='none';  
+ $('app').style.display='block';  
+ $('logoutBtn').style.display='block';  
+  
+ render();  
+  
+ if(!priceTimer){  
+  priceTimer=setInterval(updatePrices,2000);  
+ }  
+}  
+  
+function logout(){  
+ stopBot();  
+  
+ if(priceTimer){  
+  clearInterval(priceTimer);  
+  priceTimer=null;  
+ }  
+  
+ localStorage.removeItem(SESSION);  
+ accountEmail=null;  
+  
+ $('app').style.display='none';  
+ $('loginPage').style.display='block';  
+ $('logoutBtn').style.display='none';  
+ $('password').value='';  
+}  
+  
+// START  
+const savedSession=localStorage.getItem(SESSION);  
+  
+if(savedSession){  
+ accountEmail=savedSession;  
+ loadAccount();  
+ showApp();  
+}  
+  
+window.addEventListener('resize',()=>{  
+ if(accountEmail)render();  
+});  
+</script>  </body>  
+</html>  
