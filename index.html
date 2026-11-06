@@ -1,434 +1,530 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090b10">
-<title>DAN AD NETWORK PRO</title>
+<meta name="theme-color" content="#090914">
+<title>DAN AI MOTION STUDIO</title>
+
 <style>
 :root{
---bg:#090b10;--panel:#121722;--panel2:#1a2230;
---gold:#f3bd50;--gold2:#ffe0a0;--text:#f5f5f5;
---muted:#929bad;--green:#35d69a;--red:#ff6575;
+  --bg:#090914;
+  --panel:#131326;
+  --panel2:#1b1b35;
+  --pink:#ff3c9e;
+  --purple:#8b5cf6;
+  --text:#f7f5ff;
+  --muted:#9d9bb5;
+  --border:#30304b;
 }
 *{box-sizing:border-box}
 body{
-margin:0;background:var(--bg);color:var(--text);
-font-family:Arial,sans-serif;padding-bottom:85px
+  margin:0;
+  background:
+    radial-gradient(circle at 10% 0%,#32134b 0,transparent 35%),
+    radial-gradient(circle at 100% 10%,#25134c 0,transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
 }
 header{
-padding:18px 16px;background:#10141d;
-border-bottom:1px solid #30303a;
-display:flex;align-items:center;justify-content:space-between;
-position:sticky;top:0;z-index:10
+  position:sticky;
+  top:0;
+  z-index:10;
+  padding:16px;
+  background:#0b0b18ed;
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
 }
-.logo{font-size:19px;font-weight:900;color:var(--gold)}
-.logo span{color:white}
-.container{max-width:850px;margin:auto;padding:16px}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.logo{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  font-weight:900;
+  font-size:20px;
+}
+.brand h1{
+  font-size:16px;
+  margin:0;
+  letter-spacing:1px;
+}
+.brand small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:10px;
+}
+main{
+  width:min(760px,100%);
+  margin:auto;
+  padding:20px 14px 50px;
+}
 .hero{
-padding:25px 20px;border-radius:18px;
-background:linear-gradient(135deg,#25200f,#111827);
-border:1px solid #725722;margin-bottom:18px
+  text-align:center;
+  padding:27px 8px;
 }
-.hero h1{font-size:27px;margin:8px 0;color:var(--gold2)}
-.hero p{color:#c0c5d0;line-height:1.6}
+.hero h2{
+  font-size:29px;
+  line-height:1.15;
+  margin:0 0 12px;
+}
+.gradient{
+  background:linear-gradient(90deg,#ff3c9e,#b38aff,#43d9ff);
+  color:transparent;
+  background-clip:text;
+}
+.hero p{
+  color:var(--muted);
+  line-height:1.6;
+  font-size:13px;
+  max-width:480px;
+  margin:auto;
+}
 .card{
-background:var(--panel);padding:17px;
-border:1px solid #273044;border-radius:15px;margin-bottom:14px
+  background:linear-gradient(145deg,#17172c,#10101e);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:17px;
+  margin-bottom:15px;
 }
-h2{font-size:18px;margin:0 0 15px}
-h3{font-size:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:var(--panel2);padding:15px;border-radius:12px}
-.stat small{color:var(--muted)}
-.stat strong{display:block;font-size:21px;margin-top:9px;color:var(--gold)}
+.card h3{
+  font-size:15px;
+  margin:0 0 7px;
+}
+.sub{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+  margin:0 0 14px;
+}
+.upload{
+  min-height:155px;
+  border:1.5px dashed #555074;
+  border-radius:15px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  text-align:center;
+  cursor:pointer;
+  background:#ffffff05;
+  overflow:hidden;
+}
+.upload:active{border-color:var(--pink)}
+.upload .symbol{
+  font-size:33px;
+  margin-bottom:9px;
+}
+.upload strong{font-size:13px}
+.upload small{
+  color:var(--muted);
+  margin-top:6px;
+  font-size:11px;
+}
+.upload img,.upload video{
+  max-width:100%;
+  max-height:190px;
+  border-radius:10px;
+  object-fit:contain;
+}
+input[type=file]{display:none}
+.field{margin-top:14px}
+.field label{
+  display:block;
+  font-size:12px;
+  margin-bottom:8px;
+  color:#dcd8f3;
+}
+select,textarea{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--panel2);
+  color:white;
+  padding:13px;
+  font-size:13px;
+  outline:none;
+}
+textarea{
+  min-height:85px;
+  resize:vertical;
+  line-height:1.5;
+}
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.option{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  background:#ffffff05;
+  font-size:12px;
+}
+.option b{display:block;margin-bottom:5px}
+.option span{color:var(--muted);font-size:11px}
+.check{
+  display:flex;
+  gap:9px;
+  align-items:center;
+  font-size:12px;
+  color:#ddd9ef;
+  margin-top:15px;
+}
+.check input{accent-color:var(--pink)}
 button{
-border:0;border-radius:10px;padding:13px 16px;
-background:var(--gold);color:#15120a;font-weight:bold;
-cursor:pointer;font-size:14px
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  width:100%;
+  font-size:14px;
+  font-weight:800;
+  color:white;
+  background:linear-gradient(100deg,var(--pink),var(--purple));
+  cursor:pointer;
+  margin-top:16px;
 }
-button:active{transform:scale(.98)}
-button.secondary{background:#283144;color:white}
-button.danger{background:#51232c;color:white}
-button.green{background:#174b3b;color:white}
-button.full{width:100%;margin-top:10px}
-input,select,textarea{
-width:100%;padding:13px;margin:7px 0 13px;
-border-radius:9px;border:1px solid #343e50;
-background:#0c111a;color:white;font-size:15px
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
 }
-label{font-size:13px;color:#c3c9d4}
-nav{
-position:fixed;bottom:0;left:0;right:0;
-background:#111722;border-top:1px solid #30394a;
-display:flex;justify-content:space-around;
-padding:9px 3px;z-index:20
+.status{
+  display:none;
+  margin-top:15px;
+  border:1px solid var(--border);
+  background:#ffffff08;
+  padding:14px;
+  border-radius:13px;
+  font-size:12px;
+  line-height:1.6;
 }
-nav button{
-background:transparent;color:#aeb6c5;
-padding:8px 5px;font-size:11px;flex:1
+.status.show{display:block}
+.progress{
+  height:6px;
+  border-radius:10px;
+  background:#292943;
+  overflow:hidden;
+  margin-top:10px;
 }
-nav button.active{color:var(--gold)}
-.page{display:none}
-.page.active{display:block}
-.ad{
-background:#171e2b;border:1px solid #30394a;
-padding:14px;border-radius:13px;margin:12px 0
+.progress div{
+  width:25%;
+  height:100%;
+  background:linear-gradient(90deg,var(--pink),#a78bfa);
+  animation:loading 2s infinite alternate;
 }
-.ad img{width:100%;max-height:170px;object-fit:cover;border-radius:9px}
-.tag{font-size:11px;color:var(--gold);margin:5px 0}
-.muted{color:var(--muted);font-size:13px;line-height:1.6}
-.status{font-size:12px;color:var(--gold)}
-hr{border:0;border-top:1px solid #30394a;margin:15px 0}
-.hidden{display:none!important}
-.center{text-align:center}
-#message{padding:12px;border-radius:9px;margin:10px 0;display:none}
-footer{text-align:center;color:#6f7785;padding:25px;font-size:11px}
-@media(max-width:420px){
-.grid{grid-template-columns:1fr 1fr}
-.hero h1{font-size:23px}
+@keyframes loading{
+  from{width:15%}
+  to{width:90%}
+}
+.result{
+  display:none;
+  margin-top:16px;
+}
+.result video{
+  width:100%;
+  border-radius:14px;
+  background:#000;
+}
+.download{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  color:white;
+  padding:13px;
+  margin-top:10px;
+  border-radius:12px;
+  background:#292344;
+  font-weight:bold;
+  font-size:13px;
+}
+.note{
+  color:var(--muted);
+  text-align:center;
+  font-size:10px;
+  line-height:1.6;
+  padding:10px;
+}
+footer{
+  text-align:center;
+  color:#77748f;
+  font-size:10px;
+  padding:20px;
 }
 </style>
 </head>
+
 <body>
 
 <header>
- <div class="logo">DAN <span>AD NETWORK</span></div>
- <div style="color:#f3bd50;font-size:12px">● PRO</div>
+  <div class="brand">
+    <div class="logo">D</div>
+    <div>
+      <h1>DAN AI MOTION STUDIO</h1>
+      <small>AI VIDEO MOTION TRANSFER</small>
+    </div>
+  </div>
 </header>
 
-<div class="container">
+<main>
 
-<div id="message"></div>
+<section class="hero">
+  <h2>Make Your Photo <span class="gradient">Come Alive</span></h2>
+  <p>
+    Upload a person's photo and a motion video.
+    Let AI transfer the movement to your character.
+  </p>
+</section>
 
-<!-- AUTH -->
-<section id="auth" class="page active">
- <div class="hero">
-  <div class="tag">WELCOME TO DAN</div>
-  <h1>Advertise. Grow. Earn.</h1>
-  <p>Connect businesses with customers through one modern advertising platform.</p>
- </div>
- <div class="card">
-  <h2 id="authTitle">Create Your Account</h2>
-  <div id="registerFields">
-   <label>Full Name</label>
-   <input id="name" placeholder="Your full name">
+<section class="card">
+  <h3>01 — Character Photo</h3>
+  <p class="sub">Upload the person you want to animate.</p>
+
+  <label class="upload" for="photo">
+    <div id="photoPreview">
+      <div class="symbol">📸</div>
+      <strong>Choose Character Photo</strong>
+      <small>JPG, PNG or WEBP</small>
+    </div>
+  </label>
+  <input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
+</section>
+
+<section class="card">
+  <h3>02 — Motion Reference Video</h3>
+  <p class="sub">Upload a video showing the movement to copy.</p>
+
+  <label class="upload" for="motion">
+    <div id="motionPreview">
+      <div class="symbol">🎬</div>
+      <strong>Choose Motion Video</strong>
+      <small>MP4, MOV or WEBM · Maximum 100MB</small>
+    </div>
+  </label>
+  <input id="motion" type="file" accept="video/mp4,video/quicktime,video/webm">
+</section>
+
+<section class="card">
+  <h3>03 — Motion Settings</h3>
+  <p class="sub">Choose how the AI should transfer the movement.</p>
+
+  <div class="field">
+    <label>Movement orientation</label>
+    <select id="orientation">
+      <option value="video">Follow reference video — dance, walking, running</option>
+      <option value="image">Follow character photo — camera movement</option>
+    </select>
   </div>
-  <label>Email</label>
-  <input id="email" type="email" placeholder="example@email.com">
-  <label>Password</label>
-  <input id="password" type="password" placeholder="Enter password">
-  <button class="full" onclick="register()" id="authBtn">CREATE ACCOUNT</button>
-  <button class="full secondary" onclick="toggleAuth()" id="switchBtn">Already have an account? Login</button>
-  <p class="muted center">Demo version: accounts are stored only in this browser.</p>
- </div>
-</section>
 
-<!-- HOME -->
-<section id="home" class="page">
- <div class="hero">
-  <div class="tag">DAN DIGITAL BUSINESS</div>
-  <h1>Grow Your Business.</h1>
-  <p>Reach new customers. Promote your products. Build your brand.</p>
-  <button onclick="showPage('create')">+ CREATE ADVERTISEMENT</button>
- </div>
-
- <div class="grid">
-  <div class="stat"><small>Total Ads</small><strong id="totalAds">0</strong></div>
-  <div class="stat"><small>Approved Ads</small><strong id="approvedAds">0</strong></div>
-  <div class="stat"><small>Your Earnings</small><strong id="earnings">$0.00</strong></div>
-  <div class="stat"><small>Account</small><strong style="font-size:15px" id="accountStatus">Active</strong></div>
- </div>
-
- <div class="card" style="margin-top:15px">
-  <h2>Latest Advertisements</h2>
-  <div id="latestAds"></div>
- </div>
-</section>
-
-<!-- EXPLORE -->
-<section id="explore" class="page">
- <h2>Explore Advertisements</h2>
- <p class="muted">Discover businesses and their products.</p>
- <div id="publicAds"></div>
-</section>
-
-<!-- CREATE -->
-<section id="create" class="page">
- <div class="card">
-  <h2>Create Advertisement</h2>
-  <label>Business / Product Name</label>
-  <input id="adTitle" placeholder="Enter business name">
-  <label>Category</label>
-  <select id="category">
-   <option>Technology</option>
-   <option>Fashion</option>
-   <option>Food</option>
-   <option>Electronics</option>
-   <option>Education</option>
-   <option>Services</option>
-   <option>Other</option>
-  </select>
-  <label>Description</label>
-  <textarea id="description" rows="4" placeholder="Describe your product or service"></textarea>
-  <label>Image URL (optional)</label>
-  <input id="imageUrl" placeholder="https://example.com/image.jpg">
-  <label>Website / Contact URL (optional)</label>
-  <input id="contactUrl" placeholder="https://example.com">
-  <label>Advertising Budget ($)</label>
-  <input id="budget" type="number" min="1" placeholder="Example: 10">
-  <p class="muted">Your advertisement will be submitted for admin approval. This demo does not collect payment.</p>
-  <button class="full" onclick="submitAd()">SUBMIT ADVERTISEMENT</button>
- </div>
-</section>
-
-<!-- MY ADS -->
-<section id="myads" class="page">
- <h2>My Advertisements</h2>
- <div id="myAdsList"></div>
- <div class="card">
-  <h2>Account Earnings</h2>
-  <div class="stat">
-   <small>Approved earnings / commission</small>
-   <strong id="myEarnings">$0.00</strong>
+  <div class="field">
+    <label>AI instructions (optional)</label>
+    <textarea id="prompt" placeholder="Example: Make the person perform the same dance naturally. Preserve the face, clothing and appearance."></textarea>
   </div>
-  <p class="muted">Earnings are illustrative until real advertisers pay and a verified commission system is connected.</p>
- </div>
+
+  <label class="check">
+    <input type="checkbox" id="sound" checked>
+    Keep original sound from motion video
+  </label>
 </section>
 
-<!-- ADMIN -->
-<section id="admin" class="page">
- <div class="hero">
-  <h1>ADMIN CONTROL</h1>
-  <p>Manage submitted advertisements.</p>
- </div>
- <div id="adminLogin" class="card">
-  <h2>Admin Login</h2>
-  <label>Demo Admin PIN</label>
-  <input id="adminPin" type="password" placeholder="Enter admin PIN">
-  <button class="full" onclick="adminLogin()">LOGIN AS ADMIN</button>
-  <p class="muted">Demo PIN: 1234. Not secure for a public website.</p>
- </div>
- <div id="adminPanel" class="hidden">
-  <div class="grid">
-   <div class="stat"><small>All Users</small><strong id="usersCount">0</strong></div>
-   <div class="stat"><small>All Ads</small><strong id="adminAdsCount">0</strong></div>
+<section class="card">
+  <h3>04 — Video Quality</h3>
+  <div class="options">
+    <div class="option">
+      <b>HD</b>
+      <span>AI generated video</span>
+    </div>
+    <div class="option">
+      <b>4K</b>
+      <span>Requires an additional upscaling service</span>
+    </div>
   </div>
-  <div class="card" style="margin-top:15px">
-   <h2>Pending Advertisements</h2>
-   <div id="pendingAds"></div>
+  <p class="sub" style="margin-top:12px">
+    The first working version generates the AI video.
+    4K upscaling will be connected as a separate processing step.
+  </p>
+
+  <button id="generate">✨ GENERATE AI VIDEO</button>
+
+  <div class="status" id="status">
+    <strong id="statusTitle">Preparing your video...</strong>
+    <div id="statusText">Please wait while the AI processes your files.</div>
+    <div class="progress"><div></div></div>
   </div>
-  <div class="card">
-   <h2>All Advertisements</h2>
-   <div id="allAds"></div>
+
+  <div class="result" id="result">
+    <h3>Your AI Video Is Ready!</h3>
+    <video id="output" controls playsinline></video>
+    <a id="download" class="download" download="dan-ai-motion.mp4">
+      ⬇ Download Generated Video
+    </a>
   </div>
-  <button class="danger full" onclick="adminLogout()">ADMIN LOGOUT</button>
- </div>
 </section>
 
-<section id="profile" class="page">
- <div class="card">
-  <h2>My Profile</h2>
-  <p class="muted">Account information</p>
-  <h3 id="profileName">User</h3>
-  <p id="profileEmail" class="muted"></p>
-  <hr>
-  <button class="secondary full" onclick="showPage('admin')">ADMIN PANEL</button>
-  <button class="danger full" onclick="logout()">LOG OUT</button>
- </div>
- <div class="card">
-  <h2>Payment Information</h2>
-  <p class="muted">Telebirr and CBE Birr payment integration will be added after merchant account verification and backend setup.</p>
- </div>
-</section>
+<p class="note">
+  Use photos and videos that you own or have permission to use.
+  AI generation may take time and uses paid AI processing credits.
+</p>
 
-</div>
+</main>
 
-<nav id="navigation" class="hidden">
- <button onclick="showPage('home')" id="nav-home" class="active">⌂<br>Home</button>
- <button onclick="showPage('explore')" id="nav-explore">◉<br>Explore</button>
- <button onclick="showPage('create')" id="nav-create">＋<br>Create Ad</button>
- <button onclick="showPage('myads')" id="nav-myads">▤<br>My Ads</button>
- <button onclick="showPage('profile')" id="nav-profile">●<br>Profile</button>
-</nav>
-
-<footer>DAN AD NETWORK PRO © 2026<br>Advertising platform demo</footer>
+<footer>
+  DAN AI MOTION STUDIO · POWERED BY AI
+</footer>
 
 <script>
-const USERS='dan_network_users_v1';
-const ADS='dan_network_ads_v1';
-const SESSION='dan_network_session_v1';
+const photoInput = document.getElementById("photo");
+const motionInput = document.getElementById("motion");
+const generateBtn = document.getElementById("generate");
+const statusBox = document.getElementById("status");
+const statusTitle = document.getElementById("statusTitle");
+const statusText = document.getElementById("statusText");
+const resultBox = document.getElementById("result");
+const output = document.getElementById("output");
+const download = document.getElementById("download");
 
-let users=JSON.parse(localStorage.getItem(USERS)||'[]');
-let ads=JSON.parse(localStorage.getItem(ADS)||'[]');
-let current=localStorage.getItem(SESSION);
-let isRegister=true;
-let admin=false;
+let photoFile = null;
+let motionFile = null;
+let photoUrl = null;
+let motionUrl = null;
 
-function save(){
- localStorage.setItem(USERS,JSON.stringify(users));
- localStorage.setItem(ADS,JSON.stringify(ads));
-}
-function msg(t){
- let m=document.getElementById('message');
- m.textContent=t;
- m.style.display='block';
- setTimeout(()=>m.style.display='none',3500);
-}
-function toggleAuth(){
- isRegister=!isRegister;
- document.getElementById('authTitle').textContent=isRegister?'Create Your Account':'Welcome Back';
- document.getElementById('authBtn').textContent=isRegister?'CREATE ACCOUNT':'LOGIN';
- document.getElementById('registerFields').classList.toggle('hidden',!isRegister);
- document.getElementById('switchBtn').textContent=isRegister?'Already have an account? Login':'Create a new account';
-}
-function register(){
- let email=document.getElementById('email').value.trim().toLowerCase();
- let password=document.getElementById('password').value;
- let name=document.getElementById('name').value.trim();
+photoInput.addEventListener("change", () => {
+  photoFile = photoInput.files[0];
 
- if(!email||!password){msg('Enter email and password');return}
- if(password.length<6){msg('Password must be at least 6 characters');return}
+  if (!photoFile) return;
 
- if(isRegister){
-  if(!name){msg('Enter your name');return}
-  if(users.some(u=>u.email===email)){msg('Email already exists');return}
-  users.push({name,email,password,earnings:0});
-  save();
-  loginUser(email);
- }else{
-  let user=users.find(u=>u.email===email&&u.password===password);
-  if(!user){msg('Incorrect email or password');return}
-  loginUser(email);
- }
-}
-function loginUser(email){
- current=email;
- localStorage.setItem(SESSION,current);
- updateApp();
-}
-function logout(){
- current=null;admin=false;
- localStorage.removeItem(SESSION);
- document.getElementById('navigation').classList.add('hidden');
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById('auth').classList.add('active');
-}
-function getUser(){return users.find(u=>u.email===current)}
-function showPage(id){
- if(!current)return;
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
- let nav=document.getElementById('nav-'+id);
- if(nav)nav.classList.add('active');
- render();
-}
-function submitAd(){
- let title=document.getElementById('adTitle').value.trim();
- let desc=document.getElementById('description').value.trim();
- let budget=Number(document.getElementById('budget').value);
- if(!title||!desc||!budget||budget<1){msg('Complete the required fields');return}
- ads.unshift({
-  id:Date.now(),owner:current,title,
-  category:document.getElementById('category').value,
-  desc,image:document.getElementById('imageUrl').value.trim(),
-  contact:document.getElementById('contactUrl').value.trim(),
-  budget,status:'Pending',created:new Date().toLocaleDateString()
- });
- save();
- ['adTitle','description','imageUrl','contactUrl','budget'].forEach(id=>document.getElementById(id).value='');
- msg('Advertisement submitted for review!');
- showPage('myads');
-}
-function safe(s){
- return String(s??'').replace(/[&<>"']/g,c=>({
- '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
- }[c]));
-}
-function adHTML(a,adminMode=false){
- let statusColor=a.status==='Approved'?'#35d69a':a.status==='Rejected'?'#ff6575':'#f3bd50';
- return `<div class="ad">
- ${a.image&&/^https?:\/\//i.test(a.image)?`<img src="${safe(a.image)}" alt="Advertisement" onerror="this.style.display='none'">`:''}
- <div class="tag">${safe(a.category)}</div>
- <h3>${safe(a.title)}</h3>
- <p class="muted">${safe(a.desc)}</p>
- <p class="status" style="color:${statusColor}">● ${safe(a.status)}</p>
- <p class="muted">Budget: $${Number(a.budget).toFixed(2)} · ${safe(a.created)}</p>
- ${adminMode?`<p class="muted">Advertiser: ${safe(a.owner)}</p>
- <button onclick="approve(${a.id})">APPROVE</button>
- <button class="danger" onclick="reject(${a.id})">REJECT</button>
- <button class="secondary" onclick="deleteAd(${a.id})">DELETE</button>`:''}
- ${a.status==='Approved'&&a.contact&&/^https?:\/\//i.test(a.contact)?`<a href="${safe(a.contact)}" target="_blank" rel="noopener" style="color:#f3bd50">Visit advertiser ↗</a>`:''}
- </div>`;
-}
-function render(){
- if(!current)return;
- let user=getUser();
- if(!user){logout();return}
- let mine=ads.filter(a=>a.owner===current);
- let approved=mine.filter(a=>a.status==='Approved');
- let earning=Number(user.earnings||0);
- document.getElementById('totalAds').textContent=mine.length;
- document.getElementById('approvedAds').textContent=approved.length;
- document.getElementById('earnings').textContent='$'+earning.toFixed(2);
- document.getElementById('myEarnings').textContent='$'+earning.toFixed(2);
- document.getElementById('profileName').textContent=user.name;
- document.getElementById('profileEmail').textContent=user.email;
+  if (photoUrl) URL.revokeObjectURL(photoUrl);
+  photoUrl = URL.createObjectURL(photoFile);
 
- document.getElementById('latestAds').innerHTML=ads.slice(0,3).map(a=>adHTML(a)).join('')||'<p class="muted">No advertisements yet.</p>';
- document.getElementById('publicAds').innerHTML=ads.filter(a=>a.status==='Approved').map(a=>adHTML(a)).join('')||'<p class="muted">No approved ads yet.</p>';
- document.getElementById('myAdsList').innerHTML=mine.map(a=>adHTML(a)).join('')||'<p class="muted">You have not posted any advertisements.</p>';
+  document.getElementById("photoPreview").innerHTML =
+    `<img src="${photoUrl}" alt="Character preview">`;
+});
 
- document.getElementById('usersCount').textContent=users.length;
- document.getElementById('adminAdsCount').textContent=ads.length;
- document.getElementById('pendingAds').innerHTML=ads.filter(a=>a.status==='Pending').map(a=>adHTML(a,true)).join('')||'<p class="muted">No pending ads.</p>';
- document.getElementById('allAds').innerHTML=ads.map(a=>adHTML(a,true)).join('')||'<p class="muted">No ads available.</p>';
+motionInput.addEventListener("change", () => {
+  motionFile = motionInput.files[0];
+
+  if (!motionFile) return;
+
+  if (motionUrl) URL.revokeObjectURL(motionUrl);
+  motionUrl = URL.createObjectURL(motionFile);
+
+  document.getElementById("motionPreview").innerHTML =
+    `<video src="${motionUrl}" controls playsinline></video>`;
+});
+
+function showStatus(title, message) {
+  statusBox.classList.add("show");
+  statusTitle.textContent = title;
+  statusText.textContent = message;
 }
-function adminLogin(){
- if(document.getElementById('adminPin').value==='1234'){
-  admin=true;
-  document.getElementById('adminLogin').classList.add('hidden');
-  document.getElementById('adminPanel').classList.remove('hidden');
-  render();msg('Demo admin access granted');
- }else msg('Incorrect admin PIN');
+
+async function checkJob(requestId) {
+  for (;;) {
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
+    const response = await fetch(
+      "/api/status/" + encodeURIComponent(requestId)
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Could not check job.");
+    }
+
+    if (data.status === "COMPLETED") {
+      if (!data.videoUrl) {
+        throw new Error("AI finished but no video URL was returned.");
+      }
+      return data.videoUrl;
+    }
+
+    if (data.status === "FAILED") {
+      throw new Error(data.error || "AI generation failed.");
+    }
+
+    showStatus(
+      "AI is creating your video...",
+      "Your job status: " + data.status + ". Please keep this page open."
+    );
+  }
 }
-function adminLogout(){
- admin=false;
- document.getElementById('adminLogin').classList.remove('hidden');
- document.getElementById('adminPanel').classList.add('hidden');
- document.getElementById('adminPin').value='';
- showPage('home');
-}
-function approve(id){
- if(!admin)return;
- let a=ads.find(x=>x.id===id);
- if(!a)return;
- a.status='Approved';save();render();msg('Advertisement approved');
-}
-function reject(id){
- if(!admin)return;
- let a=ads.find(x=>x.id===id);
- if(!a)return;
- a.status='Rejected';save();render();msg('Advertisement rejected');
-}
-function deleteAd(id){
- if(!admin)return;
- if(!confirm('Delete this advertisement?'))return;
- ads=ads.filter(a=>a.id!==id);
- save();render();msg('Advertisement deleted');
-}
-function updateApp(){
- if(!current||!getUser()){
-  current=null;
-  document.getElementById('auth').classList.add('active');
-  return;
- }
- document.getElementById('navigation').classList.remove('hidden');
- showPage('home');
-}
-updateApp();
+
+generateBtn.addEventListener("click", async () => {
+  if (!photoFile || !motionFile) {
+    alert("Please upload both a character photo and a motion video.");
+    return;
+  }
+
+  if (!photoFile.type.startsWith("image/") ||
+      !motionFile.type.startsWith("video/")) {
+    alert("Please select a valid image and video.");
+    return;
+  }
+
+  generateBtn.disabled = true;
+  generateBtn.textContent = "PROCESSING...";
+  resultBox.style.display = "none";
+
+  try {
+    showStatus(
+      "Uploading your files...",
+      "Preparing the photo and motion reference video."
+    );
+
+    const form = new FormData();
+    form.append("photo", photoFile);
+    form.append("motion", motionFile);
+    form.append("orientation", document.getElementById("orientation").value);
+    form.append("prompt", document.getElementById("prompt").value);
+    form.append("keepSound", document.getElementById("sound").checked);
+
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      body: form
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Could not start generation.");
+    }
+
+    showStatus(
+      "AI generation started!",
+      "Your character is being animated. This can take several minutes."
+    );
+
+    const videoUrl = await checkJob(data.requestId);
+
+    output.src = videoUrl;
+    download.href = videoUrl;
+    resultBox.style.display = "block";
+
+    statusTitle.textContent = "Generation complete!";
+    statusText.textContent = "Your AI video is ready.";
+
+    document.querySelector(".progress").style.display = "none";
+
+    resultBox.scrollIntoView({ behavior: "smooth" });
+
+  } catch (error) {
+    showStatus("Something went wrong", error.message);
+  } finally {
+    generateBtn.disabled = false;
+    generateBtn.textContent = "✨ GENERATE AI VIDEO";
+  }
+});
 </script>
+
 </body>
 </html>
