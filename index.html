@@ -3,185 +3,432 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080b12">
-<title>DAN AUTO TRADING PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b10">
+<title>DAN AD NETWORK PRO</title>
 <style>
-:root{--bg:#080b12;--panel:#111827;--gold:#f4bd50;--green:#20d99a;--red:#ff536b;--muted:#91a0b8;--line:#29364b}
+:root{
+--bg:#090b10;--panel:#121722;--panel2:#1a2230;
+--gold:#f3bd50;--gold2:#ffe0a0;--text:#f5f5f5;
+--muted:#929bad;--green:#35d69a;--red:#ff6575;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#edf3ff;font-family:Arial}
-header{padding:17px;background:#101827;display:flex;justify-content:space-between;border-bottom:1px solid var(--line)}
-.logo{font-weight:900;font-size:19px}.logo span{color:var(--gold)}
-main{max-width:1000px;margin:auto;padding:14px;display:grid;gap:14px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px}
-h2{font-size:17px;margin:0 0 14px}
-p{font-size:13px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
-.metric{background:#192438;padding:14px;border-radius:10px}
-small{color:var(--muted);font-size:11px}
-strong{display:block;font-size:21px;margin-top:7px;overflow-wrap:anywhere}
-input,select{width:100%;padding:13px;margin:6px 0 12px;background:#080e19;color:white;border:1px solid #34435a;border-radius:9px}
-label{font-size:12px;color:var(--muted)}
-button{width:100%;padding:14px;border:0;border-radius:9px;font-weight:bold;background:var(--gold);color:#17120a;margin-top:7px}
-.stop{background:#51202d;color:white}
-.status{padding:13px;background:#0b1522;border:1px solid var(--line);border-radius:9px;font-size:13px;overflow-wrap:anywhere}
-.green{color:var(--green)}.red{color:var(--red)}
-.table{overflow:auto}
-table{width:100%;min-width:480px;border-collapse:collapse;font-size:12px}
-td,th{padding:11px;text-align:left;border-bottom:1px solid var(--line)}
-th{color:var(--muted)}
-footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
-@media(min-width:700px){main{grid-template-columns:1fr 1fr}.wide{grid-column:1/-1}.grid{grid-template-columns:repeat(4,1fr)}}
+body{
+margin:0;background:var(--bg);color:var(--text);
+font-family:Arial,sans-serif;padding-bottom:85px
+}
+header{
+padding:18px 16px;background:#10141d;
+border-bottom:1px solid #30303a;
+display:flex;align-items:center;justify-content:space-between;
+position:sticky;top:0;z-index:10
+}
+.logo{font-size:19px;font-weight:900;color:var(--gold)}
+.logo span{color:white}
+.container{max-width:850px;margin:auto;padding:16px}
+.hero{
+padding:25px 20px;border-radius:18px;
+background:linear-gradient(135deg,#25200f,#111827);
+border:1px solid #725722;margin-bottom:18px
+}
+.hero h1{font-size:27px;margin:8px 0;color:var(--gold2)}
+.hero p{color:#c0c5d0;line-height:1.6}
+.card{
+background:var(--panel);padding:17px;
+border:1px solid #273044;border-radius:15px;margin-bottom:14px
+}
+h2{font-size:18px;margin:0 0 15px}
+h3{font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--panel2);padding:15px;border-radius:12px}
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:21px;margin-top:9px;color:var(--gold)}
+button{
+border:0;border-radius:10px;padding:13px 16px;
+background:var(--gold);color:#15120a;font-weight:bold;
+cursor:pointer;font-size:14px
+}
+button:active{transform:scale(.98)}
+button.secondary{background:#283144;color:white}
+button.danger{background:#51232c;color:white}
+button.green{background:#174b3b;color:white}
+button.full{width:100%;margin-top:10px}
+input,select,textarea{
+width:100%;padding:13px;margin:7px 0 13px;
+border-radius:9px;border:1px solid #343e50;
+background:#0c111a;color:white;font-size:15px
+}
+label{font-size:13px;color:#c3c9d4}
+nav{
+position:fixed;bottom:0;left:0;right:0;
+background:#111722;border-top:1px solid #30394a;
+display:flex;justify-content:space-around;
+padding:9px 3px;z-index:20
+}
+nav button{
+background:transparent;color:#aeb6c5;
+padding:8px 5px;font-size:11px;flex:1
+}
+nav button.active{color:var(--gold)}
+.page{display:none}
+.page.active{display:block}
+.ad{
+background:#171e2b;border:1px solid #30394a;
+padding:14px;border-radius:13px;margin:12px 0
+}
+.ad img{width:100%;max-height:170px;object-fit:cover;border-radius:9px}
+.tag{font-size:11px;color:var(--gold);margin:5px 0}
+.muted{color:var(--muted);font-size:13px;line-height:1.6}
+.status{font-size:12px;color:var(--gold)}
+hr{border:0;border-top:1px solid #30394a;margin:15px 0}
+.hidden{display:none!important}
+.center{text-align:center}
+#message{padding:12px;border-radius:9px;margin:10px 0;display:none}
+footer{text-align:center;color:#6f7785;padding:25px;font-size:11px}
+@media(max-width:420px){
+.grid{grid-template-columns:1fr 1fr}
+.hero h1{font-size:23px}
+}
 </style>
 </head>
 <body>
+
 <header>
-<div class="logo">⚡ DAN <span>AUTO TRADING</span></div>
-<div id="state" class="red">● OFFLINE</div>
+ <div class="logo">DAN <span>AD NETWORK</span></div>
+ <div style="color:#f3bd50;font-size:12px">● PRO</div>
 </header>
-<main>
-<section class="panel wide">
-<h2>MT5 Connection</h2>
-<label>Backend Server URL</label>
-<input id="server" placeholder="https://your-server.onrender.com">
-<label>API Key</label>
-<input id="key" type="password" placeholder="Server API key">
-<button onclick="connect()">CONNECT MT5</button>
-<div class="status" id="message" style="margin-top:12px">Not connected</div>
+
+<div class="container">
+
+<div id="message"></div>
+
+<!-- AUTH -->
+<section id="auth" class="page active">
+ <div class="hero">
+  <div class="tag">WELCOME TO DAN</div>
+  <h1>Advertise. Grow. Earn.</h1>
+  <p>Connect businesses with customers through one modern advertising platform.</p>
+ </div>
+ <div class="card">
+  <h2 id="authTitle">Create Your Account</h2>
+  <div id="registerFields">
+   <label>Full Name</label>
+   <input id="name" placeholder="Your full name">
+  </div>
+  <label>Email</label>
+  <input id="email" type="email" placeholder="example@email.com">
+  <label>Password</label>
+  <input id="password" type="password" placeholder="Enter password">
+  <button class="full" onclick="register()" id="authBtn">CREATE ACCOUNT</button>
+  <button class="full secondary" onclick="toggleAuth()" id="switchBtn">Already have an account? Login</button>
+  <p class="muted center">Demo version: accounts are stored only in this browser.</p>
+ </div>
 </section>
 
-<section class="panel wide">
-<h2>Account Overview</h2>
-<div class="grid">
-<div class="metric"><small>BALANCE</small><strong id="balance">--</strong></div>
-<div class="metric"><small>EQUITY</small><strong id="equity">--</strong></div>
-<div class="metric"><small>FREE MARGIN</small><strong id="margin">--</strong></div>
-<div class="metric"><small>FLOATING P/L</small><strong id="profit">--</strong></div>
+<!-- HOME -->
+<section id="home" class="page">
+ <div class="hero">
+  <div class="tag">DAN DIGITAL BUSINESS</div>
+  <h1>Grow Your Business.</h1>
+  <p>Reach new customers. Promote your products. Build your brand.</p>
+  <button onclick="showPage('create')">+ CREATE ADVERTISEMENT</button>
+ </div>
+
+ <div class="grid">
+  <div class="stat"><small>Total Ads</small><strong id="totalAds">0</strong></div>
+  <div class="stat"><small>Approved Ads</small><strong id="approvedAds">0</strong></div>
+  <div class="stat"><small>Your Earnings</small><strong id="earnings">$0.00</strong></div>
+  <div class="stat"><small>Account</small><strong style="font-size:15px" id="accountStatus">Active</strong></div>
+ </div>
+
+ <div class="card" style="margin-top:15px">
+  <h2>Latest Advertisements</h2>
+  <div id="latestAds"></div>
+ </div>
+</section>
+
+<!-- EXPLORE -->
+<section id="explore" class="page">
+ <h2>Explore Advertisements</h2>
+ <p class="muted">Discover businesses and their products.</p>
+ <div id="publicAds"></div>
+</section>
+
+<!-- CREATE -->
+<section id="create" class="page">
+ <div class="card">
+  <h2>Create Advertisement</h2>
+  <label>Business / Product Name</label>
+  <input id="adTitle" placeholder="Enter business name">
+  <label>Category</label>
+  <select id="category">
+   <option>Technology</option>
+   <option>Fashion</option>
+   <option>Food</option>
+   <option>Electronics</option>
+   <option>Education</option>
+   <option>Services</option>
+   <option>Other</option>
+  </select>
+  <label>Description</label>
+  <textarea id="description" rows="4" placeholder="Describe your product or service"></textarea>
+  <label>Image URL (optional)</label>
+  <input id="imageUrl" placeholder="https://example.com/image.jpg">
+  <label>Website / Contact URL (optional)</label>
+  <input id="contactUrl" placeholder="https://example.com">
+  <label>Advertising Budget ($)</label>
+  <input id="budget" type="number" min="1" placeholder="Example: 10">
+  <p class="muted">Your advertisement will be submitted for admin approval. This demo does not collect payment.</p>
+  <button class="full" onclick="submitAd()">SUBMIT ADVERTISEMENT</button>
+ </div>
+</section>
+
+<!-- MY ADS -->
+<section id="myads" class="page">
+ <h2>My Advertisements</h2>
+ <div id="myAdsList"></div>
+ <div class="card">
+  <h2>Account Earnings</h2>
+  <div class="stat">
+   <small>Approved earnings / commission</small>
+   <strong id="myEarnings">$0.00</strong>
+  </div>
+  <p class="muted">Earnings are illustrative until real advertisers pay and a verified commission system is connected.</p>
+ </div>
+</section>
+
+<!-- ADMIN -->
+<section id="admin" class="page">
+ <div class="hero">
+  <h1>ADMIN CONTROL</h1>
+  <p>Manage submitted advertisements.</p>
+ </div>
+ <div id="adminLogin" class="card">
+  <h2>Admin Login</h2>
+  <label>Demo Admin PIN</label>
+  <input id="adminPin" type="password" placeholder="Enter admin PIN">
+  <button class="full" onclick="adminLogin()">LOGIN AS ADMIN</button>
+  <p class="muted">Demo PIN: 1234. Not secure for a public website.</p>
+ </div>
+ <div id="adminPanel" class="hidden">
+  <div class="grid">
+   <div class="stat"><small>All Users</small><strong id="usersCount">0</strong></div>
+   <div class="stat"><small>All Ads</small><strong id="adminAdsCount">0</strong></div>
+  </div>
+  <div class="card" style="margin-top:15px">
+   <h2>Pending Advertisements</h2>
+   <div id="pendingAds"></div>
+  </div>
+  <div class="card">
+   <h2>All Advertisements</h2>
+   <div id="allAds"></div>
+  </div>
+  <button class="danger full" onclick="adminLogout()">ADMIN LOGOUT</button>
+ </div>
+</section>
+
+<section id="profile" class="page">
+ <div class="card">
+  <h2>My Profile</h2>
+  <p class="muted">Account information</p>
+  <h3 id="profileName">User</h3>
+  <p id="profileEmail" class="muted"></p>
+  <hr>
+  <button class="secondary full" onclick="showPage('admin')">ADMIN PANEL</button>
+  <button class="danger full" onclick="logout()">LOG OUT</button>
+ </div>
+ <div class="card">
+  <h2>Payment Information</h2>
+  <p class="muted">Telebirr and CBE Birr payment integration will be added after merchant account verification and backend setup.</p>
+ </div>
+</section>
+
 </div>
-</section>
 
-<section class="panel">
-<h2>Market Watch</h2>
-<div class="grid">
-<div class="metric"><small>EURUSD</small><strong id="eur">--</strong></div>
-<div class="metric"><small>XAUUSD</small><strong id="xau">--</strong></div>
-<div class="metric"><small>BTCUSD</small><strong id="btc">--</strong></div>
-<div class="metric"><small>MARKET</small><strong id="market">--</strong></div>
-</div>
-</section>
+<nav id="navigation" class="hidden">
+ <button onclick="showPage('home')" id="nav-home" class="active">⌂<br>Home</button>
+ <button onclick="showPage('explore')" id="nav-explore">◉<br>Explore</button>
+ <button onclick="showPage('create')" id="nav-create">＋<br>Create Ad</button>
+ <button onclick="showPage('myads')" id="nav-myads">▤<br>My Ads</button>
+ <button onclick="showPage('profile')" id="nav-profile">●<br>Profile</button>
+</nav>
 
-<section class="panel">
-<h2>⚡ Automatic Trading</h2>
-<label>Trading Symbol</label>
-<select id="symbol">
-<option>EURUSD</option>
-<option>XAUUSD</option>
-<option>BTCUSD</option>
-</select>
-<label>Risk per trade (%)</label>
-<input id="risk" type="number" min="0.1" max="2" step="0.1" value="1">
-<div class="status">BOT: <b id="bot" class="red">STOPPED</b></div>
-<button onclick="botAction('start')">▶ START BOT</button>
-<button class="stop" onclick="botAction('stop')">■ STOP BOT</button>
-<p id="botMessage">Bot decisions are made by the MT5 Expert Advisor.</p>
-</section>
-
-<section class="panel wide">
-<h2>Open Positions</h2>
-<div class="table">
-<table>
-<thead><tr><th>Ticket</th><th>Symbol</th><th>Type</th><th>Lot</th><th>Entry</th><th>P/L</th></tr></thead>
-<tbody id="positions"><tr><td colspan="6">Waiting for MT5...</td></tr></tbody>
-</table>
-</div>
-</section>
-
-<section class="panel wide">
-<h2>Trading History</h2>
-<div class="table">
-<table>
-<thead><tr><th>Ticket</th><th>Symbol</th><th>Type</th><th>Entry</th><th>Exit</th><th>Profit</th></tr></thead>
-<tbody id="history"><tr><td colspan="6">Waiting for MT5 history API...</td></tr></tbody>
-</table>
-</div>
-</section>
-</main>
-<footer>DAN AUTO TRADING PRO · Real MT5 data only</footer>
+<footer>DAN AD NETWORK PRO © 2026<br>Advertising platform demo</footer>
 
 <script>
-let SERVER="",KEY="",timer=null;
-const $=id=>document.getElementById(id);
-function money(v){return Number.isFinite(Number(v))?"$"+Number(v).toFixed(2):"--"}
+const USERS='dan_network_users_v1';
+const ADS='dan_network_ads_v1';
+const SESSION='dan_network_session_v1';
 
-async function api(path,method="GET",body=null){
-const r=await fetch(SERVER+path,{
-method,
-headers:{"Content-Type":"application/json","x-api-key":KEY},
-body:body?JSON.stringify(body):undefined
-});
-const d=await r.json();
-if(!r.ok)throw Error(d.error||"Server error");
-return d;
+let users=JSON.parse(localStorage.getItem(USERS)||'[]');
+let ads=JSON.parse(localStorage.getItem(ADS)||'[]');
+let current=localStorage.getItem(SESSION);
+let isRegister=true;
+let admin=false;
+
+function save(){
+ localStorage.setItem(USERS,JSON.stringify(users));
+ localStorage.setItem(ADS,JSON.stringify(ads));
 }
-
-async function connect(){
-SERVER=$("server").value.trim().replace(/\/+$/,"");
-KEY=$("key").value.trim();
-if(!SERVER||!KEY){$("message").textContent="Enter server URL and API key.";return}
-await refresh();
-if(!timer)timer=setInterval(refresh,4000);
+function msg(t){
+ let m=document.getElementById('message');
+ m.textContent=t;
+ m.style.display='block';
+ setTimeout(()=>m.style.display='none',3500);
 }
-
-async function refresh(){
-try{
-const d=await api("/api/status");
-if(!d.connected)throw Error("MT5 Expert Advisor is offline");
-
-$("state").textContent="● MT5 ONLINE";
-$("state").className="green";
-$("message").textContent="Connected to MT5 successfully.";
-
-let a=d.account||{};
-$("balance").textContent=money(a.balance);
-$("equity").textContent=money(a.equity);
-$("margin").textContent=money(a.freeMargin??a.free_margin);
-$("profit").textContent=money(a.profit??a.floatingProfit);
-
-let p=d.prices||{};
-$("eur").textContent=p.EURUSD??"--";
-$("xau").textContent=p.XAUUSD??"--";
-$("btc").textContent=p.BTCUSD??"--";
-$("market").textContent="ONLINE";
-
-let list=Array.isArray(d.positions)?d.positions:[];
-$("positions").innerHTML=list.length?list.map(x=>`
-<tr><td>${x.ticket??"--"}</td>
-<td>${x.symbol??"--"}</td><td>${x.type??"--"}</td>
-<td>${x.volume??"--"}</td><td>${x.priceOpen??"--"}</td>
-<td>${money(x.profit)}</td></tr>`).join("")
-:'<tr><td colspan="6">No open positions</td></tr>';
-
-}catch(e){
-$("state").textContent="● OFFLINE";
-$("state").className="red";
-$("message").textContent=e.message;
-$("market").textContent="OFFLINE";
+function toggleAuth(){
+ isRegister=!isRegister;
+ document.getElementById('authTitle').textContent=isRegister?'Create Your Account':'Welcome Back';
+ document.getElementById('authBtn').textContent=isRegister?'CREATE ACCOUNT':'LOGIN';
+ document.getElementById('registerFields').classList.toggle('hidden',!isRegister);
+ document.getElementById('switchBtn').textContent=isRegister?'Already have an account? Login':'Create a new account';
 }
-}
+function register(){
+ let email=document.getElementById('email').value.trim().toLowerCase();
+ let password=document.getElementById('password').value;
+ let name=document.getElementById('name').value.trim();
 
-async function botAction(action){
-try{
-let d=await api("/api/bot/"+action,"POST",{
-symbol:$("symbol").value,
-risk:Number($("risk").value)
-});
-$("bot").textContent=action==="start"?"STARTING":"STOPPING";
-$("bot").className=action==="start"?"green":"red";
-$("botMessage").textContent=d.message||"Command sent to MT5.";
-}catch(e){
-$("botMessage").textContent="Bot command unavailable: "+e.message;
+ if(!email||!password){msg('Enter email and password');return}
+ if(password.length<6){msg('Password must be at least 6 characters');return}
+
+ if(isRegister){
+  if(!name){msg('Enter your name');return}
+  if(users.some(u=>u.email===email)){msg('Email already exists');return}
+  users.push({name,email,password,earnings:0});
+  save();
+  loginUser(email);
+ }else{
+  let user=users.find(u=>u.email===email&&u.password===password);
+  if(!user){msg('Incorrect email or password');return}
+  loginUser(email);
+ }
 }
+function loginUser(email){
+ current=email;
+ localStorage.setItem(SESSION,current);
+ updateApp();
 }
+function logout(){
+ current=null;admin=false;
+ localStorage.removeItem(SESSION);
+ document.getElementById('navigation').classList.add('hidden');
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById('auth').classList.add('active');
+}
+function getUser(){return users.find(u=>u.email===current)}
+function showPage(id){
+ if(!current)return;
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ let nav=document.getElementById('nav-'+id);
+ if(nav)nav.classList.add('active');
+ render();
+}
+function submitAd(){
+ let title=document.getElementById('adTitle').value.trim();
+ let desc=document.getElementById('description').value.trim();
+ let budget=Number(document.getElementById('budget').value);
+ if(!title||!desc||!budget||budget<1){msg('Complete the required fields');return}
+ ads.unshift({
+  id:Date.now(),owner:current,title,
+  category:document.getElementById('category').value,
+  desc,image:document.getElementById('imageUrl').value.trim(),
+  contact:document.getElementById('contactUrl').value.trim(),
+  budget,status:'Pending',created:new Date().toLocaleDateString()
+ });
+ save();
+ ['adTitle','description','imageUrl','contactUrl','budget'].forEach(id=>document.getElementById(id).value='');
+ msg('Advertisement submitted for review!');
+ showPage('myads');
+}
+function safe(s){
+ return String(s??'').replace(/[&<>"']/g,c=>({
+ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+function adHTML(a,adminMode=false){
+ let statusColor=a.status==='Approved'?'#35d69a':a.status==='Rejected'?'#ff6575':'#f3bd50';
+ return `<div class="ad">
+ ${a.image&&/^https?:\/\//i.test(a.image)?`<img src="${safe(a.image)}" alt="Advertisement" onerror="this.style.display='none'">`:''}
+ <div class="tag">${safe(a.category)}</div>
+ <h3>${safe(a.title)}</h3>
+ <p class="muted">${safe(a.desc)}</p>
+ <p class="status" style="color:${statusColor}">● ${safe(a.status)}</p>
+ <p class="muted">Budget: $${Number(a.budget).toFixed(2)} · ${safe(a.created)}</p>
+ ${adminMode?`<p class="muted">Advertiser: ${safe(a.owner)}</p>
+ <button onclick="approve(${a.id})">APPROVE</button>
+ <button class="danger" onclick="reject(${a.id})">REJECT</button>
+ <button class="secondary" onclick="deleteAd(${a.id})">DELETE</button>`:''}
+ ${a.status==='Approved'&&a.contact&&/^https?:\/\//i.test(a.contact)?`<a href="${safe(a.contact)}" target="_blank" rel="noopener" style="color:#f3bd50">Visit advertiser ↗</a>`:''}
+ </div>`;
+}
+function render(){
+ if(!current)return;
+ let user=getUser();
+ if(!user){logout();return}
+ let mine=ads.filter(a=>a.owner===current);
+ let approved=mine.filter(a=>a.status==='Approved');
+ let earning=Number(user.earnings||0);
+ document.getElementById('totalAds').textContent=mine.length;
+ document.getElementById('approvedAds').textContent=approved.length;
+ document.getElementById('earnings').textContent='$'+earning.toFixed(2);
+ document.getElementById('myEarnings').textContent='$'+earning.toFixed(2);
+ document.getElementById('profileName').textContent=user.name;
+ document.getElementById('profileEmail').textContent=user.email;
+
+ document.getElementById('latestAds').innerHTML=ads.slice(0,3).map(a=>adHTML(a)).join('')||'<p class="muted">No advertisements yet.</p>';
+ document.getElementById('publicAds').innerHTML=ads.filter(a=>a.status==='Approved').map(a=>adHTML(a)).join('')||'<p class="muted">No approved ads yet.</p>';
+ document.getElementById('myAdsList').innerHTML=mine.map(a=>adHTML(a)).join('')||'<p class="muted">You have not posted any advertisements.</p>';
+
+ document.getElementById('usersCount').textContent=users.length;
+ document.getElementById('adminAdsCount').textContent=ads.length;
+ document.getElementById('pendingAds').innerHTML=ads.filter(a=>a.status==='Pending').map(a=>adHTML(a,true)).join('')||'<p class="muted">No pending ads.</p>';
+ document.getElementById('allAds').innerHTML=ads.map(a=>adHTML(a,true)).join('')||'<p class="muted">No ads available.</p>';
+}
+function adminLogin(){
+ if(document.getElementById('adminPin').value==='1234'){
+  admin=true;
+  document.getElementById('adminLogin').classList.add('hidden');
+  document.getElementById('adminPanel').classList.remove('hidden');
+  render();msg('Demo admin access granted');
+ }else msg('Incorrect admin PIN');
+}
+function adminLogout(){
+ admin=false;
+ document.getElementById('adminLogin').classList.remove('hidden');
+ document.getElementById('adminPanel').classList.add('hidden');
+ document.getElementById('adminPin').value='';
+ showPage('home');
+}
+function approve(id){
+ if(!admin)return;
+ let a=ads.find(x=>x.id===id);
+ if(!a)return;
+ a.status='Approved';save();render();msg('Advertisement approved');
+}
+function reject(id){
+ if(!admin)return;
+ let a=ads.find(x=>x.id===id);
+ if(!a)return;
+ a.status='Rejected';save();render();msg('Advertisement rejected');
+}
+function deleteAd(id){
+ if(!admin)return;
+ if(!confirm('Delete this advertisement?'))return;
+ ads=ads.filter(a=>a.id!==id);
+ save();render();msg('Advertisement deleted');
+}
+function updateApp(){
+ if(!current||!getUser()){
+  current=null;
+  document.getElementById('auth').classList.add('active');
+  return;
+ }
+ document.getElementById('navigation').classList.remove('hidden');
+ showPage('home');
+}
+updateApp();
 </script>
 </body>
 </html>
