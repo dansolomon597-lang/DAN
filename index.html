@@ -3,495 +3,542 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#080a10">
-<title>DAN AI TRADING ANALYZER</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081426">
+<title>DAN BANK</title>
 <style>
 :root{
---bg:#080a10;--panel:#111722;--panel2:#171f2d;
---gold:#e9b94e;--gold2:#ffda82;--text:#f4f5f7;
---muted:#929bad;--green:#20d99a;--red:#ff5368;
+ --bg:#081426;--panel:#10213a;--panel2:#162b48;
+ --gold:#e9bd62;--white:#f5f7fb;--muted:#91a3bb;
+ --green:#21c78a;--red:#ff6474;--line:#263b58;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--white);
+ font-family:Arial,sans-serif}
 button,input,select{font:inherit}
 button{cursor:pointer}
+header{padding:17px 18px;background:#0d1c32;
+ display:flex;justify-content:space-between;align-items:center;
+ border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.logo{font-size:22px;font-weight:900;color:var(--gold);letter-spacing:1px}
+.logo small{display:block;font-size:9px;color:#aabbd0;letter-spacing:3px;margin-top:4px}
+.container{max-width:1100px;margin:auto;padding:17px}
 .hidden{display:none!important}
-#loginPage{
-min-height:100vh;display:flex;align-items:center;
-justify-content:center;padding:20px;
-background:radial-gradient(ellipse at 50% 20%,#493719 0%,#17130e 30%,#080a10 75%);
-}
-.login-card{
-width:100%;max-width:410px;padding:30px 23px;
-background:#111722ed;border:1px solid #b58c3b55;
-border-radius:22px;box-shadow:0 20px 80px #000;
-text-align:center;
-}
-.logo{
-width:90px;height:90px;border-radius:50%;
-margin:0 auto 14px;display:grid;place-items:center;
-border:2px solid var(--gold);
-background:linear-gradient(145deg,#493719,#0c0e13);
-font-size:47px;box-shadow:0 0 35px #e9b94e33;
-}
-h1{font-size:24px;letter-spacing:2px;margin:10px 0;color:var(--gold2)}
-.subtitle{font-size:12px;color:var(--muted);line-height:1.7}
-.field{width:100%;padding:15px;margin-top:12px;
-border:1px solid #303a4a;border-radius:11px;
-background:#090e17;color:white;outline:none}
-.field:focus{border-color:var(--gold)}
-.btn{
-width:100%;padding:14px;border:0;border-radius:11px;
-font-weight:bold;margin-top:13px;
-background:linear-gradient(100deg,#b8862d,#ffdb82);
-color:#17110a;
-}
-.btn-dark{background:#1b2635;color:white;border:1px solid #354156}
-.small{font-size:11px;color:var(--muted);margin-top:18px}
-.error{color:var(--red);font-size:12px;margin-top:10px}
-#app{max-width:1250px;margin:auto;padding:14px}
-.topbar{
-display:flex;align-items:center;justify-content:space-between;
-gap:10px;padding:13px;background:var(--panel);
-border:1px solid #293343;border-radius:15px;
-}
-.brand{font-weight:900;color:var(--gold2);letter-spacing:1px}
-.brand small{display:block;color:var(--muted);font-size:9px;margin-top:5px}
-.status{font-size:10px;color:var(--green)}
-.logout{background:#283243;border:0;color:white;padding:10px;border-radius:8px}
-nav{
-display:flex;gap:8px;overflow-x:auto;padding:15px 0;
-}
-nav button{
-white-space:nowrap;border:1px solid #2b3544;
-background:#111722;color:#cbd2df;padding:11px 15px;
-border-radius:9px;font-size:12px;
-}
-nav button.active{background:#e9b94e;color:#17110a;font-weight:bold}
-.page{display:none}.page.active{display:block}
-.hero{
-padding:22px;border-radius:16px;margin-bottom:14px;
-background:linear-gradient(120deg,#302516,#171b25 65%,#111722);
-border:1px solid #71572966;
-}
-.hero h2{color:var(--gold2);margin:0 0 8px}
-.hero p{color:#bdc4d0;font-size:12px;line-height:1.7}
-.grid{
-display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-gap:10px;margin-bottom:14px;
-}
-.panel{
-background:var(--panel);border:1px solid #273243;
-border-radius:14px;padding:15px;min-width:0;
-}
-.metric-label{color:var(--muted);font-size:10px}
-.metric-value{font-size:21px;font-weight:bold;margin-top:9px}
-.gold{color:var(--gold2)}
-.green{color:var(--green)}
-.red{color:var(--red)}
-.section-title{font-size:16px;margin:20px 0 12px}
-.chart{
-width:100%;height:230px;background:#080d16;
-border:1px solid #283345;border-radius:12px;
-display:block;
-}
-.upload{
-border:2px dashed #9c783a;border-radius:14px;
-padding:24px 12px;text-align:center;background:#111722;
-}
-.upload input{width:100%;margin-top:15px;color:#aaa}
-.preview{max-width:100%;max-height:260px;margin-top:14px;border-radius:10px}
-.result{
-padding:18px;background:#0a111b;border:1px solid #354257;
-border-radius:13px;margin-top:15px;line-height:1.8;
-font-size:13px;white-space:pre-wrap;
-}
-.signal{
-font-size:25px;font-weight:900;text-align:center;
-padding:15px;border-radius:12px;margin:10px 0;
-background:#172333;
-}
-.row{
-display:flex;justify-content:space-between;
-gap:10px;padding:12px 0;border-bottom:1px solid #283243;
-font-size:12px;
-}
-.note{font-size:11px;color:var(--muted);line-height:1.7}
-footer{text-align:center;padding:25px;color:#667084;font-size:10px}
+.card{background:var(--panel);border:1px solid var(--line);
+ border-radius:16px;padding:17px;margin-bottom:15px}
+h2{font-size:19px;margin:0 0 15px}
+h3{font-size:15px;margin:0 0 12px}
+.muted{color:var(--muted);font-size:12px}
+.gold{color:var(--gold)}
+button.primary{background:var(--gold);color:#152238;font-weight:bold;
+ border:0;border-radius:10px;padding:13px;width:100%}
+button.secondary{background:var(--panel2);color:white;
+ border:1px solid var(--line);border-radius:10px;padding:12px}
+button.danger{background:#562535;color:white;border:0;border-radius:10px;padding:12px}
+input,select{width:100%;padding:13px;background:#09172a;
+ color:white;border:1px solid #344963;border-radius:10px;
+ outline:none;margin:7px 0 13px}
+label{font-size:12px;color:#b9c8d9}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.balance{background:linear-gradient(130deg,#183656,#10213a);
+ border:1px solid #53617a;border-radius:17px;padding:19px;margin-bottom:14px}
+.balance .amount{font-size:27px;font-weight:bold;margin:9px 0}
+.stat{background:#142944;border-radius:13px;padding:14px}
+.stat b{display:block;font-size:17px;margin-top:8px}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.action{background:var(--panel2);border:1px solid var(--line);
+ color:white;padding:13px 4px;border-radius:12px;font-size:12px}
+.action span{display:block;color:var(--gold);font-size:20px;margin-bottom:6px}
+nav{display:flex;overflow:auto;gap:7px;margin:15px 0}
+nav button{white-space:nowrap;background:var(--panel2);
+ color:white;border:1px solid var(--line);padding:11px 14px;border-radius:10px}
+nav button.active{background:var(--gold);color:#152238}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.transaction{padding:13px 0;border-bottom:1px solid var(--line);
+ display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.green{color:var(--green)}.red{color:var(--red)}
+.notice{background:#263448;border:1px solid #596477;
+ padding:12px;border-radius:10px;color:#e7d6ad;font-size:12px;
+ line-height:1.6;margin-bottom:14px}
+.badge{font-size:10px;background:#244735;color:#83e8b6;
+ padding:5px 8px;border-radius:20px}
+.login{max-width:420px;margin:55px auto}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+ background:#214b3c;color:white;padding:13px 20px;border-radius:12px;
+ display:none;z-index:20;max-width:90%;text-align:center}
 @media(min-width:700px){
-.grid{grid-template-columns:repeat(4,1fr)}
-.login-card{padding:40px}
+ .grid{grid-template-columns:repeat(4,1fr)}
+ .mainlayout{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<section id="loginPage">
-<div class="login-card">
-<div class="logo">🐂</div>
-<h1>DAN AI TRADING</h1>
-<div class="subtitle">INTELLIGENT GOLD MARKET ANALYZER<br>
-SMART MONEY CONCEPT • AI VISION</div>
-
-<div id="loginForm">
-<input class="field" id="email" type="email" placeholder="Email address">
-<input class="field" id="password" type="password" placeholder="Password">
-<button class="btn" onclick="login()">LOGIN</button>
-<button class="btn btn-dark" onclick="createAccount()">CREATE ACCOUNT</button>
-<button class="btn btn-dark" onclick="googleLogin()">CONTINUE WITH GOOGLE</button>
-<div class="small">Your personal trading intelligence dashboard</div>
-<div id="loginError" class="error"></div>
-</div>
-</div>
-</section>
-
-<!-- DASHBOARD -->
-<main id="app" class="hidden">
-<header class="topbar">
-<div class="brand">🐂 DAN AI TRADING ANALYZER
-<small>GOLD INTELLIGENCE SYSTEM</small></div>
-<div>
-<div class="status">● SYSTEM ONLINE</div>
-<button class="logout" onclick="logout()">LOGOUT</button>
-</div>
+<header>
+ <div class="logo">DAN BANK<small>DIGITAL BANKING</small></div>
+ <div class="row">
+  <span class="badge">DEMO</span>
+  <button class="secondary" onclick="logout()" id="logoutBtn" style="display:none">Logout</button>
+ </div>
 </header>
 
-<nav>
-<button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
-<button onclick="showPage('analysis',this)">AI Analysis</button>
-<button onclick="showPage('market',this)">Live Market</button>
-<button onclick="showPage('history',this)">History</button>
-<button onclick="showPage('settings',this)">Settings</button>
-</nav>
+<div class="container">
+
+<!-- LOGIN -->
+<section id="loginPage" class="login">
+ <div class="card">
+  <div style="text-align:center;margin-bottom:25px">
+   <div class="logo" style="font-size:34px">DAN BANK</div>
+   <p class="muted">Welcome to your digital bank</p>
+  </div>
+  <div id="loginForm">
+   <h2>Login</h2>
+   <label>Email</label>
+   <input id="loginEmail" type="email" placeholder="Enter your email">
+   <label>Password</label>
+   <input id="loginPassword" type="password" placeholder="Enter password">
+   <button class="primary" onclick="login()">LOGIN</button>
+   <p class="muted" style="text-align:center">No account?
+    <a onclick="showRegister()" class="gold">Create account</a>
+   </p>
+  </div>
+  <div id="registerForm" class="hidden">
+   <h2>Create Account</h2>
+   <label>Full name</label>
+   <input id="regName" placeholder="Your full name">
+   <label>Email</label>
+   <input id="regEmail" type="email" placeholder="Your email">
+   <label>Password</label>
+   <input id="regPassword" type="password" placeholder="Create password">
+   <button class="primary" onclick="register()">CREATE ACCOUNT</button>
+   <p class="muted" onclick="showLogin()">Already registered? <span class="gold">Login</span></p>
+  </div>
+ </div>
+ <div class="notice">Demo account information is stored locally on this device. Do not use real passwords or financial information.</div>
+</section>
 
 <!-- DASHBOARD -->
-<section class="page active" id="dashboard">
-<div class="hero">
-<h2>WELCOME TO DAN AI</h2>
-<p>Advanced Smart Money Concept analysis.
-Upload your trading chart screenshot and receive
-an AI-generated market report with English voice.</p>
-<button class="btn" onclick="showPage('analysis',document.querySelectorAll('nav button')[1])">
-START AI ANALYSIS →
-</button>
-</div>
+<section id="dashboard" class="hidden">
+ <div class="row" style="margin:15px 0">
+  <div>
+   <div class="muted">Welcome back</div>
+   <h2 id="welcome" style="margin-top:5px">Customer</h2>
+  </div>
+  <span class="badge">PERSONAL ACCOUNT</span>
+ </div>
 
-<div class="grid">
-<div class="panel">
-<div class="metric-label">TRADING SYMBOL</div>
-<div class="metric-value gold">XAUUSD</div>
-</div>
-<div class="panel">
-<div class="metric-label">TIMEFRAME</div>
-<div class="metric-value">M15</div>
-</div>
-<div class="panel">
-<div class="metric-label">ANALYSIS MODE</div>
-<div class="metric-value">AI VISION</div>
-</div>
-<div class="panel">
-<div class="metric-label">VOICE</div>
-<div class="metric-value green">ENGLISH</div>
-</div>
-</div>
+ <div class="mainlayout">
+  <div>
+   <div class="balance">
+    <div class="muted">ETB AVAILABLE BALANCE</div>
+    <div class="amount" id="etbBalance">0.00 ETB</div>
+    <div class="muted">DAN BANK ACCOUNT</div>
+    <div id="accountNumber" class="gold" style="margin-top:8px">DAN000000</div>
+   </div>
+   <div class="balance">
+    <div class="muted">USD AVAILABLE BALANCE</div>
+    <div class="amount" id="usdBalance">$0.00</div>
+    <div class="muted">USD WALLET</div>
+   </div>
+   <div class="grid">
+    <div class="stat"><span class="muted">Total deposits</span><b id="totalDeposit">0</b></div>
+    <div class="stat"><span class="muted">Transactions</span><b id="totalTransactions">0</b></div>
+   </div>
+  </div>
+  <div>
+   <div class="card">
+    <h3>Quick Actions</h3>
+    <div class="actions">
+     <button class="action" onclick="openTab('deposit')"><span>＋</span>Deposit</button>
+     <button class="action" onclick="openTab('withdraw')"><span>－</span>Withdraw</button>
+     <button class="action" onclick="openTab('transfer')"><span>⇄</span>Transfer</button>
+     <button class="action" onclick="openTab('convert')"><span>＄</span>Convert</button>
+    </div>
+   </div>
+   <div class="card">
+    <h3>Account Information</h3>
+    <div class="transaction"><span class="muted">Account holder</span><b id="holderName"></b></div>
+    <div class="transaction"><span class="muted">Account type</span><b>Personal</b></div>
+    <div class="transaction"><span class="muted">Currency</span><b>ETB / USD</b></div>
+   </div>
+  </div>
+ </div>
 
-<div class="panel">
-<h3 class="section-title">SYSTEM FEATURES</h3>
-<div class="row"><span>AI Screenshot Analysis</span><span class="green">READY</span></div>
-<div class="row"><span>Market Structure</span><span class="green">READY</span></div>
-<div class="row"><span>Liquidity Detection</span><span class="green">READY</span></div>
-<div class="row"><span>FVG / Order Block</span><span class="green">READY</span></div>
-<div class="row"><span>English Voice Report</span><span class="green">READY</span></div>
-</div>
+ <nav id="navigation">
+  <button class="active" onclick="openTab('home',this)">Home</button>
+  <button onclick="openTab('deposit',this)">Deposit</button>
+  <button onclick="openTab('withdraw',this)">Withdraw</button>
+  <button onclick="openTab('transfer',this)">Send Money</button>
+  <button onclick="openTab('convert',this)">Exchange</button>
+  <button onclick="openTab('history',this)">History</button>
+  <button onclick="openTab('admin',this)">Settings</button>
+ </nav>
+
+ <div id="home" class="tab">
+  <div class="card">
+   <h2>Recent Transactions</h2>
+   <div id="recentTransactions" class="muted">No transactions yet.</div>
+  </div>
+ </div>
+
+ <!-- DEPOSIT -->
+ <div id="deposit" class="tab hidden">
+  <div class="card">
+   <h2>Deposit Money</h2>
+   <div class="notice">Demo mode: this form does not collect real payments.</div>
+   <label>Deposit method</label>
+   <select id="depositMethod">
+    <option>Telebirr</option>
+    <option>CBE Birr</option>
+    <option>E-Birr</option>
+    <option>Commercial Bank of Ethiopia</option>
+    <option>Bank of Abyssinia</option>
+    <option>Awash Bank</option>
+    <option>Other Bank</option>
+   </select>
+   <label>Currency</label>
+   <select id="depositCurrency"><option>ETB</option><option>USD</option></select>
+   <label>Amount</label>
+   <input id="depositAmount" type="number" min="1" placeholder="Enter amount">
+   <label>Reference / transaction ID (optional)</label>
+   <input id="depositReference" placeholder="Reference number">
+   <button class="primary" onclick="deposit()">CONTINUE DEMO DEPOSIT</button>
+  </div>
+ </div>
+
+ <!-- WITHDRAW -->
+ <div id="withdraw" class="tab hidden">
+  <div class="card">
+   <h2>Withdraw Money</h2>
+   <div class="notice">Demo only. No real bank or mobile money withdrawal occurs.</div>
+   <label>Withdrawal method</label>
+   <select id="withdrawMethod">
+    <option>Telebirr</option>
+    <option>CBE Birr</option>
+    <option>E-Birr</option>
+    <option>Bank Account</option>
+   </select>
+   <label>Currency</label>
+   <select id="withdrawCurrency"><option>ETB</option><option>USD</option></select>
+   <label>Phone / Account Number</label>
+   <input id="withdrawAccount" placeholder="Enter account number">
+   <label>Amount</label>
+   <input id="withdrawAmount" type="number" min="1" placeholder="Enter amount">
+   <button class="primary" onclick="withdraw()">WITHDRAW DEMO</button>
+  </div>
+ </div>
+
+ <!-- TRANSFER -->
+ <div id="transfer" class="tab hidden">
+  <div class="card">
+   <h2>Send Money</h2>
+   <div class="notice">Recipient verification and real transfers require an authorized provider API. This demo will not send money.</div>
+   <label>Transfer destination</label>
+   <select id="transferMethod" onchange="changeTransfer()">
+    <option value="bank">Ethiopian Bank</option>
+    <option value="Telebirr">Telebirr</option>
+    <option value="CBE Birr">CBE Birr</option>
+    <option value="E-Birr">E-Birr</option>
+   </select>
+   <div id="bankBox">
+    <label>Select Bank</label>
+    <select id="bankSelect"></select>
+   </div>
+   <label>Receiver phone / account number</label>
+   <input id="receiverAccount" placeholder="Enter receiver account">
+   <label>Receiver full name</label>
+   <input id="receiverName" placeholder="Enter verified receiver name">
+   <div class="muted">Name shown here is manually entered, not verified by the provider.</div>
+   <label>Currency</label>
+   <select id="transferCurrency"><option>ETB</option><option>USD</option></select>
+   <label>Amount</label>
+   <input id="transferAmount" type="number" min="1" placeholder="Enter amount">
+   <label>Reason</label>
+   <input id="transferReason" placeholder="Payment reason">
+   <button class="primary" onclick="transfer()">REVIEW DEMO TRANSFER</button>
+  </div>
+ </div>
+
+ <!-- EXCHANGE -->
+ <div id="convert" class="tab hidden">
+  <div class="card">
+   <h2>Currency Exchange</h2>
+   <div class="notice">The exchange rate below is an editable demonstration rate, not a live bank rate.</div>
+   <label>USD / ETB demo exchange rate</label>
+   <input id="exchangeRate" type="number" value="150" min="0.01" step="0.01">
+   <label>Convert from</label>
+   <select id="fromCurrency" onchange="calculateExchange()">
+    <option>USD</option><option>ETB</option>
+   </select>
+   <label>Amount</label>
+   <input id="exchangeAmount" type="number" placeholder="Enter amount" oninput="calculateExchange()">
+   <button class="secondary" onclick="reverseCurrency()">SWITCH CURRENCY</button>
+   <div class="stat" style="margin:15px 0">
+    <div class="muted">You will receive</div>
+    <b id="exchangeResult" class="gold">0.00 ETB</b>
+   </div>
+   <button class="primary" onclick="convertMoney()">CONVERT DEMO BALANCE</button>
+  </div>
+ </div>
+
+ <!-- HISTORY -->
+ <div id="history" class="tab hidden">
+  <div class="card">
+   <h2>Transaction History</h2>
+   <div id="allTransactions">No transactions.</div>
+  </div>
+ </div>
+
+ <!-- SETTINGS -->
+ <div id="admin" class="tab hidden">
+  <div class="card">
+   <h2>Account Settings</h2>
+   <p class="muted">Your demo account information.</p>
+   <div class="transaction"><span>Name</span><b id="settingsName"></b></div>
+   <div class="transaction"><span>Email</span><b id="settingsEmail"></b></div>
+   <button class="secondary" style="width:100%;margin-top:15px" onclick="logout()">LOGOUT</button>
+  </div>
+  <div class="notice">Admin functions and real account management must be implemented on a secure server. This browser-only prototype is not a real bank.</div>
+ </div>
 </section>
-
-<!-- AI ANALYSIS -->
-<section class="page" id="analysis">
-<h2 class="gold">AI VISION ANALYSIS</h2>
-<p class="note">Upload an XAUUSD chart screenshot from MT5 or TradingView.</p>
-
-<div class="panel">
-<label>SELECT TIMEFRAME</label>
-<select class="field" id="timeframe">
-<option>M5</option><option selected>M15</option>
-<option>M30</option><option>H1</option><option>H4</option><option>D1</option>
-</select>
-
-<label>CHART SCREENSHOT</label>
-<div class="upload">
-<div style="font-size:35px">📊</div>
-<strong>UPLOAD YOUR GOLD CHART</strong>
-<input type="file" id="chartFile" accept="image/*" onchange="previewImage(event)">
-<img id="preview" class="preview hidden">
 </div>
-
-<button class="btn" id="analyzeBtn" onclick="analyzeChart()">ANALYZE WITH AI</button>
-<div id="analysisStatus" class="note"></div>
-<div id="analysisResult" class="result hidden"></div>
-
-<button class="btn btn-dark" onclick="speakReport()">🔊 SPEAK REPORT</button>
-<button class="btn btn-dark" onclick="stopVoice()">STOP VOICE</button>
-</div>
-
-<div class="panel" style="margin-top:15px">
-<h3>SMC ANALYSIS CHECKLIST</h3>
-<div class="row"><span>Market Structure</span><span>AI DETECTION</span></div>
-<div class="row"><span>Liquidity Sweep</span><span>AI DETECTION</span></div>
-<div class="row"><span>BOS / CHoCH</span><span>AI DETECTION</span></div>
-<div class="row"><span>Fair Value Gap</span><span>AI DETECTION</span></div>
-<div class="row"><span>Order Block</span><span>AI DETECTION</span></div>
-</div>
-</section>
-
-<!-- MARKET -->
-<section class="page" id="market">
-<h2 class="gold">LIVE MARKET</h2>
-<div class="panel">
-<div class="row"><span>SYMBOL</span><strong>XAUUSD</strong></div>
-<div class="row"><span>TIMEFRAME</span><strong>M15</strong></div>
-<div class="row"><span>DATA SOURCE</span><strong>TradingView</strong></div>
-<div class="note">Market chart below requires internet access.</div>
-<div style="margin-top:15px;height:450px">
-<iframe
-src="https://www.tradingview.com/widgetembed/?symbol=OANDA%3AXAUUSD&interval=15&theme=dark&style=1&hide_top_toolbar=false&allow_symbol_change=true&save_image=false"
-width="100%" height="100%" frameborder="0" allowfullscreen>
-</iframe>
-</div>
-</div>
-</section>
-
-<!-- HISTORY -->
-<section class="page" id="history">
-<h2 class="gold">ANALYSIS HISTORY</h2>
-<div class="panel">
-<div id="historyList" class="note">No analysis history yet.</div>
-<button class="btn btn-dark" onclick="clearHistory()">CLEAR HISTORY</button>
-</div>
-</section>
-
-<!-- SETTINGS -->
-<section class="page" id="settings">
-<h2 class="gold">SETTINGS</h2>
-<div class="panel">
-<label>AI BACKEND URL</label>
-<input class="field" id="apiUrl" placeholder="https://your-server.com/analyze-image">
-<p class="note">Enter the URL of your connected AI image-analysis backend.</p>
-<button class="btn" onclick="saveSettings()">SAVE SETTINGS</button>
-<div class="row"><span>Voice language</span><strong>English (US)</strong></div>
-<div class="row"><span>Voice speed</span><strong>0.9</strong></div>
-<div class="row"><span>Platform</span><strong>Android / Web</strong></div>
-</div>
-</section>
-
-<footer>
-DAN AI TRADING ANALYZER © 2026<br>
-AI analysis is informational, not financial advice.
-</footer>
-</main>
+<footer>DAN BANK © 2026 | Demo Banking Interface | Not a licensed bank</footer>
+<div id="toast"></div>
 
 <script>
-const USERS='dan_ai_users_v1';
-const SESSION='dan_ai_session_v1';
-const HISTORY='dan_ai_history_v1';
+const USERS='dan_bank_users_v1';
+const SESSION='dan_bank_session_v1';
+const BANKS=[
+'Commercial Bank of Ethiopia',
+'Bank of Abyssinia',
+'Awash Bank',
+'Dashen Bank',
+'Wegagen Bank',
+'Hibret Bank',
+'Nib International Bank',
+'Cooperative Bank of Oromia',
+'Zemen Bank',
+'Oromia Bank',
+'Anbesa Bank',
+'Berhan Bank',
+'Bunna Bank',
+'Enat Bank',
+'Global Bank Ethiopia',
+'Addis International Bank',
+'Abay Bank',
+'Shabelle Bank',
+'ZamZam Bank',
+'Goh Betoch Bank',
+'Ahadu Bank',
+'Hijra Bank',
+'Tsehay Bank',
+'Siinqee Bank',
+'Tsedey Bank',
+'Gadaa Bank',
+'Amhara Bank',
+'Rammis Bank',
+'Siket Bank',
+'Sidama Bank',
+'Omo Bank'
+];
 
-let currentReport='';
+let current=null;
 
 function getUsers(){
-try{return JSON.parse(localStorage.getItem(USERS)||'{}')}
-catch(e){return {}}
+ return JSON.parse(localStorage.getItem(USERS)||'{}');
 }
-
-function createAccount(){
-let email=document.getElementById('email').value.trim().toLowerCase();
-let pass=document.getElementById('password').value;
-if(!email||!pass){error('Enter email and password');return}
-if(pass.length<6){error('Password must contain at least 6 characters');return}
-let users=getUsers();
-if(users[email]){error('Account already exists. Please login.');return}
-users[email]=pass;
-localStorage.setItem(USERS,JSON.stringify(users));
-localStorage.setItem(SESSION,email);
-openDashboard();
+function saveUsers(users){
+ localStorage.setItem(USERS,JSON.stringify(users));
 }
-
+function saveCurrent(){
+ const users=getUsers();
+ if(current) users[current.email]=current;
+ saveUsers(users);
+}
+function money(n,c){
+ return (c==='USD'?'$':'')+
+ Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+
+ (c==='ETB'?' ETB':'');
+}
+function toast(msg){
+ const t=document.getElementById('toast');
+ t.textContent=msg;t.style.display='block';
+ setTimeout(()=>t.style.display='none',2800);
+}
+function showRegister(){
+ document.getElementById('loginForm').classList.add('hidden');
+ document.getElementById('registerForm').classList.remove('hidden');
+}
+function showLogin(){
+ document.getElementById('registerForm').classList.add('hidden');
+ document.getElementById('loginForm').classList.remove('hidden');
+}
+function register(){
+ const name=document.getElementById('regName').value.trim();
+ const email=document.getElementById('regEmail').value.trim().toLowerCase();
+ const password=document.getElementById('regPassword').value;
+ if(!name||!email||password.length<6){
+  return toast('Enter your details and a password of at least 6 characters.');
+ }
+ const users=getUsers();
+ if(users[email])return toast('This email already exists.');
+ const user={
+  name,email,password,
+  account:'DAN'+Date.now().toString().slice(-9),
+  etb:0,usd:0,transactions:[],totalDeposits:0
+ };
+ users[email]=user;saveUsers(users);
+ current=user;
+ localStorage.setItem(SESSION,email);
+ showDashboard();
+}
 function login(){
-let email=document.getElementById('email').value.trim().toLowerCase();
-let pass=document.getElementById('password').value;
-let users=getUsers();
-if(users[email]&&users[email]===pass){
-localStorage.setItem(SESSION,email);
-openDashboard();
-}else error('Incorrect email or password. Create an account first.');
+ const email=document.getElementById('loginEmail').value.trim().toLowerCase();
+ const password=document.getElementById('loginPassword').value;
+ const user=getUsers()[email];
+ if(!user||user.password!==password)return toast('Incorrect email or password.');
+ current=user;
+ localStorage.setItem(SESSION,email);
+ showDashboard();
 }
-
-function error(msg){
-document.getElementById('loginError').textContent=msg;
-}
-
-function googleLogin(){
-error('Google login requires Firebase Authentication configuration. Use email login for this demo.');
-}
-
 function logout(){
-localStorage.removeItem(SESSION);
-document.getElementById('app').classList.add('hidden');
-document.getElementById('loginPage').classList.remove('hidden');
+ current=null;
+ localStorage.removeItem(SESSION);
+ document.getElementById('dashboard').classList.add('hidden');
+ document.getElementById('loginPage').classList.remove('hidden');
+ document.getElementById('logoutBtn').style.display='none';
 }
-
-function openDashboard(){
-document.getElementById('loginPage').classList.add('hidden');
-document.getElementById('app').classList.remove('hidden');
-loadHistory();
+function showDashboard(){
+ document.getElementById('loginPage').classList.add('hidden');
+ document.getElementById('dashboard').classList.remove('hidden');
+ document.getElementById('logoutBtn').style.display='block';
+ document.getElementById('welcome').textContent=current.name;
+ document.getElementById('holderName').textContent=current.name;
+ document.getElementById('accountNumber').textContent=current.account;
+ document.getElementById('settingsName').textContent=current.name;
+ document.getElementById('settingsEmail').textContent=current.email;
+ updateUI();
 }
-
-function showPage(id,button){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-if(button)button.classList.add('active');
-if(id==='history')loadHistory();
+function updateUI(){
+ if(!current)return;
+ document.getElementById('etbBalance').textContent=money(current.etb,'ETB');
+ document.getElementById('usdBalance').textContent=money(current.usd,'USD');
+ document.getElementById('totalDeposit').textContent=money(current.totalDeposits,'ETB');
+ document.getElementById('totalTransactions').textContent=current.transactions.length;
+ const html=current.transactions.slice().reverse().map(t=>
+ `<div class="transaction">
+ <div><b>${escapeHTML(t.type)}</b><div class="muted">${escapeHTML(t.detail)}<br>${escapeHTML(t.date)}</div></div>
+ <b class="${t.type==='Deposit'?'green':'red'}">${t.type==='Deposit'?'+':'-'}${money(t.amount,t.currency)}</b>
+ </div>`).join('');
+ document.getElementById('recentTransactions').innerHTML=html||'No transactions yet.';
+ document.getElementById('allTransactions').innerHTML=html||'No transactions yet.';
+ saveCurrent();
 }
-
-function previewImage(event){
-const file=event.target.files[0];
-if(!file)return;
-if(!file.type.startsWith('image/'))return alert('Select an image file.');
-if(file.size>12*1024*1024)return alert('Image must be under 12 MB.');
-const reader=new FileReader();
-reader.onload=e=>{
-const img=document.getElementById('preview');
-img.src=e.target.result;
-img.classList.remove('hidden');
-};
-reader.readAsDataURL(file);
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
-function getApi(){
-return localStorage.getItem('dan_ai_api')||'';
+function addTransaction(type,amount,currency,detail){
+ current.transactions.push({
+  type,amount,currency,detail,date:new Date().toLocaleString()
+ });
 }
-
-function saveSettings(){
-const url=document.getElementById('apiUrl').value.trim();
-localStorage.setItem('dan_ai_api',url);
-alert('Settings saved.');
+function deposit(){
+ const amount=Number(document.getElementById('depositAmount').value);
+ const currency=document.getElementById('depositCurrency').value;
+ const method=document.getElementById('depositMethod').value;
+ if(!amount||amount<=0)return toast('Enter a valid amount.');
+ if(currency==='ETB')current.etb+=amount;
+ else current.usd+=amount;
+ current.totalDeposits+=amount;
+ addTransaction('Deposit',amount,currency,method+' (DEMO)');
+ updateUI();toast('Demo deposit successful.');
 }
-
-async function analyzeChart(){
-const file=document.getElementById('chartFile').files[0];
-if(!file){alert('Upload a chart screenshot first.');return}
-
-const api=getApi();
-if(!api){
-document.getElementById('analysisStatus').textContent=
-'AI backend is not connected. Add your backend URL in Settings to enable real image analysis.';
-return;
+function withdraw(){
+ const amount=Number(document.getElementById('withdrawAmount').value);
+ const currency=document.getElementById('withdrawCurrency').value;
+ const method=document.getElementById('withdrawMethod').value;
+ const account=document.getElementById('withdrawAccount').value.trim();
+ if(!amount||amount<=0||!account)return toast('Enter amount and account.');
+ if(currency==='ETB'){
+  if(amount>current.etb)return toast('Insufficient ETB balance.');
+  current.etb-=amount;
+ }else{
+  if(amount>current.usd)return toast('Insufficient USD balance.');
+  current.usd-=amount;
+ }
+ addTransaction('Withdrawal',amount,currency,method+' (DEMO)');
+ updateUI();toast('Demo withdrawal recorded.');
 }
-
-const btn=document.getElementById('analyzeBtn');
-const status=document.getElementById('analysisStatus');
-const result=document.getElementById('analysisResult');
-
-btn.disabled=true;
-btn.textContent='ANALYZING...';
-status.textContent='Sending screenshot to AI...';
-result.classList.add('hidden');
-
-try{
-const form=new FormData();
-form.append('image',file);
-form.append('symbol','XAUUSD');
-form.append('timeframe',document.getElementById('timeframe').value);
-form.append('language','English');
-form.append('prompt',
-'Analyze this XAUUSD chart using Smart Money Concepts. Identify market structure, liquidity, BOS, CHoCH, FVG, order blocks, possible entry, stop loss and TP1, TP2, TP3. Give BUY, SELL or WAIT only when supported by visible chart evidence. Do not invent prices. Explain uncertainty.');
-
-const response=await fetch(api,{
-method:'POST',
-body:form
-});
-if(!response.ok)throw new Error('Server error: '+response.status);
-const data=await response.json();
-
-currentReport=typeof data==='string'?data:
-(data.analysis||data.report||data.message||JSON.stringify(data,null,2));
-
-result.textContent=currentReport;
-result.classList.remove('hidden');
-status.textContent='Analysis completed.';
-saveReport(currentReport);
-
-}catch(err){
-status.textContent='Analysis failed: '+err.message+
-'. Check your backend URL and server connection.';
-}finally{
-btn.disabled=false;
-btn.textContent='ANALYZE WITH AI';
+function changeTransfer(){
+ const method=document.getElementById('transferMethod').value;
+ document.getElementById('bankBox').classList.toggle('hidden',method!=='bank');
 }
+function transfer(){
+ const method=document.getElementById('transferMethod').value;
+ const bank=document.getElementById('bankSelect').value;
+ const account=document.getElementById('receiverAccount').value.trim();
+ const name=document.getElementById('receiverName').value.trim();
+ const amount=Number(document.getElementById('transferAmount').value);
+ const currency=document.getElementById('transferCurrency').value;
+ if(!account||!name||!amount||amount<=0)return toast('Complete all required fields.');
+ if(currency==='ETB'&&amount>current.etb)return toast('Insufficient ETB balance.');
+ if(currency==='USD'&&amount>current.usd)return toast('Insufficient USD balance.');
+ const destination=method==='bank'?bank:method;
+ if(!confirm('DEMO TRANSFER REVIEW\n\nDestination: '+destination+
+ '\nReceiver: '+name+'\nAccount: '+account+
+ '\nAmount: '+money(amount,currency)+
+ '\n\nThis will only change your demo balance. Continue?'))return;
+ if(currency==='ETB')current.etb-=amount;
+ else current.usd-=amount;
+ addTransaction('Transfer',amount,currency,destination+' / '+name+' (DEMO)');
+ updateUI();toast('Demo transfer recorded. No real money sent.');
 }
+function calculateExchange(){
+ const amount=Number(document.getElementById('exchangeAmount').value)||0;
+ const rate=Number(document.getElementById('exchangeRate').value)||0;
+ const from=document.getElementById('fromCurrency').value;
+ const result=from==='USD'?amount*rate:(rate?amount/rate:0);
+ document.getElementById('exchangeResult').textContent=money(result,from==='USD'?'ETB':'USD');
+}
+function reverseCurrency(){
+ const f=document.getElementById('fromCurrency');
+ f.value=f.value==='USD'?'ETB':'USD';
+ calculateExchange();
+}
+function convertMoney(){
+ const amount=Number(document.getElementById('exchangeAmount').value);
+ const rate=Number(document.getElementById('exchangeRate').value);
+ const from=document.getElementById('fromCurrency').value;
+ if(!amount||amount<=0||!rate||rate<=0)return toast('Enter a valid amount and exchange rate.');
+ const to=from==='USD'?'ETB':'USD';
+ const result=from==='USD'?amount*rate:amount/rate;
+ if(from==='USD'){
+  if(amount>current.usd)return toast('Insufficient USD balance.');
+  current.usd-=amount;current.etb+=result;
+ }else{
+  if(amount>current.etb)return toast('Insufficient ETB balance.');
+  current.etb-=amount;current.usd+=result;
+ }
+ addTransaction('Conversion',amount,from,'Converted to '+to+' at demo rate '+rate);
+ updateUI();toast('Demo currency conversion completed.');
+}
+function openTab(tab,button){
+ document.querySelectorAll('.tab').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(tab).classList.remove('hidden');
+ document.querySelectorAll('#navigation button').forEach(x=>x.classList.remove('active'));
+ if(button)button.classList.add('active');
+ else if(tab==='home')document.querySelector('#navigation button').classList.add('active');
+}
+document.getElementById('bankSelect').innerHTML=
+ BANKS.map(b=>`<option>${escapeHTML(b)}</option>`).join('');
 
-function speakReport(){
-if(!currentReport){
-alert('Complete an AI analysis first.');
-return;
+const saved=localStorage.getItem(SESSION);
+if(saved){
+ current=getUsers()[saved]||null;
+ if(current)showDashboard();
+ else logout();
 }
-if(!('speechSynthesis' in window)){
-alert('Voice is not supported by this browser.');
-return;
-}
-speechSynthesis.cancel();
-const utterance=new SpeechSynthesisUtterance(currentReport);
-utterance.lang='en-US';
-utterance.rate=0.9;
-utterance.pitch=1;
-speechSynthesis.speak(utterance);
-}
-
-function stopVoice(){
-if('speechSynthesis' in window)speechSynthesis.cancel();
-}
-
-function saveReport(report){
-let history=JSON.parse(localStorage.getItem(HISTORY)||'[]');
-history.unshift({
-date:new Date().toLocaleString(),
-timeframe:document.getElementById('timeframe').value,
-report:report
-});
-localStorage.setItem(HISTORY,JSON.stringify(history.slice(0,30)));
-}
-
-function loadHistory(){
-const history=JSON.parse(localStorage.getItem(HISTORY)||'[]');
-const box=document.getElementById('historyList');
-if(!history.length){box.textContent='No analysis history yet.';return}
-box.innerHTML='';
-history.forEach(item=>{
-const div=document.createElement('div');
-div.className='panel';
-div.style.marginBottom='12px';
-const date=document.createElement('strong');
-date.textContent=item.date+' | '+item.timeframe;
-const report=document.createElement('p');
-report.style.whiteSpace='pre-wrap';
-report.textContent=item.report;
-div.append(date,report);
-box.appendChild(div);
-});
-}
-
-function clearHistory(){
-if(confirm('Delete all analysis history?')){
-localStorage.removeItem(HISTORY);
-loadHistory();
-}
-}
-
-document.getElementById('apiUrl').value=getApi();
-
-if(localStorage.getItem(SESSION))openDashboard();
 </script>
 </body>
 </html>
