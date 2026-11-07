@@ -2,527 +2,661 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090914">
-<title>DAN AI MOTION STUDIO</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>DAN AUTO TRADING PRO</title>
 
 <style>
 :root{
-  --bg:#090914;
-  --panel:#131326;
-  --panel2:#1b1b35;
-  --pink:#ff3c9e;
-  --purple:#8b5cf6;
-  --text:#f7f5ff;
-  --muted:#9d9bb5;
-  --border:#30304b;
+ --bg:#07090d;
+ --panel:#11151d;
+ --panel2:#171d27;
+ --gold:#f6bd35;
+ --gold2:#ffe29a;
+ --green:#00df72;
+ --red:#ff4055;
+ --text:#f5f5f5;
+ --muted:#9ba5b5;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  background:
-    radial-gradient(circle at 10% 0%,#32134b 0,transparent 35%),
-    radial-gradient(circle at 100% 10%,#25134c 0,transparent 30%),
-    var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,Helvetica,sans-serif;
 }
-header{
-  position:sticky;
-  top:0;
-  z-index:10;
-  padding:16px;
-  background:#0b0b18ed;
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid var(--border);
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.gold{color:var(--gold)}
+.muted{color:var(--muted)}
+#authPage{
+ min-height:100vh;
+ background:
+ radial-gradient(circle at 15% 40%,#49300d 0,transparent 35%),
+ radial-gradient(circle at 90% 20%,#332309 0,transparent 30%),
+ linear-gradient(135deg,#050608,#11131a 60%,#080808);
+ display:flex;flex-direction:column;
 }
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
+.auth-header{
+ display:flex;justify-content:space-between;align-items:center;
+ padding:22px 5%;border-bottom:1px solid #705018;
 }
-.logo{
-  width:43px;
-  height:43px;
-  display:grid;
-  place-items:center;
-  border-radius:14px;
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  font-weight:900;
-  font-size:20px;
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{font-size:42px;color:var(--gold)}
+.logo h1{font-size:22px;margin:0;color:var(--gold)}
+.logo small{color:#ddd}
+.auth-header .features{color:var(--gold2);font-size:13px}
+.auth-main{
+ flex:1;display:grid;grid-template-columns:1fr 1fr;
+ align-items:center;gap:35px;padding:35px 6%;
 }
-.brand h1{
-  font-size:16px;
-  margin:0;
-  letter-spacing:1px;
+.hero{text-align:center}
+.bull{font-size:130px;filter:drop-shadow(0 0 22px #d99a19)}
+.hero h2{font-size:35px;color:var(--gold);margin:10px}
+.hero p{color:#c5c5c5;line-height:1.7}
+.hero-stats{
+ display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
+ margin-top:25px;color:var(--gold2);font-size:13px
 }
-.brand small{
-  display:block;
-  margin-top:4px;
-  color:var(--muted);
-  font-size:10px;
+.auth-card{
+ max-width:470px;width:100%;margin:auto;
+ background:linear-gradient(145deg,#171a20,#08090c);
+ border:1px solid #a77a20;border-radius:22px;
+ padding:32px;box-shadow:0 0 40px #d99b1c22;
 }
-main{
-  width:min(760px,100%);
-  margin:auto;
-  padding:20px 14px 50px;
+.auth-card h2{text-align:center;font-size:29px;margin:8px 0}
+.auth-card .sub{text-align:center;color:var(--muted);margin-bottom:25px}
+.field{margin:14px 0}
+.field label{display:block;font-size:13px;color:#d5c18c;margin-bottom:7px}
+.field input{
+ width:100%;padding:14px;border-radius:10px;
+ background:#080b10;border:1px solid #343b47;color:white;
+ outline:none;
 }
-.hero{
-  text-align:center;
-  padding:27px 8px;
+.field input:focus{border-color:var(--gold)}
+.btn{
+ width:100%;padding:14px;border-radius:11px;border:0;
+ font-weight:bold;margin-top:12px;
 }
-.hero h2{
-  font-size:29px;
-  line-height:1.15;
-  margin:0 0 12px;
+.btn-gold{background:linear-gradient(100deg,#b87b12,#ffda65);color:#111}
+.btn-google{background:#fff;color:#222}
+.btn-outline{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.btn-green{background:#00a957;color:white}
+.btn-red{background:#c92539;color:white}
+.google-icon{font-weight:bold;font-size:19px;margin-right:10px}
+.auth-links{
+ display:flex;justify-content:space-between;gap:8px;
+ margin-top:17px;font-size:13px
 }
-.gradient{
-  background:linear-gradient(90deg,#ff3c9e,#b38aff,#43d9ff);
-  color:transparent;
-  background-clip:text;
+.auth-links a{color:var(--gold2);cursor:pointer}
+.notice{font-size:12px;color:#aaa;text-align:center;line-height:1.6;margin-top:20px}
+#authMessage{font-size:13px;text-align:center;margin-top:15px;color:var(--gold2)}
+#dashboard{min-height:100vh}
+.topbar{
+ display:flex;justify-content:space-between;align-items:center;
+ padding:15px 22px;background:#0d1118;border-bottom:1px solid #493918;
+ position:sticky;top:0;z-index:10;
 }
-.hero p{
-  color:var(--muted);
-  line-height:1.6;
-  font-size:13px;
-  max-width:480px;
-  margin:auto;
+.topbar .brand{color:var(--gold);font-weight:bold;font-size:18px}
+.topbar small{color:var(--muted)}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+.sidebar{
+ width:225px;background:#0d1118;padding:20px 12px;
+ border-right:1px solid #292b30;flex-shrink:0;
 }
-.card{
-  background:linear-gradient(145deg,#17172c,#10101e);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:17px;
-  margin-bottom:15px;
+.nav{
+ width:100%;padding:14px;text-align:left;border:0;
+ color:#c6ccd5;background:transparent;border-radius:9px;
+ margin:4px 0;font-size:14px;
 }
-.card h3{
-  font-size:15px;
-  margin:0 0 7px;
+.nav.active,.nav:hover{background:#49330f;color:var(--gold)}
+.main{flex:1;padding:22px;min-width:0}
+.welcome{margin-bottom:20px}
+.welcome h2{margin:0 0 7px;font-size:24px}
+.cards{
+ display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;
 }
-.sub{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-  margin:0 0 14px;
+.metric,.panel{
+ background:linear-gradient(145deg,#171d27,#0e1219);
+ border:1px solid #34302a;border-radius:13px;padding:17px;
 }
-.upload{
-  min-height:155px;
-  border:1.5px dashed #555074;
-  border-radius:15px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-  text-align:center;
-  cursor:pointer;
-  background:#ffffff05;
-  overflow:hidden;
+.metric small{color:var(--muted)}
+.metric h2{margin:12px 0 4px;font-size:23px;color:var(--gold)}
+.metric span{font-size:12px;color:var(--green)}
+.content-grid{
+ display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);
+ gap:15px;margin-top:17px;
 }
-.upload:active{border-color:var(--pink)}
-.upload .symbol{
-  font-size:33px;
-  margin-bottom:9px;
+.panel-title{font-weight:bold;margin-bottom:16px}
+.chart-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.chart{
+ height:235px;position:relative;overflow:hidden;
+ border-top:1px solid #29313b;border-bottom:1px solid #29313b;
+ background:repeating-linear-gradient(to bottom,transparent 0 45px,#222a33 46px);
+ display:flex;align-items:flex-end;gap:5px;padding:15px 5px 0;
 }
-.upload strong{font-size:13px}
-.upload small{
-  color:var(--muted);
-  margin-top:6px;
-  font-size:11px;
+.bar{flex:1;min-width:4px;max-width:15px;border-radius:2px 2px 0 0}
+.up{background:#00d77b}.down{background:#f04455}
+.signal{
+ border:1px solid #087d43;background:#062316;border-radius:12px;
+ padding:18px;text-align:center;
 }
-.upload img,.upload video{
-  max-width:100%;
-  max-height:190px;
-  border-radius:10px;
-  object-fit:contain;
+.signal h2{color:var(--green);font-size:26px}
+.signal .confidence{color:var(--gold2);margin:15px}
+.bot-buttons{display:flex;gap:8px}
+.bot-buttons button{flex:1}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{text-align:left;padding:12px 8px;border-bottom:1px solid #2a3039;white-space:nowrap}
+th{color:var(--muted)}
+.buy{color:var(--green)}.sell{color:var(--red)}
+.table-wrap{overflow-x:auto}
+.lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:17px}
+.section{display:none}
+.section.active{display:block}
+.settings-row{padding:13px 0;border-bottom:1px solid #303640}
+.footer{text-align:center;color:#737d8b;padding:25px;font-size:12px}
+.mobile-nav{display:none}
+@media(max-width:850px){
+ .auth-main{grid-template-columns:1fr;padding:20px}
+ .hero{padding:10px}.bull{font-size:80px}
+ .hero h2{font-size:25px}
+ .auth-header .features{display:none}
+ .cards{grid-template-columns:repeat(2,1fr)}
+ .content-grid{grid-template-columns:1fr}
+ .sidebar{width:175px}
+ .main{padding:14px}
 }
-input[type=file]{display:none}
-.field{margin-top:14px}
-.field label{
-  display:block;
-  font-size:12px;
-  margin-bottom:8px;
-  color:#dcd8f3;
-}
-select,textarea{
-  width:100%;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:var(--panel2);
-  color:white;
-  padding:13px;
-  font-size:13px;
-  outline:none;
-}
-textarea{
-  min-height:85px;
-  resize:vertical;
-  line-height:1.5;
-}
-.options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-.option{
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  background:#ffffff05;
-  font-size:12px;
-}
-.option b{display:block;margin-bottom:5px}
-.option span{color:var(--muted);font-size:11px}
-.check{
-  display:flex;
-  gap:9px;
-  align-items:center;
-  font-size:12px;
-  color:#ddd9ef;
-  margin-top:15px;
-}
-.check input{accent-color:var(--pink)}
-button{
-  border:0;
-  border-radius:14px;
-  padding:15px;
-  width:100%;
-  font-size:14px;
-  font-weight:800;
-  color:white;
-  background:linear-gradient(100deg,var(--pink),var(--purple));
-  cursor:pointer;
-  margin-top:16px;
-}
-button:disabled{
-  opacity:.5;
-  cursor:not-allowed;
-}
-.status{
-  display:none;
-  margin-top:15px;
-  border:1px solid var(--border);
-  background:#ffffff08;
-  padding:14px;
-  border-radius:13px;
-  font-size:12px;
-  line-height:1.6;
-}
-.status.show{display:block}
-.progress{
-  height:6px;
-  border-radius:10px;
-  background:#292943;
-  overflow:hidden;
-  margin-top:10px;
-}
-.progress div{
-  width:25%;
-  height:100%;
-  background:linear-gradient(90deg,var(--pink),#a78bfa);
-  animation:loading 2s infinite alternate;
-}
-@keyframes loading{
-  from{width:15%}
-  to{width:90%}
-}
-.result{
-  display:none;
-  margin-top:16px;
-}
-.result video{
-  width:100%;
-  border-radius:14px;
-  background:#000;
-}
-.download{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  color:white;
-  padding:13px;
-  margin-top:10px;
-  border-radius:12px;
-  background:#292344;
-  font-weight:bold;
-  font-size:13px;
-}
-.note{
-  color:var(--muted);
-  text-align:center;
-  font-size:10px;
-  line-height:1.6;
-  padding:10px;
-}
-footer{
-  text-align:center;
-  color:#77748f;
-  font-size:10px;
-  padding:20px;
+@media(max-width:600px){
+ .auth-header{padding:14px}
+ .logo h1{font-size:17px}
+ .auth-card{padding:23px 18px}
+ .auth-main{gap:8px}
+ .hero p{font-size:13px}
+ .hero-stats{gap:10px}
+ .layout{display:block;padding-bottom:65px}
+ .sidebar{display:none}
+ .main{padding:12px}
+ .topbar{padding:13px}
+ .topbar .brand{font-size:15px}
+ .cards{gap:8px}
+ .metric{padding:12px}
+ .metric h2{font-size:19px}
+ .metric small{font-size:11px}
+ .lower-grid{grid-template-columns:1fr}
+ .mobile-nav{
+  display:flex;position:fixed;bottom:0;left:0;right:0;
+  background:#10151e;border-top:1px solid #57421d;
+  justify-content:space-around;padding:9px 3px;z-index:20;
+ }
+ .mobile-nav button{
+  background:none;border:0;color:#aaa;font-size:10px;
+ }
+ .mobile-nav button.active{color:var(--gold)}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="brand">
-    <div class="logo">D</div>
-    <div>
-      <h1>DAN AI MOTION STUDIO</h1>
-      <small>AI VIDEO MOTION TRANSFER</small>
+<!-- AUTHENTICATION PAGE -->
+<div id="authPage">
+ <header class="auth-header">
+  <div class="logo">
+   <div class="logo-icon">📈</div>
+   <div>
+    <h1>DAN AUTO TRADING PRO</h1>
+    <small>Trade Smarter. Earn Bigger.</small>
+   </div>
+  </div>
+  <div class="features">🛡 Secure　 ⚡ Fast　 📊 Reliable　 🌐 Global</div>
+ </header>
+
+ <main class="auth-main">
+  <div class="hero">
+   <div class="bull">🐂</div>
+   <h2>TRADE LIKE A PRO</h2>
+   <p>Your Intelligent Trading Partner.<br>
+   AI Analysis • Live Market • Smart Trading</p>
+   <div class="hero-stats">
+    <span>📊 Live Market</span>
+    <span>🤖 AI Analysis</span>
+    <span>⚡ Smart Signals</span>
+   </div>
+  </div>
+
+  <div class="auth-card">
+   <div id="loginForm">
+    <h2>Welcome Back</h2>
+    <p class="sub">Login to your trading account</p>
+
+    <button class="btn btn-google" id="googleLogin">
+     <span class="google-icon">G</span> Continue with Google
+    </button>
+
+    <div style="text-align:center;color:#888;margin:18px">— OR LOGIN WITH EMAIL —</div>
+
+    <div class="field">
+     <label>Email Address</label>
+     <input id="loginEmail" type="email" placeholder="Enter your email">
     </div>
-  </div>
-</header>
-
-<main>
-
-<section class="hero">
-  <h2>Make Your Photo <span class="gradient">Come Alive</span></h2>
-  <p>
-    Upload a person's photo and a motion video.
-    Let AI transfer the movement to your character.
-  </p>
-</section>
-
-<section class="card">
-  <h3>01 — Character Photo</h3>
-  <p class="sub">Upload the person you want to animate.</p>
-
-  <label class="upload" for="photo">
-    <div id="photoPreview">
-      <div class="symbol">📸</div>
-      <strong>Choose Character Photo</strong>
-      <small>JPG, PNG or WEBP</small>
+    <div class="field">
+     <label>Password</label>
+     <input id="loginPassword" type="password" placeholder="Enter password">
     </div>
-  </label>
-  <input id="photo" type="file" accept="image/jpeg,image/png,image/webp">
-</section>
+    <button class="btn btn-gold" id="emailLogin">LOGIN</button>
 
-<section class="card">
-  <h3>02 — Motion Reference Video</h3>
-  <p class="sub">Upload a video showing the movement to copy.</p>
-
-  <label class="upload" for="motion">
-    <div id="motionPreview">
-      <div class="symbol">🎬</div>
-      <strong>Choose Motion Video</strong>
-      <small>MP4, MOV or WEBM · Maximum 100MB</small>
+    <div class="auth-links">
+     <a id="forgotLink">Forgot Password?</a>
+     <a id="showRegister">Create Account</a>
     </div>
-  </label>
-  <input id="motion" type="file" accept="video/mp4,video/quicktime,video/webm">
-</section>
+   </div>
 
-<section class="card">
-  <h3>03 — Motion Settings</h3>
-  <p class="sub">Choose how the AI should transfer the movement.</p>
+   <div id="registerForm" class="hidden">
+    <h2>Create Account</h2>
+    <p class="sub">Join DAN AUTO TRADING PRO</p>
 
-  <div class="field">
-    <label>Movement orientation</label>
-    <select id="orientation">
-      <option value="video">Follow reference video — dance, walking, running</option>
-      <option value="image">Follow character photo — camera movement</option>
-    </select>
-  </div>
-
-  <div class="field">
-    <label>AI instructions (optional)</label>
-    <textarea id="prompt" placeholder="Example: Make the person perform the same dance naturally. Preserve the face, clothing and appearance."></textarea>
-  </div>
-
-  <label class="check">
-    <input type="checkbox" id="sound" checked>
-    Keep original sound from motion video
-  </label>
-</section>
-
-<section class="card">
-  <h3>04 — Video Quality</h3>
-  <div class="options">
-    <div class="option">
-      <b>HD</b>
-      <span>AI generated video</span>
+    <div class="field">
+     <label>Full Name</label>
+     <input id="regName" type="text" placeholder="Your full name">
     </div>
-    <div class="option">
-      <b>4K</b>
-      <span>Requires an additional upscaling service</span>
+    <div class="field">
+     <label>Email Address</label>
+     <input id="regEmail" type="email" placeholder="Your email">
     </div>
+    <div class="field">
+     <label>Password</label>
+     <input id="regPassword" type="password" placeholder="Minimum 6 characters">
+    </div>
+    <div class="field">
+     <label>Confirm Password</label>
+     <input id="regConfirm" type="password" placeholder="Repeat password">
+    </div>
+    <button class="btn btn-gold" id="createAccount">CREATE ACCOUNT</button>
+    <button class="btn btn-outline" id="backLogin">BACK TO LOGIN</button>
+   </div>
+
+   <div id="forgotForm" class="hidden">
+    <h2>Reset Password</h2>
+    <p class="sub">Enter your email to receive a reset link</p>
+    <div class="field">
+     <label>Email Address</label>
+     <input id="resetEmail" type="email" placeholder="Your email">
+    </div>
+    <button class="btn btn-gold" id="resetPassword">SEND RESET LINK</button>
+    <button class="btn btn-outline" id="backLogin2">BACK TO LOGIN</button>
+   </div>
+
+   <div id="authMessage"></div>
+   <p class="notice">🔒 Secure Authentication<br>
+   Your account information is protected.</p>
   </div>
-  <p class="sub" style="margin-top:12px">
-    The first working version generates the AI video.
-    4K upscaling will be connected as a separate processing step.
-  </p>
+ </main>
+ <div class="footer">© 2026 DAN AUTO TRADING PRO. All Rights Reserved.</div>
+</div>
 
-  <button id="generate">✨ GENERATE AI VIDEO</button>
-
-  <div class="status" id="status">
-    <strong id="statusTitle">Preparing your video...</strong>
-    <div id="statusText">Please wait while the AI processes your files.</div>
-    <div class="progress"><div></div></div>
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+ <header class="topbar">
+  <div class="brand">📈 DAN AUTO TRADING PRO</div>
+  <div>
+   <small id="userWelcome">Welcome, Trader</small>
+   <button id="logout" class="btn-outline" style="padding:8px 12px;margin-left:8px;border-radius:8px">Logout</button>
   </div>
+ </header>
 
-  <div class="result" id="result">
-    <h3>Your AI Video Is Ready!</h3>
-    <video id="output" controls playsinline></video>
-    <a id="download" class="download" download="dan-ai-motion.mp4">
-      ⬇ Download Generated Video
-    </a>
-  </div>
-</section>
+ <div class="layout">
+  <aside class="sidebar">
+   <button class="nav active" data-page="home">🏠 Dashboard</button>
+   <button class="nav" data-page="market">📊 Live Market</button>
+   <button class="nav" data-page="analysis">🧠 AI Analysis</button>
+   <button class="nav" data-page="bot">🤖 Auto Trading</button>
+   <button class="nav" data-page="trades">📂 Open Trades</button>
+   <button class="nav" data-page="history">📜 Trade History</button>
+   <button class="nav" data-page="settings">⚙ Settings</button>
+  </aside>
 
-<p class="note">
-  Use photos and videos that you own or have permission to use.
-  AI generation may take time and uses paid AI processing credits.
-</p>
+  <main class="main">
+   <section id="home" class="section active">
+    <div class="welcome">
+     <h2>Trading Dashboard</h2>
+     <small class="muted">Welcome to your trading control center.</small>
+    </div>
 
-</main>
+    <div class="cards">
+     <div class="metric"><small>Balance</small><h2>$1,000.00</h2><span>Demo account</span></div>
+     <div class="metric"><small>Equity</small><h2>$1,025.50</h2><span>Demo data</span></div>
+     <div class="metric"><small>Total Profit</small><h2 class="buy">+$25.50</h2><span>Sample result</span></div>
+     <div class="metric"><small>Win Rate</small><h2>87.5%</h2><span>Illustrative only</span></div>
+    </div>
 
-<footer>
-  DAN AI MOTION STUDIO · POWERED BY AI
-</footer>
+    <div class="content-grid">
+     <div class="panel">
+      <div class="chart-head">
+       <div class="panel-title">🟡 XAUUSD — Gold</div>
+       <div class="muted">1m　5m　<b class="gold">15m</b>　30m　1h</div>
+      </div>
+      <div class="chart" id="chart"></div>
+      <p class="muted" style="font-size:11px">Illustrative chart — not live market data</p>
+     </div>
 
-<script>
-const photoInput = document.getElementById("photo");
-const motionInput = document.getElementById("motion");
-const generateBtn = document.getElementById("generate");
-const statusBox = document.getElementById("status");
-const statusTitle = document.getElementById("statusTitle");
-const statusText = document.getElementById("statusText");
-const resultBox = document.getElementById("result");
-const output = document.getElementById("output");
-const download = document.getElementById("download");
+     <div class="panel">
+      <div class="panel-title">🧠 AI Analysis</div>
+      <div class="signal">
+       <div style="font-size:35px">⬆</div>
+       <h2>BUY SIGNAL</h2>
+       <p>Sample Bullish Trend</p>
+       <div class="confidence">Confidence: 92% (Demo)</div>
+       <p>Trend: Up</p>
+       <p>Market: XAUUSD</p>
+      </div>
+     </div>
+    </div>
 
-let photoFile = null;
-let motionFile = null;
-let photoUrl = null;
-let motionUrl = null;
+    <div class="lower-grid">
+     <div class="panel">
+      <div class="panel-title">🤖 Bot Control</div>
+      <div class="bot-buttons">
+       <button id="startBot" class="btn btn-green">▶ START BOT</button>
+       <button id="stopBot" class="btn btn-red">■ STOP BOT</button>
+      </div>
+      <p id="botStatus" class="gold">● Bot Stopped — Demo</p>
+      <p class="muted" style="font-size:12px">Bot controls are visual demo controls only.</p>
+     </div>
+     <div class="panel">
+      <div class="panel-title">Account Information</div>
+      <p>Account: <b>Demo</b></p>
+      <p>Market: <b>XAUUSD</b></p>
+      <p>Status: <b class="buy">Connected to Website</b></p>
+     </div>
+    </div>
+   </section>
 
-photoInput.addEventListener("change", () => {
-  photoFile = photoInput.files[0];
+   <section id="market" class="section">
+    <h2>📊 Live Market</h2>
+    <div class="panel">
+     <h3>XAUUSD — Gold</h3>
+     <h2 class="gold">Market feed not connected</h2>
+     <p class="muted">Connect a market data provider to show real prices.</p>
+     <div class="chart" id="chart2"></div>
+    </div>
+   </section>
 
-  if (!photoFile) return;
+   <section id="analysis" class="section">
+    <h2>🧠 AI Market Analysis</h2>
+    <div class="panel">
+     <h3 class="gold">Analysis Preview</h3>
+     <p>Symbol: XAUUSD</p>
+     <p>Signal: <b class="buy">BUY (Sample)</b></p>
+     <p>Trend: Bullish (Sample)</p>
+     <p>Confidence: 92% (Illustrative)</p>
+     <p class="muted">Real AI analysis requires a connected analysis service and market data.</p>
+    </div>
+   </section>
 
-  if (photoUrl) URL.revokeObjectURL(photoUrl);
-  photoUrl = URL.createObjectURL(photoFile);
+   <section id="bot" class="section">
+    <h2>🤖 Auto Trading</h2>
+    <div class="panel">
+     <h3>Bot Control Center</h3>
+     <p id="botStatus2" class="gold">● STOPPED</p>
+     <div class="bot-buttons">
+      <button class="btn btn-green" id="startBot2">START BOT</button>
+      <button class="btn btn-red" id="stopBot2">STOP BOT</button>
+     </div>
+     <p class="muted">Demo controls only. No real orders are placed.</p>
+    </div>
+   </section>
 
-  document.getElementById("photoPreview").innerHTML =
-    `<img src="${photoUrl}" alt="Character preview">`;
-});
+   <section id="trades" class="section">
+    <h2>📂 Open Trades</h2>
+    <div class="panel table-wrap">
+     <table>
+      <thead><tr><th>Symbol</th><th>Type</th><th>Lot</th><th>Entry</th><th>SL / TP</th></tr></thead>
+      <tbody><tr><td>XAUUSD</td><td class="buy">BUY</td><td>0.10</td><td>Demo</td><td>Demo</td></tr></tbody>
+     </table>
+     <p class="muted">Example trade only. No live positions.</p>
+    </div>
+   </section>
 
-motionInput.addEventListener("change", () => {
-  motionFile = motionInput.files[0];
+   <section id="history" class="section">
+    <h2>📜 Trade History</h2>
+    <div class="panel table-wrap">
+     <table>
+      <thead><tr><th>Symbol</th><th>Type</th><th>Lot</th><th>Profit</th></tr></thead>
+      <tbody>
+       <tr><td>XAUUSD</td><td class="buy">BUY</td><td>0.10</td><td class="buy">+$12.50</td></tr>
+       <tr><td>XAUUSD</td><td class="sell">SELL</td><td>0.10</td><td class="buy">+$8.70</td></tr>
+      </tbody>
+     </table>
+     <p class="muted">Sample history only.</p>
+    </div>
+   </section>
 
-  if (!motionFile) return;
+   <section id="settings" class="section">
+    <h2>⚙ Settings</h2>
+    <div class="panel">
+     <div class="settings-row">Profile: <b id="settingsEmail"></b></div>
+     <div class="settings-row">Trading mode: <b>Demo Preview</b></div>
+     <div class="settings-row">Default symbol: <b>XAUUSD</b></div>
+     <div class="settings-row">Security: <b class="buy">Firebase Authentication</b></div>
+    </div>
+   </section>
+  </main>
+ </div>
 
-  if (motionUrl) URL.revokeObjectURL(motionUrl);
-  motionUrl = URL.createObjectURL(motionFile);
+ <nav class="mobile-nav">
+  <button class="active" data-page="home">🏠<br>Home</button>
+  <button data-page="market">📊<br>Market</button>
+  <button data-page="analysis">🧠<br>AI</button>
+  <button data-page="bot">🤖<br>Bot</button>
+  <button data-page="settings">⚙<br>Settings</button>
+ </nav>
+ <div class="footer">DAN AUTO TRADING PRO • Demo Preview</div>
+</div>
 
-  document.getElementById("motionPreview").innerHTML =
-    `<video src="${motionUrl}" controls playsinline></video>`;
-});
+<script type="module">
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 
-function showStatus(title, message) {
-  statusBox.classList.add("show");
-  statusTitle.textContent = title;
-  statusText.textContent = message;
+import {
+ getAuth,
+ GoogleAuthProvider,
+ signInWithPopup,
+ createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,
+ sendEmailVerification,
+ sendPasswordResetEmail,
+ signOut,
+ onAuthStateChanged,
+ updateProfile
+} from
+"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+/* =====================================
+   INSERT YOUR FIREBASE CONFIG HERE
+===================================== */
+
+const firebaseConfig = {
+ apiKey: "YOUR_API_KEY",
+ authDomain: "YOUR_PROJECT.firebaseapp.com",
+ projectId: "YOUR_PROJECT_ID",
+ storageBucket: "YOUR_PROJECT.appspot.com",
+ messagingSenderId: "YOUR_SENDER_ID",
+ appId: "YOUR_APP_ID"
+};
+
+let auth = null;
+let firebaseReady = false;
+
+const authPage = document.getElementById("authPage");
+const dashboard = document.getElementById("dashboard");
+const message = document.getElementById("authMessage");
+
+function showMessage(text,color="#ffe29a"){
+ message.textContent=text;
+ message.style.color=color;
+}
+function showForm(name){
+ ["loginForm","registerForm","forgotForm"].forEach(id=>{
+  document.getElementById(id).classList.add("hidden");
+ });
+ document.getElementById(name).classList.remove("hidden");
+ message.textContent="";
 }
 
-async function checkJob(requestId) {
-  for (;;) {
-    await new Promise(resolve => setTimeout(resolve, 5000));
+document.getElementById("showRegister").onclick=()=>showForm("registerForm");
+document.getElementById("backLogin").onclick=()=>showForm("loginForm");
+document.getElementById("backLogin2").onclick=()=>showForm("loginForm");
+document.getElementById("forgotLink").onclick=()=>showForm("forgotForm");
 
-    const response = await fetch(
-      "/api/status/" + encodeURIComponent(requestId)
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || "Could not check job.");
-    }
-
-    if (data.status === "COMPLETED") {
-      if (!data.videoUrl) {
-        throw new Error("AI finished but no video URL was returned.");
-      }
-      return data.videoUrl;
-    }
-
-    if (data.status === "FAILED") {
-      throw new Error(data.error || "AI generation failed.");
-    }
-
-    showStatus(
-      "AI is creating your video...",
-      "Your job status: " + data.status + ". Please keep this page open."
-    );
-  }
+function openDashboard(user){
+ authPage.classList.add("hidden");
+ dashboard.classList.remove("hidden");
+ const displayName=user.displayName || user.email?.split("@")[0] || "Trader";
+ document.getElementById("userWelcome").textContent="Welcome, "+displayName;
+ document.getElementById("settingsEmail").textContent=user.email || "";
 }
 
-generateBtn.addEventListener("click", async () => {
-  if (!photoFile || !motionFile) {
-    alert("Please upload both a character photo and a motion video.");
-    return;
+function openLogin(){
+ dashboard.classList.add("hidden");
+ authPage.classList.remove("hidden");
+ showForm("loginForm");
+}
+
+try{
+ if(firebaseConfig.apiKey !== "YOUR_API_KEY" &&
+    firebaseConfig.projectId !== "YOUR_PROJECT_ID"){
+  const app=initializeApp(firebaseConfig);
+  auth=getAuth(app);
+  firebaseReady=true;
+
+  onAuthStateChanged(auth,user=>{
+   if(user){
+    openDashboard(user);
+   }else{
+    openLogin();
+   }
+  });
+ }else{
+  showMessage("Firebase setup required. Add your Firebase configuration.");
+ }
+}catch(error){
+ showMessage("Firebase setup error: "+error.message,"#ff6677");
+}
+
+function requireFirebase(){
+ if(!firebaseReady){
+  showMessage("First connect Firebase using your project configuration.","#ff6677");
+  return false;
+ }
+ return true;
+}
+
+document.getElementById("googleLogin").onclick=async()=>{
+ if(!requireFirebase())return;
+ try{
+  const provider=new GoogleAuthProvider();
+  await signInWithPopup(auth,provider);
+ }catch(e){showMessage(e.message,"#ff6677")}
+};
+
+document.getElementById("createAccount").onclick=async()=>{
+ if(!requireFirebase())return;
+
+ const name=document.getElementById("regName").value.trim();
+ const email=document.getElementById("regEmail").value.trim();
+ const password=document.getElementById("regPassword").value;
+ const confirm=document.getElementById("regConfirm").value;
+
+ if(!name||!email||!password){
+  showMessage("Please complete all fields.","#ff6677");return;
+ }
+ if(password.length<6){
+  showMessage("Password must contain at least 6 characters.","#ff6677");return;
+ }
+ if(password!==confirm){
+  showMessage("Passwords do not match.","#ff6677");return;
+ }
+
+ try{
+  const result=await createUserWithEmailAndPassword(auth,email,password);
+  await updateProfile(result.user,{displayName:name});
+  await sendEmailVerification(result.user);
+  await signOut(auth);
+  showForm("loginForm");
+  showMessage("Account created! Check your email and verify your account.");
+ }catch(e){showMessage(e.message,"#ff6677")}
+};
+
+document.getElementById("emailLogin").onclick=async()=>{
+ if(!requireFirebase())return;
+ const email=document.getElementById("loginEmail").value.trim();
+ const password=document.getElementById("loginPassword").value;
+ if(!email||!password){showMessage("Enter email and password.","#ff6677");return}
+ try{
+  const result=await signInWithEmailAndPassword(auth,email,password);
+  if(!result.user.emailVerified){
+   await signOut(auth);
+   showMessage("Please verify your email first. Check your inbox.","#ff6677");
   }
+ }catch(e){showMessage(e.message,"#ff6677")}
+};
 
-  if (!photoFile.type.startsWith("image/") ||
-      !motionFile.type.startsWith("video/")) {
-    alert("Please select a valid image and video.");
-    return;
-  }
+document.getElementById("resetPassword").onclick=async()=>{
+ if(!requireFirebase())return;
+ const email=document.getElementById("resetEmail").value.trim();
+ if(!email){showMessage("Enter your email address.","#ff6677");return}
+ try{
+  await sendPasswordResetEmail(auth,email);
+  showMessage("Password reset link sent. Check your email.");
+ }catch(e){showMessage(e.message,"#ff6677")}
+};
 
-  generateBtn.disabled = true;
-  generateBtn.textContent = "PROCESSING...";
-  resultBox.style.display = "none";
+document.getElementById("logout").onclick=async()=>{
+ if(auth)await signOut(auth);
+ openLogin();
+};
 
-  try {
-    showStatus(
-      "Uploading your files...",
-      "Preparing the photo and motion reference video."
-    );
+/* DASHBOARD NAVIGATION */
+function goPage(page){
+ document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+ document.getElementById(page)?.classList.add("active");
+ document.querySelectorAll("[data-page]").forEach(b=>{
+  b.classList.toggle("active",b.dataset.page===page);
+ });
+}
+document.querySelectorAll("[data-page]").forEach(button=>{
+ button.onclick=()=>goPage(button.dataset.page);
+});
 
-    const form = new FormData();
-    form.append("photo", photoFile);
-    form.append("motion", motionFile);
-    form.append("orientation", document.getElementById("orientation").value);
-    form.append("prompt", document.getElementById("prompt").value);
-    form.append("keepSound", document.getElementById("sound").checked);
+/* DEMO CHART — NOT LIVE MARKET DATA */
+function makeChart(id){
+ const chart=document.getElementById(id);
+ if(!chart)return;
+ for(let i=0;i<42;i++){
+  const bar=document.createElement("div");
+  const up=Math.random()>.43;
+  bar.className="bar "+(up?"up":"down");
+  bar.style.height=(25+Math.random()*75)+"%";
+  chart.appendChild(bar);
+ }
+}
+makeChart("chart");
+makeChart("chart2");
 
-    const response = await fetch("/api/generate", {
-      method: "POST",
-      body: form
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || "Could not start generation.");
-    }
-
-    showStatus(
-      "AI generation started!",
-      "Your character is being animated. This can take several minutes."
-    );
-
-    const videoUrl = await checkJob(data.requestId);
-
-    output.src = videoUrl;
-    download.href = videoUrl;
-    resultBox.style.display = "block";
-
-    statusTitle.textContent = "Generation complete!";
-    statusText.textContent = "Your AI video is ready.";
-
-    document.querySelector(".progress").style.display = "none";
-
-    resultBox.scrollIntoView({ behavior: "smooth" });
-
-  } catch (error) {
-    showStatus("Something went wrong", error.message);
-  } finally {
-    generateBtn.disabled = false;
-    generateBtn.textContent = "✨ GENERATE AI VIDEO";
-  }
+/* DEMO BOT BUTTONS */
+let botRunning=false;
+function setBot(value){
+ botRunning=value;
+ const status=botRunning?"● BOT RUNNING — DEMO":"● BOT STOPPED — DEMO";
+ document.getElementById("botStatus").textContent=status;
+ document.getElementById("botStatus2").textContent=status;
+ document.getElementById("botStatus").style.color=botRunning?"#00df72":"#f6bd35";
+ document.getElementById("botStatus2").style.color=botRunning?"#00df72":"#f6bd35";
+}
+["startBot","startBot2"].forEach(id=>{
+ document.getElementById(id).onclick=()=>setBot(true);
+});
+["stopBot","stopBot2"].forEach(id=>{
+ document.getElementById(id).onclick=()=>setBot(false);
 });
 </script>
 
