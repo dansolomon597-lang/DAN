@@ -1,544 +1,285 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="am">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#081426">
-<title>DAN BANK</title>
+<meta name="theme-color" content="#080b14">
+<title>DAN EARN PRO</title>
 <style>
-:root{
- --bg:#081426;--panel:#10213a;--panel2:#162b48;
- --gold:#e9bd62;--white:#f5f7fb;--muted:#91a3bb;
- --green:#21c78a;--red:#ff6474;--line:#263b58;
-}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--white);
- font-family:Arial,sans-serif}
-button,input,select{font:inherit}
-button{cursor:pointer}
-header{padding:17px 18px;background:#0d1c32;
- display:flex;justify-content:space-between;align-items:center;
- border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.logo{font-size:22px;font-weight:900;color:var(--gold);letter-spacing:1px}
-.logo small{display:block;font-size:9px;color:#aabbd0;letter-spacing:3px;margin-top:4px}
-.container{max-width:1100px;margin:auto;padding:17px}
+body{margin:0;background:#080b14;color:#fff;font-family:Arial,sans-serif}
+header{padding:20px;background:#101827;border-bottom:1px solid #263449}
+.logo{font-size:25px;font-weight:900;color:#f5bd50}
+.logo span{color:white}
+header p{color:#9ba9bd;font-size:13px}
+nav{display:flex;overflow:auto;gap:8px;padding:12px;background:#0d1421}
+nav button{white-space:nowrap;background:#1b293d;color:white;border:0;padding:12px;border-radius:9px}
+nav button.active{background:#f5bd50;color:#111}
+main{max-width:850px;margin:auto;padding:14px}
+.page{display:none}.page.active{display:block}
+.card{background:#111c2d;border:1px solid #293950;border-radius:15px;padding:17px;margin-bottom:14px}
+h2{font-size:19px;margin:0 0 13px}
+p{color:#aab8cc;font-size:14px;line-height:1.6}
+label{display:block;margin:13px 0 7px;font-size:13px;color:#dce4f0}
+input,select,textarea{width:100%;padding:13px;background:#080f1c;color:white;border:1px solid #34445c;border-radius:9px}
+button.primary{width:100%;padding:14px;border:0;border-radius:10px;background:#f3bd50;color:#111;font-weight:bold;margin-top:13px}
+button.secondary{padding:11px;border:1px solid #34445c;border-radius:9px;background:#1b293d;color:white}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#19283d;padding:14px;border-radius:10px;font-size:12px;color:#aebbd0}
+.stat strong{display:block;color:#f5bd50;font-size:21px;margin-top:8px}
+.notice{background:#302819;color:#f5d99b;padding:12px;border-radius:9px;font-size:13px;line-height:1.6;margin-top:12px}
+.success{background:#123528;color:#a5efc3}
+.preview{width:100%;max-height:260px;object-fit:contain;background:#050a12;border-radius:10px;margin-top:10px}
+.person{display:flex;align-items:center;gap:12px;background:#1a293e;padding:9px;margin-top:8px;border-radius:9px}
+.person img{width:55px;height:55px;object-fit:cover;border-radius:8px}
 .hidden{display:none!important}
-.card{background:var(--panel);border:1px solid var(--line);
- border-radius:16px;padding:17px;margin-bottom:15px}
-h2{font-size:19px;margin:0 0 15px}
-h3{font-size:15px;margin:0 0 12px}
-.muted{color:var(--muted);font-size:12px}
-.gold{color:var(--gold)}
-button.primary{background:var(--gold);color:#152238;font-weight:bold;
- border:0;border-radius:10px;padding:13px;width:100%}
-button.secondary{background:var(--panel2);color:white;
- border:1px solid var(--line);border-radius:10px;padding:12px}
-button.danger{background:#562535;color:white;border:0;border-radius:10px;padding:12px}
-input,select{width:100%;padding:13px;background:#09172a;
- color:white;border:1px solid #344963;border-radius:10px;
- outline:none;margin:7px 0 13px}
-label{font-size:12px;color:#b9c8d9}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.balance{background:linear-gradient(130deg,#183656,#10213a);
- border:1px solid #53617a;border-radius:17px;padding:19px;margin-bottom:14px}
-.balance .amount{font-size:27px;font-weight:bold;margin:9px 0}
-.stat{background:#142944;border-radius:13px;padding:14px}
-.stat b{display:block;font-size:17px;margin-top:8px}
-.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.action{background:var(--panel2);border:1px solid var(--line);
- color:white;padding:13px 4px;border-radius:12px;font-size:12px}
-.action span{display:block;color:var(--gold);font-size:20px;margin-bottom:6px}
-nav{display:flex;overflow:auto;gap:7px;margin:15px 0}
-nav button{white-space:nowrap;background:var(--panel2);
- color:white;border:1px solid var(--line);padding:11px 14px;border-radius:10px}
-nav button.active{background:var(--gold);color:#152238}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.transaction{padding:13px 0;border-bottom:1px solid var(--line);
- display:flex;justify-content:space-between;gap:10px;font-size:13px}
-.green{color:var(--green)}.red{color:var(--red)}
-.notice{background:#263448;border:1px solid #596477;
- padding:12px;border-radius:10px;color:#e7d6ad;font-size:12px;
- line-height:1.6;margin-bottom:14px}
-.badge{font-size:10px;background:#244735;color:#83e8b6;
- padding:5px 8px;border-radius:20px}
-.login{max-width:420px;margin:55px auto}
-footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
- background:#214b3c;color:white;padding:13px 20px;border-radius:12px;
- display:none;z-index:20;max-width:90%;text-align:center}
-@media(min-width:700px){
- .grid{grid-template-columns:repeat(4,1fr)}
- .mainlayout{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-}
+footer{text-align:center;color:#75849a;padding:25px;font-size:12px}
+a{color:#f5bd50}
 </style>
 </head>
 <body>
-
 <header>
- <div class="logo">DAN BANK<small>DIGITAL BANKING</small></div>
- <div class="row">
-  <span class="badge">DEMO</span>
-  <button class="secondary" onclick="logout()" id="logoutBtn" style="display:none">Logout</button>
- </div>
+ <div class="logo">DAN <span>EARN PRO</span></div>
+ <p>Digital Services & Photo Motion Platform</p>
 </header>
 
-<div class="container">
+<nav>
+ <button class="active" onclick="page('home',this)">Home</button>
+ <button onclick="page('motion',this)">Photo Motion</button>
+ <button onclick="page('ads',this)">Advertising</button>
+ <button onclick="page('affiliate',this)">Affiliate</button>
+ <button onclick="page('premium',this)">Premium</button>
+ <button onclick="page('business',this)">Business</button>
+ <button onclick="page('account',this)">Account</button>
+</nav>
 
-<!-- LOGIN -->
-<section id="loginPage" class="login">
+<main>
+<section id="home" class="page active">
  <div class="card">
-  <div style="text-align:center;margin-bottom:25px">
-   <div class="logo" style="font-size:34px">DAN BANK</div>
-   <p class="muted">Welcome to your digital bank</p>
-  </div>
-  <div id="loginForm">
-   <h2>Login</h2>
-   <label>Email</label>
-   <input id="loginEmail" type="email" placeholder="Enter your email">
-   <label>Password</label>
-   <input id="loginPassword" type="password" placeholder="Enter password">
-   <button class="primary" onclick="login()">LOGIN</button>
-   <p class="muted" style="text-align:center">No account?
-    <a onclick="showRegister()" class="gold">Create account</a>
-   </p>
-  </div>
-  <div id="registerForm" class="hidden">
-   <h2>Create Account</h2>
-   <label>Full name</label>
-   <input id="regName" placeholder="Your full name">
-   <label>Email</label>
-   <input id="regEmail" type="email" placeholder="Your email">
-   <label>Password</label>
-   <input id="regPassword" type="password" placeholder="Create password">
-   <button class="primary" onclick="register()">CREATE ACCOUNT</button>
-   <p class="muted" onclick="showLogin()">Already registered? <span class="gold">Login</span></p>
+  <h2>Welcome to DAN EARN PRO</h2>
+  <p>የዲጂታል አገልግሎቶችን ያግኙ፣ ይጠቀሙ እና ገቢ ያግኙ።</p>
+  <div class="grid">
+   <div class="stat">Account Balance<strong id="balance">$0.00</strong></div>
+   <div class="stat">Completed Videos<strong id="videos">0</strong></div>
   </div>
  </div>
- <div class="notice">Demo account information is stored locally on this device. Do not use real passwords or financial information.</div>
-</section>
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="hidden">
- <div class="row" style="margin:15px 0">
-  <div>
-   <div class="muted">Welcome back</div>
-   <h2 id="welcome" style="margin-top:5px">Customer</h2>
-  </div>
-  <span class="badge">PERSONAL ACCOUNT</span>
+ <div class="card">
+  <h2>Photo Motion Studio</h2>
+  <p>የዳንስ ቪዲዮ እና የሰዎች ፎቶ በማስገባት እንቅስቃሴን ማስተላለፍ።</p>
+  <button class="primary" onclick="page('motion',document.querySelectorAll('nav button')[1])">OPEN STUDIO</button>
  </div>
-
- <div class="mainlayout">
-  <div>
-   <div class="balance">
-    <div class="muted">ETB AVAILABLE BALANCE</div>
-    <div class="amount" id="etbBalance">0.00 ETB</div>
-    <div class="muted">DAN BANK ACCOUNT</div>
-    <div id="accountNumber" class="gold" style="margin-top:8px">DAN000000</div>
-   </div>
-   <div class="balance">
-    <div class="muted">USD AVAILABLE BALANCE</div>
-    <div class="amount" id="usdBalance">$0.00</div>
-    <div class="muted">USD WALLET</div>
-   </div>
-   <div class="grid">
-    <div class="stat"><span class="muted">Total deposits</span><b id="totalDeposit">0</b></div>
-    <div class="stat"><span class="muted">Transactions</span><b id="totalTransactions">0</b></div>
-   </div>
-  </div>
-  <div>
-   <div class="card">
-    <h3>Quick Actions</h3>
-    <div class="actions">
-     <button class="action" onclick="openTab('deposit')"><span>＋</span>Deposit</button>
-     <button class="action" onclick="openTab('withdraw')"><span>－</span>Withdraw</button>
-     <button class="action" onclick="openTab('transfer')"><span>⇄</span>Transfer</button>
-     <button class="action" onclick="openTab('convert')"><span>＄</span>Convert</button>
-    </div>
-   </div>
-   <div class="card">
-    <h3>Account Information</h3>
-    <div class="transaction"><span class="muted">Account holder</span><b id="holderName"></b></div>
-    <div class="transaction"><span class="muted">Account type</span><b>Personal</b></div>
-    <div class="transaction"><span class="muted">Currency</span><b>ETB / USD</b></div>
-   </div>
-  </div>
- </div>
-
- <nav id="navigation">
-  <button class="active" onclick="openTab('home',this)">Home</button>
-  <button onclick="openTab('deposit',this)">Deposit</button>
-  <button onclick="openTab('withdraw',this)">Withdraw</button>
-  <button onclick="openTab('transfer',this)">Send Money</button>
-  <button onclick="openTab('convert',this)">Exchange</button>
-  <button onclick="openTab('history',this)">History</button>
-  <button onclick="openTab('admin',this)">Settings</button>
- </nav>
-
- <div id="home" class="tab">
-  <div class="card">
-   <h2>Recent Transactions</h2>
-   <div id="recentTransactions" class="muted">No transactions yet.</div>
-  </div>
- </div>
-
- <!-- DEPOSIT -->
- <div id="deposit" class="tab hidden">
-  <div class="card">
-   <h2>Deposit Money</h2>
-   <div class="notice">Demo mode: this form does not collect real payments.</div>
-   <label>Deposit method</label>
-   <select id="depositMethod">
-    <option>Telebirr</option>
-    <option>CBE Birr</option>
-    <option>E-Birr</option>
-    <option>Commercial Bank of Ethiopia</option>
-    <option>Bank of Abyssinia</option>
-    <option>Awash Bank</option>
-    <option>Other Bank</option>
-   </select>
-   <label>Currency</label>
-   <select id="depositCurrency"><option>ETB</option><option>USD</option></select>
-   <label>Amount</label>
-   <input id="depositAmount" type="number" min="1" placeholder="Enter amount">
-   <label>Reference / transaction ID (optional)</label>
-   <input id="depositReference" placeholder="Reference number">
-   <button class="primary" onclick="deposit()">CONTINUE DEMO DEPOSIT</button>
-  </div>
- </div>
-
- <!-- WITHDRAW -->
- <div id="withdraw" class="tab hidden">
-  <div class="card">
-   <h2>Withdraw Money</h2>
-   <div class="notice">Demo only. No real bank or mobile money withdrawal occurs.</div>
-   <label>Withdrawal method</label>
-   <select id="withdrawMethod">
-    <option>Telebirr</option>
-    <option>CBE Birr</option>
-    <option>E-Birr</option>
-    <option>Bank Account</option>
-   </select>
-   <label>Currency</label>
-   <select id="withdrawCurrency"><option>ETB</option><option>USD</option></select>
-   <label>Phone / Account Number</label>
-   <input id="withdrawAccount" placeholder="Enter account number">
-   <label>Amount</label>
-   <input id="withdrawAmount" type="number" min="1" placeholder="Enter amount">
-   <button class="primary" onclick="withdraw()">WITHDRAW DEMO</button>
-  </div>
- </div>
-
- <!-- TRANSFER -->
- <div id="transfer" class="tab hidden">
-  <div class="card">
-   <h2>Send Money</h2>
-   <div class="notice">Recipient verification and real transfers require an authorized provider API. This demo will not send money.</div>
-   <label>Transfer destination</label>
-   <select id="transferMethod" onchange="changeTransfer()">
-    <option value="bank">Ethiopian Bank</option>
-    <option value="Telebirr">Telebirr</option>
-    <option value="CBE Birr">CBE Birr</option>
-    <option value="E-Birr">E-Birr</option>
-   </select>
-   <div id="bankBox">
-    <label>Select Bank</label>
-    <select id="bankSelect"></select>
-   </div>
-   <label>Receiver phone / account number</label>
-   <input id="receiverAccount" placeholder="Enter receiver account">
-   <label>Receiver full name</label>
-   <input id="receiverName" placeholder="Enter verified receiver name">
-   <div class="muted">Name shown here is manually entered, not verified by the provider.</div>
-   <label>Currency</label>
-   <select id="transferCurrency"><option>ETB</option><option>USD</option></select>
-   <label>Amount</label>
-   <input id="transferAmount" type="number" min="1" placeholder="Enter amount">
-   <label>Reason</label>
-   <input id="transferReason" placeholder="Payment reason">
-   <button class="primary" onclick="transfer()">REVIEW DEMO TRANSFER</button>
-  </div>
- </div>
-
- <!-- EXCHANGE -->
- <div id="convert" class="tab hidden">
-  <div class="card">
-   <h2>Currency Exchange</h2>
-   <div class="notice">The exchange rate below is an editable demonstration rate, not a live bank rate.</div>
-   <label>USD / ETB demo exchange rate</label>
-   <input id="exchangeRate" type="number" value="150" min="0.01" step="0.01">
-   <label>Convert from</label>
-   <select id="fromCurrency" onchange="calculateExchange()">
-    <option>USD</option><option>ETB</option>
-   </select>
-   <label>Amount</label>
-   <input id="exchangeAmount" type="number" placeholder="Enter amount" oninput="calculateExchange()">
-   <button class="secondary" onclick="reverseCurrency()">SWITCH CURRENCY</button>
-   <div class="stat" style="margin:15px 0">
-    <div class="muted">You will receive</div>
-    <b id="exchangeResult" class="gold">0.00 ETB</b>
-   </div>
-   <button class="primary" onclick="convertMoney()">CONVERT DEMO BALANCE</button>
-  </div>
- </div>
-
- <!-- HISTORY -->
- <div id="history" class="tab hidden">
-  <div class="card">
-   <h2>Transaction History</h2>
-   <div id="allTransactions">No transactions.</div>
-  </div>
- </div>
-
- <!-- SETTINGS -->
- <div id="admin" class="tab hidden">
-  <div class="card">
-   <h2>Account Settings</h2>
-   <p class="muted">Your demo account information.</p>
-   <div class="transaction"><span>Name</span><b id="settingsName"></b></div>
-   <div class="transaction"><span>Email</span><b id="settingsEmail"></b></div>
-   <button class="secondary" style="width:100%;margin-top:15px" onclick="logout()">LOGOUT</button>
-  </div>
-  <div class="notice">Admin functions and real account management must be implemented on a secure server. This browser-only prototype is not a real bank.</div>
+ <div class="card">
+  <h2>Earn With Us</h2>
+  <p>Paid Advertising · Affiliate Marketing · Premium Membership · Business Promotion</p>
  </div>
 </section>
-</div>
-<footer>DAN BANK © 2026 | Demo Banking Interface | Not a licensed bank</footer>
-<div id="toast"></div>
+
+<section id="motion" class="page">
+ <div class="card">
+  <h2>PHOTO MOTION STUDIO</h2>
+  <p>አንድ የዳንስ ቪዲዮ እና በውስጡ ያሉትን ሰዎች ብዛት ያህል ፎቶዎች ያስገቡ። የጀርባ ቦታው እንዲጠበቅ የተዘጋጀ የማቀናበሪያ ጥያቄ ይላካል።</p>
+
+  <label>Dance video</label>
+  <input type="file" id="dance" accept="video/*">
+  <video id="videoPreview" class="preview hidden" controls></video>
+
+  <label>People photos (multiple)</label>
+  <input type="file" id="photos" accept="image/*" multiple>
+  <div id="photoList"></div>
+
+  <label>Number of people in original video</label>
+  <input id="count" type="number" min="1" max="20" placeholder="Example: 3">
+
+  <label>Output quality</label>
+  <select id="quality">
+   <option>720p HD</option>
+   <option>1080p Full HD</option>
+  </select>
+
+  <button class="primary" onclick="createMotion()">CREATE VIDEO</button>
+  <div id="motionStatus" class="notice hidden"></div>
+  <div id="result" class="hidden">
+   <h2>Result</h2>
+   <video id="output" class="preview" controls></video>
+   <a id="download" download="dan-motion.mp4">Download video</a>
+  </div>
+ </div>
+</section>
+
+<section id="ads" class="page">
+ <div class="card">
+  <h2>Paid Advertising</h2>
+  <p>ማስታወቂያዎን በድረገጻችን ላይ ለማሳየት ይመዝገቡ።</p>
+  <label>Business name</label><input id="adName" placeholder="Business name">
+  <label>Website or social link</label><input id="adLink" placeholder="https://">
+  <label>Advertising budget (USD)</label><input id="adBudget" type="number" placeholder="10">
+  <button class="primary" onclick="submitRequest('Advertising')">SUBMIT AD REQUEST</button>
+ </div>
+</section>
+
+<section id="affiliate" class="page">
+ <div class="card">
+  <h2>Affiliate Marketing</h2>
+  <p>የሪፈራል ሊንክዎን ያጋሩ። ኮሚሽን የሚሰጠው ከተረጋገጠ ሽያጭ ወይም ሪፈራል በኋላ ነው።</p>
+  <input id="refLink" readonly>
+  <button class="primary" onclick="copyReferral()">COPY REFERRAL LINK</button>
+  <div class="notice">ኮሚሽን እስካሁን አልተከፈለም።</div>
+ </div>
+</section>
+
+<section id="premium" class="page">
+ <div class="card">
+  <h2>Premium Membership</h2>
+  <p>Premium አባልነት ለመጠየቅ የክፍያ መረጃዎን ይላኩ።</p>
+  <label>Plan</label>
+  <select id="plan"><option value="5">$5 Monthly</option><option value="10">$10 Monthly</option><option value="25">$25 Yearly</option></select>
+  <label>Payment method</label>
+  <select id="payment"><option>Telebirr</option><option>CBE Birr</option><option>Bank Transfer</option><option>USD</option></select>
+  <label>Transaction reference</label>
+  <input id="reference" placeholder="Enter payment reference">
+  <button class="primary" onclick="submitRequest('Premium Membership')">SEND PAYMENT REQUEST</button>
+ </div>
+</section>
+
+<section id="business" class="page">
+ <div class="card">
+  <h2>Business Promotion</h2>
+  <p>ንግድዎን በDAN EARN PRO ላይ ያስመዝግቡ።</p>
+  <label>Business name</label><input id="businessName" placeholder="Business name">
+  <label>Category</label><input id="category" placeholder="e.g. Shop, Service">
+  <label>Contact</label><input id="contact" placeholder="Phone or email">
+  <button class="primary" onclick="submitRequest('Business Promotion')">SUBMIT BUSINESS</button>
+ </div>
+</section>
+
+<section id="account" class="page">
+ <div class="card">
+  <h2>My Account</h2>
+  <label>Name</label><input id="username" placeholder="Your name">
+  <label>Email</label><input id="email" type="email" placeholder="Your email">
+  <button class="primary" onclick="saveAccount()">SAVE ACCOUNT</button>
+  <div id="accountStatus" class="notice hidden"></div>
+ </div>
+ <div class="card">
+  <h2>My Requests</h2>
+  <div id="requests">No requests yet.</div>
+ </div>
+</section>
+</main>
+
+<footer>DAN EARN PRO · Digital Services Platform</footer>
 
 <script>
-const USERS='dan_bank_users_v1';
-const SESSION='dan_bank_session_v1';
-const BANKS=[
-'Commercial Bank of Ethiopia',
-'Bank of Abyssinia',
-'Awash Bank',
-'Dashen Bank',
-'Wegagen Bank',
-'Hibret Bank',
-'Nib International Bank',
-'Cooperative Bank of Oromia',
-'Zemen Bank',
-'Oromia Bank',
-'Anbesa Bank',
-'Berhan Bank',
-'Bunna Bank',
-'Enat Bank',
-'Global Bank Ethiopia',
-'Addis International Bank',
-'Abay Bank',
-'Shabelle Bank',
-'ZamZam Bank',
-'Goh Betoch Bank',
-'Ahadu Bank',
-'Hijra Bank',
-'Tsehay Bank',
-'Siinqee Bank',
-'Tsedey Bank',
-'Gadaa Bank',
-'Amhara Bank',
-'Rammis Bank',
-'Siket Bank',
-'Sidama Bank',
-'Omo Bank'
-];
+const API_URL="/api/motion-transfer";
+const get=(id)=>document.getElementById(id);
+const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))||fallback}catch{return fallback}};
+const save=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
 
-let current=null;
+function page(id,btn){
+ document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ get(id).classList.add("active");
+ document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+}
 
-function getUsers(){
- return JSON.parse(localStorage.getItem(USERS)||'{}');
-}
-function saveUsers(users){
- localStorage.setItem(USERS,JSON.stringify(users));
-}
-function saveCurrent(){
- const users=getUsers();
- if(current) users[current.email]=current;
- saveUsers(users);
-}
-function money(n,c){
- return (c==='USD'?'$':'')+
- Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+
- (c==='ETB'?' ETB':'');
-}
-function toast(msg){
- const t=document.getElementById('toast');
- t.textContent=msg;t.style.display='block';
- setTimeout(()=>t.style.display='none',2800);
-}
-function showRegister(){
- document.getElementById('loginForm').classList.add('hidden');
- document.getElementById('registerForm').classList.remove('hidden');
-}
-function showLogin(){
- document.getElementById('registerForm').classList.add('hidden');
- document.getElementById('loginForm').classList.remove('hidden');
-}
-function register(){
- const name=document.getElementById('regName').value.trim();
- const email=document.getElementById('regEmail').value.trim().toLowerCase();
- const password=document.getElementById('regPassword').value;
- if(!name||!email||password.length<6){
-  return toast('Enter your details and a password of at least 6 characters.');
- }
- const users=getUsers();
- if(users[email])return toast('This email already exists.');
- const user={
-  name,email,password,
-  account:'DAN'+Date.now().toString().slice(-9),
-  etb:0,usd:0,transactions:[],totalDeposits:0
- };
- users[email]=user;saveUsers(users);
- current=user;
- localStorage.setItem(SESSION,email);
- showDashboard();
-}
-function login(){
- const email=document.getElementById('loginEmail').value.trim().toLowerCase();
- const password=document.getElementById('loginPassword').value;
- const user=getUsers()[email];
- if(!user||user.password!==password)return toast('Incorrect email or password.');
- current=user;
- localStorage.setItem(SESSION,email);
- showDashboard();
-}
-function logout(){
- current=null;
- localStorage.removeItem(SESSION);
- document.getElementById('dashboard').classList.add('hidden');
- document.getElementById('loginPage').classList.remove('hidden');
- document.getElementById('logoutBtn').style.display='none';
-}
-function showDashboard(){
- document.getElementById('loginPage').classList.add('hidden');
- document.getElementById('dashboard').classList.remove('hidden');
- document.getElementById('logoutBtn').style.display='block';
- document.getElementById('welcome').textContent=current.name;
- document.getElementById('holderName').textContent=current.name;
- document.getElementById('accountNumber').textContent=current.account;
- document.getElementById('settingsName').textContent=current.name;
- document.getElementById('settingsEmail').textContent=current.email;
- updateUI();
-}
-function updateUI(){
- if(!current)return;
- document.getElementById('etbBalance').textContent=money(current.etb,'ETB');
- document.getElementById('usdBalance').textContent=money(current.usd,'USD');
- document.getElementById('totalDeposit').textContent=money(current.totalDeposits,'ETB');
- document.getElementById('totalTransactions').textContent=current.transactions.length;
- const html=current.transactions.slice().reverse().map(t=>
- `<div class="transaction">
- <div><b>${escapeHTML(t.type)}</b><div class="muted">${escapeHTML(t.detail)}<br>${escapeHTML(t.date)}</div></div>
- <b class="${t.type==='Deposit'?'green':'red'}">${t.type==='Deposit'?'+':'-'}${money(t.amount,t.currency)}</b>
- </div>`).join('');
- document.getElementById('recentTransactions').innerHTML=html||'No transactions yet.';
- document.getElementById('allTransactions').innerHTML=html||'No transactions yet.';
- saveCurrent();
+let account=read("danEarnAccount",null);
+let requests=read("danEarnRequests",[]);
+let completed=Number(localStorage.getItem("danEarnVideos")||0);
+
+function update(){
+ get("balance").textContent="$"+Number(account?.balance||0).toFixed(2);
+ get("videos").textContent=completed;
+ get("requests").innerHTML=requests.length?requests.map(r=>"<p>"+escapeHTML(r.type)+" — "+escapeHTML(r.status)+"</p>").join(""):"No requests yet.";
 }
 function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-function addTransaction(type,amount,currency,detail){
- current.transactions.push({
-  type,amount,currency,detail,date:new Date().toLocaleString()
+get("dance").addEventListener("change",()=>{
+ const f=get("dance").files[0];if(!f)return;
+ get("videoPreview").src=URL.createObjectURL(f);
+ get("videoPreview").classList.remove("hidden");
+});
+get("photos").addEventListener("change",()=>{
+ get("photoList").innerHTML="";
+ [...get("photos").files].forEach((f,i)=>{
+  const box=document.createElement("div");box.className="person";
+  const img=document.createElement("img");img.src=URL.createObjectURL(f);
+  const span=document.createElement("span");span.textContent="Person "+(i+1)+": "+f.name;
+  box.append(img,span);get("photoList").append(box);
  });
+});
+function status(msg,ok=false){
+ get("motionStatus").textContent=msg;
+ get("motionStatus").classList.remove("hidden","success");
+ if(ok)get("motionStatus").classList.add("success");
 }
-function deposit(){
- const amount=Number(document.getElementById('depositAmount').value);
- const currency=document.getElementById('depositCurrency').value;
- const method=document.getElementById('depositMethod').value;
- if(!amount||amount<=0)return toast('Enter a valid amount.');
- if(currency==='ETB')current.etb+=amount;
- else current.usd+=amount;
- current.totalDeposits+=amount;
- addTransaction('Deposit',amount,currency,method+' (DEMO)');
- updateUI();toast('Demo deposit successful.');
-}
-function withdraw(){
- const amount=Number(document.getElementById('withdrawAmount').value);
- const currency=document.getElementById('withdrawCurrency').value;
- const method=document.getElementById('withdrawMethod').value;
- const account=document.getElementById('withdrawAccount').value.trim();
- if(!amount||amount<=0||!account)return toast('Enter amount and account.');
- if(currency==='ETB'){
-  if(amount>current.etb)return toast('Insufficient ETB balance.');
-  current.etb-=amount;
- }else{
-  if(amount>current.usd)return toast('Insufficient USD balance.');
-  current.usd-=amount;
+async function createMotion(){
+ const video=get("dance").files[0],photos=[...get("photos").files],count=Number(get("count").value);
+ if(!video)return status("Upload the dance video first.");
+ if(!count||count<1)return status("Enter the number of people.");
+ if(photos.length!==count)return status("The number of photos must equal the number of people.");
+ const form=new FormData();
+ form.append("video",video);
+ photos.forEach((p,i)=>form.append("photos",p));
+ form.append("personCount",count);
+ form.append("quality",get("quality").value);
+ form.append("preserveBackground","true");
+ form.append("preserveMotion","true");
+ form.append("removeOriginalAudio","true");
+ status("Uploading. Waiting for the video processing server...");
+ try{
+  const res=await fetch(API_URL,{method:"POST",body:form});
+  if(!res.ok)throw Error("Server returned "+res.status);
+  const data=await res.json();
+  if(!data.videoUrl)throw Error("No output video URL was returned.");
+  get("output").src=data.videoUrl;
+  get("download").href=data.videoUrl;
+  get("result").classList.remove("hidden");
+  completed++;localStorage.setItem("danEarnVideos",completed);
+  status("Video processing completed.",true);update();
+ }catch(e){
+  status("Processing server is not connected. This page cannot create the real video until the backend and motion-transfer engine are installed.");
  }
- addTransaction('Withdrawal',amount,currency,method+' (DEMO)');
- updateUI();toast('Demo withdrawal recorded.');
 }
-function changeTransfer(){
- const method=document.getElementById('transferMethod').value;
- document.getElementById('bankBox').classList.toggle('hidden',method!=='bank');
-}
-function transfer(){
- const method=document.getElementById('transferMethod').value;
- const bank=document.getElementById('bankSelect').value;
- const account=document.getElementById('receiverAccount').value.trim();
- const name=document.getElementById('receiverName').value.trim();
- const amount=Number(document.getElementById('transferAmount').value);
- const currency=document.getElementById('transferCurrency').value;
- if(!account||!name||!amount||amount<=0)return toast('Complete all required fields.');
- if(currency==='ETB'&&amount>current.etb)return toast('Insufficient ETB balance.');
- if(currency==='USD'&&amount>current.usd)return toast('Insufficient USD balance.');
- const destination=method==='bank'?bank:method;
- if(!confirm('DEMO TRANSFER REVIEW\n\nDestination: '+destination+
- '\nReceiver: '+name+'\nAccount: '+account+
- '\nAmount: '+money(amount,currency)+
- '\n\nThis will only change your demo balance. Continue?'))return;
- if(currency==='ETB')current.etb-=amount;
- else current.usd-=amount;
- addTransaction('Transfer',amount,currency,destination+' / '+name+' (DEMO)');
- updateUI();toast('Demo transfer recorded. No real money sent.');
-}
-function calculateExchange(){
- const amount=Number(document.getElementById('exchangeAmount').value)||0;
- const rate=Number(document.getElementById('exchangeRate').value)||0;
- const from=document.getElementById('fromCurrency').value;
- const result=from==='USD'?amount*rate:(rate?amount/rate:0);
- document.getElementById('exchangeResult').textContent=money(result,from==='USD'?'ETB':'USD');
-}
-function reverseCurrency(){
- const f=document.getElementById('fromCurrency');
- f.value=f.value==='USD'?'ETB':'USD';
- calculateExchange();
-}
-function convertMoney(){
- const amount=Number(document.getElementById('exchangeAmount').value);
- const rate=Number(document.getElementById('exchangeRate').value);
- const from=document.getElementById('fromCurrency').value;
- if(!amount||amount<=0||!rate||rate<=0)return toast('Enter a valid amount and exchange rate.');
- const to=from==='USD'?'ETB':'USD';
- const result=from==='USD'?amount*rate:amount/rate;
- if(from==='USD'){
-  if(amount>current.usd)return toast('Insufficient USD balance.');
-  current.usd-=amount;current.etb+=result;
- }else{
-  if(amount>current.etb)return toast('Insufficient ETB balance.');
-  current.etb-=amount;current.usd+=result;
+function submitRequest(type){
+ const record={type,date:new Date().toLocaleString(),status:"Pending review"};
+ if(type==="Advertising"){
+  if(!get("adName").value||!get("adBudget").value)return alert("Enter business name and budget.");
+  record.details=get("adName").value+" | "+get("adBudget").value+" USD";
  }
- addTransaction('Conversion',amount,from,'Converted to '+to+' at demo rate '+rate);
- updateUI();toast('Demo currency conversion completed.');
+ if(type==="Premium Membership"){
+  if(!get("reference").value)return alert("Enter payment reference.");
+  record.details=get("plan").value+" USD | "+get("payment").value+" | "+get("reference").value;
+ }
+ if(type==="Business Promotion"){
+  if(!get("businessName").value)return alert("Enter business name.");
+  record.details=get("businessName").value+" | "+get("category").value+" | "+get("contact").value;
+ }
+ requests.unshift(record);save("danEarnRequests",requests);update();
+ alert("Request saved on this device. It has not been sent to an administrator.");
 }
-function openTab(tab,button){
- document.querySelectorAll('.tab').forEach(x=>x.classList.add('hidden'));
- document.getElementById(tab).classList.remove('hidden');
- document.querySelectorAll('#navigation button').forEach(x=>x.classList.remove('active'));
- if(button)button.classList.add('active');
- else if(tab==='home')document.querySelector('#navigation button').classList.add('active');
+function saveAccount(){
+ const name=get("username").value.trim(),email=get("email").value.trim();
+ if(!name||!email)return alert("Enter name and email.");
+ account={name,email,balance:account?.balance||0};
+ save("danEarnAccount",account);
+ get("accountStatus").textContent="Account saved on this device.";
+ get("accountStatus").classList.remove("hidden");
+ get("refLink").value=location.href.split("#")[0]+"?ref="+encodeURIComponent(email);
+ update();
 }
-document.getElementById('bankSelect').innerHTML=
- BANKS.map(b=>`<option>${escapeHTML(b)}</option>`).join('');
-
-const saved=localStorage.getItem(SESSION);
-if(saved){
- current=getUsers()[saved]||null;
- if(current)showDashboard();
- else logout();
+function copyReferral(){
+ const value=get("refLink").value;
+ if(!value)return alert("Save your account first.");
+ if(navigator.clipboard?.writeText)navigator.clipboard.writeText(value).then(()=>alert("Copied."));
+ else{get("refLink").select();document.execCommand("copy");alert("Copied.");}
 }
+if(account){
+ get("username").value=account.name||"";
+ get("email").value=account.email||"";
+ get("refLink").value=location.href.split("#")[0]+"?ref="+encodeURIComponent(account.email||"");
+}
+update();
 </script>
 </body>
 </html>
