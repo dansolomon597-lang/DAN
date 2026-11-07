@@ -1,664 +1,497 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080808">
-<title>DAN AUTO TRADING PRO</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#080a10">
+<title>DAN AI TRADING ANALYZER</title>
 <style>
 :root{
- --bg:#07090d;
- --panel:#11151d;
- --panel2:#171d27;
- --gold:#f6bd35;
- --gold2:#ffe29a;
- --green:#00df72;
- --red:#ff4055;
- --text:#f5f5f5;
- --muted:#9ba5b5;
+--bg:#080a10;--panel:#111722;--panel2:#171f2d;
+--gold:#e9b94e;--gold2:#ffda82;--text:#f4f5f7;
+--muted:#929bad;--green:#20d99a;--red:#ff5368;
 }
 *{box-sizing:border-box}
-body{
- margin:0;background:var(--bg);color:var(--text);
- font-family:Arial,Helvetica,sans-serif;
-}
-button,input{font:inherit}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Arial,sans-serif}
+button,input,select{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-.gold{color:var(--gold)}
-.muted{color:var(--muted)}
-#authPage{
- min-height:100vh;
- background:
- radial-gradient(circle at 15% 40%,#49300d 0,transparent 35%),
- radial-gradient(circle at 90% 20%,#332309 0,transparent 30%),
- linear-gradient(135deg,#050608,#11131a 60%,#080808);
- display:flex;flex-direction:column;
+#loginPage{
+min-height:100vh;display:flex;align-items:center;
+justify-content:center;padding:20px;
+background:radial-gradient(ellipse at 50% 20%,#493719 0%,#17130e 30%,#080a10 75%);
 }
-.auth-header{
- display:flex;justify-content:space-between;align-items:center;
- padding:22px 5%;border-bottom:1px solid #705018;
+.login-card{
+width:100%;max-width:410px;padding:30px 23px;
+background:#111722ed;border:1px solid #b58c3b55;
+border-radius:22px;box-shadow:0 20px 80px #000;
+text-align:center;
 }
-.logo{display:flex;align-items:center;gap:12px}
-.logo-icon{font-size:42px;color:var(--gold)}
-.logo h1{font-size:22px;margin:0;color:var(--gold)}
-.logo small{color:#ddd}
-.auth-header .features{color:var(--gold2);font-size:13px}
-.auth-main{
- flex:1;display:grid;grid-template-columns:1fr 1fr;
- align-items:center;gap:35px;padding:35px 6%;
+.logo{
+width:90px;height:90px;border-radius:50%;
+margin:0 auto 14px;display:grid;place-items:center;
+border:2px solid var(--gold);
+background:linear-gradient(145deg,#493719,#0c0e13);
+font-size:47px;box-shadow:0 0 35px #e9b94e33;
 }
-.hero{text-align:center}
-.bull{font-size:130px;filter:drop-shadow(0 0 22px #d99a19)}
-.hero h2{font-size:35px;color:var(--gold);margin:10px}
-.hero p{color:#c5c5c5;line-height:1.7}
-.hero-stats{
- display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
- margin-top:25px;color:var(--gold2);font-size:13px
-}
-.auth-card{
- max-width:470px;width:100%;margin:auto;
- background:linear-gradient(145deg,#171a20,#08090c);
- border:1px solid #a77a20;border-radius:22px;
- padding:32px;box-shadow:0 0 40px #d99b1c22;
-}
-.auth-card h2{text-align:center;font-size:29px;margin:8px 0}
-.auth-card .sub{text-align:center;color:var(--muted);margin-bottom:25px}
-.field{margin:14px 0}
-.field label{display:block;font-size:13px;color:#d5c18c;margin-bottom:7px}
-.field input{
- width:100%;padding:14px;border-radius:10px;
- background:#080b10;border:1px solid #343b47;color:white;
- outline:none;
-}
-.field input:focus{border-color:var(--gold)}
+h1{font-size:24px;letter-spacing:2px;margin:10px 0;color:var(--gold2)}
+.subtitle{font-size:12px;color:var(--muted);line-height:1.7}
+.field{width:100%;padding:15px;margin-top:12px;
+border:1px solid #303a4a;border-radius:11px;
+background:#090e17;color:white;outline:none}
+.field:focus{border-color:var(--gold)}
 .btn{
- width:100%;padding:14px;border-radius:11px;border:0;
- font-weight:bold;margin-top:12px;
+width:100%;padding:14px;border:0;border-radius:11px;
+font-weight:bold;margin-top:13px;
+background:linear-gradient(100deg,#b8862d,#ffdb82);
+color:#17110a;
 }
-.btn-gold{background:linear-gradient(100deg,#b87b12,#ffda65);color:#111}
-.btn-google{background:#fff;color:#222}
-.btn-outline{background:transparent;border:1px solid var(--gold);color:var(--gold)}
-.btn-green{background:#00a957;color:white}
-.btn-red{background:#c92539;color:white}
-.google-icon{font-weight:bold;font-size:19px;margin-right:10px}
-.auth-links{
- display:flex;justify-content:space-between;gap:8px;
- margin-top:17px;font-size:13px
-}
-.auth-links a{color:var(--gold2);cursor:pointer}
-.notice{font-size:12px;color:#aaa;text-align:center;line-height:1.6;margin-top:20px}
-#authMessage{font-size:13px;text-align:center;margin-top:15px;color:var(--gold2)}
-#dashboard{min-height:100vh}
+.btn-dark{background:#1b2635;color:white;border:1px solid #354156}
+.small{font-size:11px;color:var(--muted);margin-top:18px}
+.error{color:var(--red);font-size:12px;margin-top:10px}
+#app{max-width:1250px;margin:auto;padding:14px}
 .topbar{
- display:flex;justify-content:space-between;align-items:center;
- padding:15px 22px;background:#0d1118;border-bottom:1px solid #493918;
- position:sticky;top:0;z-index:10;
+display:flex;align-items:center;justify-content:space-between;
+gap:10px;padding:13px;background:var(--panel);
+border:1px solid #293343;border-radius:15px;
 }
-.topbar .brand{color:var(--gold);font-weight:bold;font-size:18px}
-.topbar small{color:var(--muted)}
-.layout{display:flex;min-height:calc(100vh - 65px)}
-.sidebar{
- width:225px;background:#0d1118;padding:20px 12px;
- border-right:1px solid #292b30;flex-shrink:0;
+.brand{font-weight:900;color:var(--gold2);letter-spacing:1px}
+.brand small{display:block;color:var(--muted);font-size:9px;margin-top:5px}
+.status{font-size:10px;color:var(--green)}
+.logout{background:#283243;border:0;color:white;padding:10px;border-radius:8px}
+nav{
+display:flex;gap:8px;overflow-x:auto;padding:15px 0;
 }
-.nav{
- width:100%;padding:14px;text-align:left;border:0;
- color:#c6ccd5;background:transparent;border-radius:9px;
- margin:4px 0;font-size:14px;
+nav button{
+white-space:nowrap;border:1px solid #2b3544;
+background:#111722;color:#cbd2df;padding:11px 15px;
+border-radius:9px;font-size:12px;
 }
-.nav.active,.nav:hover{background:#49330f;color:var(--gold)}
-.main{flex:1;padding:22px;min-width:0}
-.welcome{margin-bottom:20px}
-.welcome h2{margin:0 0 7px;font-size:24px}
-.cards{
- display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;
+nav button.active{background:#e9b94e;color:#17110a;font-weight:bold}
+.page{display:none}.page.active{display:block}
+.hero{
+padding:22px;border-radius:16px;margin-bottom:14px;
+background:linear-gradient(120deg,#302516,#171b25 65%,#111722);
+border:1px solid #71572966;
 }
-.metric,.panel{
- background:linear-gradient(145deg,#171d27,#0e1219);
- border:1px solid #34302a;border-radius:13px;padding:17px;
+.hero h2{color:var(--gold2);margin:0 0 8px}
+.hero p{color:#bdc4d0;font-size:12px;line-height:1.7}
+.grid{
+display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+gap:10px;margin-bottom:14px;
 }
-.metric small{color:var(--muted)}
-.metric h2{margin:12px 0 4px;font-size:23px;color:var(--gold)}
-.metric span{font-size:12px;color:var(--green)}
-.content-grid{
- display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);
- gap:15px;margin-top:17px;
+.panel{
+background:var(--panel);border:1px solid #273243;
+border-radius:14px;padding:15px;min-width:0;
 }
-.panel-title{font-weight:bold;margin-bottom:16px}
-.chart-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.metric-label{color:var(--muted);font-size:10px}
+.metric-value{font-size:21px;font-weight:bold;margin-top:9px}
+.gold{color:var(--gold2)}
+.green{color:var(--green)}
+.red{color:var(--red)}
+.section-title{font-size:16px;margin:20px 0 12px}
 .chart{
- height:235px;position:relative;overflow:hidden;
- border-top:1px solid #29313b;border-bottom:1px solid #29313b;
- background:repeating-linear-gradient(to bottom,transparent 0 45px,#222a33 46px);
- display:flex;align-items:flex-end;gap:5px;padding:15px 5px 0;
+width:100%;height:230px;background:#080d16;
+border:1px solid #283345;border-radius:12px;
+display:block;
 }
-.bar{flex:1;min-width:4px;max-width:15px;border-radius:2px 2px 0 0}
-.up{background:#00d77b}.down{background:#f04455}
+.upload{
+border:2px dashed #9c783a;border-radius:14px;
+padding:24px 12px;text-align:center;background:#111722;
+}
+.upload input{width:100%;margin-top:15px;color:#aaa}
+.preview{max-width:100%;max-height:260px;margin-top:14px;border-radius:10px}
+.result{
+padding:18px;background:#0a111b;border:1px solid #354257;
+border-radius:13px;margin-top:15px;line-height:1.8;
+font-size:13px;white-space:pre-wrap;
+}
 .signal{
- border:1px solid #087d43;background:#062316;border-radius:12px;
- padding:18px;text-align:center;
+font-size:25px;font-weight:900;text-align:center;
+padding:15px;border-radius:12px;margin:10px 0;
+background:#172333;
 }
-.signal h2{color:var(--green);font-size:26px}
-.signal .confidence{color:var(--gold2);margin:15px}
-.bot-buttons{display:flex;gap:8px}
-.bot-buttons button{flex:1}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{text-align:left;padding:12px 8px;border-bottom:1px solid #2a3039;white-space:nowrap}
-th{color:var(--muted)}
-.buy{color:var(--green)}.sell{color:var(--red)}
-.table-wrap{overflow-x:auto}
-.lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:17px}
-.section{display:none}
-.section.active{display:block}
-.settings-row{padding:13px 0;border-bottom:1px solid #303640}
-.footer{text-align:center;color:#737d8b;padding:25px;font-size:12px}
-.mobile-nav{display:none}
-@media(max-width:850px){
- .auth-main{grid-template-columns:1fr;padding:20px}
- .hero{padding:10px}.bull{font-size:80px}
- .hero h2{font-size:25px}
- .auth-header .features{display:none}
- .cards{grid-template-columns:repeat(2,1fr)}
- .content-grid{grid-template-columns:1fr}
- .sidebar{width:175px}
- .main{padding:14px}
+.row{
+display:flex;justify-content:space-between;
+gap:10px;padding:12px 0;border-bottom:1px solid #283243;
+font-size:12px;
 }
-@media(max-width:600px){
- .auth-header{padding:14px}
- .logo h1{font-size:17px}
- .auth-card{padding:23px 18px}
- .auth-main{gap:8px}
- .hero p{font-size:13px}
- .hero-stats{gap:10px}
- .layout{display:block;padding-bottom:65px}
- .sidebar{display:none}
- .main{padding:12px}
- .topbar{padding:13px}
- .topbar .brand{font-size:15px}
- .cards{gap:8px}
- .metric{padding:12px}
- .metric h2{font-size:19px}
- .metric small{font-size:11px}
- .lower-grid{grid-template-columns:1fr}
- .mobile-nav{
-  display:flex;position:fixed;bottom:0;left:0;right:0;
-  background:#10151e;border-top:1px solid #57421d;
-  justify-content:space-around;padding:9px 3px;z-index:20;
- }
- .mobile-nav button{
-  background:none;border:0;color:#aaa;font-size:10px;
- }
- .mobile-nav button.active{color:var(--gold)}
+.note{font-size:11px;color:var(--muted);line-height:1.7}
+footer{text-align:center;padding:25px;color:#667084;font-size:10px}
+@media(min-width:700px){
+.grid{grid-template-columns:repeat(4,1fr)}
+.login-card{padding:40px}
 }
 </style>
 </head>
-
 <body>
 
-<!-- AUTHENTICATION PAGE -->
-<div id="authPage">
- <header class="auth-header">
-  <div class="logo">
-   <div class="logo-icon">📈</div>
-   <div>
-    <h1>DAN AUTO TRADING PRO</h1>
-    <small>Trade Smarter. Earn Bigger.</small>
-   </div>
-  </div>
-  <div class="features">🛡 Secure　 ⚡ Fast　 📊 Reliable　 🌐 Global</div>
- </header>
+<!-- LOGIN -->
+<section id="loginPage">
+<div class="login-card">
+<div class="logo">🐂</div>
+<h1>DAN AI TRADING</h1>
+<div class="subtitle">INTELLIGENT GOLD MARKET ANALYZER<br>
+SMART MONEY CONCEPT • AI VISION</div>
 
- <main class="auth-main">
-  <div class="hero">
-   <div class="bull">🐂</div>
-   <h2>TRADE LIKE A PRO</h2>
-   <p>Your Intelligent Trading Partner.<br>
-   AI Analysis • Live Market • Smart Trading</p>
-   <div class="hero-stats">
-    <span>📊 Live Market</span>
-    <span>🤖 AI Analysis</span>
-    <span>⚡ Smart Signals</span>
-   </div>
-  </div>
-
-  <div class="auth-card">
-   <div id="loginForm">
-    <h2>Welcome Back</h2>
-    <p class="sub">Login to your trading account</p>
-
-    <button class="btn btn-google" id="googleLogin">
-     <span class="google-icon">G</span> Continue with Google
-    </button>
-
-    <div style="text-align:center;color:#888;margin:18px">— OR LOGIN WITH EMAIL —</div>
-
-    <div class="field">
-     <label>Email Address</label>
-     <input id="loginEmail" type="email" placeholder="Enter your email">
-    </div>
-    <div class="field">
-     <label>Password</label>
-     <input id="loginPassword" type="password" placeholder="Enter password">
-    </div>
-    <button class="btn btn-gold" id="emailLogin">LOGIN</button>
-
-    <div class="auth-links">
-     <a id="forgotLink">Forgot Password?</a>
-     <a id="showRegister">Create Account</a>
-    </div>
-   </div>
-
-   <div id="registerForm" class="hidden">
-    <h2>Create Account</h2>
-    <p class="sub">Join DAN AUTO TRADING PRO</p>
-
-    <div class="field">
-     <label>Full Name</label>
-     <input id="regName" type="text" placeholder="Your full name">
-    </div>
-    <div class="field">
-     <label>Email Address</label>
-     <input id="regEmail" type="email" placeholder="Your email">
-    </div>
-    <div class="field">
-     <label>Password</label>
-     <input id="regPassword" type="password" placeholder="Minimum 6 characters">
-    </div>
-    <div class="field">
-     <label>Confirm Password</label>
-     <input id="regConfirm" type="password" placeholder="Repeat password">
-    </div>
-    <button class="btn btn-gold" id="createAccount">CREATE ACCOUNT</button>
-    <button class="btn btn-outline" id="backLogin">BACK TO LOGIN</button>
-   </div>
-
-   <div id="forgotForm" class="hidden">
-    <h2>Reset Password</h2>
-    <p class="sub">Enter your email to receive a reset link</p>
-    <div class="field">
-     <label>Email Address</label>
-     <input id="resetEmail" type="email" placeholder="Your email">
-    </div>
-    <button class="btn btn-gold" id="resetPassword">SEND RESET LINK</button>
-    <button class="btn btn-outline" id="backLogin2">BACK TO LOGIN</button>
-   </div>
-
-   <div id="authMessage"></div>
-   <p class="notice">🔒 Secure Authentication<br>
-   Your account information is protected.</p>
-  </div>
- </main>
- <div class="footer">© 2026 DAN AUTO TRADING PRO. All Rights Reserved.</div>
+<div id="loginForm">
+<input class="field" id="email" type="email" placeholder="Email address">
+<input class="field" id="password" type="password" placeholder="Password">
+<button class="btn" onclick="login()">LOGIN</button>
+<button class="btn btn-dark" onclick="createAccount()">CREATE ACCOUNT</button>
+<button class="btn btn-dark" onclick="googleLogin()">CONTINUE WITH GOOGLE</button>
+<div class="small">Your personal trading intelligence dashboard</div>
+<div id="loginError" class="error"></div>
 </div>
+</div>
+</section>
 
 <!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
- <header class="topbar">
-  <div class="brand">📈 DAN AUTO TRADING PRO</div>
-  <div>
-   <small id="userWelcome">Welcome, Trader</small>
-   <button id="logout" class="btn-outline" style="padding:8px 12px;margin-left:8px;border-radius:8px">Logout</button>
-  </div>
- </header>
+<main id="app" class="hidden">
+<header class="topbar">
+<div class="brand">🐂 DAN AI TRADING ANALYZER
+<small>GOLD INTELLIGENCE SYSTEM</small></div>
+<div>
+<div class="status">● SYSTEM ONLINE</div>
+<button class="logout" onclick="logout()">LOGOUT</button>
+</div>
+</header>
 
- <div class="layout">
-  <aside class="sidebar">
-   <button class="nav active" data-page="home">🏠 Dashboard</button>
-   <button class="nav" data-page="market">📊 Live Market</button>
-   <button class="nav" data-page="analysis">🧠 AI Analysis</button>
-   <button class="nav" data-page="bot">🤖 Auto Trading</button>
-   <button class="nav" data-page="trades">📂 Open Trades</button>
-   <button class="nav" data-page="history">📜 Trade History</button>
-   <button class="nav" data-page="settings">⚙ Settings</button>
-  </aside>
+<nav>
+<button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
+<button onclick="showPage('analysis',this)">AI Analysis</button>
+<button onclick="showPage('market',this)">Live Market</button>
+<button onclick="showPage('history',this)">History</button>
+<button onclick="showPage('settings',this)">Settings</button>
+</nav>
 
-  <main class="main">
-   <section id="home" class="section active">
-    <div class="welcome">
-     <h2>Trading Dashboard</h2>
-     <small class="muted">Welcome to your trading control center.</small>
-    </div>
-
-    <div class="cards">
-     <div class="metric"><small>Balance</small><h2>$1,000.00</h2><span>Demo account</span></div>
-     <div class="metric"><small>Equity</small><h2>$1,025.50</h2><span>Demo data</span></div>
-     <div class="metric"><small>Total Profit</small><h2 class="buy">+$25.50</h2><span>Sample result</span></div>
-     <div class="metric"><small>Win Rate</small><h2>87.5%</h2><span>Illustrative only</span></div>
-    </div>
-
-    <div class="content-grid">
-     <div class="panel">
-      <div class="chart-head">
-       <div class="panel-title">🟡 XAUUSD — Gold</div>
-       <div class="muted">1m　5m　<b class="gold">15m</b>　30m　1h</div>
-      </div>
-      <div class="chart" id="chart"></div>
-      <p class="muted" style="font-size:11px">Illustrative chart — not live market data</p>
-     </div>
-
-     <div class="panel">
-      <div class="panel-title">🧠 AI Analysis</div>
-      <div class="signal">
-       <div style="font-size:35px">⬆</div>
-       <h2>BUY SIGNAL</h2>
-       <p>Sample Bullish Trend</p>
-       <div class="confidence">Confidence: 92% (Demo)</div>
-       <p>Trend: Up</p>
-       <p>Market: XAUUSD</p>
-      </div>
-     </div>
-    </div>
-
-    <div class="lower-grid">
-     <div class="panel">
-      <div class="panel-title">🤖 Bot Control</div>
-      <div class="bot-buttons">
-       <button id="startBot" class="btn btn-green">▶ START BOT</button>
-       <button id="stopBot" class="btn btn-red">■ STOP BOT</button>
-      </div>
-      <p id="botStatus" class="gold">● Bot Stopped — Demo</p>
-      <p class="muted" style="font-size:12px">Bot controls are visual demo controls only.</p>
-     </div>
-     <div class="panel">
-      <div class="panel-title">Account Information</div>
-      <p>Account: <b>Demo</b></p>
-      <p>Market: <b>XAUUSD</b></p>
-      <p>Status: <b class="buy">Connected to Website</b></p>
-     </div>
-    </div>
-   </section>
-
-   <section id="market" class="section">
-    <h2>📊 Live Market</h2>
-    <div class="panel">
-     <h3>XAUUSD — Gold</h3>
-     <h2 class="gold">Market feed not connected</h2>
-     <p class="muted">Connect a market data provider to show real prices.</p>
-     <div class="chart" id="chart2"></div>
-    </div>
-   </section>
-
-   <section id="analysis" class="section">
-    <h2>🧠 AI Market Analysis</h2>
-    <div class="panel">
-     <h3 class="gold">Analysis Preview</h3>
-     <p>Symbol: XAUUSD</p>
-     <p>Signal: <b class="buy">BUY (Sample)</b></p>
-     <p>Trend: Bullish (Sample)</p>
-     <p>Confidence: 92% (Illustrative)</p>
-     <p class="muted">Real AI analysis requires a connected analysis service and market data.</p>
-    </div>
-   </section>
-
-   <section id="bot" class="section">
-    <h2>🤖 Auto Trading</h2>
-    <div class="panel">
-     <h3>Bot Control Center</h3>
-     <p id="botStatus2" class="gold">● STOPPED</p>
-     <div class="bot-buttons">
-      <button class="btn btn-green" id="startBot2">START BOT</button>
-      <button class="btn btn-red" id="stopBot2">STOP BOT</button>
-     </div>
-     <p class="muted">Demo controls only. No real orders are placed.</p>
-    </div>
-   </section>
-
-   <section id="trades" class="section">
-    <h2>📂 Open Trades</h2>
-    <div class="panel table-wrap">
-     <table>
-      <thead><tr><th>Symbol</th><th>Type</th><th>Lot</th><th>Entry</th><th>SL / TP</th></tr></thead>
-      <tbody><tr><td>XAUUSD</td><td class="buy">BUY</td><td>0.10</td><td>Demo</td><td>Demo</td></tr></tbody>
-     </table>
-     <p class="muted">Example trade only. No live positions.</p>
-    </div>
-   </section>
-
-   <section id="history" class="section">
-    <h2>📜 Trade History</h2>
-    <div class="panel table-wrap">
-     <table>
-      <thead><tr><th>Symbol</th><th>Type</th><th>Lot</th><th>Profit</th></tr></thead>
-      <tbody>
-       <tr><td>XAUUSD</td><td class="buy">BUY</td><td>0.10</td><td class="buy">+$12.50</td></tr>
-       <tr><td>XAUUSD</td><td class="sell">SELL</td><td>0.10</td><td class="buy">+$8.70</td></tr>
-      </tbody>
-     </table>
-     <p class="muted">Sample history only.</p>
-    </div>
-   </section>
-
-   <section id="settings" class="section">
-    <h2>⚙ Settings</h2>
-    <div class="panel">
-     <div class="settings-row">Profile: <b id="settingsEmail"></b></div>
-     <div class="settings-row">Trading mode: <b>Demo Preview</b></div>
-     <div class="settings-row">Default symbol: <b>XAUUSD</b></div>
-     <div class="settings-row">Security: <b class="buy">Firebase Authentication</b></div>
-    </div>
-   </section>
-  </main>
- </div>
-
- <nav class="mobile-nav">
-  <button class="active" data-page="home">🏠<br>Home</button>
-  <button data-page="market">📊<br>Market</button>
-  <button data-page="analysis">🧠<br>AI</button>
-  <button data-page="bot">🤖<br>Bot</button>
-  <button data-page="settings">⚙<br>Settings</button>
- </nav>
- <div class="footer">DAN AUTO TRADING PRO • Demo Preview</div>
+<!-- DASHBOARD -->
+<section class="page active" id="dashboard">
+<div class="hero">
+<h2>WELCOME TO DAN AI</h2>
+<p>Advanced Smart Money Concept analysis.
+Upload your trading chart screenshot and receive
+an AI-generated market report with English voice.</p>
+<button class="btn" onclick="showPage('analysis',document.querySelectorAll('nav button')[1])">
+START AI ANALYSIS →
+</button>
 </div>
 
-<script type="module">
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+<div class="grid">
+<div class="panel">
+<div class="metric-label">TRADING SYMBOL</div>
+<div class="metric-value gold">XAUUSD</div>
+</div>
+<div class="panel">
+<div class="metric-label">TIMEFRAME</div>
+<div class="metric-value">M15</div>
+</div>
+<div class="panel">
+<div class="metric-label">ANALYSIS MODE</div>
+<div class="metric-value">AI VISION</div>
+</div>
+<div class="panel">
+<div class="metric-label">VOICE</div>
+<div class="metric-value green">ENGLISH</div>
+</div>
+</div>
 
-import {
- getAuth,
- GoogleAuthProvider,
- signInWithPopup,
- createUserWithEmailAndPassword,
- signInWithEmailAndPassword,
- sendEmailVerification,
- sendPasswordResetEmail,
- signOut,
- onAuthStateChanged,
- updateProfile
-} from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+<div class="panel">
+<h3 class="section-title">SYSTEM FEATURES</h3>
+<div class="row"><span>AI Screenshot Analysis</span><span class="green">READY</span></div>
+<div class="row"><span>Market Structure</span><span class="green">READY</span></div>
+<div class="row"><span>Liquidity Detection</span><span class="green">READY</span></div>
+<div class="row"><span>FVG / Order Block</span><span class="green">READY</span></div>
+<div class="row"><span>English Voice Report</span><span class="green">READY</span></div>
+</div>
+</section>
 
-/* =====================================
-   INSERT YOUR FIREBASE CONFIG HERE
-===================================== */
+<!-- AI ANALYSIS -->
+<section class="page" id="analysis">
+<h2 class="gold">AI VISION ANALYSIS</h2>
+<p class="note">Upload an XAUUSD chart screenshot from MT5 or TradingView.</p>
 
-const firebaseConfig = {
- apiKey: "YOUR_API_KEY",
- authDomain: "YOUR_PROJECT.firebaseapp.com",
- projectId: "YOUR_PROJECT_ID",
- storageBucket: "YOUR_PROJECT.appspot.com",
- messagingSenderId: "YOUR_SENDER_ID",
- appId: "YOUR_APP_ID"
+<div class="panel">
+<label>SELECT TIMEFRAME</label>
+<select class="field" id="timeframe">
+<option>M5</option><option selected>M15</option>
+<option>M30</option><option>H1</option><option>H4</option><option>D1</option>
+</select>
+
+<label>CHART SCREENSHOT</label>
+<div class="upload">
+<div style="font-size:35px">📊</div>
+<strong>UPLOAD YOUR GOLD CHART</strong>
+<input type="file" id="chartFile" accept="image/*" onchange="previewImage(event)">
+<img id="preview" class="preview hidden">
+</div>
+
+<button class="btn" id="analyzeBtn" onclick="analyzeChart()">ANALYZE WITH AI</button>
+<div id="analysisStatus" class="note"></div>
+<div id="analysisResult" class="result hidden"></div>
+
+<button class="btn btn-dark" onclick="speakReport()">🔊 SPEAK REPORT</button>
+<button class="btn btn-dark" onclick="stopVoice()">STOP VOICE</button>
+</div>
+
+<div class="panel" style="margin-top:15px">
+<h3>SMC ANALYSIS CHECKLIST</h3>
+<div class="row"><span>Market Structure</span><span>AI DETECTION</span></div>
+<div class="row"><span>Liquidity Sweep</span><span>AI DETECTION</span></div>
+<div class="row"><span>BOS / CHoCH</span><span>AI DETECTION</span></div>
+<div class="row"><span>Fair Value Gap</span><span>AI DETECTION</span></div>
+<div class="row"><span>Order Block</span><span>AI DETECTION</span></div>
+</div>
+</section>
+
+<!-- MARKET -->
+<section class="page" id="market">
+<h2 class="gold">LIVE MARKET</h2>
+<div class="panel">
+<div class="row"><span>SYMBOL</span><strong>XAUUSD</strong></div>
+<div class="row"><span>TIMEFRAME</span><strong>M15</strong></div>
+<div class="row"><span>DATA SOURCE</span><strong>TradingView</strong></div>
+<div class="note">Market chart below requires internet access.</div>
+<div style="margin-top:15px;height:450px">
+<iframe
+src="https://www.tradingview.com/widgetembed/?symbol=OANDA%3AXAUUSD&interval=15&theme=dark&style=1&hide_top_toolbar=false&allow_symbol_change=true&save_image=false"
+width="100%" height="100%" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+</div>
+</section>
+
+<!-- HISTORY -->
+<section class="page" id="history">
+<h2 class="gold">ANALYSIS HISTORY</h2>
+<div class="panel">
+<div id="historyList" class="note">No analysis history yet.</div>
+<button class="btn btn-dark" onclick="clearHistory()">CLEAR HISTORY</button>
+</div>
+</section>
+
+<!-- SETTINGS -->
+<section class="page" id="settings">
+<h2 class="gold">SETTINGS</h2>
+<div class="panel">
+<label>AI BACKEND URL</label>
+<input class="field" id="apiUrl" placeholder="https://your-server.com/analyze-image">
+<p class="note">Enter the URL of your connected AI image-analysis backend.</p>
+<button class="btn" onclick="saveSettings()">SAVE SETTINGS</button>
+<div class="row"><span>Voice language</span><strong>English (US)</strong></div>
+<div class="row"><span>Voice speed</span><strong>0.9</strong></div>
+<div class="row"><span>Platform</span><strong>Android / Web</strong></div>
+</div>
+</section>
+
+<footer>
+DAN AI TRADING ANALYZER © 2026<br>
+AI analysis is informational, not financial advice.
+</footer>
+</main>
+
+<script>
+const USERS='dan_ai_users_v1';
+const SESSION='dan_ai_session_v1';
+const HISTORY='dan_ai_history_v1';
+
+let currentReport='';
+
+function getUsers(){
+try{return JSON.parse(localStorage.getItem(USERS)||'{}')}
+catch(e){return {}}
+}
+
+function createAccount(){
+let email=document.getElementById('email').value.trim().toLowerCase();
+let pass=document.getElementById('password').value;
+if(!email||!pass){error('Enter email and password');return}
+if(pass.length<6){error('Password must contain at least 6 characters');return}
+let users=getUsers();
+if(users[email]){error('Account already exists. Please login.');return}
+users[email]=pass;
+localStorage.setItem(USERS,JSON.stringify(users));
+localStorage.setItem(SESSION,email);
+openDashboard();
+}
+
+function login(){
+let email=document.getElementById('email').value.trim().toLowerCase();
+let pass=document.getElementById('password').value;
+let users=getUsers();
+if(users[email]&&users[email]===pass){
+localStorage.setItem(SESSION,email);
+openDashboard();
+}else error('Incorrect email or password. Create an account first.');
+}
+
+function error(msg){
+document.getElementById('loginError').textContent=msg;
+}
+
+function googleLogin(){
+error('Google login requires Firebase Authentication configuration. Use email login for this demo.');
+}
+
+function logout(){
+localStorage.removeItem(SESSION);
+document.getElementById('app').classList.add('hidden');
+document.getElementById('loginPage').classList.remove('hidden');
+}
+
+function openDashboard(){
+document.getElementById('loginPage').classList.add('hidden');
+document.getElementById('app').classList.remove('hidden');
+loadHistory();
+}
+
+function showPage(id,button){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(button)button.classList.add('active');
+if(id==='history')loadHistory();
+}
+
+function previewImage(event){
+const file=event.target.files[0];
+if(!file)return;
+if(!file.type.startsWith('image/'))return alert('Select an image file.');
+if(file.size>12*1024*1024)return alert('Image must be under 12 MB.');
+const reader=new FileReader();
+reader.onload=e=>{
+const img=document.getElementById('preview');
+img.src=e.target.result;
+img.classList.remove('hidden');
 };
-
-let auth = null;
-let firebaseReady = false;
-
-const authPage = document.getElementById("authPage");
-const dashboard = document.getElementById("dashboard");
-const message = document.getElementById("authMessage");
-
-function showMessage(text,color="#ffe29a"){
- message.textContent=text;
- message.style.color=color;
-}
-function showForm(name){
- ["loginForm","registerForm","forgotForm"].forEach(id=>{
-  document.getElementById(id).classList.add("hidden");
- });
- document.getElementById(name).classList.remove("hidden");
- message.textContent="";
+reader.readAsDataURL(file);
 }
 
-document.getElementById("showRegister").onclick=()=>showForm("registerForm");
-document.getElementById("backLogin").onclick=()=>showForm("loginForm");
-document.getElementById("backLogin2").onclick=()=>showForm("loginForm");
-document.getElementById("forgotLink").onclick=()=>showForm("forgotForm");
-
-function openDashboard(user){
- authPage.classList.add("hidden");
- dashboard.classList.remove("hidden");
- const displayName=user.displayName || user.email?.split("@")[0] || "Trader";
- document.getElementById("userWelcome").textContent="Welcome, "+displayName;
- document.getElementById("settingsEmail").textContent=user.email || "";
+function getApi(){
+return localStorage.getItem('dan_ai_api')||'';
 }
 
-function openLogin(){
- dashboard.classList.add("hidden");
- authPage.classList.remove("hidden");
- showForm("loginForm");
+function saveSettings(){
+const url=document.getElementById('apiUrl').value.trim();
+localStorage.setItem('dan_ai_api',url);
+alert('Settings saved.');
 }
+
+async function analyzeChart(){
+const file=document.getElementById('chartFile').files[0];
+if(!file){alert('Upload a chart screenshot first.');return}
+
+const api=getApi();
+if(!api){
+document.getElementById('analysisStatus').textContent=
+'AI backend is not connected. Add your backend URL in Settings to enable real image analysis.';
+return;
+}
+
+const btn=document.getElementById('analyzeBtn');
+const status=document.getElementById('analysisStatus');
+const result=document.getElementById('analysisResult');
+
+btn.disabled=true;
+btn.textContent='ANALYZING...';
+status.textContent='Sending screenshot to AI...';
+result.classList.add('hidden');
 
 try{
- if(firebaseConfig.apiKey !== "YOUR_API_KEY" &&
-    firebaseConfig.projectId !== "YOUR_PROJECT_ID"){
-  const app=initializeApp(firebaseConfig);
-  auth=getAuth(app);
-  firebaseReady=true;
+const form=new FormData();
+form.append('image',file);
+form.append('symbol','XAUUSD');
+form.append('timeframe',document.getElementById('timeframe').value);
+form.append('language','English');
+form.append('prompt',
+'Analyze this XAUUSD chart using Smart Money Concepts. Identify market structure, liquidity, BOS, CHoCH, FVG, order blocks, possible entry, stop loss and TP1, TP2, TP3. Give BUY, SELL or WAIT only when supported by visible chart evidence. Do not invent prices. Explain uncertainty.');
 
-  onAuthStateChanged(auth,user=>{
-   if(user){
-    openDashboard(user);
-   }else{
-    openLogin();
-   }
-  });
- }else{
-  showMessage("Firebase setup required. Add your Firebase configuration.");
- }
-}catch(error){
- showMessage("Firebase setup error: "+error.message,"#ff6677");
-}
-
-function requireFirebase(){
- if(!firebaseReady){
-  showMessage("First connect Firebase using your project configuration.","#ff6677");
-  return false;
- }
- return true;
-}
-
-document.getElementById("googleLogin").onclick=async()=>{
- if(!requireFirebase())return;
- try{
-  const provider=new GoogleAuthProvider();
-  await signInWithPopup(auth,provider);
- }catch(e){showMessage(e.message,"#ff6677")}
-};
-
-document.getElementById("createAccount").onclick=async()=>{
- if(!requireFirebase())return;
-
- const name=document.getElementById("regName").value.trim();
- const email=document.getElementById("regEmail").value.trim();
- const password=document.getElementById("regPassword").value;
- const confirm=document.getElementById("regConfirm").value;
-
- if(!name||!email||!password){
-  showMessage("Please complete all fields.","#ff6677");return;
- }
- if(password.length<6){
-  showMessage("Password must contain at least 6 characters.","#ff6677");return;
- }
- if(password!==confirm){
-  showMessage("Passwords do not match.","#ff6677");return;
- }
-
- try{
-  const result=await createUserWithEmailAndPassword(auth,email,password);
-  await updateProfile(result.user,{displayName:name});
-  await sendEmailVerification(result.user);
-  await signOut(auth);
-  showForm("loginForm");
-  showMessage("Account created! Check your email and verify your account.");
- }catch(e){showMessage(e.message,"#ff6677")}
-};
-
-document.getElementById("emailLogin").onclick=async()=>{
- if(!requireFirebase())return;
- const email=document.getElementById("loginEmail").value.trim();
- const password=document.getElementById("loginPassword").value;
- if(!email||!password){showMessage("Enter email and password.","#ff6677");return}
- try{
-  const result=await signInWithEmailAndPassword(auth,email,password);
-  if(!result.user.emailVerified){
-   await signOut(auth);
-   showMessage("Please verify your email first. Check your inbox.","#ff6677");
-  }
- }catch(e){showMessage(e.message,"#ff6677")}
-};
-
-document.getElementById("resetPassword").onclick=async()=>{
- if(!requireFirebase())return;
- const email=document.getElementById("resetEmail").value.trim();
- if(!email){showMessage("Enter your email address.","#ff6677");return}
- try{
-  await sendPasswordResetEmail(auth,email);
-  showMessage("Password reset link sent. Check your email.");
- }catch(e){showMessage(e.message,"#ff6677")}
-};
-
-document.getElementById("logout").onclick=async()=>{
- if(auth)await signOut(auth);
- openLogin();
-};
-
-/* DASHBOARD NAVIGATION */
-function goPage(page){
- document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
- document.getElementById(page)?.classList.add("active");
- document.querySelectorAll("[data-page]").forEach(b=>{
-  b.classList.toggle("active",b.dataset.page===page);
- });
-}
-document.querySelectorAll("[data-page]").forEach(button=>{
- button.onclick=()=>goPage(button.dataset.page);
+const response=await fetch(api,{
+method:'POST',
+body:form
 });
+if(!response.ok)throw new Error('Server error: '+response.status);
+const data=await response.json();
 
-/* DEMO CHART — NOT LIVE MARKET DATA */
-function makeChart(id){
- const chart=document.getElementById(id);
- if(!chart)return;
- for(let i=0;i<42;i++){
-  const bar=document.createElement("div");
-  const up=Math.random()>.43;
-  bar.className="bar "+(up?"up":"down");
-  bar.style.height=(25+Math.random()*75)+"%";
-  chart.appendChild(bar);
- }
-}
-makeChart("chart");
-makeChart("chart2");
+currentReport=typeof data==='string'?data:
+(data.analysis||data.report||data.message||JSON.stringify(data,null,2));
 
-/* DEMO BOT BUTTONS */
-let botRunning=false;
-function setBot(value){
- botRunning=value;
- const status=botRunning?"● BOT RUNNING — DEMO":"● BOT STOPPED — DEMO";
- document.getElementById("botStatus").textContent=status;
- document.getElementById("botStatus2").textContent=status;
- document.getElementById("botStatus").style.color=botRunning?"#00df72":"#f6bd35";
- document.getElementById("botStatus2").style.color=botRunning?"#00df72":"#f6bd35";
+result.textContent=currentReport;
+result.classList.remove('hidden');
+status.textContent='Analysis completed.';
+saveReport(currentReport);
+
+}catch(err){
+status.textContent='Analysis failed: '+err.message+
+'. Check your backend URL and server connection.';
+}finally{
+btn.disabled=false;
+btn.textContent='ANALYZE WITH AI';
 }
-["startBot","startBot2"].forEach(id=>{
- document.getElementById(id).onclick=()=>setBot(true);
+}
+
+function speakReport(){
+if(!currentReport){
+alert('Complete an AI analysis first.');
+return;
+}
+if(!('speechSynthesis' in window)){
+alert('Voice is not supported by this browser.');
+return;
+}
+speechSynthesis.cancel();
+const utterance=new SpeechSynthesisUtterance(currentReport);
+utterance.lang='en-US';
+utterance.rate=0.9;
+utterance.pitch=1;
+speechSynthesis.speak(utterance);
+}
+
+function stopVoice(){
+if('speechSynthesis' in window)speechSynthesis.cancel();
+}
+
+function saveReport(report){
+let history=JSON.parse(localStorage.getItem(HISTORY)||'[]');
+history.unshift({
+date:new Date().toLocaleString(),
+timeframe:document.getElementById('timeframe').value,
+report:report
 });
-["stopBot","stopBot2"].forEach(id=>{
- document.getElementById(id).onclick=()=>setBot(false);
+localStorage.setItem(HISTORY,JSON.stringify(history.slice(0,30)));
+}
+
+function loadHistory(){
+const history=JSON.parse(localStorage.getItem(HISTORY)||'[]');
+const box=document.getElementById('historyList');
+if(!history.length){box.textContent='No analysis history yet.';return}
+box.innerHTML='';
+history.forEach(item=>{
+const div=document.createElement('div');
+div.className='panel';
+div.style.marginBottom='12px';
+const date=document.createElement('strong');
+date.textContent=item.date+' | '+item.timeframe;
+const report=document.createElement('p');
+report.style.whiteSpace='pre-wrap';
+report.textContent=item.report;
+div.append(date,report);
+box.appendChild(div);
 });
+}
+
+function clearHistory(){
+if(confirm('Delete all analysis history?')){
+localStorage.removeItem(HISTORY);
+loadHistory();
+}
+}
+
+document.getElementById('apiUrl').value=getApi();
+
+if(localStorage.getItem(SESSION))openDashboard();
 </script>
-
 </body>
 </html>
