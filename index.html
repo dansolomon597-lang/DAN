@@ -1,1 +1,142 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart AI Multi MT5 Bot</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#0b1220;color:#fff;
+ font-family:Arial,sans-serif;padding:18px;
+}
+header{display:flex;justify-content:space-between;
+ align-items:center;margin-bottom:25px}
+h2{color:#35d6a0}
+.card{
+ background:#151f31;padding:17px;
+ border-radius:14px;margin-bottom:15px;
+ border:1px solid #26364c;
+}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.number{font-size:25px;font-weight:bold;color:#35d6a0}
+button{
+ padding:13px;border:0;border-radius:9px;
+ font-weight:bold;cursor:pointer;
+}
+.start{background:#13b981;color:white}
+.stop{background:#ef4444;color:white}
+.connect{background:#263d56;color:white}
+.row{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:8px;padding:13px 0;
+ border-bottom:1px solid #29364a;
+}
+.small{color:#9aacc2;font-size:12px}
+.status{color:#fbbf24;font-size:12px}
+.full{width:100%;margin-top:10px}
+</style>
+</head>
+<body>
+
+<header>
+ <div>
+  <h2>SMART AI BOT</h2>
+  <div class="small">MULTI MT5 TRADING SYSTEM</div>
+ </div>
+ <span>🤖</span>
+</header>
+
+<div class="stats">
+ <div class="card">
+  <div class="small">MT5 ACCOUNTS</div>
+  <div class="number">10</div>
+ </div>
+ <div class="card">
+  <div class="small">BOT MODE</div>
+  <div class="number" id="mode">OFF</div>
+ </div>
+ <div class="card">
+  <div class="small">BUY SIGNALS</div>
+  <div class="number">0</div>
+ </div>
+ <div class="card">
+  <div class="small">SELL SIGNALS</div>
+  <div class="number">0</div>
+ </div>
+</div>
+
+<div class="card">
+ <h3>⚙️ MASTER CONTROL</h3>
+ <p class="small">Demo interface only - no real orders</p>
+ <button class="start full" onclick="startBot()">
+ START DEMO BOT
+ </button>
+ <button class="stop full" onclick="stopBot()">
+ STOP BOT
+ </button>
+ <p id="message" class="status">Bot is stopped</p>
+</div>
+
+<div class="card">
+ <h3>📊 TRADING SETTINGS</h3>
+ <label class="small">Trading Symbol</label>
+ <select id="symbol" class="full">
+  <option>EURUSD</option>
+  <option>GBPUSD</option>
+  <option>USDJPY</option>
+  <option>XAUUSD</option>
+ </select>
+ <br><br>
+ <label class="small">Maximum Risk (%)</label>
+ <input id="risk" type="number" value="0.5"
+ min="0.1" max="1" step="0.1" class="full">
+ <br><br>
+ <label class="small">Take Profit (points)</label>
+ <input type="number" value="200" class="full">
+ <br><br>
+ <label class="small">Stop Loss (points)</label>
+ <input type="number" value="100" class="full">
+</div>
+
+<div class="card">
+ <h3>🔗 MT5 ACCOUNTS</h3>
+ <div id="accounts"></div>
+</div>
+
+<script>
+let running = false;
+
+function startBot(){
+ running=true;
+ document.getElementById("mode").innerText="DEMO";
+ document.getElementById("message").innerText=
+ "Demo mode enabled. No real orders.";
+}
+
+function stopBot(){
+ running=false;
+ document.getElementById("mode").innerText="OFF";
+ document.getElementById("message").innerText=
+ "Demo bot stopped.";
+}
+
+const accounts=document.getElementById("accounts");
+
+for(let i=1;i<=10;i++){
+ const div=document.createElement("div");
+ div.className="row";
+ div.innerHTML=`
+ <div>
+  <strong>MT5 Account ${i}</strong>
+  <div class="small">Broker ${i} · Not connected</div>
+ </div>
+ <span class="status">Pending</span>
+ `;
+ accounts.appendChild(div);
+}
+</script>
+
+</body>
+</html>
